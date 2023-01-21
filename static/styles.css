@@ -1,0 +1,32 @@
+html{
+    background-color:  rgb(246, 242, 244);
+    display: block;
+    margin: 0 2em;
+    font-family: 'Chalkduster', 'Marker Felt', 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', serif;
+}
+body{
+    padding: 2em;
+}
+header{
+
+    background-color: rgb(246, 242, 244);
+}
+header *{
+    text-align: left;
+}
+h1, h2{
+    padding-left: 0.5em;
+}
+
+main{
+    margin-top: 1rem;
+    text-align: left;
+}
+
+main *{
+    padding: 1em;
+}
+
+footer{    
+    color: black;
+}
