@@ -12,7 +12,7 @@ def index():
 
 
 @app.route("/game", methods=["GET", "POST"])
-def view():
+def game():
     return render_template("game.html")
 
 
