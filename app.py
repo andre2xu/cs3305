@@ -11,11 +11,11 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/view", methods=["GET", "POST"])
+@app.route("/game", methods=["GET", "POST"])
 def view():
-    return render_template("view.html")
+    return render_template("game.html")
 
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
