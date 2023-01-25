@@ -4,4 +4,9 @@ console.log(1);
 
 const Application = PIXI.Application;
 
-const app = new Application();
+const app = new Application({
+    width: 800,
+    height: 800,
+    transparent: false
+});
+
