@@ -9,14 +9,13 @@ app.config["SECRET_KEY"] = "secretkeycs3305"
 @app.route("/")     
 def index():
     return render_template("index.html")
-  
 
-@app.route("/view", methods=["GET", "POST"])
-def view():
-    return render_template("view.html")
+
+@app.route("/game", methods=["GET", "POST"])
+def game():
+    return render_template("game.html")
 
 
 
 if __name__ == "__main__":
-    app.run()
- 
+    app.run(debug=True)
