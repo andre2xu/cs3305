@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+
+  <title>Game Name</title>
+</head>
+<body>
+  <header>
+    <h1>Insert Game Name Here</h1>        
+  </header>
+
+  <main>
+    {% block main_content %}{% endblock %}
+  </main>
+
+  <footer>
+    &copy; Team 1 - CS3305 Team Software Project
+  </footer>
+</body>
+</html>
+
+
