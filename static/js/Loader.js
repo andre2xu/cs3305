@@ -1,6 +1,6 @@
 //template for future loador
 //#TODO write loader logic
-
+//decide what sprites are interactive on load
 
 
 // use particle container if possible
