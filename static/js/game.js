@@ -1,7 +1,3 @@
-//console.log(1);
-
-
-
 const Application = PIXI.Application;
 
 const app = new Application({
@@ -12,7 +8,7 @@ document.body.appendChild(app.view);
 
 //input setup
 let keys = {};
-let keysDiv;
+
 
 
 //fit canvas to window
@@ -32,21 +28,33 @@ playerSprite.interactive = true;
 
 app.ticker.add(gameLoop)
 
+const weaponTexture = PIXI.Texture.from("./static/assets/pistol1.png");
+const weaponTexture2 = PIXI.Texture.from("./static/assets/pistol2.png");
 
+const weaponSprite = new PIXI.Sprite(weaponTexture); 
+weaponSprite.scale.x = 3.2
+weaponSprite.scale.y = 3.2
+app.stage.addChild(weaponSprite)
 window.addEventListener("keydown", keysDown)
 window.addEventListener("keyup", keysUp)
-// playerSprite.on("mousedown", function() {
-//     playerSprite.position.x +=100
-// })
-// keysDiv = document.querySelector
+
+weaponSprite.anchor.set(0)
+// weaponSprite.pivot.x = weaponSprite.pivot.x 
+// weaponSprite.pivot.y = weaponSprite.pivot.y 
 
 
+// const gra = PIXI.Graphics;
 
-//controls setup 
+// const rect = new gra();
+// rect.beginFill(0x000000)
+// rect.drawRect(weaponSprite.pivot.x,weaponSprite.pivot.y,100,100)
+// rect.endFill();
+// app.stage.addChild(rect)
+// //controls setup 
 
 // W = 87, A = 65, S = 83, D = 68
 function keysDown(e) {
-    console.log(e.keyCode)
+    // console.log(e.keyCode)
     keys[e.keyCode] = true;
 }
 
@@ -56,45 +64,45 @@ function keysUp(e) {
 
 
 function gameLoop(){
-
+    //up
     if (keys["87"]){
         playerSprite.y -= 10;
     }
-
+    //left
     if (keys["65"]){
         playerSprite.x -= 10;
     }
-
+    //down
     if (keys["83"]){
         playerSprite.y += 10;
     }
-
+    //right
     if (keys["68"]){
         playerSprite.x += 10;
     }
+//up
+    if (keys["38"]){
+        weaponSprite.rotation += 0.1;
+    }
+    //left
+    if (keys["37"]){
+        // weaponSprite.setTexture = weaponTexture
+        // playerSprite.x -= 10;
+        // weaponTexture = PIXI.Texture.from("./static/assets/pistol1.png")
+    }
+    //down
+    if (keys["40"]){
+        weaponSprite.rotation -= 0.1;
+    }
+    //right
+    if (keys["39"]){
+        // weaponSprite.setTexture = playerTexture
+        // weaponTexture = PIXI.Texture.from("./static/assets/pistol2.png");
+    }
 
+
+    weaponSprite.x = playerSprite.x  +64
+    weaponSprite.y = playerSprite.y +64
+    // console.log(weaponSprite.pivot)
 
 }
-
-
-
-
-
-
-
-
-
-// document.addEventListener("keydown", function(a){
-//     if(a.key == ("ArrowLeft" && "ArrowDown"))
-//         playerSprite.x -= 10
-//         playerSprite.y += 10
-//     if(a.key == "ArrowLeft")
-//         playerSprite.x -= 20
-//     if(a.key == "ArrowRight")
-//         playerSprite.x += 20
-//     if(a.key == "ArrowUp")
-//         playerSprite.y -= 20
-//     if(a.key == "ArrowDown")
-//         playerSprite.y += 20
-    
-// })
