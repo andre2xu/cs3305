@@ -38,12 +38,19 @@ app.stage.addChild(weaponSprite)
 window.addEventListener("keydown", keysDown)
 window.addEventListener("keyup", keysUp)
 
-weaponSprite.anchor.set(0)
-// weaponSprite.pivot.x = weaponSprite.pivot.x 
-// weaponSprite.pivot.y = weaponSprite.pivot.y 
+// weaponSprite.anchor.set(0.1,0.5)
+weaponSprite.pivot.x = 9
+weaponSprite.pivot.y = 19
 
 
-// const gra = PIXI.Graphics;
+const crosshairTexture = PIXI.Texture.from("./static/assets/crosshair.png")
+const crosshairSprite = new PIXI.Sprite(crosshairTexture)
+
+crosshairSprite.scale.set(2,2)
+app.stage.addChild(crosshairSprite)
+
+
+const gra = PIXI.Graphics;
 
 // const rect = new gra();
 // rect.beginFill(0x000000)
@@ -62,6 +69,27 @@ function keysUp(e) {
     keys[e.keyCode] = false;
 }
 
+//tracks mouse
+const line = new gra();
+line.lineStyle(5, 0xFFEA00,1)
+document.onmousemove = function(e){
+    
+    
+    // line
+    // .moveTo(playerSprite.x +90,playerSprite.y +90)
+    // .lineTo(e.clientX, e.clientY)
+
+    weaponSprite.rotation = Math.atan2(e.clientY - playerSprite.y,e.clientX - playerSprite.x)
+    crosshairSprite.x = e.clientX
+    crosshairSprite.y = e.clientY
+
+
+
+}
+
+
+
+    app.stage.addChild(line)
 
 function gameLoop(){
     //up
@@ -101,8 +129,8 @@ function gameLoop(){
     }
 
 
-    weaponSprite.x = playerSprite.x  +64
-    weaponSprite.y = playerSprite.y +64
+    weaponSprite.x = playerSprite.x  +90
+    weaponSprite.y = playerSprite.y +90
     // console.log(weaponSprite.pivot)
 
 }
