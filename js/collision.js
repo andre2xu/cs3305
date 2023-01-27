@@ -138,6 +138,21 @@ function draw() {
         if(moveleft === true){
             player.x = player.x + 3
         }
+        else if(player.x+player.size < wall.x + 2){
+            player.x = player.x - 3
+        }
+
+        else if(player.x > wall.x + wall.size - 2){
+            player.x = player.x + 3
+        }
+
+        else if(player.y + player.size < wall.y + 2){
+            player.y = player.y - 3
+        }
+
+        else if(player.y > wall.y + wall.size - 2){
+            player.y = player.y + 3
+        }
     }
 
     else {
