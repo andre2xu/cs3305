@@ -1,3 +1,7 @@
+//to test, go to 127.0.0.1/game after running flask server
+
+
+
 const Application = PIXI.Application;
 
 const app = new Application({
@@ -125,7 +129,7 @@ function gameLoop(){
     //right
     if (keys["39"]){
         // weaponSprite.setTexture = playerTexture
-        // weaponTexture = PIXI.Texture.from("./static/assets/pistol2.png");
+        weaponSprite.texture = weaponTexture2;
     }
 
 
