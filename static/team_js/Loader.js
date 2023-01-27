@@ -1,5 +1,5 @@
 //template for future loador
-//#TODO write loader logic
+//TODO write loader logic
 //decide what sprites are interactive on load
 
 
