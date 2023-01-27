@@ -11,12 +11,15 @@ export function checkIfNumber(x) {
 };
 
 export function checkIfInstance(x, c) {
-    if (c instanceof Object === false) {
+    if (c instanceof Object) {
         const DESCRIPTORS = Object.getOwnPropertyDescriptors(c);
 
         if (DESCRIPTORS.prototype === undefined || DESCRIPTORS.prototype.writable === undefined || DESCRIPTORS.prototype.writable === true) {
-            throw ReferenceError("Not a class");
+            throw TypeError("Not a class");
         }
+    }
+    else {
+        throw TypeError("Not a class");
     }
 
     if (x instanceof c === false) {
