@@ -123,7 +123,21 @@ function draw() {
     }
 
     if (player_collides_object(wall)) {
-        player.change = -10
+        if(moveright === true){
+            player.x = player.x - 3
+        }
+
+        if(moveup === true){
+            player.y = player.y + 3 
+        }
+
+        if(movedown === true){
+            player.y = player.y - 3
+        }
+
+        if(moveleft === true){
+            player.x = player.x + 3
+        }
     }
 
     else {
