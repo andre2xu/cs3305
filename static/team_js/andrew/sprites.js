@@ -1,5 +1,11 @@
+import * as checks from '../js/checks.js';
+
 export class Sprite {
     constructor(texture, posX, posY) {
+        checks.checkIfInstance(texture, PIXI.Texture);
+        checks.checkIfNumber(posX);
+        checks.checkIfNumber(posY);
+
         this.sprite = new PIXI.Sprite(texture);
         this.spriteFrameWidth = 0;
         this.spriteFrameHeight = 0;
@@ -18,6 +24,11 @@ export class Sprite {
     }
 
     addMask(x, y, frameWidth, frameHeight) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+        checks.checkIfNumber(frameWidth);
+        checks.checkIfNumber(frameHeight);
+
         const MASK = new PIXI.Graphics();
         MASK.beginFill('black');
         MASK.drawRect(x, y, frameWidth, frameHeight);
@@ -31,11 +42,17 @@ export class Sprite {
     };
 
     moveSprite(x, y) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
         this.sprite_container.x += x;
         this.sprite_container.y += y;
     };
 
     resizeSprite(w, h) {
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
         this.sprite_container.width = w;
         this.sprite_container.height = h;
     };
@@ -101,14 +118,21 @@ export class Sprite {
     };
 
     setPosX(x) {
+        checks.checkIfNumber(x);
+
         this.sprite_container.x = x;
     };
 
     setPosY(y) {
+        checks.checkIfNumber(y);
+
         this.sprite_container.y = y;
     };
 
     setSpriteFrameDimensions(w, h) {
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
         this.spriteFrameWidth = w;
         this.spriteFrameHeight = h;
     };
