@@ -135,6 +135,10 @@ function draw() {
         enemy.x = enemy.x -10
     }
 
+    if (enemy_collides_edge(wall_right)) {
+        enemy.x = enemy.x +10
+    }
+
     if (player_collides_object(wall)) {
         if(moveright === true){
             player.x = player.x - 3
