@@ -25,67 +25,6 @@ export class Pistol{
 
     //WILL BE USEFUL LATER
 
-
-    // flipHorizontally() {
-    //     // adding/subtracting the frame width ensures that the sprite is still in the same x-position after the flip
-    //
-    //     if (this.isFlippedHorizontally) {
-    //         this.sprite_container.scale.x = 1;
-    //         this.sprite_container.x -= this.spriteFrameWidth;
-    //
-    //         this.isFlippedHorizontally = false;
-    //     }
-    //     else {
-    //         this.sprite_container.scale.x = -1;
-    //         this.sprite_container.x += this.spriteFrameWidth;
-    //
-    //         this.isFlippedHorizontally = true;
-    //     }
-    // };
-    //
-    // flipVertically() {
-    //     // adding/subtracting the frame height ensures that the sprite is still in the same y-position after the flip
-    //
-    //     if (this.isFlippedVertically) {
-    //         this.sprite_container.scale.y = 1;
-    //         this.sprite_container.y -= this.spriteFrameHeight;
-    //
-    //         this.isFlippedVertically = false;
-    //     }
-    //     else {
-    //         this.sprite_container.scale.y = -1;
-    //         this.sprite_container.y += this.spriteFrameHeight;
-    //
-    //         this.isFlippedVertically = true;
-    //     }
-    // };
-    //
-    // getLeftPosX() {
-    //     return this.sprite_container.x;
-    // };
-    //
-    // getLeftPosY() {
-    //     return this.sprite_container.y;
-    // };
-    //
-    // getRightPosX() {
-    //     if (this.isFlippedHorizontally) {
-    //         return this.sprite_container.x;
-    //     }
-    //     else {
-    //         return this.sprite_container.x + this.spriteFrameWidth;
-    //     }
-    // };
-    //
-    // getRightPosY() {
-    //     if (this.isFlippedVertically) {
-    //         return this.sprite_container.y;
-    //     }
-    //     else {
-    //         return this.sprite_container.y + this.spriteFrameHeight;
-    //     }
-    // };
-
     setPosX(x) {
         this.sprite.x = x;
     };
