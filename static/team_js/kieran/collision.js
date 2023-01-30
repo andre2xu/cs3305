@@ -209,6 +209,22 @@ function draw() {
     if (movedown) {
         player.y = player.y + player.change;
     }
+
+    if (player.x > enemy.x) {
+        enemy.x = enemy.x + enemy.change;
+    }
+
+    if (player.y > enemy.y) {
+        enemy.y = enemy.y + enemy.change;
+    }
+
+    if (player.x < enemy.x) {
+        enemy.x = enemy.x - enemy.change;
+    }
+
+    if (player.y < enemy.y) {
+        enemy.y = enemy.y - enemy.change;
+    }
 }
 
 function activate (event) {
