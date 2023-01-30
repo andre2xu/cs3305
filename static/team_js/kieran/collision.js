@@ -258,6 +258,19 @@ function player_collides_object(w) {
     }
 }
 
+function enemy_collides_edge(g) {
+    if (enemy.x + enemy.size < g.x ||
+        g.x + g.width < enemy.x || 
+        enemy.y > g.y + g.height ||
+        g.y > enemy.y + enemy.size) {
+        return false;
+        }
+
+    else {
+        return true;
+    }
+}
+
 function stop() {
     window.removeEventListener("keydown", activate, false);
     window.removeEventListener("keyup", deactivate ,false);
