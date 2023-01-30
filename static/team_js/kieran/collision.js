@@ -271,6 +271,19 @@ function enemy_collides_edge(g) {
     }
 }
 
+function enemy_collides_object(w) {
+    if (enemy.x + enemy.size < w.x ||
+        w.x + w.size < enemy.x || 
+        enemy.y > w.y + w.size ||
+        w.y > enemy.y + enemy.size) {
+        return false;
+        }
+
+    else {
+        return true;
+    }
+}
+
 function stop() {
     window.removeEventListener("keydown", activate, false);
     window.removeEventListener("keyup", deactivate ,false);
