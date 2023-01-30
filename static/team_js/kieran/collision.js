@@ -176,6 +176,24 @@ function draw() {
         player.change = 2
     }
 
+    if (enemy_collides_object(wall)) {
+        if(enemy.x+enemy.size < wall.x + 2){
+            enemy.x = enemy.x - 3
+        }
+
+        if(enemy.x > wall.x + wall.size - 2){
+            enemy.x = enemy.x + 3
+        }
+
+        if(enemy.y + enemy.size < wall.y + 2){
+            enemy.y = enemy.y - 3
+        }
+
+        if(enemy.y > wall.y + wall.size - 2){
+            enemy.y = enemy.y + 3
+        }
+    }
+
     if (moveright) {
         player.x = player.x + player.change;
     }
