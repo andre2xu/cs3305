@@ -51,7 +51,8 @@ let wall = {
 let enemy = {
     x : 200 ,
     y : 100,
-    size : 10
+    size : 10,
+    change : 1
 };
                 
 document.addEventListener("DOMContentLoaded", init, false);
