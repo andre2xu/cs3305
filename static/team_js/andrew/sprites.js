@@ -235,6 +235,33 @@ export class Player extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
     };
+
+    rotateToMouse() {
+        const PLAYER_CENTER = this.getCenterCoordinates();
+
+        const MOUSE_X_DISTANCE_FROM_PLAYER = window.mouseX - PLAYER_CENTER.x;
+        const MOUSE_Y_DISTANCE_FROM_PLAYER = window.mouseY - PLAYER_CENTER.y;
+        const MOUSE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(MOUSE_Y_DISTANCE_FROM_PLAYER, MOUSE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+
+        /*
+            -90
+        -180    0
+            90
+        */
+
+        if (MOUSE_ANGLE_FROM_PLAYER >= -145 && MOUSE_ANGLE_FROM_PLAYER <= -45) {
+            this.switchFrame('north');
+        }
+        else if (MOUSE_ANGLE_FROM_PLAYER >= -180 && MOUSE_ANGLE_FROM_PLAYER < -145 || MOUSE_ANGLE_FROM_PLAYER <= 180 && MOUSE_ANGLE_FROM_PLAYER > 145 ) {
+            this.switchFrame('west');
+        }
+        else if (MOUSE_ANGLE_FROM_PLAYER <= 145 && MOUSE_ANGLE_FROM_PLAYER > 45) {
+            this.switchFrame('south');
+        }
+        else if (MOUSE_ANGLE_FROM_PLAYER >= 0 && MOUSE_ANGLE_FROM_PLAYER <= 45 || MOUSE_ANGLE_FROM_PLAYER < 0 && MOUSE_ANGLE_FROM_PLAYER > -45) {
+            this.switchFrame('east');
+        }
+    };
 };
 
 export class Zombie extends Entity {
