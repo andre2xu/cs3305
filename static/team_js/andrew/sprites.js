@@ -268,6 +268,35 @@ export class Zombie extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
     };
+
+    rotateToPlayer(playerCenterCoordinates) {
+        checks.checkIfObject(playerCenterCoordinates);
+
+        const ZOMBIE_CENTER = this.getCenterCoordinates();
+
+        const ZOMBIE_X_DISTANCE_FROM_PLAYER = playerCenterCoordinates.x - ZOMBIE_CENTER.x;
+        const ZOMBIE_Y_DISTANCE_FROM_PLAYER = playerCenterCoordinates.y - ZOMBIE_CENTER.y;
+        const ZOMBIE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(ZOMBIE_Y_DISTANCE_FROM_PLAYER, ZOMBIE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+
+        /*
+            -90
+        -180    0
+            90
+        */
+
+        if (ZOMBIE_ANGLE_FROM_PLAYER >= -145 && ZOMBIE_ANGLE_FROM_PLAYER <= -45) {
+            this.switchFrame('north');
+        }
+        else if (ZOMBIE_ANGLE_FROM_PLAYER >= -180 && ZOMBIE_ANGLE_FROM_PLAYER < -145 || ZOMBIE_ANGLE_FROM_PLAYER <= 180 && ZOMBIE_ANGLE_FROM_PLAYER > 145 ) {
+            this.switchFrame('west');
+        }
+        else if (ZOMBIE_ANGLE_FROM_PLAYER <= 145 && ZOMBIE_ANGLE_FROM_PLAYER > 45) {
+            this.switchFrame('south');
+        }
+        else if (ZOMBIE_ANGLE_FROM_PLAYER >= 0 && ZOMBIE_ANGLE_FROM_PLAYER <= 45 || ZOMBIE_ANGLE_FROM_PLAYER < 0 && ZOMBIE_ANGLE_FROM_PLAYER > -45) {
+            this.switchFrame('east');
+        }
+    };
 };
 
 
