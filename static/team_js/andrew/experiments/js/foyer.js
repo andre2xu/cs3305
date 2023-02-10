@@ -41,14 +41,18 @@ window.addEventListener('load', () => {
     const floor = new Decoration(PIXI.Texture.from('assets/foyer/floor.png'), 0, 0, 512, 256);
     floor.setPosition(0, 48);
 
-    const doubleDoor1 = new SemiSolid(PIXI.Texture.from('assets/foyer/door1.png'), 0, 0, 96, 48);
-    doubleDoor1.setPosition(0, 0);
-    doubleDoor1.modifyCollisionBoundary(5, 5, 5, 5);
-
+    //can't use the word window alone - it is a reserved word for the program
+    const doubleWindow = new SemiSolid(PIXI.Texture.from('assets/foyer/window.png'), 0, 0, 105, 75);
+    doubleWindow.setPosition(0, 0);
+    doubleWindow.modifyCollisionBoundary(5, 5, 5, 5);
  
-    const doubleDoor2 = new SemiSolid(PIXI.Texture.from('assets/foyer/door1.png'), 0, 0, 96, 48);
-    doubleDoor2.setPosition(414, 0);
-    doubleDoor2.modifyCollisionBoundary(5, 5, 5, 5);
+    const doubleDoor = new SemiSolid(PIXI.Texture.from('assets/foyer/Door1.png'), 0, 0, 96, 48);
+    doubleDoor.setPosition(206, 0);
+    doubleDoor.modifyCollisionBoundary(5, 5, 5, 5);
+
+    const singleDoor = new SemiSolid(PIXI.Texture.from('assets/foyer/Door.png'), 0, 0, 48, 96);
+    singleDoor.setPosition(470, 0);
+    singleDoor.modifyCollisionBoundary(5, 5, 5, 5);
 
     const stairs1 = new SemiSolid(PIXI.Texture.from('assets/foyer/stairs.png'), 0, 0, 117, 95);
     stairs1.setPosition(80, 100);
@@ -97,16 +101,13 @@ window.addEventListener('load', () => {
     plant2.setPosition(450, 120);
     plant2.modifyCollisionBoundary(5, 5, 5, 5);
 
-    //const window = new SemiSolid(PIXI.Texture.from('assets/foyer/window.png'), 0, 0, 105, 75);
-    //window.setPosition(114, 0);
-    //window.modifyCollisionBoundary(5, 5, 5, 5); 
-
 
 
     GAME.stage.addChild(
         floor.load(),
-        doubleDoor1.load(),
-        doubleDoor2.load(),
+        doubleWindow.load(),
+        doubleDoor.load(),
+        singleDoor.load(),
         stairs1.load(),
         stairs2.load(),
         mat.load(),
