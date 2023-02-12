@@ -35,17 +35,18 @@ window.addEventListener('load', () => {
     document.body.appendChild(GAME_VIEW);
 
 
+    //const floorContainer = new PIXI.Container();
 
-
-    //Make entire floor a container and work with everying inside the container. 
     const floor = new Decoration(PIXI.Texture.from('assets/foyer/floor.png'), 0, 0, 512, 256);
     floor.setPosition(0, 48);
+    //floorContainer.addChild(floor);
 
     //can't use the word window alone - it is a reserved word for the program
     const doubleWindow = new SemiSolid(PIXI.Texture.from('assets/foyer/window.png'), 0, 0, 105, 75);
     doubleWindow.setPosition(0, 0);
     doubleWindow.modifyCollisionBoundary(5, 5, 5, 5);
- 
+    //floorContainer.addChild(doubleWindow);
+
     const doubleDoor = new SemiSolid(PIXI.Texture.from('assets/foyer/Door1.png'), 0, 0, 96, 48);
     doubleDoor.setPosition(206, 0);
     doubleDoor.modifyCollisionBoundary(5, 5, 5, 5);
@@ -104,6 +105,7 @@ window.addEventListener('load', () => {
 
 
     GAME.stage.addChild(
+        //floorContainer.load(),
         floor.load(),
         doubleWindow.load(),
         doubleDoor.load(),
@@ -120,7 +122,6 @@ window.addEventListener('load', () => {
         railing7.load(),
         plant1.load(),
         plant2.load()
-        //window.load()
     );
 
 
