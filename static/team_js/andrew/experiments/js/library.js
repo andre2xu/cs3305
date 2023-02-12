@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
     const floor = new Decoration(PIXI.Texture.from('assets/library/libraryfloor.png'), 0, 0, 512, 256);
     floor.setPosition(0, 50);
 
-    const singleDoor = new SemiSolid(PIXI.Texture.from('assets/library/Door.png'), 0, 0, 42, );
+    const singleDoor = new SemiSolid(PIXI.Texture.from('assets/library/Door.png'), 0, 0, 42, 63);
     singleDoor.setPosition(0, 0);
     singleDoor.modifyCollisionBoundary(5, 5, 5, 5);
 
