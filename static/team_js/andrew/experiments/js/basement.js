@@ -42,11 +42,11 @@ window.addEventListener('load', () => {
     baseElevator.modifyCollisionBoundary(5, 5, 5, 5);
 
     const baseCouch = new SemiSolid(PIXI.Texture.from('assets/basement/basecouch.png'), 0, 0, 143, 165);
-    baseCouch.setPosition(310, 280);
+    baseCouch.setPosition(380, 220);
     baseCouch.modifyCollisionBoundary(5, 5, 5, 5); 
 
     const fireplace = new SemiSolid(PIXI.Texture.from('assets/basement/fireplace.png'), 0, 0, 116, 94);
-    fireplace.setPosition(340, 100);
+    fireplace.setPosition(400, 50);
     fireplace.modifyCollisionBoundary(5, 5, 5, 5); 
 
     const brokenCupboard = new SemiSolid(PIXI.Texture.from('assets/basement/brokencupboard.png'), 0, 0, 80, 108);
@@ -60,6 +60,8 @@ window.addEventListener('load', () => {
     const openChest = new SemiSolid(PIXI.Texture.from('assets/basement/openchest.png'), 0, 0, 59, 63);
     openChest.setPosition(160, 425);
     openChest.modifyCollisionBoundary(5, 5, 5, 5); 
+
+    
 
     GAME.stage.addChild(
         baseFloor.load(),

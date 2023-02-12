@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
     doubleDoor.setPosition(206, 0);
     doubleDoor.modifyCollisionBoundary(5, 5, 5, 5);
 
-    const singleDoor = new SemiSolid(PIXI.Texture.from('assets/foyer/Door.png'), 0, 0, 48, 96);
+    const singleDoor = new SemiSolid(PIXI.Texture.from('assets/foyer/door.png'), 0, 0, 42, 63);
     singleDoor.setPosition(470, 0);
     singleDoor.modifyCollisionBoundary(5, 5, 5, 5);
 
