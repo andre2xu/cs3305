@@ -1,4 +1,4 @@
-import * as checks from '../js/checks.js';
+import * as checks from './checks.js';
 import { OBSTACLES } from './collision.js';
 
 export class Sprite {

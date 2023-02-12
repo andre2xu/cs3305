@@ -1,5 +1,5 @@
-import * as checks from '../js/checks.js';
-import { Entity } from '../js/sprites.js';
+import * as checks from './checks.js';
+import { Entity } from './sprites.js';
 
 export const OBSTACLES = [];
 
