@@ -64,7 +64,7 @@ window.addEventListener('load', () => {
     stairs2.modifyCollisionBoundary(5, 5, 5, 5);
 
     const mat = new Decoration(PIXI.Texture.from('assets/foyer/mat.png'), 0, 0, 48, 96);
-    mat.setPosition(232, 210);
+    mat.setPosition(215, 180);
 
     const railing1 = new SemiSolid(PIXI.Texture.from('assets/foyer/railing2.png'), 0, 0, 96, 48);
     railing1.setPosition(0, 110);
@@ -101,6 +101,7 @@ window.addEventListener('load', () => {
     const plant2 = new SemiSolid(PIXI.Texture.from('assets/foyer/plantA.png'), 0, 0, 48, 96);
     plant2.setPosition(450, 120);
     plant2.modifyCollisionBoundary(5, 5, 5, 5);
+
 
 
 
