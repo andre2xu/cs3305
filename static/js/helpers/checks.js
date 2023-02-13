@@ -38,3 +38,12 @@ export function checkIfFunction(x) {
         throw TypeError("Not a function");
     }
 };
+
+export function checkIfKeyExistsInObject(o, k) {
+    checkIfObject(o);
+    checkIfString(k);
+
+    if (o[k] === undefined) {
+        throw ReferenceError(`The key '${k}' doesn't exist in the object`);
+    }
+};
