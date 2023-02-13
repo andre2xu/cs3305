@@ -26,3 +26,9 @@ export function checkIfInstance(x, c) {
         throw TypeError("Not an instance of " + c.name);
     }
 };
+
+export function checkIfObject(x) {
+    if (x.constructor === undefined || x.constructor === null || x.constructor !== Object) {
+        throw TypeError("Not an object");
+    }
+};
