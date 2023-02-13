@@ -32,3 +32,9 @@ export function checkIfObject(x) {
         throw TypeError("Not an object");
     }
 };
+
+export function checkIfFunction(x) {
+    if (typeof x !== 'function' || Object.prototype.toString.call(x) !== '[object Function]') {
+        throw TypeError("Not a function");
+    }
+};
