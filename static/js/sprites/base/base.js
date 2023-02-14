@@ -121,4 +121,12 @@ export class Sprite {
         this.spriteFrameWidth = frameWidth;
         this.spriteFrameHeight = frameHeight;
     };
+
+    setSpriteFrameDimensions(w, h) {
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
+        this.spriteFrameWidth = w;
+        this.spriteFrameHeight = h;
+    };
 };
