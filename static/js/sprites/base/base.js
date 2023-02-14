@@ -121,4 +121,12 @@ export class Sprite {
         this.spriteFrameWidth = frameWidth;
         this.spriteFrameHeight = frameHeight;
     };
+
+    setPosition(x, y) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        this.sprite_container.x = x;
+        this.sprite_container.y = y;
+    };
 };
