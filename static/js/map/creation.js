@@ -9,21 +9,28 @@ import {
 
 // MAP SYNTAX
 /*
-    export const MAP_NAME = (function () {
-        const MAP_NAME = new PlayableArea(w, h); // DO NOT REMOVE
+import { PlayableArea } from '../creation.js';
+import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
 
-        const OBJECT = new ObjectClass(PIXI.Texture.from('path/to/object/image.png'), 0, 0, w, h);
-        FOYER.addStaticSprite(
-            OBJECT,
-            'object_id',
-            x,
-            y
-        );
+import {
+    
+} from '../../sprites/objects.js';
 
-        ...
+export const MAP_NAME = (function () {
+    const MAP_NAME = new PlayableArea(w, h); // DO NOT REMOVE
 
-        return MAP_NAME; // DO NOT REMOVE
-    })();
+    const OBJECT = new ObjectClass(getTextureFromStaticJSFolder('path/to/object/image/from/static/js.png'), 0, 0, w, h);
+    FOYER.addStaticSprite(
+        OBJECT,
+        'object_id',
+        x,
+        y
+    );
+
+    ...
+
+    return MAP_NAME; // DO NOT REMOVE
+})();
 */
 
 
