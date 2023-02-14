@@ -126,4 +126,37 @@ export class PlayableArea {
 
         sprite.setPosition(x, y);
     };
+
+    sortSpriteOrder() {
+        // SPRITE ORDERING
+        const ALL_SPRITES = Object.values(this.dynamicSprites);
+        const NUM_OF_SPRITES = ALL_SPRITES.length;
+
+        if (NUM_OF_SPRITES > 0) {
+            let posY_of_sprites = [];
+
+            // gets the y coordinate of the bottom edge of every sprite
+            for (let i=0; i < NUM_OF_SPRITES; i++) {
+                const CURRENT_SPRITE = ALL_SPRITES[i];
+
+                posY_of_sprites.push(CURRENT_SPRITE.getRightPosY());
+            }
+
+            // sorts the y coordinates in ascending order
+            posY_of_sprites = posY_of_sprites.sort();
+
+            for (let i=0; i < NUM_OF_SPRITES; i++) {
+                const CURRENT_POSY = posY_of_sprites[i];
+
+                for (let j=0; j < NUM_OF_SPRITES; j++) {
+                    const UNSORTED_SPRITE = ALL_SPRITES[j];
+
+                    // corrects the z-order of all the sprites according to the sorted y coordinates
+                    if (UNSORTED_SPRITE.getRightPosY() === CURRENT_POSY) {
+                        this.DYNAMIC_SPRITES_CONTAINER.setChildIndex(UNSORTED_SPRITE.getSprite(), i);
+                    }
+                }
+            }
+        }
+    };
 };
