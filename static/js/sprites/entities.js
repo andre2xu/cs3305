@@ -38,4 +38,37 @@ export class Player extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
     };
+
+
+
+    // SETTERS
+    rotateToMouse() {
+        const PLAYER_CENTER = this.getCenterCoordinates(); // relative to parent
+
+        const CORRECTED_CENTER_X = PLAYER_CENTER.x + this.sprite_container.parent.x + this.sprite_container.parent.parent.x;
+        const CORRECTED_CENTER_Y = PLAYER_CENTER.y + this.sprite_container.parent.y + this.sprite_container.parent.parent.y;
+
+        const MOUSE_X_DISTANCE_FROM_PLAYER = window.mouseX - CORRECTED_CENTER_X;
+        const MOUSE_Y_DISTANCE_FROM_PLAYER = window.mouseY - CORRECTED_CENTER_Y;
+        const MOUSE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(MOUSE_Y_DISTANCE_FROM_PLAYER, MOUSE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+
+        /*
+            -90
+        -180    0
+            90
+        */
+
+        if (MOUSE_ANGLE_FROM_PLAYER >= -145 && MOUSE_ANGLE_FROM_PLAYER <= -45) {
+            this.switchFrame('n');
+        }
+        else if (MOUSE_ANGLE_FROM_PLAYER >= -180 && MOUSE_ANGLE_FROM_PLAYER < -145 || MOUSE_ANGLE_FROM_PLAYER <= 180 && MOUSE_ANGLE_FROM_PLAYER > 145 ) {
+            this.switchFrame('w');
+        }
+        else if (MOUSE_ANGLE_FROM_PLAYER <= 145 && MOUSE_ANGLE_FROM_PLAYER > 45) {
+            this.switchFrame('s');
+        }
+        else if (MOUSE_ANGLE_FROM_PLAYER >= 0 && MOUSE_ANGLE_FROM_PLAYER <= 45 || MOUSE_ANGLE_FROM_PLAYER < 0 && MOUSE_ANGLE_FROM_PLAYER > -45) {
+            this.switchFrame('e');
+        }
+    };
 };
