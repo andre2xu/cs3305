@@ -83,6 +83,29 @@ export class Obstacle extends Objects {
 
         return true;
     };
+
+    checkIfBottomEdgeCollisionOccurred(sprite) {
+        checks.checkIfInstance(sprite, Sprite);
+
+        if (sprite.getRightPosX() < this.getLeftPosX()) {
+            // if the sprite's right edge is far from the object's left edge
+            return false;
+        }
+        else if (sprite.getLeftPosX() > this.getRightPosX()) {
+            // if the sprite's left edge is far from the object's right edge
+            return false;
+        }
+        else if (sprite.getLeftPosY() > this.getRightPosY()) {
+            // if the sprite's top edge is lower than the object's bottom edge
+            return false;
+        }
+        else if (sprite.getRightPosY() < this.getRightPosY()) {
+            // if the sprite's bottom edge is beyond the object's bottom edge
+            return false;
+        }
+
+        return true;
+    };
 };
 
 export class Decoration extends Objects {
