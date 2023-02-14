@@ -123,4 +123,26 @@ export class SemiSolid extends Obstacle {
         this.boundaryRightX = 0;
         this.boundaryRightY = 0;
     };
+
+
+
+    // SETTERS
+    modifyCollisionBoundary(leftX, leftY, rightX, rightY) {
+        if (leftX !== null && leftX !== undefined) {
+            checks.checkIfNumber(leftX);
+            this.boundaryLeftX = leftX;
+        }
+        if (leftY !== null && leftY !== undefined) {
+            checks.checkIfNumber(leftY);
+            this.boundaryLeftY = leftY;
+        }
+        if (rightX !== null && rightX !== undefined) {
+            checks.checkIfNumber(rightX);
+            this.boundaryRightX = rightX;
+        }
+        if (rightY !== null && rightY !== undefined) {
+            checks.checkIfNumber(rightY);
+            this.boundaryRightY = rightY;
+        }
+    };
 };
