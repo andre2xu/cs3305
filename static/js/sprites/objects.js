@@ -202,6 +202,9 @@ export class ObstacleFill extends FillSprite {
         OBSTACLES.push(this);
     };
 
+
+
+    // GETTERS
     checkIfLeftEdgeCollisionOccurred(sprite) {
         checks.checkIfInstance(sprite, Sprite);
 
@@ -298,5 +301,57 @@ export class ObstacleFill extends FillSprite {
 export class DecorationFill extends FillSprite {
     constructor(color, posX, posY, width, height) {
         super(color, posX, posY, width, height);
+    };
+};
+
+export class SemiSolidFill extends ObstacleFill {
+    constructor(color, posX, posY, width, height) {
+        super(color, posX, posY, width, height);
+
+        this.boundaryLeftX = 0;
+        this.boundaryLeftY = 0;
+        this.boundaryRightX = 0;
+        this.boundaryRightY = 0;
+    };
+
+
+
+    // SETTERS
+    modifyCollisionBoundary(leftX, leftY, rightX, rightY) {
+        if (leftX !== null && leftX !== undefined) {
+            checks.checkIfNumber(leftX);
+            this.boundaryLeftX = leftX;
+        }
+        if (leftY !== null && leftY !== undefined) {
+            checks.checkIfNumber(leftY);
+            this.boundaryLeftY = leftY;
+        }
+        if (rightX !== null && rightX !== undefined) {
+            checks.checkIfNumber(rightX);
+            this.boundaryRightX = rightX;
+        }
+        if (rightY !== null && rightY !== undefined) {
+            checks.checkIfNumber(rightY);
+            this.boundaryRightY = rightY;
+        }
+    };
+
+
+
+    // GETTERS
+    getLeftPosX() {
+        return this.sprite.x + this.boundaryLeftX;
+    };
+
+    getLeftPosY() {
+        return this.sprite.y + this.boundaryLeftY;
+    };
+
+    getRightPosX() {
+        return this.sprite.x + (this.fillWidth + this.boundaryRightX);
+    };
+
+    getRightPosY() {
+        return this.sprite.y + (this.fillHeight + this.boundaryRightY);
     };
 };
