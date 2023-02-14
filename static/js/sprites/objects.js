@@ -294,3 +294,9 @@ export class ObstacleFill extends FillSprite {
         return true;
     };
 };
+
+export class DecorationFill extends FillSprite {
+    constructor(color, posX, posY, width, height) {
+        super(color, posX, posY, width, height);
+    };
+};
