@@ -1,4 +1,5 @@
 import { PlayableArea } from '../creation.js';
+import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
 
 import {
     Decoration,
@@ -17,7 +18,7 @@ export const FOYER = (function () {
 
 
 
-    const DOUBLE_DOOR = new SemiSolid(PIXI.Texture.from('assets/Door1.png'), 0, 0, 96, 48);
+    const DOUBLE_DOOR = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/Door1.png'), 0, 0, 96, 48);
     FOYER.addStaticSprite(
         DOUBLE_DOOR,
         'double_door',
@@ -27,7 +28,7 @@ export const FOYER = (function () {
 
 
 
-    const WINDOW = new Decoration(PIXI.Texture.from('assets/window.png'), 0, 0, 105, 75);
+    const WINDOW = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/window.png'), 0, 0, 105, 75);
     FOYER.addStaticSprite(
         WINDOW,
         'window',
@@ -37,7 +38,7 @@ export const FOYER = (function () {
 
 
 
-    const SECOND_FLOOR_MAT = new Decoration(PIXI.Texture.from('assets/mat2.png'), 0, 0, 32, 34);
+    const SECOND_FLOOR_MAT = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/mat2.png'), 0, 0, 32, 34);
     FOYER.addStaticSprite(
         SECOND_FLOOR_MAT,
         '2f_mat',
@@ -53,7 +54,7 @@ export const FOYER = (function () {
 
 
 
-    const STAIRS_1 = new Decoration(PIXI.Texture.from('assets/stairs.png'), 0, 0, 117, 95);
+    const STAIRS_1 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/stairs.png'), 0, 0, 117, 95);
     FOYER.addStaticSprite(
         STAIRS_1,
         'stairs1',
@@ -63,7 +64,7 @@ export const FOYER = (function () {
 
 
 
-    const STAIRS_2 = new Decoration(PIXI.Texture.from('assets/stairs.png'), 0, 0, 117, 95);
+    const STAIRS_2 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/stairs.png'), 0, 0, 117, 95);
     FOYER.addStaticSprite(
         STAIRS_2,
         'stairs2',
@@ -73,7 +74,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_1 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_1 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_1,
         'railing1',
@@ -83,7 +84,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_2 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_2 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_2,
         'railing2',
@@ -93,7 +94,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_3 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_3 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_3,
         'railing3',
@@ -103,7 +104,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_4 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_4 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_4,
         'railing4',
@@ -113,7 +114,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_5 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_5 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_5,
         'railing5',
@@ -123,7 +124,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_6 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_6 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_6,
         'railing6',
@@ -133,7 +134,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_7 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_7 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_7,
         'railing7',
@@ -143,7 +144,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_8 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_8 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_8,
         'railing8',
@@ -153,7 +154,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_9 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_9 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_9,
         'railing9',
@@ -163,7 +164,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_10 = new SemiSolid(PIXI.Texture.from('assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_10 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_10,
         'railing10',
@@ -173,7 +174,7 @@ export const FOYER = (function () {
 
 
 
-    const FIRST_FLOOR_MAT = new Decoration(PIXI.Texture.from('assets/mat.png'), 0, 0, 48, 96);
+    const FIRST_FLOOR_MAT = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/mat.png'), 0, 0, 48, 96);
     FOYER.addStaticSprite(
         FIRST_FLOOR_MAT,
         '1f_mat',
@@ -183,7 +184,7 @@ export const FOYER = (function () {
 
 
 
-    const PLANT_1 = new SemiSolid(PIXI.Texture.from('assets/plantA.png'), 0, 0, 48, 96);
+    const PLANT_1 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/plantA.png'), 0, 0, 48, 96);
     PLANT_1.modifyCollisionBoundary(null, 50, null, null);
     FOYER.addDynamicSprite(
         PLANT_1,
@@ -194,7 +195,7 @@ export const FOYER = (function () {
 
 
 
-    const PLANT_2 = new SemiSolid(PIXI.Texture.from('assets/plantA.png'), 0, 0, 48, 96);
+    const PLANT_2 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/plantA.png'), 0, 0, 48, 96);
     PLANT_2.modifyCollisionBoundary(null, 50, null, null);
     FOYER.addDynamicSprite(
         PLANT_2,
