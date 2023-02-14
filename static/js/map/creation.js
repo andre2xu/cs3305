@@ -50,4 +50,20 @@ export class PlayableArea {
     getRightPosY() {
         return this.area.y + this.area.height;
     };
+
+    getWidth() {
+        return this.width;
+    };
+
+    getHeight() {
+        return this.height;
+    };
+
+    getHalfWidth() {
+        return this.width * 0.5;
+    };
+
+    getHalfHeight() {
+        return this.height * 0.5;
+    };
 };
