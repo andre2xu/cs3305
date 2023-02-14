@@ -289,4 +289,12 @@ export class FillSprite {
         this.sprite.x = x;
         this.sprite.y = y;
     };
+
+    setFillDimensions(w, h) {
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
+        this.fillWidth = w;
+        this.fillHeight = h;
+    };
 };
