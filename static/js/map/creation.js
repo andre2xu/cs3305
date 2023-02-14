@@ -5,6 +5,29 @@ import {
     FillSprite
 } from '../sprites/base/base.js';
 
+
+
+// MAP SYNTAX
+/*
+    export const MAP_NAME = (function () {
+        const MAP_NAME = new PlayableArea(w, h); // DO NOT REMOVE
+
+        const OBJECT = new ObjectClass(PIXI.Texture.from('path/to/object/image.png'), 0, 0, w, h);
+        FOYER.addStaticSprite(
+            OBJECT,
+            'object_id',
+            x,
+            y
+        );
+
+        ...
+
+        return MAP_NAME; // DO NOT REMOVE
+    })();
+*/
+
+
+
 export class PlayableArea {
     constructor(width, height) {
         this.area = new PIXI.Container();
