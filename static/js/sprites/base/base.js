@@ -89,4 +89,8 @@ export class Sprite {
     getHalfHeight() {
         return this.spriteFrameHeight * 0.5;
     };
+
+    getCurrentFrame() {
+        return this.currentFrame;
+    };
 };
