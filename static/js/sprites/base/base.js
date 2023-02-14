@@ -31,4 +31,43 @@ export class Sprite {
         this.isFlippedHorizontally = false;
         this.isFlippedVertically = false;
     };
+
+
+
+    // GETTERS
+    getLeftPosX() {
+        if (this.isFlippedHorizontally) {
+            return this.sprite_container.x - this.spriteFrameWidth;
+        }
+        else {
+            return this.sprite_container.x;
+        }
+    };
+
+    getLeftPosY() {
+        if (this.isFlippedVertically) {
+            return this.sprite_container.y - this.spriteFrameHeight;
+        }
+        else {
+            return this.sprite_container.y;
+        }
+    };
+
+    getRightPosX() {
+        if (this.isFlippedHorizontally) {
+            return this.sprite_container.x;
+        }
+        else {
+            return this.sprite_container.x + this.spriteFrameWidth;
+        }
+    };
+
+    getRightPosY() {
+        if (this.isFlippedVertically) {
+            return this.sprite_container.y;
+        }
+        else {
+            return this.sprite_container.y + this.spriteFrameHeight;
+        }
+    };
 };
