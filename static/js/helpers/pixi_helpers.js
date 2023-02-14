@@ -9,7 +9,5 @@ export function getTextureFromStaticJSFolder(path) {
         throw ReferenceError("Paths must start with /");
     }
 
-    PIXI.Texture.fromURL(`${STATIC_JS_FOLDER_URL}${path}`).then((texture) => {
-        return texture;
-    });
+    return PIXI.Texture.from(`${STATIC_JS_FOLDER_URL}${path}`);
 };
