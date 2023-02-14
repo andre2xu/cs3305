@@ -274,4 +274,8 @@ export class FillSprite {
     getHalfHeight() {
         return this.fillHeight * 0.5;
     };
+
+    getSprite() {
+        return this.sprite;
+    };
 };
