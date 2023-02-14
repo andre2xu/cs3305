@@ -88,4 +88,42 @@ export class PlayableArea {
 
         this.area.on(event, callback);
     };
+
+    addStaticSprite(sprite, id, x, y) {
+        if ((sprite instanceof Sprite) === false && (sprite instanceof FillSprite) === false) {
+            throw ReferenceError(`Not an instance of ${Sprite.name} or ${FillSprite.name}`);
+        }
+
+        checks.checkIfString(id);
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        if (this.staticSprites[id] !== undefined) {
+            throw ReferenceError(`A sprite with the id '${id}' already exists`);
+        }
+
+        this.STATIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
+        this.staticSprites[id] = sprite;
+
+        sprite.setPosition(x, y);
+    };
+
+    addDynamicSprite(sprite, id, x, y) {
+        if ((sprite instanceof Sprite) === false && (sprite instanceof FillSprite) === false) {
+            throw ReferenceError(`Not an instance of ${Sprite.name} or ${FillSprite.name}`);
+        }
+
+        checks.checkIfString(id);
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        if (this.dynamicSprites[id] !== undefined) {
+            throw ReferenceError(`A sprite with the id '${id}' already exists`);
+        }
+
+        this.DYNAMIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
+        this.dynamicSprites[id] = sprite;
+
+        sprite.setPosition(x, y);
+    };
 };
