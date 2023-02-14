@@ -77,4 +77,8 @@ export class Sprite {
             y: this.getLeftPosY() + this.getHalfHeight() 
         };
     };
+
+    getSpriteFrameDimensions() {
+        return {w: this.spriteFrameWidth, h: this.spriteFrameHeight};
+    };
 };
