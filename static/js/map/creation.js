@@ -67,6 +67,10 @@ export class PlayableArea {
         return this.height * 0.5;
     };
 
+    load() {
+        return this.area;
+    };
+
 
 
     // SETTERS
