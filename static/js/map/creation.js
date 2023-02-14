@@ -31,4 +31,23 @@ export class PlayableArea {
             this.DYNAMIC_SPRITES_CONTAINER
         );
     };
+
+
+
+    // GETTERS
+    getLeftPosX() {
+        return this.area.x;
+    };
+
+    getLeftPosY() {
+        return this.area.y;
+    };
+
+    getRightPosX() {
+        return this.area.x + this.area.width;
+    };
+
+    getRightPosY() {
+        return this.area.y + this.area.height;
+    };
 };
