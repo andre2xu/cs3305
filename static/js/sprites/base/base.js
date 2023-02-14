@@ -81,4 +81,12 @@ export class Sprite {
     getSpriteFrameDimensions() {
         return {w: this.spriteFrameWidth, h: this.spriteFrameHeight};
     };
+
+    getHalfWidth() {
+        return this.spriteFrameWidth * 0.5;
+    };
+
+    getHalfHeight() {
+        return this.spriteFrameHeight * 0.5;
+    };
 };
