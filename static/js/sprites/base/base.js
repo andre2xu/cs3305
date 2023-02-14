@@ -97,4 +97,28 @@ export class Sprite {
     getSprite() {
         return this.sprite_container;
     };
+
+
+
+    // SETTERS
+    __setFrameMask__(x, y, frameWidth, frameHeight) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+        checks.checkIfNumber(frameWidth);
+        checks.checkIfNumber(frameHeight);
+
+        this.sprite_container.removeChild(this.frameMask); // removes old frame mask
+
+        const MASK = new PIXI.Graphics();
+        MASK.beginFill('black');
+        MASK.drawRect(x, y, frameWidth, frameHeight);
+        MASK.endFill();
+
+        this.sprite.mask = MASK;
+        this.sprite_container.addChild(MASK);
+        this.frameMask = MASK;
+
+        this.spriteFrameWidth = frameWidth;
+        this.spriteFrameHeight = frameHeight;
+    };
 };
