@@ -30,3 +30,19 @@ function checkCollisionWithObstacles(sprite, side) {
 
     return false;
 };
+
+export function checkCollisionWithLeftEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, 'left');
+};
+
+export function checkCollisionWithRightEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, 'right');
+};
+
+export function checkCollisionWithTopEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, 'top');
+};
+
+export function checkCollisionWithBottomEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, 'bottom');
+};
