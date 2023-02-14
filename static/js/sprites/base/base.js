@@ -216,3 +216,24 @@ export class Sprite {
         }
     };
 };
+
+export class FillSprite {
+    constructor(color, posX, posY, width, height) {
+        checks.checkIfNumber(color);
+        checks.checkIfNumber(posX);
+        checks.checkIfNumber(posY);
+        checks.checkIfNumber(width);
+        checks.checkIfNumber(height);
+
+        const FILL = new PIXI.Graphics();
+        FILL.beginFill(color);
+        FILL.drawRect(posX, posY, width, height);
+        FILL.endFill();
+        this.sprite = FILL
+
+        this.fillWidth = width;
+        this.fillHeight = height;
+
+        this.events = {};
+    };
+};
