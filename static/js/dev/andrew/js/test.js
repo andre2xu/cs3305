@@ -1,4 +1,5 @@
 import { FOYER } from '../../../map/foyer/foyer.js';
+import { getTextureFromStaticJSFolder } from '../../../helpers/pixi_helpers.js';
 
 import {
     Player,
@@ -32,8 +33,7 @@ window.addEventListener('load', () => {
 
 
     // PLAYER
-    const player_sprite = PIXI.Texture.from('../andrew/assets/sprite_sheets/player/player.png');
-    const player = new Player(player_sprite, 0, 0, player_frames_json.s.w, player_frames_json.s.h);
+    const player = new Player(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
     player.switchFrame('s');
 
@@ -80,8 +80,7 @@ window.addEventListener('load', () => {
 
 
     // ENEMY
-    const zombie_sprite = PIXI.Texture.from('../andrew/assets/sprite_sheets/enemies/clothed_zombie.png');
-    const zombie = new Zombie(zombie_sprite, 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
+    const zombie = new Zombie(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
     zombie.setPosition(250, 300);
     zombie.addFrames(zombie_frames_json);
     zombie.switchFrame('n');
