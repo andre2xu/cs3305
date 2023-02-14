@@ -15,6 +15,9 @@ export class Obstacle extends Objects {
         OBSTACLES.push(this);
     };
 
+
+
+    // GETTERS
     checkIfLeftEdgeCollisionOccurred(sprite) {
         checks.checkIfInstance(sprite, Sprite);
 
