@@ -81,4 +81,11 @@ export class PlayableArea {
         this.area.x = x;
         this.area.y = y;
     };
+
+    addEvent(event, callback) {
+        checks.checkIfString(event);
+        checks.checkIfFunction(callback);
+
+        this.area.on(event, callback);
+    };
 };
