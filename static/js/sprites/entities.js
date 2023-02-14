@@ -79,4 +79,40 @@ export class Enemy extends Entity {
 
         NON_PLAYER_ENTITIES.push(this);
     };
+
+
+
+    // SETTERS
+    rotateToPlayer(player) {
+        checks.checkIfInstance(player, Player);
+
+        const PLAYER_SPRITE = player.getSprite();
+        const PLAYER_CENTER = player.getCenterCoordinates();
+        const ZOMBIE_CENTER = this.getCenterCoordinates(); // relative to parent
+
+        const ZOMBIE_X_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.x + PLAYER_SPRITE.x) - (ZOMBIE_CENTER.x + this.sprite_container.x);
+
+        const ZOMBIE_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ZOMBIE_CENTER.y + this.sprite_container.y);
+
+        const ZOMBIE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(ZOMBIE_Y_DISTANCE_FROM_PLAYER, ZOMBIE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+
+        /*
+            -90
+        -180    0
+            90
+        */
+
+        if (ZOMBIE_ANGLE_FROM_PLAYER >= -145 && ZOMBIE_ANGLE_FROM_PLAYER <= -45) {
+            this.switchFrame('n');
+        }
+        else if (ZOMBIE_ANGLE_FROM_PLAYER >= -180 && ZOMBIE_ANGLE_FROM_PLAYER < -145 || ZOMBIE_ANGLE_FROM_PLAYER <= 180 && ZOMBIE_ANGLE_FROM_PLAYER > 145 ) {
+            this.switchFrame('w');
+        }
+        else if (ZOMBIE_ANGLE_FROM_PLAYER <= 145 && ZOMBIE_ANGLE_FROM_PLAYER > 45) {
+            this.switchFrame('s');
+        }
+        else if (ZOMBIE_ANGLE_FROM_PLAYER >= 0 && ZOMBIE_ANGLE_FROM_PLAYER <= 45 || ZOMBIE_ANGLE_FROM_PLAYER < 0 && ZOMBIE_ANGLE_FROM_PLAYER > -45) {
+            this.switchFrame('e');
+        }
+    };
 };
