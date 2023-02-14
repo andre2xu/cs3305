@@ -278,4 +278,15 @@ export class FillSprite {
     getSprite() {
         return this.sprite;
     };
+
+
+
+    // SETTERS
+    setPosition(x, y) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        this.sprite.x = x;
+        this.sprite.y = y;
+    };
 };
