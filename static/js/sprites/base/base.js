@@ -93,4 +93,8 @@ export class Sprite {
     getCurrentFrame() {
         return this.currentFrame;
     };
+
+    getSprite() {
+        return this.sprite_container;
+    };
 };
