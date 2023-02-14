@@ -72,3 +72,11 @@ export class Player extends Entity {
         }
     };
 };
+
+export class Enemy extends Entity {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+
+        NON_PLAYER_ENTITIES.push(this);
+    };
+};
