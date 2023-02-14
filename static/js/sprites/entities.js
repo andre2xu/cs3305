@@ -11,4 +11,25 @@ export class Entity extends Sprite {
             move: null
         };
     };
+
+
+
+    // SETTERS
+    moveSprite(x, y) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        if (this.events['move'] !== null) {
+            this.events['move']({
+                old_posX: this.sprite_container.x,
+                old_posY: this.sprite_container.y,
+                new_posX: this.sprite_container.x + x,
+                new_posY: this.sprite_container.y + y,
+                currentFrame: this.currentFrame
+            });
+        } 
+
+        this.sprite_container.x += x;
+        this.sprite_container.y += y;
+    };
 };
