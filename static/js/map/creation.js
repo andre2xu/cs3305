@@ -66,4 +66,15 @@ export class PlayableArea {
     getHalfHeight() {
         return this.height * 0.5;
     };
+
+
+
+    // SETTERS
+    setPosition(x, y) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        this.area.x = x;
+        this.area.y = y;
+    };
 };
