@@ -166,4 +166,15 @@ export class Sprite {
             }
         }
     };
+
+    switchFrame(name) {
+        const FRAME = this.frames[name];
+
+        this.sprite.x = -FRAME.x;
+        this.sprite.y = -FRAME.y;
+
+        this.__setFrameMask__(0, 0, FRAME.w, FRAME.h);
+
+        this.currentFrame = name;
+    };
 };
