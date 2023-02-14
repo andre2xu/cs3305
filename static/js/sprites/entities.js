@@ -33,3 +33,9 @@ export class Entity extends Sprite {
         this.sprite_container.y += y;
     };
 };
+
+export class Player extends Entity {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+    };
+};
