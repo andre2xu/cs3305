@@ -262,4 +262,16 @@ export class FillSprite {
             y: this.getLeftPosY() + this.getHalfHeight() 
         };
     };
+
+    getFillDimensions() {
+        return {w: this.fillWidth, h: this.fillHeight};
+    };
+
+    getHalfWidth() {
+        return this.fillWidth * 0.5;
+    };
+
+    getHalfHeight() {
+        return this.fillHeight * 0.5;
+    };
 };
