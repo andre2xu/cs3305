@@ -15,3 +15,9 @@ export class Obstacle extends Objects {
         OBSTACLES.push(this);
     };
 };
+
+export class Decoration extends Objects {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+    };
+};
