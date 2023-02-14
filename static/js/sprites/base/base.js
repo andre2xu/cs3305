@@ -144,4 +144,26 @@ export class Sprite {
             h: h
         };
     };
+
+    addFrames(json) {
+        checks.checkIfObject(json);
+
+        const FRAME_NAMES = Object.keys(json);
+        const NUM_OF_FRAMES = FRAME_NAMES.length;
+
+        if (NUM_OF_FRAMES > 0) {
+            for (let i=0; i < NUM_OF_FRAMES; i++) {
+                const NAME = FRAME_NAMES[i];
+                const FRAME_DATA = json[NAME];
+
+                this.addFrame(
+                    NAME,
+                    FRAME_DATA.x,
+                    FRAME_DATA.y,
+                    FRAME_DATA.w,
+                    FRAME_DATA.h
+                );
+            }
+        }
+    };
 };
