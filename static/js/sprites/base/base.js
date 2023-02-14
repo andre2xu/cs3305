@@ -236,4 +236,30 @@ export class FillSprite {
 
         this.events = {};
     };
+
+
+
+    // GETTERS
+    getLeftPosX() {
+        return this.sprite.x;
+    };
+
+    getLeftPosY() {
+        return this.sprite.y;
+    };
+
+    getRightPosX() {
+        return this.sprite.x + this.fillWidth;
+    };
+
+    getRightPosY() {
+        return this.sprite.y + this.fillHeight;
+    };
+
+    getCenterCoordinates() {
+        return {
+            x: this.getLeftPosX() + this.getHalfWidth(),
+            y: this.getLeftPosY() + this.getHalfHeight() 
+        };
+    };
 };
