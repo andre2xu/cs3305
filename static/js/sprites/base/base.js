@@ -1,4 +1,4 @@
-import * as checks from '../helpers/checks.js';
+import * as checks from '../../helpers/checks.js';
 
 export class Sprite {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
