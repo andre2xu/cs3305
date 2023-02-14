@@ -145,4 +145,43 @@ export class SemiSolid extends Obstacle {
             this.boundaryRightY = rightY;
         }
     };
+
+
+
+    // GETTERS
+    getLeftPosX() {
+        if (this.isFlippedHorizontally) {
+            return (this.sprite_container.x + this.boundaryLeftX) - this.spriteFrameWidth;
+        }
+        else {
+            return this.sprite_container.x + this.boundaryLeftX;
+        }
+    };
+
+    getLeftPosY() {
+        if (this.isFlippedVertically) {
+            return (this.sprite_container.y + this.boundaryLeftY) - this.spriteFrameHeight;
+        }
+        else {
+            return this.sprite_container.y + this.boundaryLeftY;
+        }
+    };
+
+    getRightPosX() {
+        if (this.isFlippedHorizontally) {
+            return this.sprite_container.x + this.boundaryLeftX;
+        }
+        else {
+            return this.sprite_container.x + (this.spriteFrameWidth + this.boundaryRightX);
+        }
+    };
+
+    getRightPosY() {
+        if (this.isFlippedVertically) {
+            return this.sprite_container.y + this.boundaryLeftY;
+        }
+        else {
+            return this.sprite_container.y + (this.spriteFrameHeight + this.boundaryRightY);
+        }
+    };
 };
