@@ -130,6 +130,17 @@ export class Sprite {
         this.sprite_container.y = y;
     };
 
+    addEvent(event, callback) {
+        checks.checkIfString(event);
+        checks.checkIfFunction(callback);
+
+        if (this.events[event] === undefined) {
+            throw ReferenceError("Not a valid event");
+        }
+
+        this.events[event] = callback;
+    };
+
     addFrame(name, x, y, w, h) {
         checks.checkIfString(name);
         checks.checkIfNumber(x);
