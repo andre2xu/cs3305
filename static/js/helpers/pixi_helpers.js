@@ -1,11 +1,15 @@
 import * as checks from './checks.js';
 
-const ASSETS_FOLDER_URL = 'http://127.0.0.1:5500/static/js/map/foyer/assets';
+const STATIC_JS_FOLDER_URL = 'http://127.0.0.1:5500/static/js';
 
-export function getTextureFromURL(url) {
-    checks.checkIfString(url);
+export function getTextureFromStaticJSFolder(path) {
+    checks.checkIfString(path);
 
-    PIXI.Texture.fromURL(`${ASSETS_FOLDER_URL}/Door1.png`).then((texture) => {
+    if (path[0] !== '/') {
+        throw ReferenceError("Paths must start with /");
+    }
+
+    PIXI.Texture.fromURL(`${STATIC_JS_FOLDER_URL}${path}`).then((texture) => {
         return texture;
     });
 };
