@@ -129,4 +129,19 @@ export class Sprite {
         this.sprite_container.x = x;
         this.sprite_container.y = y;
     };
+
+    addFrame(name, x, y, w, h) {
+        checks.checkIfString(name);
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
+        this.frames[name] = {
+            x: x,
+            y: y,
+            w: w,
+            h: h
+        };
+    };
 };
