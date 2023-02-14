@@ -116,3 +116,9 @@ export class Enemy extends Entity {
         }
     };
 };
+
+export class Zombie extends Enemy {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+    };
+};
