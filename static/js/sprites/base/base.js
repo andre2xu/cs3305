@@ -70,4 +70,11 @@ export class Sprite {
             return this.sprite_container.y + this.spriteFrameHeight;
         }
     };
+
+    getCenterCoordinates() {
+        return {
+            x: this.getLeftPosX() + this.getHalfWidth(),
+            y: this.getLeftPosY() + this.getHalfHeight() 
+        };
+    };
 };
