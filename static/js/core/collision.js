@@ -35,7 +35,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
 
                 if (BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE && BOTTOM_Y_IS_IN_FRONT_OF_TOP_EDGE) {
-                    return false;
+                    continue;
                 }
                 else if (BOTTOM_Y_IS_BEHIND === false) {
                     if (IN_BETWEEN) {
@@ -60,7 +60,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
 
                 if (RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE && RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE) {
-                    return false;
+                    continue;
                 }
                 else if (RIGHT_X_IS_BEHIND_LEFT_EDGE === false) {
                     if (IN_BETWEEN) {
@@ -85,7 +85,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
 
                 if (LEFT_X_IS_BEHIND_LEFT_EDGE && LEFT_X_IS_BEHIND_RIGHT_EDGE) {
-                    return false;
+                    continue;
                 }
                 else if (LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE === false) {
                     if (IN_BETWEEN) {
@@ -110,7 +110,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
 
                 if (TOP_Y_IS_BEHIND_BOTTOM_EDGE && TOP_Y_IS_BEHIND_TOP_EDGE) {
-                    return false;
+                    continue;
                 }
                 else if (TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false) {
                     if (IN_BETWEEN) {
