@@ -131,26 +131,31 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
             }
             else if (side === 'bottom') {
-                const TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE = SLY > ORY;
-                const TOP_Y_IS_BEHIND_TOP_EDGE = SLY < OLY;
-                const TOP_Y_IS_BEHIND_BOTTOM_EDGE = SLY < ORY;
-                const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
-                const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
-                const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
-                const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
-                const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
+                const ST_below_BE = SLY > ORY;
+                const ST_above_TE = SLY < OLY;
+                const ST_above_BE = SLY < ORY;
 
-                if (TOP_Y_IS_BEHIND_BOTTOM_EDGE && TOP_Y_IS_BEHIND_TOP_EDGE) {
+                const SLSR_between_LERE = SLX >= OLX && SRX <= ORX;
+
+                const SL_before_LE = SLX < OLX;
+                const SR_after_RE = SRX > ORX;
+
+                const SL_between_LERE = SLX >= OLX && SLX <= ORX;
+                const SR_between_LERE = SRX >= OLX && SRX <= ORX;
+
+
+
+                if (ST_above_BE && ST_above_TE) {
                     continue;
                 }
-                else if (TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false) {
-                    if (IN_BETWEEN) {
+                else if (ST_below_BE === false) {
+                    if (SLSR_between_LERE) {
                         return true;
                     }
-                    else if (LEFT_EDGE_IS_OUTSIDE && RIGHT_EDGE_IS_INSIDE) {
+                    else if (SL_before_LE && SR_between_LERE) {
                         return true
                     }
-                    else if (RIGHT_EDGE_IS_OUTSIDE && LEFT_EDGE_IS_INSIDE) {
+                    else if (SR_after_RE && SL_between_LERE) {
                         return true;
                     }
                 }
