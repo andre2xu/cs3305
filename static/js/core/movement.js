@@ -21,22 +21,22 @@ export function checkForCollisionsAndMovePlayer(sprite) {
     if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.d && (checkCollisionWithTopEdgesOfObstacles(sprite) === false && checkCollisionWithLeftEdgesOfObstacles(sprite) === false)) {
         sprite.moveSpriteSouthEast();
     }
-    else if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.a) {
+    else if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.a && (checkCollisionWithTopEdgesOfObstacles(sprite) === false && checkCollisionWithRightEdgesOfObstacles(sprite) === false)) {
         sprite.moveSpriteSouthWest();
     }
-    else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.d) {
+    else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.d && (checkCollisionWithBottomEdgesOfObstacles(sprite) === false && checkCollisionWithLeftEdgesOfObstacles(sprite) === false)) {
         sprite.moveSpriteNorthEast();
     }
-    else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.a) {
+    else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.a && (checkCollisionWithBottomEdgesOfObstacles(sprite) === false && checkCollisionWithRightEdgesOfObstacles(sprite) === false)) {
         sprite.moveSpriteNorthWest();
     }
-    else if (MOVEMENT_KEY_STATUSES.w) {
+    else if (MOVEMENT_KEY_STATUSES.w && checkCollisionWithBottomEdgesOfObstacles(sprite) === false) {
         sprite.moveSpriteNorth();
     }
     else if (MOVEMENT_KEY_STATUSES.s && checkCollisionWithTopEdgesOfObstacles(sprite) === false) {
         sprite.moveSpriteSouth();
     }
-    else if (MOVEMENT_KEY_STATUSES.a) {
+    else if (MOVEMENT_KEY_STATUSES.a && checkCollisionWithRightEdgesOfObstacles(sprite) === false) {
         sprite.moveSpriteWest();
     }
     else if (MOVEMENT_KEY_STATUSES.d && checkCollisionWithLeftEdgesOfObstacles(sprite) === false) {
