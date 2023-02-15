@@ -14,7 +14,20 @@ export class Entity extends Sprite {
 
 
 
+    // GETTERS
+    getSpeed() {
+        return this.movementOffset;
+    };
+
+
+
     // SETTERS
+    setSpeed(speed) {
+        checks.checkIfNumber(speed);
+
+        this.movementOffset = speed;
+    };
+
     moveSprite(x, y) {
         checks.checkIfNumber(x);
         checks.checkIfNumber(y);
