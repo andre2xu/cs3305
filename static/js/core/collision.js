@@ -12,8 +12,8 @@ function checkCollisionWithObstacles(sprite, side) {
     if (NUM_OF_OBSTACLES > 0) {
         const SLX = sprite.getLeftPosX();
         const SLY = sprite.getLeftPosY();
-        const SRX = sprite.getRightPosX();
-        const SRY = sprite.getRightPosY();
+        const SRX = sprite.getRightPosX() + sprite.getSpeed();
+        const SRY = sprite.getRightPosY() + sprite.getSpeed();
 
         for (let i=0; i < NUM_OF_OBSTACLES; i++) {
             const OBSTACLE = OBSTACLES[i];
@@ -43,22 +43,29 @@ function checkCollisionWithObstacles(sprite, side) {
                     }
                 }
             }
-            // else if (side === 'left' && sprite.getRightPosX() < OBSTACLE.getLeftPosX()) {
-            //     // x-coordinate is constant
+            else if (side === 'left') {
+                const RIGHT_X_IS_BEHIND = SRX < OLX;
+                const IN_BETWEEN = SLY >= OLY && SRY <= ORY;
+                const TOP_EDGE_IS_OUTSIDE = SLY < OLY;
+                const BOTTOM_EDGE_IS_OUTSIDE = SRY > ORY;
+                const TOP_EDGE_IS_INSIDE = SLY >= OLY && SLY <= ORY;
+                const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
 
-            //     if (sprite.getLeftPosY() >= OBSTACLE.getLeftPosY() && sprite.getRightPosY() <= OBSTACLE.getRightPosY()) {
-            //         // IN BETWEEN
-            //         return false
-            //     }
-            //     else if (sprite.getLeftPosY() > OBSTACLE.getRightPosY()) {
-            //         // OUTER BOTTOM
-            //         return false;
-            //     }
-            //     else if (sprite.getRightPosY() < OBSTACLE.getLeftPosY()) {
-            //         // OUTER TOP
-            //         return false;
-            //     }
-            // }
+                if (RIGHT_X_IS_BEHIND === false) {
+                    if (IN_BETWEEN) {
+                        return true;
+                    }
+                    else if (TOP_EDGE_IS_OUTSIDE && BOTTOM_EDGE_IS_INSIDE) {
+                        return true
+                    }
+                    else if (BOTTOM_EDGE_IS_OUTSIDE && TOP_EDGE_IS_INSIDE) {
+                        return true;
+                    }
+                }
+            }
+
+
+
             // else if (side === 'right' && OBSTACLE.checkIfRightEdgeCollisionOccurred(sprite)) {
             //     return true;
             // }
