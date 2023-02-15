@@ -49,7 +49,8 @@ export const FOYER = (function () {
 
 
     const WALL = new SemiSolidFill(0xD0EAF5, 0, 0, 278, 60);
-    WALL.modifyCollisionBoundary(null, -5, null, -20);
+    const WALL_TOP_Y_REDUCTION = 10;
+    WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
 
@@ -59,7 +60,7 @@ export const FOYER = (function () {
         STAIRS_1,
         'stairs1',
         0,
-        WALL.getLeftPosY()
+        WALL.getLeftPosY() + WALL_TOP_Y_REDUCTION
     );
 
 
@@ -74,17 +75,17 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_1 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_1 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_1,
         'railing1',
         STAIRS_1.getRightPosX() + 4,
-        WALL.getLeftPosY() - (RAILING_1.getSpriteFrameDimensions().h - 5)
+        (WALL.getLeftPosY() + WALL_TOP_Y_REDUCTION) - (RAILING_1.getSpriteFrameDimensions().h - 5)
     );
 
 
 
-    const RAILING_2 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_2 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_2,
         'railing2',
@@ -94,7 +95,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_3 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_3 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_3,
         'railing3',
@@ -104,7 +105,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_4 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_4 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_4,
         'railing4',
@@ -114,7 +115,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_5 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_5 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_5,
         'railing5',
@@ -124,7 +125,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_6 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_6 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_6,
         'railing6',
@@ -134,7 +135,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_7 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_7 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_7,
         'railing7',
@@ -144,7 +145,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_8 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_8 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_8,
         'railing8',
@@ -154,7 +155,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_9 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_9 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_9,
         'railing9',
@@ -164,7 +165,7 @@ export const FOYER = (function () {
 
 
 
-    const RAILING_10 = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
+    const RAILING_10 = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/railing.png'), 0, 0, 27, 18);
     FOYER.addStaticSprite(
         RAILING_10,
         'railing10',
