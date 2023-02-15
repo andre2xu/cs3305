@@ -1,14 +1,10 @@
-// import { FOYER } from '../../../map/foyer/foyer.js';
+import { FOYER } from '../../../map/foyer/foyer.js';
 import { getTextureFromStaticJSFolder } from '../../../helpers/pixi_helpers.js';
 
 import {
     Player,
     Zombie
 } from '../../../sprites/entities.js';
-
-import {
-    ObstacleFill
-} from '../../../sprites/objects.js'; // temp
 
 import {
     MOVEMENT_KEY_STATUSES,
@@ -91,13 +87,13 @@ window.addEventListener('load', () => {
 
 
 
-    // FOYER.addDynamicSprite(player, 'player', 250, 200);
-    // FOYER.addDynamicSprite(zombie, 'zombie', 250, 300);
+    FOYER.addDynamicSprite(player, 'player', 250, 200);
+    FOYER.addDynamicSprite(zombie, 'zombie', 250, 300);
 
-    // FOYER.setPosition(
-    //     GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
-    //     GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
-    // );
+    FOYER.setPosition(
+        GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
+        GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
+    );
 
 
 
@@ -151,17 +147,11 @@ window.addEventListener('load', () => {
 
 
 
-    player.setPosition(250, 180);
-    const BLOCK = new ObstacleFill(0xff0000, 250, 250, 30, 30);
-
     GAME.stage.addChild(
-        // FOYER.load()
-        player.getSprite(),
-        zombie.getSprite(),
-        BLOCK.getSprite()
+        FOYER.load()
     );
 
     GAME.ticker.add(() => {
-        // FOYER.sortSpriteOrder();
+        FOYER.sortSpriteOrder();
     });
 });
