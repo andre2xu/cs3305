@@ -53,13 +53,27 @@ function checkCollisionWithObstacles(sprite, side) {
                 const RIGHT_X_IS_BEHIND_LEFT_EDGE = SRX < OLX;
                 const RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE = SRX > OLX;
                 const RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE = SRX > ORX;
+
                 const IN_BETWEEN = SLY >= OLY && SRY <= ORY;
+
                 const TOP_EDGE_IS_OUTSIDE = SLY < OLY;
                 const BOTTOM_EDGE_IS_OUTSIDE = SRY > ORY;
+
                 const TOP_EDGE_IS_INSIDE = SLY >= OLY && SLY <= ORY;
                 const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
 
+
+
                 if (RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE && RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE) {
+                    // if the sprite is on the right side of the LE and is on the right side of the RE
+                    continue;
+                }
+                else if ((SRY - SPRITE_SPEED) < OLY && SLX > OLX) {
+                    // if the sprite is above the TE and is on the right side of the LE
+                    continue;
+                }
+                else if ((SRY - SPRITE_SPEED) > ORY && SLX > OLX) {
+                    // if the sprite is below the BE and is on the right side of the LE
                     continue;
                 }
                 else if (RIGHT_X_IS_BEHIND_LEFT_EDGE === false) {
@@ -78,13 +92,27 @@ function checkCollisionWithObstacles(sprite, side) {
                 const LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE = SLX > ORX;
                 const LEFT_X_IS_BEHIND_LEFT_EDGE = SLX < OLX;
                 const LEFT_X_IS_BEHIND_RIGHT_EDGE = SLX < ORX;
+
                 const IN_BETWEEN = SLY >= OLY && SRY <= ORY;
+
                 const TOP_EDGE_IS_OUTSIDE = SLY < OLY;
                 const BOTTOM_EDGE_IS_OUTSIDE = SRY > ORY;
+
                 const TOP_EDGE_IS_INSIDE = SLY >= OLY && SLY <= ORY;
                 const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
 
+
+
                 if (LEFT_X_IS_BEHIND_LEFT_EDGE && LEFT_X_IS_BEHIND_RIGHT_EDGE) {
+                    // if the sprite is on the left side of the LE and is on the left side of the RE
+                    continue;
+                }
+                else if ((SRY - SPRITE_SPEED) < OLY && SRX < ORX) {
+                    // if the sprite is above the TE and is on the left side of the RE
+                    continue;
+                }
+                else if ((SRY - SPRITE_SPEED) > ORY && SRX < ORX) {
+                    // if the sprite is below the BE and is on the left side of the RE
                     continue;
                 }
                 else if (LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE === false) {
