@@ -26,13 +26,18 @@ function checkCollisionWithObstacles(sprite, side) {
 
             if (side === 'top') {
                 const BOTTOM_Y_IS_BEHIND = SRY < OLY;
+                const BOTTOM_Y_IS_IN_FRONT_OF_TOP_EDGE = SRY > OLY;
+                const BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE = SRY > ORY;
                 const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
                 const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
                 const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
                 const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
                 const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
 
-                if (BOTTOM_Y_IS_BEHIND === false) {
+                if (BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE && BOTTOM_Y_IS_IN_FRONT_OF_TOP_EDGE) {
+                    return false;
+                }
+                else if (BOTTOM_Y_IS_BEHIND === false) {
                     if (IN_BETWEEN) {
                         return true;
                     }
@@ -95,14 +100,19 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
             }
             else if (side === 'bottom') {
-                const TOP_Y_IS_IN_FRONT = SLY > ORY;
+                const TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE = SLY > ORY;
+                const TOP_Y_IS_BEHIND_TOP_EDGE = SLY < OLY;
+                const TOP_Y_IS_BEHIND_BOTTOM_EDGE = SLY < ORY;
                 const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
                 const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
                 const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
                 const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
                 const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
 
-                if (TOP_Y_IS_IN_FRONT === false) {
+                if (TOP_Y_IS_BEHIND_BOTTOM_EDGE && TOP_Y_IS_BEHIND_TOP_EDGE) {
+                    return false;
+                }
+                else if (TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false) {
                     if (IN_BETWEEN) {
                         return true;
                     }
