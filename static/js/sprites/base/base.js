@@ -227,9 +227,12 @@ export class FillSprite {
 
         const FILL = new PIXI.Graphics();
         FILL.beginFill(color);
-        FILL.drawRect(posX, posY, width, height);
+        FILL.drawRect(0, 0, width, height);
         FILL.endFill();
         this.sprite = FILL
+
+        this.sprite.x = posX;
+        this.sprite.y = posY;
 
         this.fillWidth = width;
         this.fillHeight = height;
