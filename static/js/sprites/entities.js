@@ -44,12 +44,20 @@ export class Player extends Entity {
     // SETTERS
     rotateToMouse() {
         const PLAYER_CENTER = this.getCenterCoordinates(); // relative to parent
+        let player_sprite_parent = this.sprite_container.parent;
 
-        const CORRECTED_CENTER_X = PLAYER_CENTER.x + this.sprite_container.parent.x + this.sprite_container.parent.parent.x;
-        const CORRECTED_CENTER_Y = PLAYER_CENTER.y + this.sprite_container.parent.y + this.sprite_container.parent.parent.y;
+        let corrected_offsetX = PLAYER_CENTER.x + player_sprite_parent.x;
+        let corrected_offsetY = PLAYER_CENTER.y + player_sprite_parent.y;
 
-        const MOUSE_X_DISTANCE_FROM_PLAYER = window.mouseX - CORRECTED_CENTER_X;
-        const MOUSE_Y_DISTANCE_FROM_PLAYER = window.mouseY - CORRECTED_CENTER_Y;
+        while (player_sprite_parent.parent !== null) {
+            player_sprite_parent = player_sprite_parent.parent;
+
+            corrected_offsetX += player_sprite_parent.x;
+            corrected_offsetY += player_sprite_parent.y;
+        }
+
+        const MOUSE_X_DISTANCE_FROM_PLAYER = window.mouseX - corrected_offsetX;
+        const MOUSE_Y_DISTANCE_FROM_PLAYER = window.mouseY - corrected_offsetY;
         const MOUSE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(MOUSE_Y_DISTANCE_FROM_PLAYER, MOUSE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
 
         /*
