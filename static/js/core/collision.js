@@ -37,9 +37,17 @@ function checkCollisionWithObstacles(sprite, side) {
                 const SL_between_LERE = SLX >= OLX && SLX <= ORX;
                 const SR_between_LERE = SRX >= OLX && SRX <= ORX;
 
+                const CORRECTED_SR = SRX - SPRITE_SPEED;
+
 
 
                 if (SB_below_BE && SB_below_TE) {
+                    continue;
+                }
+                else if (CORRECTED_SR < OLX && SLY < ORY) {
+                    continue;
+                }
+                else if (CORRECTED_SR < OLX && SRY > OLY) {
                     continue;
                 }
                 else if (SB_above_TE === false) {
@@ -143,9 +151,17 @@ function checkCollisionWithObstacles(sprite, side) {
                 const SL_between_LERE = SLX >= OLX && SLX <= ORX;
                 const SR_between_LERE = SRX >= OLX && SRX <= ORX;
 
+                const CORRECTED_SL = SLX + SPRITE_SPEED;
+
 
 
                 if (ST_above_BE && ST_above_TE) {
+                    continue;
+                }
+                else if (CORRECTED_SL > ORX && SLY < ORY) {
+                    continue;
+                }
+                else if (CORRECTED_SL > ORX && SRY > OLY) {
                     continue;
                 }
                 else if (ST_below_BE === false) {

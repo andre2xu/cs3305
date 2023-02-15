@@ -87,7 +87,7 @@ window.addEventListener('load', () => {
 
 
 
-    FOYER.addDynamicSprite(player, 'player', 50, 30);
+    FOYER.addDynamicSprite(player, 'player', 450, 150);
     FOYER.addDynamicSprite(zombie, 'zombie', 250, 300);
 
     FOYER.setPosition(
