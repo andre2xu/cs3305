@@ -154,4 +154,11 @@ window.addEventListener('load', () => {
     GAME.ticker.add(() => {
         FOYER.sortSpriteOrder();
     });
+
+
+
+    // ensures the player is facing front and standing straight
+    window.mouseX = FOYER.getHalfWidth();
+    window.mouseY = FOYER.getRightPosY();
+    player.rotateToMouse();
 });
