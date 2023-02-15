@@ -25,10 +25,10 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         if (COLLIDED_WITH_A_TOP_EDGE === false && COLLIDED_WITH_A_LEFT_EDGE === false) {
             sprite.moveSpriteSouthEast();
         }
-        else if (COLLIDED_WITH_A_TOP_EDGE) {
+        else if (COLLIDED_WITH_A_TOP_EDGE && COLLIDED_WITH_A_LEFT_EDGE === false) {
             sprite.moveSpriteEast();
         }
-        else if (COLLIDED_WITH_A_LEFT_EDGE) {
+        else if (COLLIDED_WITH_A_LEFT_EDGE && COLLIDED_WITH_A_TOP_EDGE === false) {
             sprite.moveSpriteSouth();
         }
     }
@@ -39,10 +39,10 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         if (COLLIDED_WITH_A_TOP_EDGE === false && COLLIDED_WITH_A_RIGHT_EDGE === false) {
             sprite.moveSpriteSouthWest();
         }
-        else if (COLLIDED_WITH_A_TOP_EDGE) {
+        else if (COLLIDED_WITH_A_TOP_EDGE && COLLIDED_WITH_A_RIGHT_EDGE === false) {
             sprite.moveSpriteWest();
         }
-        else if (COLLIDED_WITH_A_RIGHT_EDGE) {
+        else if (COLLIDED_WITH_A_RIGHT_EDGE && COLLIDED_WITH_A_TOP_EDGE === false) {
             sprite.moveSpriteSouth();
         }
     }
@@ -53,10 +53,10 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         if (COLLIDED_WITH_A_BOTTOM_EDGE === false && COLLIDED_WITH_A_LEFT_EDGE === false) {
             sprite.moveSpriteNorthEast();
         }
-        else if (COLLIDED_WITH_A_BOTTOM_EDGE) {
+        else if (COLLIDED_WITH_A_BOTTOM_EDGE && COLLIDED_WITH_A_LEFT_EDGE === false) {
             sprite.moveSpriteEast();
         }
-        else if (COLLIDED_WITH_A_LEFT_EDGE) {
+        else if (COLLIDED_WITH_A_LEFT_EDGE && COLLIDED_WITH_A_BOTTOM_EDGE === false) {
             sprite.moveSpriteNorth();
         }
     }
@@ -67,10 +67,10 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         if (COLLIDED_WITH_A_BOTTOM_EDGE === false && COLLIDED_WITH_A_RIGHT_EDGE === false) {
             sprite.moveSpriteNorthWest();
         }
-        else if (COLLIDED_WITH_A_BOTTOM_EDGE) {
+        else if (COLLIDED_WITH_A_BOTTOM_EDGE && COLLIDED_WITH_A_RIGHT_EDGE === false) {
             sprite.moveSpriteWest();
         }
-        else if (COLLIDED_WITH_A_RIGHT_EDGE) {
+        else if (COLLIDED_WITH_A_RIGHT_EDGE && COLLIDED_WITH_A_BOTTOM_EDGE === false) {
             sprite.moveSpriteNorth();
         }
     }

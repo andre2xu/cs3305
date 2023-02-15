@@ -37,7 +37,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 if (BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE && BOTTOM_Y_IS_IN_FRONT_OF_TOP_EDGE) {
                     continue;
                 }
-                else if (BOTTOM_Y_IS_BEHIND === false) {
+                else if (BOTTOM_Y_IS_BEHIND === false && BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false) {
                     if (IN_BETWEEN) {
                         return true;
                     }
@@ -62,7 +62,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 if (RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE && RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE) {
                     continue;
                 }
-                else if (RIGHT_X_IS_BEHIND_LEFT_EDGE === false) {
+                else if (RIGHT_X_IS_BEHIND_LEFT_EDGE === false && RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE === false) {
                     if (IN_BETWEEN) {
                         return true;
                     }
@@ -87,7 +87,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 if (LEFT_X_IS_BEHIND_LEFT_EDGE && LEFT_X_IS_BEHIND_RIGHT_EDGE) {
                     continue;
                 }
-                else if (LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE === false) {
+                else if (LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE === false && LEFT_X_IS_BEHIND_RIGHT_EDGE === false) {
                     if (IN_BETWEEN) {
                         return true;
                     }
@@ -112,7 +112,7 @@ function checkCollisionWithObstacles(sprite, side) {
                 if (TOP_Y_IS_BEHIND_BOTTOM_EDGE && TOP_Y_IS_BEHIND_TOP_EDGE) {
                     continue;
                 }
-                else if (TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false) {
+                else if (TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false && TOP_Y_IS_BEHIND_BOTTOM_EDGE === false) {
                     if (IN_BETWEEN) {
                         return true;
                     }
