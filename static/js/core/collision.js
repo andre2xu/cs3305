@@ -10,21 +10,61 @@ function checkCollisionWithObstacles(sprite, side) {
     const NUM_OF_OBSTACLES = OBSTACLES.length;
 
     if (NUM_OF_OBSTACLES > 0) {
+        const SLX = sprite.getLeftPosX();
+        const SLY = sprite.getLeftPosY();
+        const SRX = sprite.getRightPosX();
+        const SRY = sprite.getRightPosY();
+
         for (let i=0; i < NUM_OF_OBSTACLES; i++) {
             const OBSTACLE = OBSTACLES[i];
 
-            if (side === 'top' && OBSTACLE.checkIfTopEdgeCollisionOccurred(sprite)) {
-                return true;
+            const OLX = OBSTACLE.getLeftPosX();
+            const OLY = OBSTACLE.getLeftPosY();
+            const ORX = OBSTACLE.getRightPosX();
+            const ORY = OBSTACLE.getRightPosY();
+
+            if (side === 'top') {
+                const BOTTOM_Y_IS_BEHIND = SRY < OLY;
+                const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
+                const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
+                const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
+                const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
+                const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
+
+                if (BOTTOM_Y_IS_BEHIND === false) {
+                    if (IN_BETWEEN) {
+                        return true;
+                    }
+                    else if (LEFT_EDGE_IS_OUTSIDE && RIGHT_EDGE_IS_INSIDE) {
+                        return true
+                    }
+                    else if (RIGHT_EDGE_IS_OUTSIDE && LEFT_EDGE_IS_INSIDE) {
+                        return true;
+                    }
+                }
             }
-            else if (side === 'left' && OBSTACLE.checkIfLeftEdgeCollisionOccurred(sprite)) {
-                return true;
-            }
-            else if (side === 'right' && OBSTACLE.checkIfRightEdgeCollisionOccurred(sprite)) {
-                return true;
-            }
-            else if (side === 'bottom' && OBSTACLE.checkIfBottomEdgeCollisionOccurred(sprite)) {
-                return true;
-            }
+            // else if (side === 'left' && sprite.getRightPosX() < OBSTACLE.getLeftPosX()) {
+            //     // x-coordinate is constant
+
+            //     if (sprite.getLeftPosY() >= OBSTACLE.getLeftPosY() && sprite.getRightPosY() <= OBSTACLE.getRightPosY()) {
+            //         // IN BETWEEN
+            //         return false
+            //     }
+            //     else if (sprite.getLeftPosY() > OBSTACLE.getRightPosY()) {
+            //         // OUTER BOTTOM
+            //         return false;
+            //     }
+            //     else if (sprite.getRightPosY() < OBSTACLE.getLeftPosY()) {
+            //         // OUTER TOP
+            //         return false;
+            //     }
+            // }
+            // else if (side === 'right' && OBSTACLE.checkIfRightEdgeCollisionOccurred(sprite)) {
+            //     return true;
+            // }
+            // else if (side === 'bottom' && OBSTACLE.checkIfBottomEdgeCollisionOccurred(sprite)) {
+            //     return true;
+            // }
         }
     }
 
