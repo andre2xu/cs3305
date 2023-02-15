@@ -95,7 +95,24 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
             }
             else if (side === 'bottom') {
-                1
+                const TOP_Y_IS_IN_FRONT = SLY > ORY;
+                const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
+                const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
+                const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
+                const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
+                const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
+
+                if (TOP_Y_IS_IN_FRONT === false) {
+                    if (IN_BETWEEN) {
+                        return true;
+                    }
+                    else if (LEFT_EDGE_IS_OUTSIDE && RIGHT_EDGE_IS_INSIDE) {
+                        return true
+                    }
+                    else if (RIGHT_EDGE_IS_OUTSIDE && LEFT_EDGE_IS_INSIDE) {
+                        return true;
+                    }
+                }
             }
         }
     }
