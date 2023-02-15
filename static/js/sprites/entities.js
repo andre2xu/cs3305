@@ -45,6 +45,38 @@ export class Entity extends Sprite {
         this.sprite_container.x += x;
         this.sprite_container.y += y;
     };
+
+    moveSpriteNorth() {
+        this.moveSprite(0, -this.movementOffset);
+    };
+
+    moveSpriteNorthWest() {
+        this.moveSprite(-this.movementOffset, -this.movementOffset);
+    };
+
+    moveSpriteNorthEast() {
+        this.moveSprite(this.movementOffset, -this.movementOffset);
+    };
+
+    moveSpriteWest() {
+        this.moveSprite(-this.movementOffset, 0);
+    };
+
+    moveSpriteEast() {
+        this.moveSprite(this.movementOffset, 0);
+    };
+
+    moveSpriteSouth() {
+        this.moveSprite(0, this.movementOffset);
+    };
+
+    moveSpriteSouthWest() {
+        this.moveSprite(-this.movementOffset, this.movementOffset);
+    };
+
+    moveSpriteSouthEast() {
+        this.moveSprite(this.movementOffset, this.movementOffset);
+    };
 };
 
 export class Player extends Entity {
