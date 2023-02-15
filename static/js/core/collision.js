@@ -55,40 +55,37 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
             }
             else if (side === 'left') {
-                const RIGHT_X_IS_BEHIND_LEFT_EDGE = SRX < OLX;
-                const RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE = SRX > OLX;
-                const RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE = SRX > ORX;
+                const SR_before_LE = SRX < OLX;
+                const SR_after_LE = SRX > OLX;
+                const SR_after_RE = SRX > ORX;
 
-                const IN_BETWEEN = SLY >= OLY && SRY <= ORY;
+                const STSB_between_TEBE = SLY >= OLY && SRY <= ORY;
 
-                const TOP_EDGE_IS_OUTSIDE = SLY < OLY;
-                const BOTTOM_EDGE_IS_OUTSIDE = SRY > ORY;
+                const ST_above_TE = SLY < OLY;
+                const SB_below_BE = SRY > ORY;
 
-                const TOP_EDGE_IS_INSIDE = SLY >= OLY && SLY <= ORY;
-                const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
+                const ST_between_TEBE = SLY >= OLY && SLY <= ORY;
+                const SB_between_TEBE = SRY >= OLY && SRY <= ORY;
 
 
 
-                if (RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE && RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE) {
-                    // if the sprite is on the right side of the LE and is on the right side of the RE
+                if (SR_after_LE && SR_after_RE) {
                     continue;
                 }
                 else if ((SRY - SPRITE_SPEED) < OLY && SLX > OLX) {
-                    // if the sprite is above the TE and is on the right side of the LE
                     continue;
                 }
                 else if ((SRY - SPRITE_SPEED) > ORY && SLX > OLX) {
-                    // if the sprite is below the BE and is on the right side of the LE
                     continue;
                 }
-                else if (RIGHT_X_IS_BEHIND_LEFT_EDGE === false) {
-                    if (IN_BETWEEN) {
+                else if (SR_before_LE === false) {
+                    if (STSB_between_TEBE) {
                         return true;
                     }
-                    else if (TOP_EDGE_IS_OUTSIDE && BOTTOM_EDGE_IS_INSIDE) {
+                    else if (ST_above_TE && SB_between_TEBE) {
                         return true
                     }
-                    else if (BOTTOM_EDGE_IS_OUTSIDE && TOP_EDGE_IS_INSIDE) {
+                    else if (SB_below_BE && ST_between_TEBE) {
                         return true;
                     }
                 }
