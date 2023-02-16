@@ -13,7 +13,7 @@ import {
 export const FOYER = (function () {
     const FOYER = new PlayableArea(512, 400);
 
-    const FLOOR = new DecorationFill(0xf8dcd4, 0, 0, 512, 400);
+    const FLOOR = new DecorationFill(0x5e4639, 0, 0, 512, 400);
     FOYER.addStaticSprite(FLOOR, 'floor', 0, 0);
 
 
@@ -48,7 +48,7 @@ export const FOYER = (function () {
 
 
 
-    const WALL = new SemiSolidFill(0xD0EAF5, 0, 0, 278, 60);
+    const WALL = new SemiSolidFill(0xF5F5DC, 0, 0, 278, 60);
     const WALL_TOP_Y_REDUCTION = 10;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
