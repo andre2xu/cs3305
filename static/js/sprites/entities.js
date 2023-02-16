@@ -160,19 +160,66 @@ export class Enemy extends Entity {
 
     // SETTERS
     rotateToPlayer(player) {
-        const ZOMBIE_ANGLE_FROM_PLAYER = this.__getAngleToPlayer__(player);
+        const PLAYER_ANGLE_FROM_ENEMY = this.__getAngleToPlayer__(player);
 
-        if (ZOMBIE_ANGLE_FROM_PLAYER >= -145 && ZOMBIE_ANGLE_FROM_PLAYER <= -45) {
+        if (PLAYER_ANGLE_FROM_ENEMY >= -145 && PLAYER_ANGLE_FROM_ENEMY <= -45) {
             this.switchFrame('n');
         }
-        else if (ZOMBIE_ANGLE_FROM_PLAYER >= -180 && ZOMBIE_ANGLE_FROM_PLAYER < -145 || ZOMBIE_ANGLE_FROM_PLAYER <= 180 && ZOMBIE_ANGLE_FROM_PLAYER > 145 ) {
+        else if (PLAYER_ANGLE_FROM_ENEMY >= -180 && PLAYER_ANGLE_FROM_ENEMY < -145 || PLAYER_ANGLE_FROM_ENEMY <= 180 && PLAYER_ANGLE_FROM_ENEMY > 145 ) {
             this.switchFrame('w');
         }
-        else if (ZOMBIE_ANGLE_FROM_PLAYER <= 145 && ZOMBIE_ANGLE_FROM_PLAYER > 45) {
+        else if (PLAYER_ANGLE_FROM_ENEMY <= 145 && PLAYER_ANGLE_FROM_ENEMY > 45) {
             this.switchFrame('s');
         }
-        else if (ZOMBIE_ANGLE_FROM_PLAYER >= 0 && ZOMBIE_ANGLE_FROM_PLAYER <= 45 || ZOMBIE_ANGLE_FROM_PLAYER < 0 && ZOMBIE_ANGLE_FROM_PLAYER > -45) {
+        else if (PLAYER_ANGLE_FROM_ENEMY >= 0 && PLAYER_ANGLE_FROM_ENEMY <= 45 || PLAYER_ANGLE_FROM_ENEMY < 0 && PLAYER_ANGLE_FROM_ENEMY > -45) {
             this.switchFrame('e');
+        }
+    };
+
+    moveToPlayer(player) {
+        const PLAYER_ANGLE_FROM_ENEMY = this.__getAngleToPlayer__(player);
+
+        const PLAYER_N = PLAYER_ANGLE_FROM_ENEMY >= -120 && PLAYER_ANGLE_FROM_ENEMY <= -60;
+
+        const PLAYER_NW = PLAYER_ANGLE_FROM_ENEMY >= -150 && PLAYER_ANGLE_FROM_ENEMY <= -120;
+
+        const PLAYER_W = (PLAYER_ANGLE_FROM_ENEMY >= -180 && PLAYER_ANGLE_FROM_ENEMY <= -150) || (PLAYER_ANGLE_FROM_ENEMY <= 180 && PLAYER_ANGLE_FROM_ENEMY >= 150);
+
+        const PLAYER_SW = PLAYER_ANGLE_FROM_ENEMY <= 150 && PLAYER_ANGLE_FROM_ENEMY >= 120;
+
+        const PLAYER_S = PLAYER_ANGLE_FROM_ENEMY <= 120 && PLAYER_ANGLE_FROM_ENEMY >= 60;
+
+        const PLAYER_SE = PLAYER_ANGLE_FROM_ENEMY <= 60 && PLAYER_ANGLE_FROM_ENEMY >= 30;
+
+        const PLAYER_E = (PLAYER_ANGLE_FROM_ENEMY <= 30 && PLAYER_ANGLE_FROM_ENEMY >= 0) || (PLAYER_ANGLE_FROM_ENEMY <= 0 && PLAYER_ANGLE_FROM_ENEMY >= -30);
+
+        const PLAYER_NE = PLAYER_ANGLE_FROM_ENEMY <= -30 && PLAYER_ANGLE_FROM_ENEMY >= -60;
+
+
+
+        if (PLAYER_N) {
+            this.moveSpriteNorth();
+        }
+        else if (PLAYER_NW) {
+            this.moveSpriteNorthWest();
+        }
+        else if (PLAYER_W) {
+            this.moveSpriteWest();
+        }
+        else if (PLAYER_SW) {
+            this.moveSpriteSouthWest();
+        }
+        else if (PLAYER_S) {
+            this.moveSpriteSouth();
+        }
+        else if (PLAYER_SE) {
+            this.moveSpriteSouthEast();
+        }
+        else if (PLAYER_E) {
+            this.moveSpriteEast();
+        }
+        else if (PLAYER_NE) {
+            this.moveSpriteNorthEast();
         }
     };
 };
@@ -180,5 +227,7 @@ export class Enemy extends Entity {
 export class Zombie extends Enemy {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
+
+        this.setSpeed(0.5);
     };
 };
