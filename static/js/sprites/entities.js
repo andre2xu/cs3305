@@ -135,9 +135,15 @@ export class Enemy extends Entity {
 
 
 
-    // SETTERS
-    rotateToPlayer(player) {
+    // GETTERS
+    __getAngleToPlayer__(player) {
         checks.checkIfInstance(player, Player);
+
+        /*
+            -90
+        -180    0
+            90
+        */
 
         const PLAYER_SPRITE = player.getSprite();
         const PLAYER_CENTER = player.getCenterCoordinates();
@@ -147,13 +153,14 @@ export class Enemy extends Entity {
 
         const ZOMBIE_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ZOMBIE_CENTER.y + this.sprite_container.y);
 
-        const ZOMBIE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(ZOMBIE_Y_DISTANCE_FROM_PLAYER, ZOMBIE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+        return Math.round(Math.atan2(ZOMBIE_Y_DISTANCE_FROM_PLAYER, ZOMBIE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+    };
 
-        /*
-            -90
-        -180    0
-            90
-        */
+
+
+    // SETTERS
+    rotateToPlayer(player) {
+        const ZOMBIE_ANGLE_FROM_PLAYER = this.__getAngleToPlayer__(player);
 
         if (ZOMBIE_ANGLE_FROM_PLAYER >= -145 && ZOMBIE_ANGLE_FROM_PLAYER <= -45) {
             this.switchFrame('n');
