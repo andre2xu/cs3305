@@ -49,7 +49,7 @@ export const FOYER = (function () {
 
 
     const WALL = new SemiSolidFill(0xF5F5DC, 0, 0, 278, 60);
-    const WALL_TOP_Y_REDUCTION = 10;
+    const WALL_TOP_Y_REDUCTION = 15;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
@@ -80,7 +80,7 @@ export const FOYER = (function () {
         RAILING_1,
         'railing1',
         STAIRS_1.getRightPosX() + 4,
-        (WALL.getLeftPosY() + 4) - (RAILING_1.getSpriteFrameDimensions().h - 5)
+        (WALL.getLeftPosY() + WALL_TOP_Y_REDUCTION - 5) - (RAILING_1.getSpriteFrameDimensions().h - 5)
     );
 
 
