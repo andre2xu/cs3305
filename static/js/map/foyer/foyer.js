@@ -18,6 +18,49 @@ export const FOYER = (function () {
 
 
 
+    const BARRIER_1 = new SemiSolidFill(0x000000, 0, 0, FOYER.getWidth(), 10);
+    BARRIER_1.modifyCollisionBoundary(null, null, null, -BARRIER_1.getHalfHeight());
+    FOYER.addStaticSprite(
+        BARRIER_1,
+        'barrier1',
+        0,
+        -BARRIER_1.getFillDimensions().h
+    );
+
+
+
+    const BARRIER_2 = new SemiSolidFill(0x000000, 0, 0, FOYER.getWidth(), 10);
+    FOYER.addStaticSprite(
+        BARRIER_2,
+        'barrier2',
+        0,
+        FOYER.getHeight()
+    );
+
+
+
+    const BARRIER_3 = new SemiSolidFill(0x000000, 0, 0, 10, FOYER.getHeight());
+    BARRIER_3.modifyCollisionBoundary(null, null, -3, null);
+    FOYER.addStaticSprite(
+        BARRIER_3,
+        'barrier3',
+        -BARRIER_3.getFillDimensions().w,
+        0
+    );
+
+
+
+    const BARRIER_4 = new SemiSolidFill(0x000000, 0, 0, 10, FOYER.getHeight());
+    BARRIER_4.modifyCollisionBoundary(-3, null, null, null);
+    FOYER.addStaticSprite(
+        BARRIER_4,
+        'barrier4',
+        FOYER.getWidth(),
+        0
+    );
+
+
+
     const DOUBLE_DOOR = new SemiSolid(getTextureFromStaticJSFolder('/map/foyer/assets/Door1.png'), 0, 0, 96, 48);
     FOYER.addStaticSprite(
         DOUBLE_DOOR,
