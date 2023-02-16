@@ -13,7 +13,7 @@ import {
 export const FOYER = (function () {
     const FOYER = new PlayableArea(512, 400);
 
-    const FLOOR = new DecorationFill(0x5e4639, 0, 0, 512, 400);
+    const FLOOR = new DecorationFill(0x735848, 0, 0, 512, 400);
     FOYER.addStaticSprite(FLOOR, 'floor', 0, 0);
 
 
@@ -80,7 +80,7 @@ export const FOYER = (function () {
         RAILING_1,
         'railing1',
         STAIRS_1.getRightPosX() + 4,
-        (WALL.getLeftPosY() + WALL_TOP_Y_REDUCTION) - (RAILING_1.getSpriteFrameDimensions().h - 5)
+        (WALL.getLeftPosY() + 4) - (RAILING_1.getSpriteFrameDimensions().h - 5)
     );
 
 
