@@ -277,15 +277,22 @@ export class Enemy extends Entity {
             // going around object
 
             const DISTANCES = this.__getEnemyXandYDistanceFromPlayer__(player);
+
             const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(DISTANCES.dx, 2) + Math.pow(DISTANCES.dy, 2)));
 
             const CLOSEST_DETOUR = this.objectCollidedWith.getClosestDetour(this);
 
-            if (CLOSEST_DETOUR.distance < DISTANCE_BETWEEN_ENEMY_AND_PLAYER) {
+            const ENEMY_CENTER = this.getCenterCoordinates();
+
+            const ARRIVED_AT_DETOUR = Math.round(ENEMY_CENTER.x) === CLOSEST_DETOUR.coordinates.x && Math.round(ENEMY_CENTER.y) === CLOSEST_DETOUR.coordinates.y;
+
+
+
+            if (CLOSEST_DETOUR.distance < DISTANCE_BETWEEN_ENEMY_AND_PLAYER && ARRIVED_AT_DETOUR === false) {
                 this.moveToDetour(CLOSEST_DETOUR);
             }
             else {
-                this.navigationMode = 0;
+                // this.navigationMode = 0;
             }
         }
     };
@@ -293,10 +300,40 @@ export class Enemy extends Entity {
     moveToDetour(detour_data) {
         checks.checkIfObject(detour_data);
 
-        const COORDINATES = detour_data.coordinates;
-        const ANGLE_TO_DETOUR = Math.round(Math.atan2(COORDINATES.y, COORDINATES.x) * 180 / Math.PI);
+        const ENEMY_CENTER = this.getCenterCoordinates();
+        const DETOUR_COORDINATES = detour_data.coordinates;
+        const ANGLE_TO_DETOUR = Math.round(Math.atan2(DETOUR_COORDINATES.y - ENEMY_CENTER.y, DETOUR_COORDINATES.x - ENEMY_CENTER.x) * 180 / Math.PI);
 
         this.__switchFrameToAngle__(ANGLE_TO_DETOUR);
+
+        const DIRECTION = this.__getMoveDirectionFromAngle__(ANGLE_TO_DETOUR);
+
+        switch (DIRECTION) {
+            case 'n':
+                this.moveSpriteNorth();
+                break;
+            case 'nw':
+                this.moveSpriteNorthWest();
+                break;
+            case 'w':
+                this.moveSpriteWest();
+                break;
+            case 'sw':
+                this.moveSpriteSouthWest();
+                break;
+            case 's':
+                this.moveSpriteSouth();
+                break;
+            case 'se':
+                this.moveSpriteSouthEast();
+                break;
+            case 'e':
+                this.moveSpriteEast();
+                break;
+            case 'ne':
+                this.moveSpriteNorthEast();
+                break;
+        }
     };
 };
 
