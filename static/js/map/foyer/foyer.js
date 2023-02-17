@@ -95,7 +95,7 @@ export const FOYER = (function () {
     const WALL_TOP_Y_REDUCTION = 15;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
 
-    const DTRX = 60;
+    const DTRX = 140;
     const DTRY = 220;
     WALL.addDetour(DTRX, DTRY); // temp
 
