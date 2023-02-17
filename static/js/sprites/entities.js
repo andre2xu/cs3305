@@ -3,6 +3,11 @@ import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
 
 import {
+    Obstacle,
+    ObstacleFill
+} from '../sprites/objects.js';
+
+import {
     checkCollisionWithBottomEdgesOfObstacles,
     checkCollisionWithLeftEdgesOfObstacles,
     checkCollisionWithRightEdgesOfObstacles,
@@ -139,8 +144,11 @@ export class Enemy extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
-        this.navigationMode = 0; // 0 = going after player | 1 = going around object
+        this.navigationMode = 0;
         this.objectCollidedWith = null;
+
+        this.detourChosen = null;
+        this.detourPointIndex = 0;
 
         NON_PLAYER_ENTITIES.push(this);
     };
@@ -205,6 +213,38 @@ export class Enemy extends Entity {
         return Math.round(Math.atan2(DISTANCES.dy, DISTANCES.dx) * 180 / Math.PI);
     };
 
+    getClosestDetour(object) {
+        if (object instanceof Obstacle && object instanceof ObstacleFill === false) {
+            throw TypeError("Not an obstacle.");
+        }
+
+        const ALL_DETOURS = object.getDetours();
+
+        const ENTITY_CENTER = this.getCenterCoordinates();
+
+        let closestDetour = null;
+        let previousDistance = null;
+        const NUM_OF_DETOURS = ALL_DETOURS.length;
+
+        for (let i=0; i < NUM_OF_DETOURS; i++) {
+            const START_OF_DETOUR = ALL_DETOURS[i][0];
+
+            const DISTANCE = Math.round(Math.sqrt(Math.pow(ENTITY_CENTER.x - START_OF_DETOUR.x, 2) + Math.pow(ENTITY_CENTER.y - START_OF_DETOUR.y, 2)));
+
+            if (closestDetour === null || DISTANCE < previousDistance) {
+                closestDetour = ALL_DETOURS[i];
+                previousDistance = DISTANCE;
+            }
+        }
+
+        if (closestDetour !== null) {
+            return [...closestDetour];
+        }
+        else {
+            return null;
+        }
+    };
+
 
 
     // SETTERS
@@ -227,6 +267,13 @@ export class Enemy extends Entity {
         const PLAYER_ANGLE_FROM_ENEMY = this.__getAngleToPlayer__(player);
 
         this.__switchFrameToAngle__(PLAYER_ANGLE_FROM_ENEMY);
+    };
+
+    stopFollowingDetourAndChasePlayerAgain() {
+        this.detourChosen = null;
+        this.detourPointIndex = 0;
+
+        this.navigationMode = 0;
     };
 
     moveToPlayer(player) {
@@ -276,33 +323,59 @@ export class Enemy extends Entity {
         else if (this.navigationMode === 1) {
             // going around object
 
-            const DISTANCES = this.__getEnemyXandYDistanceFromPlayer__(player);
+            const DISTANCE_DIFFERENCE = this.__getEnemyXandYDistanceFromPlayer__(player);
 
-            const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(DISTANCES.dx, 2) + Math.pow(DISTANCES.dy, 2)));
-
-            const CLOSEST_DETOUR = this.objectCollidedWith.getClosestDetour(this);
-
-            const ENEMY_CENTER = this.getCenterCoordinates();
-
-            const ARRIVED_AT_DETOUR = Math.round(ENEMY_CENTER.x) === CLOSEST_DETOUR.coordinates.x && Math.round(ENEMY_CENTER.y) === CLOSEST_DETOUR.coordinates.y;
+            const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(DISTANCE_DIFFERENCE.dx, 2) + Math.pow(DISTANCE_DIFFERENCE.dy, 2)));
 
 
 
-            if (CLOSEST_DETOUR.distance < DISTANCE_BETWEEN_ENEMY_AND_PLAYER && ARRIVED_AT_DETOUR === false) {
-                this.moveToDetour(CLOSEST_DETOUR);
+            if (this.detourChosen === null) {
+                this.detourChosen = this.getClosestDetour(this.objectCollidedWith); // gets copy of saved detours
             }
-            else {
-                // this.navigationMode = 0;
+            else if (this.detourChosen.constructor === Array) {
+                const NUM_OF_DETOURS = this.detourChosen.length;
+
+                if (NUM_OF_DETOURS > 0) {
+                    const POINT = this.detourChosen[this.detourPointIndex];
+                    const ENEMY_CENTER = this.getCenterCoordinates();
+                    const DISTANCE_BETWEEN_ENEMY_AND_POINT = Math.round(Math.sqrt(Math.pow(ENEMY_CENTER.x - POINT.x, 2) + Math.pow(ENEMY_CENTER.y - POINT.y, 2)));
+
+                    // compares distance between enemy and current point to the distance between enemy and the player
+                    if (DISTANCE_BETWEEN_ENEMY_AND_POINT < DISTANCE_BETWEEN_ENEMY_AND_PLAYER) {
+                        this.moveToDetourPoint(POINT);
+                    }
+                    else {
+                        this.stopFollowingDetourAndChasePlayerAgain();
+
+                        return;
+                    }
+
+                    // moves the enemy to the next point
+                    if (Math.round(ENEMY_CENTER.x) === POINT.x && Math.round(ENEMY_CENTER.y) === POINT.y) {
+                        this.detourPointIndex += 1;
+                    }
+
+                    // stop following detour since the last point has been reached
+                    if (this.detourPointIndex === this.detourChosen.length) {
+                        this.stopFollowingDetourAndChasePlayerAgain();
+                    }
+                }
             }
         }
     };
 
-    moveToDetour(detour_data) {
-        checks.checkIfObject(detour_data);
+    moveToDetourPoint(point) {
+        checks.checkIfObject(point);
+
+        if (point.x === undefined || point.y === undefined) {
+            throw SyntaxError("Point must be an object with x and y as properties.");
+        }
+
+        checks.checkIfNumber(point.x);
+        checks.checkIfNumber(point.y);
 
         const ENEMY_CENTER = this.getCenterCoordinates();
-        const DETOUR_COORDINATES = detour_data.coordinates;
-        const ANGLE_TO_DETOUR = Math.round(Math.atan2(DETOUR_COORDINATES.y - ENEMY_CENTER.y, DETOUR_COORDINATES.x - ENEMY_CENTER.x) * 180 / Math.PI);
+        const ANGLE_TO_DETOUR = Math.round(Math.atan2(point.y - ENEMY_CENTER.y, point.x - ENEMY_CENTER.x) * 180 / Math.PI);
 
         this.__switchFrameToAngle__(ANGLE_TO_DETOUR);
 
