@@ -95,11 +95,27 @@ export const FOYER = (function () {
     const WALL_TOP_Y_REDUCTION = 15;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
 
+
+
     // temp
     const DTRX_1 = 140;
     const DTRY_1 = 220;
-    WALL.addDetour(DTRX_1, DTRY_1);
+    const DTRX_2 = 60;
+    const DTRY_2 = DTRX_1;
+    const DTRX_3 = DTRX_2;
+    const DTRY_3 = 40;
+
     FOYER.colorCoordinate(0xff0000, DTRX_1, DTRY_1, 5, 5);
+    FOYER.colorCoordinate(0xff0000, DTRX_2, DTRY_2, 5, 5);
+    FOYER.colorCoordinate(0xff0000, DTRX_3, DTRY_3, 5, 5);
+
+    WALL.addDetour([
+        {x: DTRX_1, y: DTRY_1},
+        {x: DTRX_2, y: DTRY_2},
+        {x: DTRX_3, y: DTRY_3}
+    ]);
+
+
 
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
