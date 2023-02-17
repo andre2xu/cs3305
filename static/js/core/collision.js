@@ -25,109 +25,197 @@ function checkCollisionWithObstacles(sprite, side) {
             const ORY = OBSTACLE.getRightPosY();
 
             if (side === 'top') {
-                const BOTTOM_Y_IS_BEHIND = SRY < OLY;
-                const BOTTOM_Y_IS_IN_FRONT_OF_TOP_EDGE = SRY > OLY;
-                const BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE = SRY > ORY;
-                const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
-                const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
-                const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
-                const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
-                const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
+                const SB_above_TE = SRY < OLY;
+                const SB_below_TE = SRY > OLY;
+                const SB_below_BE = SRY > ORY;
 
-                if (BOTTOM_Y_IS_IN_FRONT_OF_BOTTOM_EDGE && BOTTOM_Y_IS_IN_FRONT_OF_TOP_EDGE) {
+                const SLSR_between_LERE = SLX >= OLX && SRX <= ORX;
+
+                const SL_before_LE = SLX < OLX;
+                const SR_after_RE = SRX > ORX;
+
+                const SL_between_LERE = SLX >= OLX && SLX <= ORX;
+                const SR_between_LERE = SRX >= OLX && SRX <= ORX;
+
+                const CORRECTED_SR = SRX - SPRITE_SPEED;
+
+
+
+                if (SB_below_BE && SB_below_TE) {
                     continue;
                 }
-                else if (BOTTOM_Y_IS_BEHIND === false) {
-                    if (IN_BETWEEN) {
-                        return true;
+                else if (CORRECTED_SR < OLX && SLY < ORY) {
+                    continue;
+                }
+                else if (CORRECTED_SR < OLX && SRY > OLY) {
+                    continue;
+                }
+                else if (SB_above_TE === false) {
+                    if (SLSR_between_LERE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (LEFT_EDGE_IS_OUTSIDE && RIGHT_EDGE_IS_INSIDE) {
-                        return true
+                    else if (SL_before_LE && SR_between_LERE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (RIGHT_EDGE_IS_OUTSIDE && LEFT_EDGE_IS_INSIDE) {
-                        return true;
+                    else if (SR_after_RE && SL_between_LERE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
             else if (side === 'left') {
-                const RIGHT_X_IS_BEHIND_LEFT_EDGE = SRX < OLX;
-                const RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE = SRX > OLX;
-                const RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE = SRX > ORX;
-                const IN_BETWEEN = SLY >= OLY && SRY <= ORY;
-                const TOP_EDGE_IS_OUTSIDE = SLY < OLY;
-                const BOTTOM_EDGE_IS_OUTSIDE = SRY > ORY;
-                const TOP_EDGE_IS_INSIDE = SLY >= OLY && SLY <= ORY;
-                const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
+                const SR_before_LE = SRX < OLX;
+                const SR_after_LE = SRX > OLX;
+                const SR_after_RE = SRX > ORX;
 
-                if (RIGHT_X_IS_IN_FRONT_OF_LEFT_EDGE && RIGHT_X_IS_IN_FRONT_OF_RIGHT_EDGE) {
+                const STSB_between_TEBE = SLY >= OLY && SRY <= ORY;
+
+                const ST_above_TE = SLY < OLY;
+                const SB_below_BE = SRY > ORY;
+
+                const ST_between_TEBE = SLY >= OLY && SLY <= ORY;
+                const SB_between_TEBE = SRY >= OLY && SRY <= ORY;
+
+                const CORRECTED_SB = SRY - SPRITE_SPEED;
+
+
+
+                if (SR_after_LE && SR_after_RE) {
                     continue;
                 }
-                else if (RIGHT_X_IS_BEHIND_LEFT_EDGE === false) {
-                    if (IN_BETWEEN) {
-                        return true;
+                else if (CORRECTED_SB < OLY && SLX > OLX) {
+                    continue;
+                }
+                else if (CORRECTED_SB > ORY && SLX > OLX) {
+                    continue;
+                }
+                else if (SR_before_LE === false) {
+                    if (STSB_between_TEBE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (TOP_EDGE_IS_OUTSIDE && BOTTOM_EDGE_IS_INSIDE) {
-                        return true
+                    else if (ST_above_TE && SB_between_TEBE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (BOTTOM_EDGE_IS_OUTSIDE && TOP_EDGE_IS_INSIDE) {
-                        return true;
+                    else if (SB_below_BE && ST_between_TEBE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
             else if (side === 'right') {
-                const LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE = SLX > ORX;
-                const LEFT_X_IS_BEHIND_LEFT_EDGE = SLX < OLX;
-                const LEFT_X_IS_BEHIND_RIGHT_EDGE = SLX < ORX;
-                const IN_BETWEEN = SLY >= OLY && SRY <= ORY;
-                const TOP_EDGE_IS_OUTSIDE = SLY < OLY;
-                const BOTTOM_EDGE_IS_OUTSIDE = SRY > ORY;
-                const TOP_EDGE_IS_INSIDE = SLY >= OLY && SLY <= ORY;
-                const BOTTOM_EDGE_IS_INSIDE = SRY >= OLY && SRY <= ORY;
+                const SL_after_RE = SLX > ORX;
+                const SL_before_LE = SLX < OLX;
+                const SL_before_RE = SLX < ORX;
 
-                if (LEFT_X_IS_BEHIND_LEFT_EDGE && LEFT_X_IS_BEHIND_RIGHT_EDGE) {
+                const STSB_between_TEBE = SLY >= OLY && SRY <= ORY;
+
+                const ST_above_TE = SLY < OLY;
+                const SB_below_BE = SRY > ORY;
+
+                const ST_between_TEBE = SLY >= OLY && SLY <= ORY;
+                const SB_between_TEBE = SRY >= OLY && SRY <= ORY;
+
+                const CORRECTED_SB = SRY - SPRITE_SPEED;
+
+
+
+                if (SL_before_LE && SL_before_RE) {
                     continue;
                 }
-                else if (LEFT_X_IS_IN_FRONT_OF_RIGHT_EDGE === false) {
-                    if (IN_BETWEEN) {
-                        return true;
+                else if (CORRECTED_SB < OLY && SRX < ORX) {
+                    continue;
+                }
+                else if (CORRECTED_SB > ORY && SRX < ORX) {
+                    continue;
+                }
+                else if (SL_after_RE === false) {
+                    if (STSB_between_TEBE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (TOP_EDGE_IS_OUTSIDE && BOTTOM_EDGE_IS_INSIDE) {
-                        return true
+                    else if (ST_above_TE && SB_between_TEBE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (BOTTOM_EDGE_IS_OUTSIDE && TOP_EDGE_IS_INSIDE) {
-                        return true;
+                    else if (SB_below_BE && ST_between_TEBE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
             else if (side === 'bottom') {
-                const TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE = SLY > ORY;
-                const TOP_Y_IS_BEHIND_TOP_EDGE = SLY < OLY;
-                const TOP_Y_IS_BEHIND_BOTTOM_EDGE = SLY < ORY;
-                const IN_BETWEEN = SLX >= OLX && SRX <= ORX;
-                const LEFT_EDGE_IS_OUTSIDE = SLX < OLX;
-                const RIGHT_EDGE_IS_OUTSIDE = SRX > ORX;
-                const LEFT_EDGE_IS_INSIDE = SLX >= OLX && SLX <= ORX;
-                const RIGHT_EDGE_IS_INSIDE = SRX >= OLX && SRX <= ORX;
+                const ST_below_BE = SLY > ORY;
+                const ST_above_TE = SLY < OLY;
+                const ST_above_BE = SLY < ORY;
 
-                if (TOP_Y_IS_BEHIND_BOTTOM_EDGE && TOP_Y_IS_BEHIND_TOP_EDGE) {
+                const SLSR_between_LERE = SLX >= OLX && SRX <= ORX;
+
+                const SL_before_LE = SLX < OLX;
+                const SR_after_RE = SRX > ORX;
+
+                const SL_between_LERE = SLX >= OLX && SLX <= ORX;
+                const SR_between_LERE = SRX >= OLX && SRX <= ORX;
+
+                const CORRECTED_SL = SLX + SPRITE_SPEED;
+
+
+
+                if (ST_above_BE && ST_above_TE) {
                     continue;
                 }
-                else if (TOP_Y_IS_IN_FRONT_OF_BOTTOM_EDGE === false) {
-                    if (IN_BETWEEN) {
-                        return true;
+                else if (CORRECTED_SL > ORX && SLY < ORY) {
+                    continue;
+                }
+                else if (CORRECTED_SL > ORX && SRY > OLY) {
+                    continue;
+                }
+                else if (ST_below_BE === false) {
+                    if (SLSR_between_LERE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (LEFT_EDGE_IS_OUTSIDE && RIGHT_EDGE_IS_INSIDE) {
-                        return true
+                    else if (SL_before_LE && SR_between_LERE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
-                    else if (RIGHT_EDGE_IS_OUTSIDE && LEFT_EDGE_IS_INSIDE) {
-                        return true;
+                    else if (SR_after_RE && SL_between_LERE) {
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
         }
     }
 
-    return false;
+    return {status: false, object: undefined};
 };
 
 export function checkCollisionWithLeftEdgesOfObstacles(sprite) {

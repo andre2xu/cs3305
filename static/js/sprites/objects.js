@@ -1,5 +1,6 @@
 import * as checks from '../helpers/checks.js';
 import { OBSTACLES } from '../core/collision.js';
+import { Entity } from '../sprites/entities.js';
 
 import {
     Sprite,
@@ -199,6 +200,8 @@ export class ObstacleFill extends FillSprite {
     constructor(color, posX, posY, width, height) {
         super(color, posX, posY, width, height);
 
+        this.detours = [];
+
         OBSTACLES.push(this);
     };
 
@@ -295,6 +298,34 @@ export class ObstacleFill extends FillSprite {
         }
 
         return true;
+    };
+
+    getDetours() {
+        return this.detours;
+    };
+
+
+
+    // SETTERS
+    addDetour(array_of_points) {
+        checks.checkIfArray(array_of_points);
+
+        const NUM_OF_ELEMENTS = array_of_points.length;
+
+        for (let i=0; i < NUM_OF_ELEMENTS; i++) {
+            const E = array_of_points[i];
+
+            checks.checkIfObject(E);
+
+            if (E.x === undefined || E.y === undefined) {
+                throw SyntaxError(`Element ${i} is not a valid point object. It must have an x and a y property`);
+            }
+
+            checks.checkIfNumber(E.x);
+            checks.checkIfNumber(E.y);
+        }
+
+        this.detours.push(array_of_points);
     };
 };
 

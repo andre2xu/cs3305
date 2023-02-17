@@ -1,4 +1,5 @@
 import * as checks from '../helpers/checks.js';
+import { DecorationFill } from '../sprites/objects.js';
 
 import {
     Sprite,
@@ -188,5 +189,25 @@ export class PlayableArea {
                 }
             }
         }
+    };
+
+    colorCoordinate(color, x, y, w, h) {
+        checks.checkIfNumber(color);
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
+        const P = new DecorationFill(color, x, y, w, w);
+        this.area.addChild(P.getSprite());
+
+        if (w > 1) {
+            x = x - (w * 0.5);
+        }
+        if (h > 1) {
+            y = y - (h * 0.5);
+        }
+
+        P.setPosition(x, y);
     };
 };

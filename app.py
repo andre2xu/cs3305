@@ -1,9 +1,25 @@
 # import flask modules
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, session
 
+from flask_session import Session
 
 app = Flask(__name__)
+
+app.config["SESSION_PERMAMENT"] = False
+
+app.config["SESSION_TYPE"] = "filesystem"
+
+Session(app)
+
 app.config["SECRET_KEY"] = "secretkeycs3305"
+
+
+
+Difficulty = 5
+
+Sound = 5
+
+Music = 5
 
 
 @app.route("/")     
@@ -15,6 +31,17 @@ def index():
 def game():
     return render_template("game.html")
 
+@app.route("/settings", methods=["GET", "POST"])
+def settings():
+    return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
+
+def Add_Difficulty():
+    Difficulty += 1
+    return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
+
+def Minus_Difficulty():
+    Difficulty -= 1
+    return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
 
 # New code added in for Kieran to modify if necessary:
 
