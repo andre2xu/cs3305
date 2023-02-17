@@ -148,24 +148,32 @@ export class Enemy extends Entity {
 
 
     // GETTERS
-    __getAngleToPlayer__(player) {
+    __getEnemyXandYDistanceFromPlayer__(player) {
         checks.checkIfInstance(player, Player);
-
-        /*
-            -90
-        -180    0
-            90
-        */
 
         const PLAYER_SPRITE = player.getSprite();
         const PLAYER_CENTER = player.getCenterCoordinates();
         const ENEMY_CENTER = this.getCenterCoordinates(); // relative to parent
 
         const ENEMY_X_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.x + PLAYER_SPRITE.x) - (ENEMY_CENTER.x + this.sprite_container.x);
-
         const ENEMY_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ENEMY_CENTER.y + this.sprite_container.y);
 
-        return Math.round(Math.atan2(ENEMY_Y_DISTANCE_FROM_PLAYER, ENEMY_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+        return {
+            dx: ENEMY_X_DISTANCE_FROM_PLAYER,
+            dy: ENEMY_Y_DISTANCE_FROM_PLAYER
+        };
+    };
+
+    __getAngleToPlayer__(player) {
+        /*
+            -90
+        -180    0
+            90
+        */
+
+        const DISTANCES = this.__getEnemyXandYDistanceFromPlayer__(player);
+
+        return Math.round(Math.atan2(DISTANCES.dy, DISTANCES.dx) * 180 / Math.PI);
     };
 
 
@@ -218,7 +226,7 @@ export class Enemy extends Entity {
                 if (COLLISION_DETECTION.status === false) {
                     this.moveSpriteNorth();
                 }
-                else {
+                else if (COLLISION_DETECTION.status === true) {
                     this.navigationMode = 1;
 
                     this.objectCollidedWith = COLLISION_DETECTION.object;
@@ -249,17 +257,12 @@ export class Enemy extends Entity {
         else if (this.navigationMode === 1) {
             // going around object
 
-            const PLAYER_SPRITE = player.getSprite();
-            const PLAYER_CENTER = player.getCenterCoordinates();
-            const ENEMY_CENTER = this.getCenterCoordinates(); // relative to parent
-
-            const ENEMY_X_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.x + PLAYER_SPRITE.x) - (ENEMY_CENTER.x + this.sprite_container.x);
-            const ENEMY_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ENEMY_CENTER.y + this.sprite_container.y);
-
-            const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(ENEMY_X_DISTANCE_FROM_PLAYER, 2) + Math.pow(ENEMY_Y_DISTANCE_FROM_PLAYER, 2)));
+            const DISTANCES = this.__getEnemyXandYDistanceFromPlayer__(player);
+            const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(DISTANCES.dx, 2) + Math.pow(DISTANCES.dy, 2)));
 
 
 
+            
         }
     };
 };
