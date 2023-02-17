@@ -16,6 +16,8 @@ export class Obstacle extends Objects {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
+        this.detours = [];
+
         OBSTACLES.push(this);
     };
 
@@ -112,6 +114,20 @@ export class Obstacle extends Objects {
         }
 
         return true;
+    };
+
+    getDetours() {
+        return this.detours;
+    };
+
+
+
+    // SETTERS
+    addDetour(x, y) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        this.detours.push({x: x, y: y});
     };
 };
 
