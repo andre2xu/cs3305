@@ -1,5 +1,6 @@
 import * as checks from '../helpers/checks.js';
 import { OBSTACLES } from '../core/collision.js';
+import { Entity } from '../sprites/entities.js';
 
 import {
     Sprite,
@@ -299,8 +300,26 @@ export class ObstacleFill extends FillSprite {
         return true;
     };
 
-    getDetours() {
-        return this.detours;
+    getClosestDetour(entity) {
+        checks.checkIfInstance(entity, Entity);
+
+        const ENTITY_CENTER = entity.getCenterCoordinates();
+
+        let closestDetour = null;
+        let previousDistance = null;
+        const NUM_OF_DETOURS = this.detours.length;
+
+        for (let i=0; i < NUM_OF_DETOURS; i++) {
+            const DETOUR = this.detours[i];
+            const DISTANCE = Math.round(Math.sqrt(Math.pow(ENTITY_CENTER.x - DETOUR.x, 2) + Math.pow(ENTITY_CENTER.y - DETOUR.y, 2)));
+
+            if (closestDetour === null || DISTANCE < previousDistance) {
+                closestDetour = DETOUR;
+                previousDistance = DISTANCE;
+            }
+        }
+
+        return closestDetour;
     };
 
 
