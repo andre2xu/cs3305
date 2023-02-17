@@ -19,8 +19,8 @@ export function checkForCollisionsAndMovePlayer(sprite) {
     checks.checkIfInstance(sprite, Player);
 
     if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.d) {
-        const COLLIDED_WITH_A_TOP_EDGE = checkCollisionWithTopEdgesOfObstacles(sprite);
-        const COLLIDED_WITH_A_LEFT_EDGE = checkCollisionWithLeftEdgesOfObstacles(sprite);
+        const COLLIDED_WITH_A_TOP_EDGE = checkCollisionWithTopEdgesOfObstacles(sprite).status;
+        const COLLIDED_WITH_A_LEFT_EDGE = checkCollisionWithLeftEdgesOfObstacles(sprite).status;
 
         if (COLLIDED_WITH_A_TOP_EDGE === false && COLLIDED_WITH_A_LEFT_EDGE === false) {
             sprite.moveSpriteSouthEast();
@@ -33,8 +33,8 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         }
     }
     else if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.a) {
-        const COLLIDED_WITH_A_TOP_EDGE = checkCollisionWithTopEdgesOfObstacles(sprite);
-        const COLLIDED_WITH_A_RIGHT_EDGE = checkCollisionWithRightEdgesOfObstacles(sprite);
+        const COLLIDED_WITH_A_TOP_EDGE = checkCollisionWithTopEdgesOfObstacles(sprite).status;
+        const COLLIDED_WITH_A_RIGHT_EDGE = checkCollisionWithRightEdgesOfObstacles(sprite).status;
 
         if (COLLIDED_WITH_A_TOP_EDGE === false && COLLIDED_WITH_A_RIGHT_EDGE === false) {
             sprite.moveSpriteSouthWest();
@@ -47,8 +47,8 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         }
     }
     else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.d) {
-        const COLLIDED_WITH_A_BOTTOM_EDGE = checkCollisionWithBottomEdgesOfObstacles(sprite);
-        const COLLIDED_WITH_A_LEFT_EDGE = checkCollisionWithLeftEdgesOfObstacles(sprite);
+        const COLLIDED_WITH_A_BOTTOM_EDGE = checkCollisionWithBottomEdgesOfObstacles(sprite).status;
+        const COLLIDED_WITH_A_LEFT_EDGE = checkCollisionWithLeftEdgesOfObstacles(sprite).status;
 
         if (COLLIDED_WITH_A_BOTTOM_EDGE === false && COLLIDED_WITH_A_LEFT_EDGE === false) {
             sprite.moveSpriteNorthEast();
@@ -61,8 +61,8 @@ export function checkForCollisionsAndMovePlayer(sprite) {
         }
     }
     else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.a) {
-        const COLLIDED_WITH_A_BOTTOM_EDGE = checkCollisionWithBottomEdgesOfObstacles(sprite);
-        const COLLIDED_WITH_A_RIGHT_EDGE = checkCollisionWithRightEdgesOfObstacles(sprite);
+        const COLLIDED_WITH_A_BOTTOM_EDGE = checkCollisionWithBottomEdgesOfObstacles(sprite).status;
+        const COLLIDED_WITH_A_RIGHT_EDGE = checkCollisionWithRightEdgesOfObstacles(sprite).status;
 
         if (COLLIDED_WITH_A_BOTTOM_EDGE === false && COLLIDED_WITH_A_RIGHT_EDGE === false) {
             sprite.moveSpriteNorthWest();
@@ -74,16 +74,16 @@ export function checkForCollisionsAndMovePlayer(sprite) {
             sprite.moveSpriteNorth();
         }
     }
-    else if (MOVEMENT_KEY_STATUSES.w && checkCollisionWithBottomEdgesOfObstacles(sprite) === false) {
+    else if (MOVEMENT_KEY_STATUSES.w && checkCollisionWithBottomEdgesOfObstacles(sprite).status === false) {
         sprite.moveSpriteNorth();
     }
-    else if (MOVEMENT_KEY_STATUSES.s && checkCollisionWithTopEdgesOfObstacles(sprite) === false) {
+    else if (MOVEMENT_KEY_STATUSES.s && checkCollisionWithTopEdgesOfObstacles(sprite).status === false) {
         sprite.moveSpriteSouth();
     }
-    else if (MOVEMENT_KEY_STATUSES.a && checkCollisionWithRightEdgesOfObstacles(sprite) === false) {
+    else if (MOVEMENT_KEY_STATUSES.a && checkCollisionWithRightEdgesOfObstacles(sprite).status === false) {
         sprite.moveSpriteWest();
     }
-    else if (MOVEMENT_KEY_STATUSES.d && checkCollisionWithLeftEdgesOfObstacles(sprite) === false) {
+    else if (MOVEMENT_KEY_STATUSES.d && checkCollisionWithLeftEdgesOfObstacles(sprite).status === false) {
         sprite.moveSpriteEast();
     }
 };

@@ -52,13 +52,22 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
                 else if (SB_above_TE === false) {
                     if (SLSR_between_LERE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (SL_before_LE && SR_between_LERE) {
-                        return true
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (SR_after_RE && SL_between_LERE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
@@ -90,13 +99,22 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
                 else if (SR_before_LE === false) {
                     if (STSB_between_TEBE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (ST_above_TE && SB_between_TEBE) {
-                        return true
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (SB_below_BE && ST_between_TEBE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
@@ -128,13 +146,22 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
                 else if (SL_after_RE === false) {
                     if (STSB_between_TEBE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (ST_above_TE && SB_between_TEBE) {
-                        return true
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (SB_below_BE && ST_between_TEBE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
@@ -166,20 +193,29 @@ function checkCollisionWithObstacles(sprite, side) {
                 }
                 else if (ST_below_BE === false) {
                     if (SLSR_between_LERE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (SL_before_LE && SR_between_LERE) {
-                        return true
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                     else if (SR_after_RE && SL_between_LERE) {
-                        return true;
+                        return {
+                            status: true,
+                            object: OBSTACLE
+                        };
                     }
                 }
             }
         }
     }
 
-    return false;
+    return {status: false, object: undefined};
 };
 
 export function checkCollisionWithLeftEdgesOfObstacles(sprite) {
