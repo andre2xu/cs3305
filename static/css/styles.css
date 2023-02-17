@@ -1,18 +1,14 @@
 html{
     background-color:  rgb(246, 242, 244);
+    background-image: url("../css/Backround_mansion.jpg");
+    background-size: cover;
     display: block;
-    margin: 0 2em;
     font-family: 'Chalkduster', 'Marker Felt', 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', serif;
+    color: white;
 }
 body{
     padding: 2em;
-}
-header{
-
-    background-color: rgb(246, 242, 244);
-}
-header *{
-    text-align: left;
+    text-align: center;
 }
 h1, h2{
     padding-left: 0.5em;
@@ -20,7 +16,6 @@ h1, h2{
 
 main{
     margin-top: 1rem;
-    text-align: left;
 }
 
 main *{
@@ -28,5 +23,12 @@ main *{
 }
 
 footer{    
-    color: black;
+    color: white;
+}
+
+button{
+    text-align: center;
+    color: white;
+    background-color: transparent;
+    border-color: white;
 }
