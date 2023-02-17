@@ -319,7 +319,10 @@ export class ObstacleFill extends FillSprite {
             }
         }
 
-        return closestDetour;
+        return {
+            detour: closestDetour,
+            distance: previousDistance
+        };
     };
 
 
