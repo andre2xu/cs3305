@@ -320,7 +320,7 @@ export class ObstacleFill extends FillSprite {
         }
 
         return {
-            detour: closestDetour,
+            coordinates: closestDetour,
             distance: previousDistance
         };
     };
