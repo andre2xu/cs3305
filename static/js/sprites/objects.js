@@ -300,6 +300,10 @@ export class ObstacleFill extends FillSprite {
         return true;
     };
 
+    getDetours() {
+        return this.detours;
+    };
+
     getClosestDetour(entity) {
         checks.checkIfInstance(entity, Entity);
 
@@ -319,20 +323,39 @@ export class ObstacleFill extends FillSprite {
             }
         }
 
-        return {
-            coordinates: closestDetour,
-            distance: previousDistance
-        };
+        if (closestDetour !== null && previousDistance !== null) {
+            return {
+                coordinates: closestDetour,
+                distance: previousDistance
+            };
+        }
+        else {
+            return 0;
+        }
     };
 
 
 
     // SETTERS
-    addDetour(x, y) {
-        checks.checkIfNumber(x);
-        checks.checkIfNumber(y);
+    addDetour(array_of_points) {
+        checks.checkIfArray(array_of_points);
 
-        this.detours.push({x: x, y: y});
+        const NUM_OF_ELEMENTS = array_of_points.length;
+
+        for (let i=0; i < NUM_OF_ELEMENTS; i++) {
+            const E = array_of_points[i];
+
+            checks.checkIfObject(E);
+
+            if (E.x === undefined || E.y === undefined) {
+                throw SyntaxError(`Element ${i} is not a valid point object. It must have an x and a y property`);
+            }
+
+            checks.checkIfNumber(E.x);
+            checks.checkIfNumber(E.y);
+        }
+
+        this.detours.push(array_of_points);
     };
 };
 
