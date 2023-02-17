@@ -47,3 +47,9 @@ export function checkIfKeyExistsInObject(o, k) {
         throw ReferenceError(`The key '${k}' doesn't exist in the object`);
     }
 };
+
+export function checkIfArray(x) {
+    if (x.constructor !== Array) {
+        throw TypeError("Not an array");
+    }
+};
