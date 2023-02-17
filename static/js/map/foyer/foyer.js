@@ -101,7 +101,7 @@ export const FOYER = (function () {
     const DTRX_1 = 140;
     const DTRY_1 = 220;
     const DTRX_2 = 60;
-    const DTRY_2 = DTRX_1;
+    const DTRY_2 = DTRY_1;
     const DTRX_3 = DTRX_2;
     const DTRY_3 = 40;
 
