@@ -2,6 +2,15 @@ import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
 
+import {
+    checkCollisionWithBottomEdgesOfObstacles,
+    checkCollisionWithLeftEdgesOfObstacles,
+    checkCollisionWithRightEdgesOfObstacles,
+    checkCollisionWithTopEdgesOfObstacles
+} from '../core/collision.js';
+
+
+
 export class Entity extends Sprite {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
@@ -130,6 +139,9 @@ export class Enemy extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
+        this.navigationMode = 0; // 0 = going after player | 1 = going around object
+        this.objectCollidedWith = null;
+
         NON_PLAYER_ENTITIES.push(this);
     };
 
@@ -147,13 +159,13 @@ export class Enemy extends Entity {
 
         const PLAYER_SPRITE = player.getSprite();
         const PLAYER_CENTER = player.getCenterCoordinates();
-        const ZOMBIE_CENTER = this.getCenterCoordinates(); // relative to parent
+        const ENEMY_CENTER = this.getCenterCoordinates(); // relative to parent
 
-        const ZOMBIE_X_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.x + PLAYER_SPRITE.x) - (ZOMBIE_CENTER.x + this.sprite_container.x);
+        const ENEMY_X_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.x + PLAYER_SPRITE.x) - (ENEMY_CENTER.x + this.sprite_container.x);
 
-        const ZOMBIE_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ZOMBIE_CENTER.y + this.sprite_container.y);
+        const ENEMY_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ENEMY_CENTER.y + this.sprite_container.y);
 
-        return Math.round(Math.atan2(ZOMBIE_Y_DISTANCE_FROM_PLAYER, ZOMBIE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+        return Math.round(Math.atan2(ENEMY_Y_DISTANCE_FROM_PLAYER, ENEMY_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
     };
 
 
@@ -179,47 +191,75 @@ export class Enemy extends Entity {
     moveToPlayer(player) {
         const PLAYER_ANGLE_FROM_ENEMY = this.__getAngleToPlayer__(player);
 
-        const PLAYER_N = PLAYER_ANGLE_FROM_ENEMY >= -120 && PLAYER_ANGLE_FROM_ENEMY <= -60;
+        if (this.navigationMode === 0) {
+            // going after player
 
-        const PLAYER_NW = PLAYER_ANGLE_FROM_ENEMY >= -150 && PLAYER_ANGLE_FROM_ENEMY <= -120;
+            const PLAYER_N = PLAYER_ANGLE_FROM_ENEMY >= -120 && PLAYER_ANGLE_FROM_ENEMY <= -60;
 
-        const PLAYER_W = (PLAYER_ANGLE_FROM_ENEMY >= -180 && PLAYER_ANGLE_FROM_ENEMY <= -150) || (PLAYER_ANGLE_FROM_ENEMY <= 180 && PLAYER_ANGLE_FROM_ENEMY >= 150);
+            const PLAYER_NW = PLAYER_ANGLE_FROM_ENEMY >= -150 && PLAYER_ANGLE_FROM_ENEMY <= -120;
 
-        const PLAYER_SW = PLAYER_ANGLE_FROM_ENEMY <= 150 && PLAYER_ANGLE_FROM_ENEMY >= 120;
+            const PLAYER_W = (PLAYER_ANGLE_FROM_ENEMY >= -180 && PLAYER_ANGLE_FROM_ENEMY <= -150) || (PLAYER_ANGLE_FROM_ENEMY <= 180 && PLAYER_ANGLE_FROM_ENEMY >= 150);
 
-        const PLAYER_S = PLAYER_ANGLE_FROM_ENEMY <= 120 && PLAYER_ANGLE_FROM_ENEMY >= 60;
+            const PLAYER_SW = PLAYER_ANGLE_FROM_ENEMY <= 150 && PLAYER_ANGLE_FROM_ENEMY >= 120;
 
-        const PLAYER_SE = PLAYER_ANGLE_FROM_ENEMY <= 60 && PLAYER_ANGLE_FROM_ENEMY >= 30;
+            const PLAYER_S = PLAYER_ANGLE_FROM_ENEMY <= 120 && PLAYER_ANGLE_FROM_ENEMY >= 60;
 
-        const PLAYER_E = (PLAYER_ANGLE_FROM_ENEMY <= 30 && PLAYER_ANGLE_FROM_ENEMY >= 0) || (PLAYER_ANGLE_FROM_ENEMY <= 0 && PLAYER_ANGLE_FROM_ENEMY >= -30);
+            const PLAYER_SE = PLAYER_ANGLE_FROM_ENEMY <= 60 && PLAYER_ANGLE_FROM_ENEMY >= 30;
 
-        const PLAYER_NE = PLAYER_ANGLE_FROM_ENEMY <= -30 && PLAYER_ANGLE_FROM_ENEMY >= -60;
+            const PLAYER_E = (PLAYER_ANGLE_FROM_ENEMY <= 30 && PLAYER_ANGLE_FROM_ENEMY >= 0) || (PLAYER_ANGLE_FROM_ENEMY <= 0 && PLAYER_ANGLE_FROM_ENEMY >= -30);
+
+            const PLAYER_NE = PLAYER_ANGLE_FROM_ENEMY <= -30 && PLAYER_ANGLE_FROM_ENEMY >= -60;
 
 
 
-        if (PLAYER_N) {
-            this.moveSpriteNorth();
+            if (PLAYER_N) {
+                const COLLISION_DETECTION = checkCollisionWithBottomEdgesOfObstacles(this);
+
+                if (COLLISION_DETECTION.status === false) {
+                    this.moveSpriteNorth();
+                }
+                else {
+                    this.navigationMode = 1;
+
+                    this.objectCollidedWith = COLLISION_DETECTION.object;
+                }
+            }
+            else if (PLAYER_NW) {
+                this.moveSpriteNorthWest();
+            }
+            else if (PLAYER_W) {
+                this.moveSpriteWest();
+            }
+            else if (PLAYER_SW) {
+                this.moveSpriteSouthWest();
+            }
+            else if (PLAYER_S) {
+                this.moveSpriteSouth();
+            }
+            else if (PLAYER_SE) {
+                this.moveSpriteSouthEast();
+            }
+            else if (PLAYER_E) {
+                this.moveSpriteEast();
+            }
+            else if (PLAYER_NE) {
+                this.moveSpriteNorthEast();
+            }
         }
-        else if (PLAYER_NW) {
-            this.moveSpriteNorthWest();
-        }
-        else if (PLAYER_W) {
-            this.moveSpriteWest();
-        }
-        else if (PLAYER_SW) {
-            this.moveSpriteSouthWest();
-        }
-        else if (PLAYER_S) {
-            this.moveSpriteSouth();
-        }
-        else if (PLAYER_SE) {
-            this.moveSpriteSouthEast();
-        }
-        else if (PLAYER_E) {
-            this.moveSpriteEast();
-        }
-        else if (PLAYER_NE) {
-            this.moveSpriteNorthEast();
+        else if (this.navigationMode === 1) {
+            // going around object
+
+            const PLAYER_SPRITE = player.getSprite();
+            const PLAYER_CENTER = player.getCenterCoordinates();
+            const ENEMY_CENTER = this.getCenterCoordinates(); // relative to parent
+
+            const ENEMY_X_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.x + PLAYER_SPRITE.x) - (ENEMY_CENTER.x + this.sprite_container.x);
+            const ENEMY_Y_DISTANCE_FROM_PLAYER = (PLAYER_CENTER.y + PLAYER_SPRITE.y) - (ENEMY_CENTER.y + this.sprite_container.y);
+
+            const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(ENEMY_X_DISTANCE_FROM_PLAYER, 2) + Math.pow(ENEMY_Y_DISTANCE_FROM_PLAYER, 2)));
+
+
+
         }
     };
 };
