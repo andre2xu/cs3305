@@ -98,12 +98,12 @@ export const FOYER = (function () {
 
 
     // temp
-    const DTRX_1 = 140;
+    const DTRX_1 = 200;
     const DTRY_1 = 220;
     const DTRX_2 = 60;
     const DTRY_2 = DTRY_1;
     const DTRX_3 = DTRX_2;
-    const DTRY_3 = 40;
+    const DTRY_3 = 30;
 
     FOYER.colorCoordinate(0xff0000, DTRX_1, DTRY_1, 5, 5);
     FOYER.colorCoordinate(0xff0000, DTRX_2, DTRY_2, 5, 5);
