@@ -95,9 +95,11 @@ export const FOYER = (function () {
     const WALL_TOP_Y_REDUCTION = 15;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
 
+    // temp
     const DTRX = 140;
     const DTRY = 220;
-    WALL.addDetour(DTRX, DTRY); // temp
+    WALL.addDetour(DTRX, DTRY);
+    FOYER.colorCoordinate(0xff0000, DTRX, DTRY, 5, 5);
 
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
@@ -252,12 +254,6 @@ export const FOYER = (function () {
         FOYER.getWidth() - PLANT_2.getSpriteFrameDimensions().w,
         FOYER.getHeight() - (PLANT_2.getSpriteFrameDimensions().h + 5)
     );
-
-
-
-    // temp
-    const POINT = new DecorationFill(0xff0000, 0, 0, 3, 3);
-    FOYER.addStaticSprite(POINT, 'p1', DTRX, DTRY);
 
 
 
