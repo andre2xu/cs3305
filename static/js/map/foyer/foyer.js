@@ -95,7 +95,9 @@ export const FOYER = (function () {
     const WALL_TOP_Y_REDUCTION = 15;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
 
-    WALL.addDetour(0, 100); // temp
+    const DTRX = 60;
+    const DTRY = 220;
+    WALL.addDetour(DTRX, DTRY); // temp
 
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
@@ -255,7 +257,7 @@ export const FOYER = (function () {
 
     // temp
     const POINT = new DecorationFill(0xff0000, 0, 0, 3, 3);
-    FOYER.addStaticSprite(POINT, 'p1', 60, 220);
+    FOYER.addStaticSprite(POINT, 'p1', DTRX, DTRY);
 
 
 
