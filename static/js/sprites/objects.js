@@ -331,11 +331,23 @@ export class ObstacleFill extends FillSprite {
             checks.checkIfNumber(E.y);
         }
 
-        this.detours.push(array_of_points);
+        this.detours[edge].push(array_of_points);
     };
 
     addBottomEdgeDetour(array_of_points) {
         this.__addDetour__(array_of_points, 'bottom');
+    };
+
+    addTopEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'top');
+    };
+
+    addLeftEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'left');
+    };
+
+    addRightEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'right');
     };
 };
 
