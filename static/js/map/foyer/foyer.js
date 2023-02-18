@@ -125,12 +125,20 @@ export const FOYER = (function () {
     FOYER.addLeftEdgeDetour(
         WALL,
         [
-            {x: 50, y: 30},
+            {x: 80, y: 30},
             {x: 260, y: 30},
             {x: 440, y: 30},
             {x: 440, y: 200}
         ],
-        // 0x4af7f4
+        0x4af7f4
+    );
+
+    FOYER.addLeftEdgeDetour(
+        WALL,
+        [
+            {x: 60, y: 170}
+        ],
+        0xff0000
     );
 
 
