@@ -215,7 +215,7 @@ export class Enemy extends Entity {
 
     getClosestDetour(object) {
         if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
-            throw TypeError("Not an obstacle.");
+            return; // silently fail
         }
 
         const ALL_DETOURS = object.getDetours();
@@ -269,7 +269,18 @@ export class Enemy extends Entity {
         this.__switchFrameToAngle__(PLAYER_ANGLE_FROM_ENEMY);
     };
 
+    stopFollowingPlayerAndMoveAroundObject(object) {
+        if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
+            throw TypeError("Object must be an obstacle.");
+        }
+
+        this.navigationMode = 1;
+        this.objectCollidedWith = object;
+    };
+
     stopFollowingDetourAndChasePlayerAgain(player) {
+        checks.checkIfInstance(player, Player);
+
         this.detourChosen = null;
         this.detourPointIndex = 0;
 
@@ -286,17 +297,17 @@ export class Enemy extends Entity {
 
             const DIRECTION = this.__getMoveDirectionFromAngle__(PLAYER_ANGLE_FROM_ENEMY);
 
+            let collision_detection = null;
+
             switch (DIRECTION) {
                 case 'n':
-                    const COLLISION_DETECTION = checkCollisionWithBottomEdgesOfObstacles(this);
+                    collision_detection = checkCollisionWithBottomEdgesOfObstacles(this);
 
-                    if (COLLISION_DETECTION.status === false) {
+                    if (collision_detection.status === false) {
                         this.moveSpriteNorth();
                     }
-                    else if (COLLISION_DETECTION.status === true) {
-                        this.navigationMode = 1;
-
-                        this.objectCollidedWith = COLLISION_DETECTION.object;
+                    else if (collision_detection.status === true) {
+                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection.object);
                     }
                     break;
                 case 'nw':
@@ -315,7 +326,14 @@ export class Enemy extends Entity {
                     this.moveSpriteSouthEast();
                     break;
                 case 'e':
-                    this.moveSpriteEast();
+                    collision_detection = checkCollisionWithLeftEdgesOfObstacles(this);
+
+                    if (collision_detection.status === false) {
+                        this.moveSpriteEast();
+                    }
+                    else {
+                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection.object);
+                    }
                     break;
                 case 'ne':
                     this.moveSpriteNorthEast();
@@ -331,10 +349,10 @@ export class Enemy extends Entity {
 
 
 
-            if (this.detourChosen === null) {
+            if (this.detourChosen === null && false === true) {
                 this.detourChosen = this.getClosestDetour(this.objectCollidedWith); // gets copy of saved detours
             }
-            else if (this.detourChosen.constructor === Array) {
+            else if (this.detourChosen !== null && this.detourChosen.constructor === Array) {
                 const NUM_OF_DETOURS = this.detourChosen.length;
 
                 if (NUM_OF_DETOURS > 0) {
