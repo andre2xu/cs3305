@@ -98,24 +98,24 @@ export const FOYER = (function () {
 
 
     // WALL BOTTOM EDGE DETOURS
-    FOYER.addDetour(
+    FOYER.addBottomEdgeDetour(
         WALL,
         [
             {x: 190, y: 220},
             {x: 60, y: 220},
             {x: 60, y: 30}
         ],
-        // 0x4af7f4
+        0x4af7f4
     );
 
-    FOYER.addDetour(
+    FOYER.addBottomEdgeDetour(
         WALL,
         [
             {x: 310, y: 220},
             {x: 455, y: 220},
             {x: 455, y: 30}
         ],
-        // 0xebb93b
+        0xebb93b
     );
 
 
