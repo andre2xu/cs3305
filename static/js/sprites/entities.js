@@ -214,7 +214,7 @@ export class Enemy extends Entity {
     };
 
     getClosestDetour(object) {
-        if (object instanceof Obstacle && object instanceof ObstacleFill === false) {
+        if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
             throw TypeError("Not an obstacle.");
         }
 
