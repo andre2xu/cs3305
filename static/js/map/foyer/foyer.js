@@ -97,42 +97,31 @@ export const FOYER = (function () {
 
 
 
-    // WALL DETOURS
-    const X1 = 190;
-    const X2 = 60;
-    const X3 = 60;
-    const Y1 = 220;
-    const Y2 = 220;
-    const Y3 = 30;
+    // WALL BOTTOM EDGE DETOURS
+    FOYER.addDetour(
+        WALL,
+        [
+            {x: 190, y: 220},
+            {x: 60, y: 220},
+            {x: 60, y: 30}
+        ],
+        // 0x4af7f4
+    );
 
-    const D1_COLOR = 0x4af7f4;
-    FOYER.colorCoordinate(D1_COLOR, X1, Y1, 5, 5);
-    FOYER.colorCoordinate(D1_COLOR, X2, Y2, 5, 5);
-    FOYER.colorCoordinate(D1_COLOR, X3, Y3, 5, 5);
+    FOYER.addDetour(
+        WALL,
+        [
+            {x: 310, y: 220},
+            {x: 455, y: 220},
+            {x: 455, y: 30}
+        ],
+        // 0xebb93b
+    );
 
-    WALL.addDetour([
-        {x: X1, y: Y1},
-        {x: X2, y: Y2},
-        {x: X3, y: Y3}
-    ]);
 
-    const X4 = 310;
-    const X5 = 455;
-    const X6 = 455;
-    const Y4 = 220;
-    const Y5 = 220;
-    const Y6 = 30;
 
-    const D2_COLOR = 0x46eb46;
-    FOYER.colorCoordinate(D2_COLOR, X4, Y4, 5, 5);
-    FOYER.colorCoordinate(D2_COLOR, X5, Y5, 5, 5);
-    FOYER.colorCoordinate(D2_COLOR, X6, Y6, 5, 5);
 
-    WALL.addDetour([
-        {x: X4, y: Y4},
-        {x: X5, y: Y5},
-        {x: X6, y: Y6}
-    ]);
+    // WALL LEFT EDGE DETOURS
 
 
 
