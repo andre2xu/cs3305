@@ -200,7 +200,12 @@ export class ObstacleFill extends FillSprite {
     constructor(color, posX, posY, width, height) {
         super(color, posX, posY, width, height);
 
-        this.detours = [];
+        this.detours = {
+            'top': [],
+            'bottom': [],
+            'left': [],
+            'right': []
+        };
 
         OBSTACLES.push(this);
     };
@@ -307,8 +312,9 @@ export class ObstacleFill extends FillSprite {
 
 
     // SETTERS
-    addDetour(array_of_points) {
+    __addDetour__(array_of_points, edge) {
         checks.checkIfArray(array_of_points);
+        checks.checkIfString(edge);
 
         const NUM_OF_ELEMENTS = array_of_points.length;
 
@@ -326,6 +332,10 @@ export class ObstacleFill extends FillSprite {
         }
 
         this.detours.push(array_of_points);
+    };
+
+    addBottomEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'bottom');
     };
 };
 
