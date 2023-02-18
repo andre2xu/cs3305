@@ -97,7 +97,7 @@ export const FOYER = (function () {
 
 
 
-    // temp
+    // WALL DETOURS
     const X1 = 190;
     const X2 = 60;
     const X3 = 60;
@@ -105,9 +105,10 @@ export const FOYER = (function () {
     const Y2 = 220;
     const Y3 = 30;
 
-    FOYER.colorCoordinate(0xff0000, X1, Y1, 5, 5);
-    FOYER.colorCoordinate(0xff0000, X2, Y2, 5, 5);
-    FOYER.colorCoordinate(0xff0000, X3, Y3, 5, 5);
+    const D1_COLOR = 0x4af7f4;
+    FOYER.colorCoordinate(D1_COLOR, X1, Y1, 5, 5);
+    FOYER.colorCoordinate(D1_COLOR, X2, Y2, 5, 5);
+    FOYER.colorCoordinate(D1_COLOR, X3, Y3, 5, 5);
 
     WALL.addDetour([
         {x: X1, y: Y1},
@@ -122,9 +123,10 @@ export const FOYER = (function () {
     const Y5 = 220;
     const Y6 = 30;
 
-    FOYER.colorCoordinate(0xff0000, X4, Y4, 5, 5);
-    FOYER.colorCoordinate(0xff0000, X5, Y5, 5, 5);
-    FOYER.colorCoordinate(0xff0000, X6, Y6, 5, 5);
+    const D2_COLOR = 0x46eb46;
+    FOYER.colorCoordinate(D2_COLOR, X4, Y4, 5, 5);
+    FOYER.colorCoordinate(D2_COLOR, X5, Y5, 5, 5);
+    FOYER.colorCoordinate(D2_COLOR, X6, Y6, 5, 5);
 
     WALL.addDetour([
         {x: X4, y: Y4},
