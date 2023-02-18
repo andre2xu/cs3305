@@ -122,6 +122,16 @@ export const FOYER = (function () {
 
 
     // WALL LEFT EDGE DETOURS
+    FOYER.addLeftEdgeDetour(
+        WALL,
+        [
+            {x: 50, y: 30},
+            {x: 260, y: 30},
+            {x: 440, y: 30},
+            {x: 440, y: 200}
+        ],
+        // 0x4af7f4
+    );
 
 
 

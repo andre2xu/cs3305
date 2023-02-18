@@ -157,7 +157,7 @@ window.addEventListener('load', () => {
 
 
         // ZOMBIE MOVEMENT
-        // zombie.moveToPlayer(player);
+        zombie.moveToPlayer(player);
     });
 
 
