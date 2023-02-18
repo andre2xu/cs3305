@@ -305,8 +305,10 @@ export class ObstacleFill extends FillSprite {
         return true;
     };
 
-    getDetours() {
-        return this.detours;
+    getDetours(edge) {
+        checks.checkIfString(edge);
+
+        return this.detours[edge];
     };
 
 
