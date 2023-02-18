@@ -105,7 +105,7 @@ export const FOYER = (function () {
             {x: 60, y: 220},
             {x: 60, y: 30}
         ],
-        0x4af7f4
+        // 0x4af7f4
     );
 
     FOYER.addBottomEdgeDetour(
@@ -115,7 +115,7 @@ export const FOYER = (function () {
             {x: 455, y: 220},
             {x: 455, y: 30}
         ],
-        0xebb93b
+        // 0xebb93b
     );
 
 
