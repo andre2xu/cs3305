@@ -269,11 +269,13 @@ export class Enemy extends Entity {
         this.__switchFrameToAngle__(PLAYER_ANGLE_FROM_ENEMY);
     };
 
-    stopFollowingDetourAndChasePlayerAgain() {
+    stopFollowingDetourAndChasePlayerAgain(player) {
         this.detourChosen = null;
         this.detourPointIndex = 0;
 
         this.navigationMode = 0;
+
+        this.__switchFrameToAngle__(this.__getAngleToPlayer__(player));
     };
 
     moveToPlayer(player) {
@@ -345,7 +347,7 @@ export class Enemy extends Entity {
                         this.moveToDetourPoint(POINT);
                     }
                     else {
-                        this.stopFollowingDetourAndChasePlayerAgain();
+                        this.stopFollowingDetourAndChasePlayerAgain(player);
 
                         return;
                     }
@@ -357,7 +359,7 @@ export class Enemy extends Entity {
 
                     // stop following detour since the last point has been reached
                     if (this.detourPointIndex === this.detourChosen.length) {
-                        this.stopFollowingDetourAndChasePlayerAgain();
+                        this.stopFollowingDetourAndChasePlayerAgain(player);
                     }
                 }
             }
