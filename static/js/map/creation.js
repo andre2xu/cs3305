@@ -1,5 +1,10 @@
 import * as checks from '../helpers/checks.js';
-import { DecorationFill } from '../sprites/objects.js';
+
+import {
+    Obstacle,
+    ObstacleFill,
+    DecorationFill
+} from '../sprites/objects.js';
 
 import {
     Sprite,
@@ -209,5 +214,23 @@ export class PlayableArea {
         }
 
         P.setPosition(x, y);
+    };
+
+    addDetour(object, array_of_points, color) {
+        if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
+            throw TypeError("Object must be an obstacle.");
+        }
+
+        object.addDetour(array_of_points);
+
+        if (typeof color === 'number') {
+            const NUM_OF_POINTS = array_of_points.length;
+
+            for (let i=0; i < NUM_OF_POINTS; i++) {
+                const POINT = array_of_points[i];
+
+                this.colorCoordinate(color, POINT.x, POINT.y, 5, 5);
+            }
+        }
     };
 };
