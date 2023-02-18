@@ -216,12 +216,27 @@ export class PlayableArea {
         P.setPosition(x, y);
     };
 
-    addDetour(object, array_of_points, color) {
+    __addDetour__(object, edge, array_of_points, color) {
         if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
             throw TypeError("Object must be an obstacle.");
         }
 
-        object.addDetour(array_of_points);
+        checks.checkIfString(edge);
+
+        switch (edge) {
+            case 'bottom':
+                object.addBottomEdgeDetour(array_of_points);
+                break;
+            case 'top':
+                object.addTopEdgeDetour(array_of_points);
+                break;
+            case 'left':
+                object.addLeftEdgeDetour(array_of_points);
+                break;
+            case 'right':
+                object.addRightEdgeDetour(array_of_points);
+                break;
+        }
 
         if (typeof color === 'number') {
             const NUM_OF_POINTS = array_of_points.length;
@@ -232,5 +247,41 @@ export class PlayableArea {
                 this.colorCoordinate(color, POINT.x, POINT.y, 5, 5);
             }
         }
+    };
+
+    addBottomEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'bottom',
+            array_of_points,
+            color
+        );
+    };
+
+    addTopEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'top',
+            array_of_points,
+            color
+        );
+    };
+
+    addLeftEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'left',
+            array_of_points,
+            color
+        );
+    };
+
+    addRightEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'right',
+            array_of_points,
+            color
+        );
     };
 };
