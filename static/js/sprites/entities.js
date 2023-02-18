@@ -316,47 +316,72 @@ export class Enemy extends Entity {
 
             const DIRECTION = this.__getMoveDirectionFromAngle__(PLAYER_ANGLE_FROM_ENEMY);
 
-            let collision_detection = null;
+            const BEC = checkCollisionWithBottomEdgesOfObstacles(this);
+            const TEC = checkCollisionWithTopEdgesOfObstacles(this);
 
-            switch (DIRECTION) {
-                case 'n':
-                    collision_detection = checkCollisionWithBottomEdgesOfObstacles(this);
+            if (DIRECTION === 'e' || DIRECTION === 'ne' || DIRECTION === 'se') {
+                const LEC = checkCollisionWithLeftEdgesOfObstacles(this);
 
-                    if (collision_detection.status === false) {
-                        this.moveSpriteNorth();
-                    }
-                    else if (collision_detection.status === true) {
-                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection);
-                    }
-                    break;
-                case 'nw':
-                    this.moveSpriteNorthWest();
-                    break;
-                case 'w':
-                    this.moveSpriteWest();
-                    break;
-                case 'sw':
-                    this.moveSpriteSouthWest();
-                    break;
-                case 's':
+                switch (DIRECTION) {
+                    case 'e':
+                        if (LEC.status === false) {
+                            this.moveSpriteEast();
+                        }
+                        else if (LEC.status === true) {
+                            this.stopFollowingPlayerAndMoveAroundObject(LEC);
+                        }
+                        break;
+                    case 'ne':
+                        if (BEC.status === false && LEC.status === false) {
+                            this.moveSpriteNorthEast();
+                        }
+                        break;
+                    case 'se':
+                        if (TEC.status === false && LEC.status === false) {
+                            this.moveSpriteSouthEast();
+                        }
+                        break;
+                }
+            }
+            else if (DIRECTION === 'w' || DIRECTION === 'nw' || DIRECTION === 'sw') {
+                const REC = checkCollisionWithRightEdgesOfObstacles(this);
+
+                switch (DIRECTION) {
+                    case 'w':
+                        if (REC.status === false) {
+                            this.moveSpriteWest();
+                        }
+                        else if (REC.status === true) {
+                            this.stopFollowingPlayerAndMoveAroundObject(REC);
+                        }
+                        break;
+                    case 'nw':
+                        if (BEC.status === false && REC.status === false) {
+                            this.moveSpriteNorthWest();
+                        }
+                        break;
+                    case 'sw':
+                        if (TEC.status === false && REC.status === false) {
+                            this.moveSpriteSouthWest();
+                        }
+                        break;
+                }
+            }
+            else if (DIRECTION === 'n') {
+                if (BEC.status === false) {
+                    this.moveSpriteNorth();
+                }
+                else if (BEC.status === true) {
+                    this.stopFollowingPlayerAndMoveAroundObject(BEC);
+                }
+            }
+            else if (DIRECTION === 's') {
+                if (TEC.status === false) {
                     this.moveSpriteSouth();
-                    break;
-                case 'se':
-                    this.moveSpriteSouthEast();
-                    break;
-                case 'e':
-                    collision_detection = checkCollisionWithLeftEdgesOfObstacles(this);
-
-                    if (collision_detection.status === false) {
-                        this.moveSpriteEast();
-                    }
-                    else {
-                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection);
-                    }
-                    break;
-                case 'ne':
-                    this.moveSpriteNorthEast();
-                    break;
+                }
+                else if (TEC.status === true) {
+                    this.stopFollowingPlayerAndMoveAroundObject(TEC);
+                }
             }
         }
         else if (this.navigationMode === 1) {

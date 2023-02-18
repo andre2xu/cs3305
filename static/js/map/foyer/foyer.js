@@ -130,7 +130,7 @@ export const FOYER = (function () {
             {x: 440, y: 30},
             {x: 440, y: 200}
         ],
-        0x4af7f4
+        // 0x4af7f4
     );
 
     FOYER.addLeftEdgeDetour(
@@ -138,7 +138,7 @@ export const FOYER = (function () {
         [
             {x: 60, y: 170}
         ],
-        0xff0000
+        // 0xff0000
     );
 
 
