@@ -146,6 +146,7 @@ export class Enemy extends Entity {
 
         this.navigationMode = 0;
         this.objectCollidedWith = null;
+        this.edgeCollidedWith = null;
 
         this.detourChosen = null;
         this.detourPointIndex = 0;
@@ -213,12 +214,19 @@ export class Enemy extends Entity {
         return Math.round(Math.atan2(DISTANCES.dy, DISTANCES.dx) * 180 / Math.PI);
     };
 
-    getClosestDetour(object) {
+    getClosestDetour(object, edge) {
         if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
             return; // silently fail
         }
 
-        const ALL_DETOURS = object.getDetours();
+        checks.checkIfString(edge);
+        edge = edge.toLowerCase();
+
+        if (edge !== 'bottom' && edge !== 'top' && edge !== 'left' && edge !== 'right') {
+            throw ReferenceError("Edge can only be one of the following: top, bottom, left, right");
+        }
+
+        const ALL_DETOURS = object.getDetours(edge);
 
         const ENTITY_CENTER = this.getCenterCoordinates();
 
@@ -269,13 +277,22 @@ export class Enemy extends Entity {
         this.__switchFrameToAngle__(PLAYER_ANGLE_FROM_ENEMY);
     };
 
-    stopFollowingPlayerAndMoveAroundObject(object) {
-        if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
+    stopFollowingPlayerAndMoveAroundObject(collision_data) {
+        checks.checkIfObject(collision_data);
+
+        if (collision_data.object instanceof Obstacle === false && collision_data.object instanceof ObstacleFill === false) {
             throw TypeError("Object must be an obstacle.");
         }
 
+        if (collision_data.edge === undefined) {
+            throw SyntaxError("Collision data is missing edge information.");
+        }
+
+        checks.checkIfString(collision_data.edge);
+
         this.navigationMode = 1;
-        this.objectCollidedWith = object;
+        this.objectCollidedWith = collision_data.object;
+        this.edgeCollidedWith = collision_data.edge;
     };
 
     stopFollowingDetourAndChasePlayerAgain(player) {
@@ -285,6 +302,8 @@ export class Enemy extends Entity {
         this.detourPointIndex = 0;
 
         this.navigationMode = 0;
+        this.objectCollidedWith = null;
+        this.edgeCollidedWith = null;
 
         this.__switchFrameToAngle__(this.__getAngleToPlayer__(player));
     };
@@ -307,7 +326,7 @@ export class Enemy extends Entity {
                         this.moveSpriteNorth();
                     }
                     else if (collision_detection.status === true) {
-                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection.object);
+                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection);
                     }
                     break;
                 case 'nw':
@@ -332,7 +351,7 @@ export class Enemy extends Entity {
                         this.moveSpriteEast();
                     }
                     else {
-                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection.object);
+                        this.stopFollowingPlayerAndMoveAroundObject(collision_detection);
                     }
                     break;
                 case 'ne':
@@ -349,8 +368,8 @@ export class Enemy extends Entity {
 
 
 
-            if (this.detourChosen === null && false === true) {
-                this.detourChosen = this.getClosestDetour(this.objectCollidedWith); // gets copy of saved detours
+            if (this.detourChosen === null && this.edgeCollidedWith !== null) {
+                this.detourChosen = this.getClosestDetour(this.objectCollidedWith, this.edgeCollidedWith); // gets copy of saved detours
             }
             else if (this.detourChosen !== null && this.detourChosen.constructor === Array) {
                 const NUM_OF_DETOURS = this.detourChosen.length;
