@@ -98,21 +98,38 @@ export const FOYER = (function () {
 
 
     // temp
-    const DTRX_1 = 200;
-    const DTRY_1 = 220;
-    const DTRX_2 = 60;
-    const DTRY_2 = DTRY_1;
-    const DTRX_3 = DTRX_2;
-    const DTRY_3 = 30;
+    const X1 = 190;
+    const X2 = 60;
+    const X3 = 60;
+    const Y1 = 220;
+    const Y2 = 220;
+    const Y3 = 30;
 
-    FOYER.colorCoordinate(0xff0000, DTRX_1, DTRY_1, 5, 5);
-    FOYER.colorCoordinate(0xff0000, DTRX_2, DTRY_2, 5, 5);
-    FOYER.colorCoordinate(0xff0000, DTRX_3, DTRY_3, 5, 5);
+    FOYER.colorCoordinate(0xff0000, X1, Y1, 5, 5);
+    FOYER.colorCoordinate(0xff0000, X2, Y2, 5, 5);
+    FOYER.colorCoordinate(0xff0000, X3, Y3, 5, 5);
 
     WALL.addDetour([
-        {x: DTRX_1, y: DTRY_1},
-        {x: DTRX_2, y: DTRY_2},
-        {x: DTRX_3, y: DTRY_3}
+        {x: X1, y: Y1},
+        {x: X2, y: Y2},
+        {x: X3, y: Y3}
+    ]);
+
+    const X4 = 310;
+    const X5 = 455;
+    const X6 = 455;
+    const Y4 = 220;
+    const Y5 = 220;
+    const Y6 = 30;
+
+    FOYER.colorCoordinate(0xff0000, X4, Y4, 5, 5);
+    FOYER.colorCoordinate(0xff0000, X5, Y5, 5, 5);
+    FOYER.colorCoordinate(0xff0000, X6, Y6, 5, 5);
+
+    WALL.addDetour([
+        {x: X4, y: Y4},
+        {x: X5, y: Y5},
+        {x: X6, y: Y6}
     ]);
 
 
