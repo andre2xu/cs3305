@@ -22,7 +22,7 @@ export class Entity extends Sprite {
 
         this.movementOffset = 5;
         this.events = {
-            move: null
+            move: []
         };
     };
 
@@ -47,13 +47,14 @@ export class Entity extends Sprite {
         checks.checkIfNumber(y);
 
         if (this.events['move'] !== null) {
-            this.events['move']({
-                old_posX: this.sprite_container.x,
-                old_posY: this.sprite_container.y,
-                new_posX: this.sprite_container.x + x,
-                new_posY: this.sprite_container.y + y,
-                currentFrame: this.currentFrame
-            });
+            const EVENT_CALLBACKS = this.events['move'];
+            const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
+
+            for (let i=0; i < NUM_OF_CALLBACKS; i++) {
+                EVENT_CALLBACKS[i]({
+                    currentFrame: this.currentFrame
+                });
+            }
         } 
 
         this.sprite_container.x += x;
@@ -96,6 +97,47 @@ export class Entity extends Sprite {
 export class Player extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
+
+        // movement animation
+        let reset_to_idle_timer = null;
+
+        this.addEvent('move', (event) => {
+            clearTimeout(reset_to_idle_timer);
+
+            reset_to_idle_timer = setTimeout(() => {
+                this.rotateToMouse(); // resets player sprite to the idle frame
+            }, 100);
+
+            if (new Date().getMilliseconds() % 2 === 0) {
+                if (event.currentFrame === 's' || event.currentFrame === 'sr') {
+                    this.switchFrame('sl');
+                }
+                else if (event.currentFrame === 'sl') {
+                    this.switchFrame('sr');
+                }
+                else if (event.currentFrame === 'e' || event.currentFrame === 'er') {
+                    this.switchFrame('el');
+                }
+                else if (event.currentFrame === 'w' || event.currentFrame === 'wr') {
+                    this.switchFrame('wl');
+                }
+                else if (event.currentFrame === 'wl') {
+                    this.switchFrame('wr');
+                }
+                else if (event.currentFrame === 'e' || event.currentFrame === 'er') {
+                    this.switchFrame('el');
+                }
+                else if (event.currentFrame === 'el') {
+                    this.switchFrame('er');
+                }
+                else if (event.currentFrame === 'n' || event.currentFrame === 'nr') {
+                    this.switchFrame('nl');
+                }
+                else if (event.currentFrame === 'nl') {
+                    this.switchFrame('nr');
+                }
+            }
+        });
     };
 
 
