@@ -200,7 +200,12 @@ export class ObstacleFill extends FillSprite {
     constructor(color, posX, posY, width, height) {
         super(color, posX, posY, width, height);
 
-        this.detours = [];
+        this.detours = {
+            'top': [],
+            'bottom': [],
+            'left': [],
+            'right': []
+        };
 
         OBSTACLES.push(this);
     };
@@ -300,15 +305,18 @@ export class ObstacleFill extends FillSprite {
         return true;
     };
 
-    getDetours() {
-        return this.detours;
+    getDetours(edge) {
+        checks.checkIfString(edge);
+
+        return this.detours[edge];
     };
 
 
 
     // SETTERS
-    addDetour(array_of_points) {
+    __addDetour__(array_of_points, edge) {
         checks.checkIfArray(array_of_points);
+        checks.checkIfString(edge);
 
         const NUM_OF_ELEMENTS = array_of_points.length;
 
@@ -325,7 +333,23 @@ export class ObstacleFill extends FillSprite {
             checks.checkIfNumber(E.y);
         }
 
-        this.detours.push(array_of_points);
+        this.detours[edge].push(array_of_points);
+    };
+
+    addBottomEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'bottom');
+    };
+
+    addTopEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'top');
+    };
+
+    addLeftEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'left');
+    };
+
+    addRightEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'right');
     };
 };
 

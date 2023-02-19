@@ -1,5 +1,10 @@
 import * as checks from '../helpers/checks.js';
-import { DecorationFill } from '../sprites/objects.js';
+
+import {
+    Obstacle,
+    ObstacleFill,
+    DecorationFill
+} from '../sprites/objects.js';
 
 import {
     Sprite,
@@ -209,5 +214,74 @@ export class PlayableArea {
         }
 
         P.setPosition(x, y);
+    };
+
+    __addDetour__(object, edge, array_of_points, color) {
+        if (object instanceof Obstacle === false && object instanceof ObstacleFill === false) {
+            throw TypeError("Object must be an obstacle.");
+        }
+
+        checks.checkIfString(edge);
+
+        switch (edge) {
+            case 'bottom':
+                object.addBottomEdgeDetour(array_of_points);
+                break;
+            case 'top':
+                object.addTopEdgeDetour(array_of_points);
+                break;
+            case 'left':
+                object.addLeftEdgeDetour(array_of_points);
+                break;
+            case 'right':
+                object.addRightEdgeDetour(array_of_points);
+                break;
+        }
+
+        if (typeof color === 'number') {
+            const NUM_OF_POINTS = array_of_points.length;
+
+            for (let i=0; i < NUM_OF_POINTS; i++) {
+                const POINT = array_of_points[i];
+
+                this.colorCoordinate(color, POINT.x, POINT.y, 5, 5);
+            }
+        }
+    };
+
+    addBottomEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'bottom',
+            array_of_points,
+            color
+        );
+    };
+
+    addTopEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'top',
+            array_of_points,
+            color
+        );
+    };
+
+    addLeftEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'left',
+            array_of_points,
+            color
+        );
+    };
+
+    addRightEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(
+            object,
+            'right',
+            array_of_points,
+            color
+        );
     };
 };

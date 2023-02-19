@@ -97,23 +97,94 @@ export const FOYER = (function () {
 
 
 
-    // temp
-    const DTRX_1 = 200;
-    const DTRY_1 = 220;
-    const DTRX_2 = 60;
-    const DTRY_2 = DTRY_1;
-    const DTRX_3 = DTRX_2;
-    const DTRY_3 = 30;
+    // WALL BOTTOM EDGE DETOURS
+    FOYER.addBottomEdgeDetour(
+        WALL,
+        [
+            {x: 190, y: 220},
+            {x: 60, y: 220},
+            {x: 60, y: 30}
+        ],
+        // 0x4af7f4
+    );
 
-    FOYER.colorCoordinate(0xff0000, DTRX_1, DTRY_1, 5, 5);
-    FOYER.colorCoordinate(0xff0000, DTRX_2, DTRY_2, 5, 5);
-    FOYER.colorCoordinate(0xff0000, DTRX_3, DTRY_3, 5, 5);
+    FOYER.addBottomEdgeDetour(
+        WALL,
+        [
+            {x: 310, y: 220},
+            {x: 455, y: 220},
+            {x: 455, y: 30}
+        ],
+        // 0xebb93b
+    );
 
-    WALL.addDetour([
-        {x: DTRX_1, y: DTRY_1},
-        {x: DTRX_2, y: DTRY_2},
-        {x: DTRX_3, y: DTRY_3}
-    ]);
+
+
+
+    // WALL LEFT EDGE DETOURS
+    FOYER.addLeftEdgeDetour(
+        WALL,
+        [
+            {x: 80, y: 30},
+            {x: 260, y: 30},
+            {x: 440, y: 30},
+            {x: 440, y: 200}
+        ],
+        // 0x4af7f4
+    );
+
+    FOYER.addLeftEdgeDetour(
+        WALL,
+        [
+            {x: 60, y: 170}
+        ],
+        // 0xff0000
+    );
+
+
+
+    // WALL RIGHT EDGE DETOURS
+    FOYER.addRightEdgeDetour(
+        WALL,
+        [
+            {x: 425, y: 30},
+            {x: 260, y: 30},
+            {x: 60, y: 30},
+            {x: 60, y: 200},
+        ],
+        // 0x4af7f4
+    );
+
+    FOYER.addRightEdgeDetour(
+        WALL,
+        [
+            {x: 460, y: 170}
+        ],
+        // 0xff0000
+    );
+
+
+
+    // WALL TOP EDGE DETOURS
+    FOYER.addTopEdgeDetour(
+        WALL,
+        [
+            {x: 180, y: 30},
+            {x: 60, y: 30},
+            {x: 60, y: 200},
+        ],
+        // 0xff0000
+    );
+
+    FOYER.addTopEdgeDetour(
+        WALL,
+        [
+            {x: 330, y: 30},
+            {x: 440, y: 30},
+            {x: 440, y: 200},
+        ],
+        // 0xcaeb46
+    );
 
 
 

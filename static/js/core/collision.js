@@ -54,19 +54,22 @@ function checkCollisionWithObstacles(sprite, side) {
                     if (SLSR_between_LERE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'top'
                         };
                     }
                     else if (SL_before_LE && SR_between_LERE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'top'
                         };
                     }
                     else if (SR_after_RE && SL_between_LERE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'top'
                         };
                     }
                 }
@@ -101,19 +104,22 @@ function checkCollisionWithObstacles(sprite, side) {
                     if (STSB_between_TEBE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'left'
                         };
                     }
                     else if (ST_above_TE && SB_between_TEBE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'left'
                         };
                     }
                     else if (SB_below_BE && ST_between_TEBE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'left'
                         };
                     }
                 }
@@ -148,19 +154,22 @@ function checkCollisionWithObstacles(sprite, side) {
                     if (STSB_between_TEBE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'right'
                         };
                     }
                     else if (ST_above_TE && SB_between_TEBE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'right'
                         };
                     }
                     else if (SB_below_BE && ST_between_TEBE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'right'
                         };
                     }
                 }
@@ -195,19 +204,22 @@ function checkCollisionWithObstacles(sprite, side) {
                     if (SLSR_between_LERE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'bottom'
                         };
                     }
                     else if (SL_before_LE && SR_between_LERE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'bottom'
                         };
                     }
                     else if (SR_after_RE && SL_between_LERE) {
                         return {
                             status: true,
-                            object: OBSTACLE
+                            object: OBSTACLE,
+                            edge: 'bottom'
                         };
                     }
                 }
@@ -215,7 +227,11 @@ function checkCollisionWithObstacles(sprite, side) {
         }
     }
 
-    return {status: false, object: undefined};
+    return {
+        status: false,
+        object: undefined,
+        edge: undefined
+    };
 };
 
 export function checkCollisionWithLeftEdgesOfObstacles(sprite) {
