@@ -1,6 +1,5 @@
 import * as checks from '../helpers/checks.js';
 import { OBSTACLES } from '../core/collision.js';
-import { Entity } from '../sprites/entities.js';
 
 import {
     Sprite,
