@@ -81,14 +81,13 @@ window.addEventListener('load', () => {
 
     // ENEMY
     const zombie = new Zombie(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
-    zombie.setPosition(250, 300);
     zombie.addFrames(zombie_frames_json);
     zombie.switchFrame('n');
 
 
 
-    FOYER.addDynamicSprite(player, 'player', 50, 80);
-    FOYER.addDynamicSprite(zombie, 'zombie', 430, 80);
+    FOYER.addDynamicSprite(player, 'player', 250, 150);
+    FOYER.addDynamicSprite(zombie, 'zombie', 230, 5);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
@@ -157,7 +156,7 @@ window.addEventListener('load', () => {
 
 
         // ZOMBIE MOVEMENT
-        // zombie.moveToPlayer(player);
+        zombie.moveToPlayer(player);
     });
 
 

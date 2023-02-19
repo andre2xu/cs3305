@@ -165,6 +165,29 @@ export const FOYER = (function () {
 
 
 
+    // WALL TOP EDGE DETOURS
+    FOYER.addTopEdgeDetour(
+        WALL,
+        [
+            {x: 180, y: 30},
+            {x: 60, y: 30},
+            {x: 60, y: 200},
+        ],
+        // 0xff0000
+    );
+
+    FOYER.addTopEdgeDetour(
+        WALL,
+        [
+            {x: 330, y: 30},
+            {x: 440, y: 30},
+            {x: 440, y: 200},
+        ],
+        // 0xcaeb46
+    );
+
+
+
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
 
