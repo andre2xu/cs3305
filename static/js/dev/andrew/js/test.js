@@ -37,46 +37,6 @@ window.addEventListener('load', () => {
     player.addFrames(player_frames_json);
     player.switchFrame('s');
 
-    let reset_to_idle_timer = null;
-
-    player.addEvent('move', (event) => {
-        clearTimeout(reset_to_idle_timer);
-
-        reset_to_idle_timer = setTimeout(() => {
-            player.rotateToMouse(); // resets player sprite to the idle frame
-        }, 100);
-
-        if (new Date().getMilliseconds() % 2 === 0) {
-            if (event.currentFrame === 's' || event.currentFrame === 'sr') {
-                player.switchFrame('sl');
-            }
-            else if (event.currentFrame === 'sl') {
-                player.switchFrame('sr');
-            }
-            else if (event.currentFrame === 'e' || event.currentFrame === 'er') {
-                player.switchFrame('el');
-            }
-            else if (event.currentFrame === 'w' || event.currentFrame === 'wr') {
-                player.switchFrame('wl');
-            }
-            else if (event.currentFrame === 'wl') {
-                player.switchFrame('wr');
-            }
-            else if (event.currentFrame === 'e' || event.currentFrame === 'er') {
-                player.switchFrame('el');
-            }
-            else if (event.currentFrame === 'el') {
-                player.switchFrame('er');
-            }
-            else if (event.currentFrame === 'n' || event.currentFrame === 'nr') {
-                player.switchFrame('nl');
-            }
-            else if (event.currentFrame === 'nl') {
-                player.switchFrame('nr');
-            }
-        }
-    });
-
 
 
     // ENEMY
@@ -87,7 +47,7 @@ window.addEventListener('load', () => {
 
 
     FOYER.addDynamicSprite(player, 'player', 250, 150);
-    FOYER.addDynamicSprite(zombie, 'zombie', 230, 5);
+    FOYER.addDynamicSprite(zombie, 'zombie', 130, 150);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
@@ -153,16 +113,15 @@ window.addEventListener('load', () => {
     GAME.ticker.add(() => {
         FOYER.sortSpriteOrder();
 
-
-
-        // ZOMBIE MOVEMENT
         zombie.moveToPlayer(player);
     });
 
 
 
-    // ensures the player is facing front and standing straight
+    // ensures the player is facing front and standing straight & the zombie is facing them
     window.mouseX = FOYER.getHalfWidth();
     window.mouseY = FOYER.getRightPosY();
     player.rotateToMouse();
+
+    zombie.rotateToPlayer(player);
 });
