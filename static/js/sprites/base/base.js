@@ -131,7 +131,7 @@ export class Sprite {
             throw ReferenceError("Not a valid event");
         }
 
-        this.events[event] = callback;
+        this.events[event].push(callback);
     };
 
     addFrame(name, x, y, w, h) {
@@ -236,8 +236,6 @@ export class FillSprite {
 
         this.fillWidth = width;
         this.fillHeight = height;
-
-        this.events = {};
     };
 
 
