@@ -13,14 +13,14 @@ import {
 export const BASEMENT = (function () {
     const BASEMENT = new PlayableArea(555, 441);
 
-    const FLOOR = new Decoration(getTextureFromStaticJSFolder('/map/basement/assets/floor.png'), 0, 0, 555, 441);
+    const FLOOR = new Decoration(getTextureFromStaticJSFolder('/map/basement/assets/basefloor.png'), 0, 0, 555, 441);
     BASEMENT.addStaticSprite(
         FLOOR, 
         'floor', 
         0, 0);
 
 
-    const DOUBLE_DOOR = new SemiSolid(getTextureFromStaticJSFolder('/map/basement/assets/Door1.png'), 0, 0, 96, 48);
+    const DOUBLE_DOOR = new SemiSolid(getTextureFromStaticJSFolder('/map/basement/assets/baseelevator.png'), 0, 0, 96, 48);
     BASEMENT.addStaticSprite(
         DOUBLE_DOOR,
         'double_door',
@@ -61,7 +61,14 @@ export const BASEMENT = (function () {
         BASEMENT.getHeight() - (STACKED_CUPBOARD.getSpriteFrameDimensions().h + 5)
     );
 
-
+    const OPEN_CHEST = new SemiSolid(getTextureFromStaticJSFolder('/map/basement/assets/openchest.png'), 0, 0, 59, 63);
+    BASEMENT.addStaticSprite(
+        OPEN_CHEST,
+        'openchest',
+        BASEMENT.getHalfWidth() - OPEN_CHEST.getHalfWidth(),
+        BASEMENT.getHeight() - (OPEN_CHEST.getSpriteFrameDimensions().h + 5)
+    );
+    
 
 
     return BASEMENT;
