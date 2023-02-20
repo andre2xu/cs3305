@@ -1,0 +1,1 @@
+This folder should only have sprite classes that DO NOT INHERIT from other classes (especially other sprite-related classes).

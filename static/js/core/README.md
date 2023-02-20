@@ -1,0 +1,1 @@
+This folder is only for the essential mechanics of the game. 'Essential' is basically anything that is common to all action videogames (e.g. movement, collision detection, spawning, etc.)
