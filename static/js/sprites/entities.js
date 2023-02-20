@@ -150,6 +150,10 @@ export class Player extends Entity {
         return this.invincibility;
     };
 
+    getHealth() {
+        return this.health;
+    };
+
 
 
     // SETTERS
