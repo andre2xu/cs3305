@@ -35,7 +35,13 @@ def game():
 def settings():
     return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
 
+@app.route("/leaderboard", methods=["GET", "POST"])
+def leaderboard():
+    return render_template("leaderboard.html")
+
 def Add_Difficulty():
+    global Difficulty
+
     Difficulty += 1
     return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
 
