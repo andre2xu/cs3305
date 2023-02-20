@@ -98,6 +98,8 @@ export class Player extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
+        this.health = 100;
+
         // movement animation
         let reset_to_idle_timer = null;
 
@@ -519,6 +521,8 @@ export class Enemy extends Entity {
 export class Zombie extends Enemy {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
+
+        this.health = 100;
 
         this.setSpeed(0.5);
     };
