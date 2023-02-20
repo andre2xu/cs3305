@@ -199,7 +199,12 @@ export class ObstacleFill extends FillSprite {
     constructor(color, posX, posY, width, height) {
         super(color, posX, posY, width, height);
 
-        this.detours = [];
+        this.detours = {
+            'top': [],
+            'bottom': [],
+            'left': [],
+            'right': []
+        };
 
         OBSTACLES.push(this);
     };
@@ -299,18 +304,51 @@ export class ObstacleFill extends FillSprite {
         return true;
     };
 
-    getDetours() {
-        return this.detours;
+    getDetours(edge) {
+        checks.checkIfString(edge);
+
+        return this.detours[edge];
     };
 
 
 
     // SETTERS
-    addDetour(x, y) {
-        checks.checkIfNumber(x);
-        checks.checkIfNumber(y);
+    __addDetour__(array_of_points, edge) {
+        checks.checkIfArray(array_of_points);
+        checks.checkIfString(edge);
 
-        this.detours.push({x: x, y: y});
+        const NUM_OF_ELEMENTS = array_of_points.length;
+
+        for (let i=0; i < NUM_OF_ELEMENTS; i++) {
+            const E = array_of_points[i];
+
+            checks.checkIfObject(E);
+
+            if (E.x === undefined || E.y === undefined) {
+                throw SyntaxError(`Element ${i} is not a valid point object. It must have an x and a y property`);
+            }
+
+            checks.checkIfNumber(E.x);
+            checks.checkIfNumber(E.y);
+        }
+
+        this.detours[edge].push(array_of_points);
+    };
+
+    addBottomEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'bottom');
+    };
+
+    addTopEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'top');
+    };
+
+    addLeftEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'left');
+    };
+
+    addRightEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, 'right');
     };
 };
 

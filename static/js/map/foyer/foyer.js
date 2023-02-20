@@ -95,9 +95,98 @@ export const FOYER = (function () {
     const WALL_TOP_Y_REDUCTION = 15;
     WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
 
-    const DTRX = 140;
-    const DTRY = 220;
-    WALL.addDetour(DTRX, DTRY); // temp
+
+
+    // WALL BOTTOM EDGE DETOURS
+    FOYER.addBottomEdgeDetour(
+        WALL,
+        [
+            {x: 190, y: 220},
+            {x: 60, y: 220},
+            {x: 60, y: 30}
+        ],
+        // 0x4af7f4
+    );
+
+    FOYER.addBottomEdgeDetour(
+        WALL,
+        [
+            {x: 310, y: 220},
+            {x: 455, y: 220},
+            {x: 455, y: 30}
+        ],
+        // 0xebb93b
+    );
+
+
+
+
+    // WALL LEFT EDGE DETOURS
+    FOYER.addLeftEdgeDetour(
+        WALL,
+        [
+            {x: 80, y: 30},
+            {x: 260, y: 30},
+            {x: 440, y: 30},
+            {x: 440, y: 200}
+        ],
+        // 0x4af7f4
+    );
+
+    FOYER.addLeftEdgeDetour(
+        WALL,
+        [
+            {x: 60, y: 170}
+        ],
+        // 0xff0000
+    );
+
+
+
+    // WALL RIGHT EDGE DETOURS
+    FOYER.addRightEdgeDetour(
+        WALL,
+        [
+            {x: 425, y: 30},
+            {x: 260, y: 30},
+            {x: 60, y: 30},
+            {x: 60, y: 200},
+        ],
+        // 0x4af7f4
+    );
+
+    FOYER.addRightEdgeDetour(
+        WALL,
+        [
+            {x: 460, y: 170}
+        ],
+        // 0xff0000
+    );
+
+
+
+    // WALL TOP EDGE DETOURS
+    FOYER.addTopEdgeDetour(
+        WALL,
+        [
+            {x: 180, y: 30},
+            {x: 60, y: 30},
+            {x: 60, y: 200},
+        ],
+        // 0xff0000
+    );
+
+    FOYER.addTopEdgeDetour(
+        WALL,
+        [
+            {x: 330, y: 30},
+            {x: 440, y: 30},
+            {x: 440, y: 200},
+        ],
+        // 0xcaeb46
+    );
+
+
 
     FOYER.addStaticSprite(WALL, 'wall', 117, 80);
 
@@ -252,12 +341,6 @@ export const FOYER = (function () {
         FOYER.getWidth() - PLANT_2.getSpriteFrameDimensions().w,
         FOYER.getHeight() - (PLANT_2.getSpriteFrameDimensions().h + 5)
     );
-
-
-
-    // temp
-    const POINT = new DecorationFill(0xff0000, 0, 0, 3, 3);
-    FOYER.addStaticSprite(POINT, 'p1', DTRX, DTRY);
 
 
 
