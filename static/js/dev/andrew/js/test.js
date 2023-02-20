@@ -113,7 +113,7 @@ window.addEventListener('load', () => {
     GAME.ticker.add(() => {
         FOYER.sortSpriteOrder();
 
-        // zombie.moveToPlayer(player);
+        zombie.moveToPlayer(player);
     });
 
 

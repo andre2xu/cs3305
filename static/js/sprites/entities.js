@@ -99,6 +99,7 @@ export class Player extends Entity {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.health = 100;
+        this.invincibility = false;
 
         // movement animation
         let reset_to_idle_timer = null;
@@ -144,6 +145,13 @@ export class Player extends Entity {
 
 
 
+    // GETTERS
+    isInvincible() {
+        return this.invincibility;
+    };
+
+
+
     // SETTERS
     rotateToMouse() {
         const PLAYER_CENTER = this.getCenterCoordinates(); // relative to parent
@@ -181,6 +189,14 @@ export class Player extends Entity {
         else if (MOUSE_ANGLE_FROM_PLAYER >= 0 && MOUSE_ANGLE_FROM_PLAYER <= 45 || MOUSE_ANGLE_FROM_PLAYER < 0 && MOUSE_ANGLE_FROM_PLAYER > -45) {
             this.switchFrame('e');
         }
+    };
+
+    activateInvincibility() {
+        this.invincibility = true;
+
+        setTimeout(() => {
+            this.invincibility = false;
+        }, 1000);
     };
 };
 
@@ -427,6 +443,16 @@ export class Enemy extends Entity {
                     this.stopFollowingPlayerAndMoveAroundObject(TEC);
                 }
             }
+
+
+
+            const CURRENT_FRAME = this.getCurrentFrame();
+
+            if (player.isInvincible() === false) {
+                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX()) {
+                    this.__damagePlayer___(player);
+                }
+            }
         }
         else if (this.navigationMode === 1) {
             // going around object
@@ -523,7 +549,18 @@ export class Zombie extends Enemy {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.health = 100;
+        this.damage = 10;
 
         this.setSpeed(0.5);
+    };
+
+
+
+    __damagePlayer___(player) {
+        checks.checkIfInstance(player, Player);
+
+        player.health -= this.damage;
+
+        player.activateInvincibility()
     };
 };
