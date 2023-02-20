@@ -114,3 +114,5 @@ export class Pistol{
 
 
 }
+
+//crafting systemwrap + desinfectant= medkit wrap _ bootle = molotov
