@@ -202,6 +202,32 @@ export class Player extends Entity {
             this.invincibility = false;
         }, 1000);
     };
+
+    setHealth(health) {
+        checks.checkIfNumber(health);
+
+        this.health = health;
+    };
+
+    increaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health += value;
+
+        if (this.health > 100) {
+            this.health = 100;
+        }
+    };
+
+    decreaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health -= value;
+
+        if (this.health < 0) {
+            this.health = 0;
+        }
+    };
 };
 
 export class Enemy extends Entity {
@@ -453,7 +479,7 @@ export class Enemy extends Entity {
             // deals damage to player on contact
             const CURRENT_FRAME = this.getCurrentFrame();
 
-            if (player.isInvincible() === false) {
+            if (player.isInvincible() === false && player.getHealth() > 0) {
                 if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX()) {
                     this.__damagePlayer___(player);
                 }
@@ -585,7 +611,7 @@ export class Zombie extends Enemy {
     __damagePlayer___(player) {
         checks.checkIfInstance(player, Player);
 
-        player.health -= this.damage;
+        player.decreaseHealth(this.damage);
 
         player.activateInvincibility()
     };
