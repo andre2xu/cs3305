@@ -446,10 +446,32 @@ export class Enemy extends Entity {
 
 
 
+            // deals damage to player on contact
             const CURRENT_FRAME = this.getCurrentFrame();
 
             if (player.isInvincible() === false) {
                 if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX()) {
                     this.__damagePlayer___(player);
                 }
             }
