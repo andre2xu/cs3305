@@ -208,6 +208,8 @@ export class Player extends Entity {
 
         setTimeout(() => {
             this.invincibility = false;
+
+            this.hideDamage();
         }, 1000);
     };
 
@@ -231,6 +233,8 @@ export class Player extends Entity {
         checks.checkIfNumber(value);
 
         this.health -= value;
+
+        this.showDamage();
 
         if (this.health < 0) {
             this.health = 0;
