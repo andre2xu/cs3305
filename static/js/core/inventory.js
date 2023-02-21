@@ -1,5 +1,4 @@
 import * as checks from '../helpers/checks.js';
-import { getTextureFromStaticJSFolder } from '../helpers/pixi_helpers.js';
 
 export class Inventory {
     constructor(texture, posX, posY, selection_texture) {
@@ -26,17 +25,12 @@ export class Inventory {
         this.inventoryContainer.y = posY;
 
         this.selectorSprite = new PIXI.Sprite(selection_texture);
-        this.selectorSprite.x = -3;
-        this.selectorSprite.y = -3;
-        this.selectorSprite.width = 38;
-        this.selectorSprite.height = 39;
+        this.selectorSprite.x = -2;
+        this.selectorSprite.y = -2;
+        this.selectorSprite.width = 36;
+        this.selectorSprite.height = 36;
 
         this.inventoryContainer.addChild(this.sprite,this.selectorSprite);
-
-        // each cell is 51.6 pixels wide with 1.6 scale
-        this.currentSelItem = 0;
-        this.initialSelX = -7;
-        this.selBias = 51;
     };
 
 
@@ -60,9 +54,6 @@ export class Inventory {
     useSelItem(){
         if (this.inventory[this.currentSelItem] != null){
             this.inventory[this.currentSelItem].onUse();
-        }
-        else {
-            console.log("No item is selected");
         }
     };
 
@@ -125,8 +116,6 @@ export class Inventory {
     changeSelItem(index){
         this.currentSelItem = index - 1;
 
-        this.selectorSprite.x = this.initialSelX + ((index - 1) * this.selBias);
-
-        console.log(this.inventory);
+        this.selectorSprite.x = -2 + ((this.selectorSprite.width - 4) * (index - 1));
     };
 };
