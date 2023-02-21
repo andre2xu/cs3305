@@ -36,6 +36,14 @@ export class Entity extends Sprite {
 
 
     // SETTERS
+    showDamage() {
+        this.sprite.tint = 0xff0000;
+    };
+
+    hideDamage() {
+        this.sprite.tint = this.original_tint;
+    };
+
     setSpeed(speed) {
         checks.checkIfNumber(speed);
 
@@ -98,6 +106,9 @@ export class Player extends Entity {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
+        this.health = 100;
+        this.invincibility = false;
+
         // movement animation
         let reset_to_idle_timer = null;
 
@@ -142,6 +153,17 @@ export class Player extends Entity {
 
 
 
+    // GETTERS
+    isInvincible() {
+        return this.invincibility;
+    };
+
+    getHealth() {
+        return this.health;
+    };
+
+
+
     // SETTERS
     rotateToMouse() {
         const PLAYER_CENTER = this.getCenterCoordinates(); // relative to parent
@@ -178,6 +200,44 @@ export class Player extends Entity {
         }
         else if (MOUSE_ANGLE_FROM_PLAYER >= 0 && MOUSE_ANGLE_FROM_PLAYER <= 45 || MOUSE_ANGLE_FROM_PLAYER < 0 && MOUSE_ANGLE_FROM_PLAYER > -45) {
             this.switchFrame('e');
+        }
+    };
+
+    activateInvincibility() {
+        this.invincibility = true;
+
+        setTimeout(() => {
+            this.invincibility = false;
+
+            this.hideDamage();
+        }, 1000);
+    };
+
+    setHealth(health) {
+        checks.checkIfNumber(health);
+
+        this.health = health;
+    };
+
+    increaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health += value;
+
+        if (this.health > 100) {
+            this.health = 100;
+        }
+    };
+
+    decreaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health -= value;
+
+        this.showDamage();
+
+        if (this.health < 0) {
+            this.health = 0;
         }
     };
 };
@@ -425,6 +485,38 @@ export class Enemy extends Entity {
                     this.stopFollowingPlayerAndMoveAroundObject(TEC);
                 }
             }
+
+
+
+            // deals damage to player on contact
+            const CURRENT_FRAME = this.getCurrentFrame();
+
+            if (player.isInvincible() === false && player.getHealth() > 0) {
+                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                    this.__damagePlayer___(player);
+                }
+                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                    this.__damagePlayer___(player);
+                }
+            }
         }
         else if (this.navigationMode === 1) {
             // going around object
@@ -520,6 +612,19 @@ export class Zombie extends Enemy {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
+        this.health = 100;
+        this.damage = 20;
+
         this.setSpeed(0.5);
+    };
+
+
+
+    __damagePlayer___(player) {
+        checks.checkIfInstance(player, Player);
+
+        player.decreaseHealth(this.damage);
+
+        player.activateInvincibility()
     };
 };

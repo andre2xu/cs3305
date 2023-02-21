@@ -11,6 +11,11 @@ import {
     checkForCollisionsAndMovePlayer
 } from '../../../core/movement.js';
 
+import {
+    PLAYER_HEALTH_STATUS,
+    updatePlayerHealthStatus
+} from '../../../core/hud.js';
+
 import player_frames_json from '../assets/sprite_sheets/player/player.json' assert {type: 'json'};
 
 import zombie_frames_json from '../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
@@ -46,8 +51,8 @@ window.addEventListener('load', () => {
 
 
 
-    FOYER.addDynamicSprite(player, 'player', 250, 150);
-    FOYER.addDynamicSprite(zombie, 'zombie', 130, 150);
+    FOYER.addDynamicSprite(player, 'player', 210, 250);
+    FOYER.addDynamicSprite(zombie, 'zombie', 260, 190);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
@@ -107,13 +112,19 @@ window.addEventListener('load', () => {
 
 
     GAME.stage.addChild(
-        FOYER.load()
+        FOYER.load(),
+        PLAYER_HEALTH_STATUS
     );
 
     GAME.ticker.add(() => {
         FOYER.sortSpriteOrder();
 
         zombie.moveToPlayer(player);
+
+
+
+        // HUD
+        updatePlayerHealthStatus(player.getHealth());
     });
 
 

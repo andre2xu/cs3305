@@ -17,6 +17,7 @@ export class Sprite {
         this.sprite_container.x = posX;
         this.sprite_container.y = posY;
 
+        this.original_tint = this.sprite.tint;
         this.frameMask = null;
         this.frames = {};
         this.currentFrame = null;

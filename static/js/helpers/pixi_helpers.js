@@ -1,6 +1,8 @@
 import * as checks from './checks.js';
 
-const STATIC_JS_FOLDER_URL = 'http://127.0.0.1:5500/static/js';
+const ABSOLUTE_URL = window.location.href;
+const CURRENT_WORKING_DIRECTORY = ABSOLUTE_URL.substring(0, ABSOLUTE_URL.indexOf('/static/'));
+const STATIC_JS_FOLDER_URL = `${CURRENT_WORKING_DIRECTORY}/static/js/`;
 
 export function getTextureFromStaticJSFolder(path) {
     checks.checkIfString(path);
