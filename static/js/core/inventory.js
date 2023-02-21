@@ -1,5 +1,13 @@
+import * as checks from '../helpers/checks.js';
+import { getTextureFromStaticJSFolder } from '../helpers/pixi_helpers.js';
+
 export class Inventory {
-    constructor(texture,posX,posY,selectSprite) {
+    constructor(texture, posX, posY, selection_texture) {
+        checks.checkIfInstance(texture, PIXI.Texture);
+        checks.checkIfNumber(posX);
+        checks.checkIfNumber(posY);
+        checks.checkIfInstance(selection_texture, PIXI.Texture);
+
         this.sprite = new PIXI.Sprite(texture);
 
         this.inventory = [
@@ -17,9 +25,11 @@ export class Inventory {
         this.inventoryContainer.x = posX;
         this.inventoryContainer.y = posY;
 
-        this.selectorSprite = new PIXI.Sprite(selectSprite);
-        this.selectorSprite.x = -7;
-        this.selectorSprite.y = -6;
+        this.selectorSprite = new PIXI.Sprite(selection_texture);
+        this.selectorSprite.x = -3;
+        this.selectorSprite.y = -3;
+        this.selectorSprite.width = 38;
+        this.selectorSprite.height = 39;
 
         this.inventoryContainer.addChild(this.sprite,this.selectorSprite);
 
@@ -31,7 +41,7 @@ export class Inventory {
 
 
 
-    load() {
+    display() {
         return this.inventoryContainer;
     };
 
@@ -112,28 +122,11 @@ export class Inventory {
         this.inventoryContainer.destroy();
     };
 
-    moveSprite(x, y) {
-        this.sprite.x += x;
-        this.sprite.y += y;
-    };
-
-    scaleSprite(scaleX, scaleY) {
-        this.sprite.scale.set(scaleX,scaleY);
-    };
-
     changeSelItem(index){
         this.currentSelItem = index - 1;
 
         this.selectorSprite.x = this.initialSelX + ((index - 1) * this.selBias);
 
         console.log(this.inventory);
-    };
-
-    setPosX(x) {
-        this.sprite.x = x;
-    };
-
-    setPosY(y) {
-        this.sprite.y = y;
     };
 };
