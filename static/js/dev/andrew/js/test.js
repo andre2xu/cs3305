@@ -101,6 +101,30 @@ window.addEventListener('load', () => {
             case 'd':
                 MOVEMENT_KEY_STATUSES.d = true;
                 break;
+            case '1':
+                HOTBAR.changeSelItem(1);
+                break;
+            case '2':
+                HOTBAR.changeSelItem(2);
+                break;
+            case '3':
+                HOTBAR.changeSelItem(3);
+                break;
+            case '4':
+                HOTBAR.changeSelItem(4);
+                break;
+            case '5':
+                HOTBAR.changeSelItem(5);
+                break;
+            case '6':
+                HOTBAR.changeSelItem(6);
+                break;
+            case '7':
+                HOTBAR.changeSelItem(7);
+                break;
+            case '8':
+                HOTBAR.changeSelItem(8);
+                break;
         }
 
         checkForCollisionsAndMovePlayer(player);
