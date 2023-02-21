@@ -36,6 +36,14 @@ export class Entity extends Sprite {
 
 
     // SETTERS
+    showDamage() {
+        this.sprite.tint = 0xff0000;
+    };
+
+    hideDamage() {
+        this.sprite.tint = this.original_tint;
+    };
+
     setSpeed(speed) {
         checks.checkIfNumber(speed);
 
