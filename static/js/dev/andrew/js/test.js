@@ -59,8 +59,8 @@ window.addEventListener('load', () => {
 
 
 
-    FOYER.addDynamicSprite(player, 'player', 210, 250);
-    FOYER.addDynamicSprite(zombie, 'zombie', 260, 190);
+    FOYER.addDynamicSprite(player, 'player', 240, 230);
+    FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
@@ -152,7 +152,7 @@ window.addEventListener('load', () => {
     GAME.ticker.add(() => {
         FOYER.sortSpriteOrder();
 
-        zombie.moveToPlayer(player);
+        // zombie.moveToPlayer(player);
 
 
 
