@@ -613,7 +613,7 @@ export class Zombie extends Enemy {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.health = 100;
-        this.damage = 10;
+        this.damage = 20;
 
         this.setSpeed(0.5);
     };

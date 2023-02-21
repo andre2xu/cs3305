@@ -51,8 +51,8 @@ window.addEventListener('load', () => {
 
 
 
-    FOYER.addDynamicSprite(player, 'player', 250, 200);
-    FOYER.addDynamicSprite(zombie, 'zombie', 180, 190);
+    FOYER.addDynamicSprite(player, 'player', 210, 250);
+    FOYER.addDynamicSprite(zombie, 'zombie', 260, 190);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
