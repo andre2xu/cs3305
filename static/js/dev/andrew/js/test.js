@@ -1,5 +1,6 @@
 import { FOYER } from '../../../map/foyer/foyer.js';
 import { getTextureFromStaticJSFolder } from '../../../helpers/pixi_helpers.js';
+import { Inventory } from '../../../core/inventory.js';
 
 import {
     Player,
@@ -41,6 +42,13 @@ window.addEventListener('load', () => {
     const player = new Player(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
     player.switchFrame('s');
+
+    const HOTBAR = new Inventory(
+        getTextureFromStaticJSFolder('/dev/andrew/assets/hotbar.png'),
+        20,
+        50,
+        getTextureFromStaticJSFolder('/dev/andrew/assets/selector.png')
+    );
 
 
 
@@ -113,7 +121,8 @@ window.addEventListener('load', () => {
 
     GAME.stage.addChild(
         FOYER.load(),
-        PLAYER_HEALTH_STATUS
+        PLAYER_HEALTH_STATUS,
+        HOTBAR.display()
     );
 
     GAME.ticker.add(() => {
