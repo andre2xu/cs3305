@@ -1,6 +1,7 @@
 import { FOYER } from '../../../map/foyer/foyer.js';
 import { getTextureFromStaticJSFolder } from '../../../helpers/pixi_helpers.js';
 import { Inventory } from '../../../core/inventory.js';
+import { Item } from '../../../core/items.js';
 
 import {
     Player,
@@ -49,6 +50,15 @@ window.addEventListener('load', () => {
         50,
         getTextureFromStaticJSFolder('/dev/andrew/assets/selector.png')
     );
+
+    const HANDGUN = new Item(
+        getTextureFromStaticJSFolder('/dev/andrew/assets/handgun.png'),
+        '0',
+        false,
+        false
+    );
+
+    HOTBAR.addItem(HANDGUN);
 
 
 
