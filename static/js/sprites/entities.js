@@ -1,6 +1,7 @@
 import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
+import { Item } from '../core/items.js';
 
 import {
     Obstacle,
@@ -36,6 +37,10 @@ export class Entity extends Sprite {
 
 
     // SETTERS
+    equip(item) {
+        checks.checkIfInstance(item, Item);
+    };
+
     showDamage() {
         this.sprite.tint = 0xff0000;
     };
