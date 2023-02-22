@@ -22,9 +22,12 @@ export class Entity extends Sprite {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.movementOffset = 5;
+
         this.events = {
             move: []
         };
+
+        this.equippedItem = null;
     };
 
 
@@ -39,6 +42,16 @@ export class Entity extends Sprite {
     // SETTERS
     equip(item) {
         checks.checkIfInstance(item, Item);
+
+        this.equippedItem = item.load();
+
+        this.sprite_container.addChild(this.equippedItem);
+    };
+
+    unequip() {
+        this.sprite_container.removeChild(this.equippedItem);
+
+        this.equippedItem = null;
     };
 
     showDamage() {
