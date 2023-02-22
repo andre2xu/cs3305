@@ -1,8 +1,10 @@
 import * as checks from '../helpers/checks.js';
 import { Item } from '../core/items.js';
+import { Player } from '../sprites/entities.js';
 
 export class Inventory {
-    constructor(texture, posX, posY, selection_texture) {
+    constructor(player, texture, posX, posY, selection_texture) {
+        checks.checkIfInstance(player, Player);
         checks.checkIfInstance(texture, PIXI.Texture);
         checks.checkIfNumber(posX);
         checks.checkIfNumber(posY);
@@ -32,6 +34,8 @@ export class Inventory {
         this.selectorSprite.height = 36;
 
         this.inventoryContainer.addChild(this.sprite,this.selectorSprite);
+
+        this.player = player;
     };
 
 
@@ -83,7 +87,7 @@ export class Inventory {
     };
 
     changeSelItem(index) {
-        this.currentSelItem = index - 1;
+        this.player.equip(this.inventory[index - 1]);
 
         this.selectorSprite.x = this.___getPositionInInventory__(index);
     };
