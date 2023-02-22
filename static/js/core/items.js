@@ -23,8 +23,8 @@ export class Item {
         return this.inventoryImage;
     };
 
-    getTexture() {
-        return this.texture;
+    load() {
+        return new PIXI.Sprite(this.texture);
     };
 
 
