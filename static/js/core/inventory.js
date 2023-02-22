@@ -87,13 +87,12 @@ export class Inventory {
     };
 
     changeSelItem(index) {
+        this.player.unequip();
+
         const SELECTED_ITEM = this.inventory[index - 1];
 
         if (SELECTED_ITEM instanceof Item) {
             this.player.equip(SELECTED_ITEM);
-        }
-        else {
-            this.player.unequip();
         }
 
         this.selectorSprite.x = this.___getPositionInInventory__(index);
