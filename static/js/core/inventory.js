@@ -65,7 +65,7 @@ export class Inventory {
 
         for (let i=0; i < NUM_OF_ITEMS_IN_INVENTORY; i++) {
             if (this.inventory[i] === null) {
-                this.inventory.splice(i, 1, ICON);
+                this.inventory.splice(i, 1, item);
 
                 ICON.x = this.___getPositionInInventory__(i + 1) + 2;
 
@@ -80,14 +80,21 @@ export class Inventory {
         }
     };
 
-    useSelItem(){
+    useSelItem() {
         if (this.inventory[this.currentSelItem] != null){
             this.inventory[this.currentSelItem].onUse();
         }
     };
 
     changeSelItem(index) {
-        this.player.equip(this.inventory[index - 1]);
+        const SELECTED_ITEM = this.inventory[index - 1];
+
+        if (SELECTED_ITEM instanceof Item) {
+            this.player.equip(SELECTED_ITEM);
+        }
+        else {
+            this.player.unequip();
+        }
 
         this.selectorSprite.x = this.___getPositionInInventory__(index);
     };
