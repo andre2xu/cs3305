@@ -37,7 +37,7 @@ export class Inventory {
 
 
     // GETTERS
-    ___getPositionInHotbar__(index) {
+    ___getPositionInInventory__(index) {
         checks.checkIfNumber(index);
 
         return -2 + ((this.selectorSprite.width - 4) * (index - 1));
@@ -54,38 +54,24 @@ export class Inventory {
         checks.checkIfInstance(item, Item);
 
         const ICON = item.getIcon();
-
         this.inventoryContainer.addChild(ICON);
 
-        this.changeSelItem(1);
+        const NUM_OF_ITEMS_IN_INVENTORY = this.inventory.length;
+        let stored = false;
 
-        ICON.x = this.___getPositionInHotbar__(1) + 2;
-    };
+        for (let i=0; i < NUM_OF_ITEMS_IN_INVENTORY; i++) {
+            if (this.inventory[i] === null) {
+                this.inventory.splice(i, 1, ICON);
 
-    addItemOnIndex(item, index, isOverwrite){
-        checks.checkIfInstance(item, Item);
-        checks.checkIfNumber(index);
-        checks.checkIfBoolean(isOverwrite);
+                ICON.x = this.___getPositionInInventory__(i + 1) + 2;
 
-        // isOverwrite determines if the adding of the item should overwrite the item that was in that position or fail to add if there is already an item there
-        if (isOverwrite){
-            this.inventory[index] = item;
+                stored = true;
 
-            this.inventoryContainer.addChild(item.inventoryImage);
-
-            item.inventoryImage.x = this.selBias * index;
-        }
-        else {
-            if(this.inventory[index] != null){
-                return 1;
+                break;
             }
-            else {
-                this.inventory[index] = item;
 
-                this.inventoryContainer.addChild(item.inventoryImage);
-
-                item.inventoryImage.x = this.selBias * index;
-
+            if (i === NUM_OF_ITEMS_IN_INVENTORY && stored === false) {
+                // if inventory is full, ignore item?
             }
         }
     };
@@ -99,7 +85,7 @@ export class Inventory {
     changeSelItem(index) {
         this.currentSelItem = index - 1;
 
-        this.selectorSprite.x = this.___getPositionInHotbar__(index);
+        this.selectorSprite.x = this.___getPositionInInventory__(index);
     };
 
     clearInventory() {
