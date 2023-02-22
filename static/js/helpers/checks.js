@@ -53,3 +53,9 @@ export function checkIfArray(x) {
         throw TypeError("Not an array");
     }
 };
+
+export function checkIfBoolean(x) {
+    if (typeof x !== 'boolean') {
+        throw TypeError("Not a boolean.");
+    }
+};
