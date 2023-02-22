@@ -1,5 +1,12 @@
+import * as checks from '../helpers/checks.js';
+
 export class Item {
     constructor(invImage, itemID, isOverwritable,isConsumable) {
+        checks.checkIfInstance(invImage, PIXI.Texture);
+        checks.checkIfString(itemID);
+        checks.checkIfBoolean(isOverwritable);
+        checks.checkIfBoolean(isConsumable);
+
         this.itemID = itemID;
 
         this.inventoryImage = new PIXI.Sprite(invImage);
