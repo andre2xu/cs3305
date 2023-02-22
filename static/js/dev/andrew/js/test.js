@@ -45,6 +45,7 @@ window.addEventListener('load', () => {
     player.switchFrame('s');
 
     const HOTBAR = new Inventory(
+        player,
         getTextureFromStaticJSFolder('/dev/andrew/assets/hotbar.png'),
         20,
         50,
@@ -59,6 +60,7 @@ window.addEventListener('load', () => {
     );
 
     HOTBAR.addItem(HANDGUN);
+    HOTBAR.changeSelItem(1);
 
 
 
