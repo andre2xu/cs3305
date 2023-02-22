@@ -36,47 +36,30 @@ export class Inventory {
 
 
 
+    // GETTERS
+    ___getPositionInHotbar__(index) {
+        checks.checkIfNumber(index);
+
+        return -2 + ((this.selectorSprite.width - 4) * (index - 1));
+    };
+
     display() {
         return this.inventoryContainer;
     };
 
-    removeItem(index){
-        checks.checkIfNumber(index);
 
-        if(this.inventory[index] != null){
-            this.inventoryContainer.removeChildAt(index+2); // +2 is a bias added since the first 2 children of the container are the inventory and the selector sprite
-            this.inventory[index] = null;
 
-            return 0;
-        }
-        else{
-            return 1;
-        }
-    };
-
-    useSelItem(){
-        if (this.inventory[this.currentSelItem] != null){
-            this.inventory[this.currentSelItem].onUse();
-        }
-    };
-
+    // SETTERS
     addItem(item) {
         checks.checkIfInstance(item, Item);
 
-        // adding the same item twice does not work, must be something with how pixijs containers operate, so if we have to add two of the same item it has to be two different instances
-        for (let i = 0; i < this.inventory.length ; i++) {
-            if(this.inventory[i]==null){
-                this.inventoryContainer.addChild(item.inventoryImage);
+        const ICON = item.getIcon();
 
-                this.inventory[i] = item;
+        this.inventoryContainer.addChild(ICON);
 
-                item.inventoryImage.x = this.selBias*i;
+        this.changeSelItem(1);
 
-                return 0; // might be worth adding error handling later on.
-            }
-        }
-
-        return 1;
+        ICON.x = this.___getPositionInHotbar__(1) + 2;
     };
 
     addItemOnIndex(item, index, isOverwrite){
@@ -107,6 +90,18 @@ export class Inventory {
         }
     };
 
+    useSelItem(){
+        if (this.inventory[this.currentSelItem] != null){
+            this.inventory[this.currentSelItem].onUse();
+        }
+    };
+
+    changeSelItem(index) {
+        this.currentSelItem = index - 1;
+
+        this.selectorSprite.x = this.___getPositionInHotbar__(index);
+    };
+
     clearInventory() {
         this.inventory = [
             null,
@@ -122,11 +117,17 @@ export class Inventory {
         this.inventoryContainer.destroy();
     };
 
-    changeSelItem(index) {
+    removeItem(index){
         checks.checkIfNumber(index);
 
-        this.currentSelItem = index - 1;
+        if(this.inventory[index] != null){
+            this.inventoryContainer.removeChildAt(index+2); // +2 is a bias added since the first 2 children of the container are the inventory and the selector sprite
+            this.inventory[index] = null;
 
-        this.selectorSprite.x = -2 + ((this.selectorSprite.width - 4) * (index - 1));
+            return 0;
+        }
+        else{
+            return 1;
+        }
     };
 };
