@@ -1,4 +1,5 @@
 import * as checks from '../helpers/checks.js';
+import { Item } from '../core/items.js';
 
 export class Inventory {
     constructor(texture, posX, posY, selection_texture) {
@@ -40,6 +41,8 @@ export class Inventory {
     };
 
     removeItem(index){
+        checks.checkIfNumber(index);
+
         if(this.inventory[index] != null){
             this.inventoryContainer.removeChildAt(index+2); // +2 is a bias added since the first 2 children of the container are the inventory and the selector sprite
             this.inventory[index] = null;
@@ -58,6 +61,8 @@ export class Inventory {
     };
 
     addItem(item) {
+        checks.checkIfInstance(item, Item);
+
         // adding the same item twice does not work, must be something with how pixijs containers operate, so if we have to add two of the same item it has to be two different instances
         for (let i = 0; i < this.inventory.length ; i++) {
             if(this.inventory[i]==null){
@@ -74,7 +79,11 @@ export class Inventory {
         return 1;
     };
 
-    addItemOnIndex(item,index,isOverwrite){
+    addItemOnIndex(item, index, isOverwrite){
+        checks.checkIfInstance(item, Item);
+        checks.checkIfNumber(index);
+        checks.checkIfBoolean(isOverwrite);
+
         // isOverwrite determines if the adding of the item should overwrite the item that was in that position or fail to add if there is already an item there
         if (isOverwrite){
             this.inventory[index] = item;
@@ -98,7 +107,7 @@ export class Inventory {
         }
     };
 
-    clearInventory(){
+    clearInventory() {
         this.inventory = [
             null,
             null,
@@ -113,7 +122,9 @@ export class Inventory {
         this.inventoryContainer.destroy();
     };
 
-    changeSelItem(index){
+    changeSelItem(index) {
+        checks.checkIfNumber(index);
+
         this.currentSelItem = index - 1;
 
         this.selectorSprite.x = -2 + ((this.selectorSprite.width - 4) * (index - 1));
