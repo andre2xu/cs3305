@@ -10,8 +10,6 @@ export class Item {
         this.itemID = itemID;
 
         this.inventoryImage = new PIXI.Sprite(invImage);
-        this.inventoryImage.scale.x = 1.6;
-        this.inventoryImage.scale.y = 1.6;
 
         this.isConsumable = isConsumable // consumable items are removed upon use
         this.isOverwritable = isOverwritable // used to determine wether the item can be overwritten, some items might should not be able to be overwritten i.e the starting weapon.
@@ -19,6 +17,14 @@ export class Item {
 
 
 
+    // GETTERS
+    getIcon() {
+        return this.inventoryImage;
+    };
+
+
+
+    // SETTERS
     onUse() {
         // make this a little text popup later
     };
