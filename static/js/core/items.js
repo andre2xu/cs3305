@@ -9,6 +9,7 @@ export class Item {
 
         this.itemID = itemID;
 
+        this.texture = invImage;
         this.inventoryImage = new PIXI.Sprite(invImage);
 
         this.isConsumable = isConsumable // consumable items are removed upon use
@@ -20,6 +21,10 @@ export class Item {
     // GETTERS
     getIcon() {
         return this.inventoryImage;
+    };
+
+    getTexture() {
+        return this.texture;
     };
 
 
