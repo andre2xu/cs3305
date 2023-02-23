@@ -54,7 +54,7 @@ export class Pistol extends Weapon {
 
     // GETTERS
     loadNorth() {
-        const PISTOL = this.createCopy(this.texture, 20, 20, 25, 25);
+        const PISTOL = this.createCopy(this.texture, 25, 18, 25, 25);
 
         PISTOL.scale.y = -1;
         PISTOL.rotation = 4.6;

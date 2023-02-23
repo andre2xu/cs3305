@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
     // PLAYER
     const player = new Player(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
-    player.switchFrame('s');
+    player.switchFrame('n');
 
     const HOTBAR = new Inventory(
         player,
