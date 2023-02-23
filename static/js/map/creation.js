@@ -44,7 +44,6 @@ export const MAP_NAME = (function () {
 export class PlayableArea {
     constructor(width, height) {
         this.area = new PIXI.Container();
-        this.area.interactive = true;
 
         this.width = width;
         this.height = height;
@@ -66,6 +65,16 @@ export class PlayableArea {
             this.STATIC_SPRITES_CONTAINER,
             this.DYNAMIC_SPRITES_CONTAINER
         );
+
+
+
+        this.area.interactive = true;
+
+        this.area.on('mousedown', (event) => {
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                
+            }
+        });
     };
 
 
