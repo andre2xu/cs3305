@@ -48,8 +48,16 @@ export class Gun extends Weapon {
         return this.ammoLeft;
     };
 
-    playSound() {
-        new Audio(this.soundFile).play();
+    playGunFireSound() {
+        new Audio(this.gunFireSoundFile).play();
+    };
+
+    playReloadSound() {
+        const AUDIO = new Audio(this.reloadSoundFile);
+
+        AUDIO.play();
+
+        return AUDIO;
     };
 
 
@@ -61,12 +69,14 @@ export class Gun extends Weapon {
         }
 
         if (this.ammoLoaded > -1) {
-            this.playSound();
+            this.playGunFireSound();
 
             updateAmmoCount(this);
         }
 
-        if (this.ammoLoaded === 0) {
+        if (this.ammoLoaded === 0 && this.ammoLeft > 0) {
+            this.playReloadSound();
+
             this.reload();
         }
     };
@@ -89,7 +99,8 @@ export class Pistol extends Gun {
     constructor(texture) {
         super(texture);
 
-        this.soundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3';
+        this.gunFireSoundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3';
+        this.reloadSoundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol_reload.mp3';
 
         this.mode = 'semi-auto';
 
