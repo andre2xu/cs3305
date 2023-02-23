@@ -15,7 +15,8 @@ import {
 
 import {
     PLAYER_HEALTH_STATUS,
-    updatePlayerHealthStatus
+    updatePlayerHealthStatus,
+    AMMO_COUNT
 } from '../../../core/hud.js';
 
 import player_frames_json from '../assets/sprite_sheets/player/player.json' assert {type: 'json'};
@@ -162,6 +163,7 @@ window.addEventListener('load', () => {
     GAME.stage.addChild(
         FOYER.load(),
         PLAYER_HEALTH_STATUS,
+        AMMO_COUNT,
         window.HOTBAR.display()
     );
 
