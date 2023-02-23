@@ -10,39 +10,24 @@ export class Item {
         this.itemID = itemID;
 
         this.texture = invImage;
-        this.inventoryImage = new PIXI.Sprite(invImage);
-
-        this.isConsumable = isConsumable // consumable items are removed upon use
-        this.isOverwritable = isOverwritable // used to determine wether the item can be overwritten, some items might should not be able to be overwritten i.e the starting weapon.
+        this.icon = new PIXI.Sprite(invImage);
     };
 
 
 
     // GETTERS
     getIcon() {
-        return this.inventoryImage;
+        return this.icon;
     };
 
     load() {
-        return new PIXI.Sprite(this.texture);
-    };
+        const COPY = new PIXI.Sprite(this.texture);
 
+        COPY.x = -5;
+        COPY.y = 20;
+        COPY.scale.y = -1;
+        COPY.rotation = 1.5;
 
-
-    // SETTERS
-    onUse() {
-        // make this a little text popup later
-    };
-
-    onDrop() {
-        // renders the dropped item on the ground.
-    };
-
-    onPickup() {
-        // if anything special should happen on pickup i.e. showing a tutorial.
-    };
-
-    onSel() {
-        // if anything special should happen on selection i.e. playing a sound.
+        return COPY;
     };
 };
