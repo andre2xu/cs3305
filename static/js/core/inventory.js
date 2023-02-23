@@ -80,12 +80,6 @@ export class Inventory {
         }
     };
 
-    useSelItem() {
-        if (this.inventory[this.currentSelItem] != null){
-            this.inventory[this.currentSelItem].onUse();
-        }
-    };
-
     changeSelItem(index) {
         this.player.unequip();
 
@@ -96,34 +90,5 @@ export class Inventory {
         }
 
         this.selectorSprite.x = this.___getPositionInInventory__(index);
-    };
-
-    clearInventory() {
-        this.inventory = [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ];
-
-        this.inventoryContainer.destroy();
-    };
-
-    removeItem(index){
-        checks.checkIfNumber(index);
-
-        if(this.inventory[index] != null){
-            this.inventoryContainer.removeChildAt(index+2); // +2 is a bias added since the first 2 children of the container are the inventory and the selector sprite
-            this.inventory[index] = null;
-
-            return 0;
-        }
-        else{
-            return 1;
-        }
     };
 };
