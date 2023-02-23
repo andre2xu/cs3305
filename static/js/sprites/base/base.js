@@ -197,7 +197,7 @@ export class Sprite {
                     currentFrame: this.currentFrame
                 });
             }
-        } 
+        }
     };
 
     flipHorizontally() {
