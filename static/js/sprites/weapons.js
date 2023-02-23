@@ -28,7 +28,27 @@ export class Weapon extends Item {
     };
 };
 
-export class Pistol extends Weapon {
+export class Gun extends Weapon {
+    constructor(texture) {
+        super(texture);
+
+        this.ammoLoaded = 12;
+        this.ammoLeft = 60;
+    };
+
+
+
+    // GETTERS
+    getAmmoLoaded() {
+        return this.ammoLoaded;
+    };
+
+    getAmmoLeft() {
+        return this.ammoCapacity;
+    };
+};
+
+export class Pistol extends Gun {
     constructor(texture) {
         super(texture);
     };
