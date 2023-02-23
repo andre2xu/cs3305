@@ -1,7 +1,11 @@
 import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
-import { Item } from '../core/items.js';
+
+import {
+    Item,
+    Weapon
+} from '../core/items.js';
 
 import {
     Obstacle,
@@ -24,15 +28,40 @@ export class Entity extends Sprite {
         this.movementOffset = 5;
 
         this.events = {
-            move: []
+            move: [],
+            onChangeFrame: []
         };
 
         this.equippedItem = null;
+
+
+
+        this.addEvent('onChangeFrame', (event) => {
+            
+        });
     };
 
 
 
     // GETTERS
+    __getWeaponFrame__(weapon, frame) {
+        checks.checkIfInstance(weapon, Weapon);
+        checks.checkIfString(frame);
+
+        if (frame === 's') {
+            return weapon.loadSouth();
+        }
+        else if (frame === 'n') {
+            return weapon.loadNorth();
+        }
+        else if (frame === 'w') {
+            return weapon.loadWest();
+        }
+        else if (frame === 'e') {
+            return weapon.loadEast();
+        }
+    };
+
     getSpeed() {
         return this.movementOffset;
     };
@@ -43,9 +72,13 @@ export class Entity extends Sprite {
     equip(item) {
         checks.checkIfInstance(item, Item);
 
-        this.equippedItem = item.load();
+        if (item instanceof Weapon) {
+            this.equippedItem = this.__getWeaponFrame__(item, this.currentFrame);
+        }
 
-        this.sprite_container.addChild(this.equippedItem);
+        if (this.equippedItem !== undefined && this.equippedItem !== null) {
+            this.sprite_container.addChild(this.equippedItem);
+        }
     };
 
     unequip() {
@@ -72,8 +105,15 @@ export class Entity extends Sprite {
         checks.checkIfNumber(x);
         checks.checkIfNumber(y);
 
-        if (this.events['move'] !== null) {
-            const EVENT_CALLBACKS = this.events['move'];
+        this.sprite_container.x += x;
+        this.sprite_container.y += y;
+
+
+
+        const EVENT = this.events['move'];
+
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
             const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
 
             for (let i=0; i < NUM_OF_CALLBACKS; i++) {
@@ -82,9 +122,6 @@ export class Entity extends Sprite {
                 });
             }
         } 
-
-        this.sprite_container.x += x;
-        this.sprite_container.y += y;
     };
 
     moveSpriteNorth() {
