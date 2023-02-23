@@ -1,5 +1,5 @@
 import * as checks from '../helpers/checks.js';
-import { Item } from '../core/items.js';
+import { Item } from '../sprites/base/base.js';
 import { Player } from '../sprites/entities.js';
 
 export class Inventory {

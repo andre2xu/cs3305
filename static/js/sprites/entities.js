@@ -1,11 +1,8 @@
 import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
-
-import {
-    Item,
-    Weapon
-} from '../core/items.js';
+import { Item } from '../sprites/base/base.js';
+import { Weapon } from './weapons.js';
 
 import {
     Obstacle,
@@ -54,8 +51,6 @@ export class Entity extends Sprite {
     __renderWeapon__(weapon, frame) {
         checks.checkIfInstance(weapon, Weapon);
         checks.checkIfString(frame);
-
-        console.log(frame);
 
         if (frame === 'n' || frame === 'nl' || frame === 'nr') {
             this.equippedItem = weapon.loadNorth();

@@ -317,3 +317,21 @@ export class FillSprite {
         this.fillHeight = h;
     };
 };
+
+
+
+export class Item {
+    constructor(texture) {
+        checks.checkIfInstance(texture, PIXI.Texture);
+
+        this.texture = texture;
+        this.icon = new PIXI.Sprite(texture);
+    };
+
+
+
+    // GETTERS
+    getIcon() {
+        return this.icon;
+    };
+};

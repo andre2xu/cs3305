@@ -1,25 +1,8 @@
 import * as checks from '../helpers/checks.js';
-
-// BASE
-export class Item {
-    constructor(texture) {
-        checks.checkIfInstance(texture, PIXI.Texture);
-
-        this.texture = texture;
-        this.icon = new PIXI.Sprite(texture);
-    };
+import { Item } from './base/base.js'; 
 
 
 
-    // GETTERS
-    getIcon() {
-        return this.icon;
-    };
-};
-
-
-
-// WEAPONS
 export class Weapon extends Item {
     constructor(texture) {
         super(texture);

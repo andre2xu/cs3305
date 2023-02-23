@@ -1,7 +1,7 @@
 import { FOYER } from '../../../map/foyer/foyer.js';
 import { getTextureFromStaticJSFolder } from '../../../helpers/pixi_helpers.js';
 import { Inventory } from '../../../core/inventory.js';
-import { Pistol } from '../../../core/items.js';
+import { Pistol } from '../../../sprites/weapons.js';
 
 import {
     Player,
