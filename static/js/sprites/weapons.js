@@ -44,13 +44,21 @@ export class Gun extends Weapon {
     };
 
     getAmmoLeft() {
-        return this.ammoCapacity;
+        return this.ammoLeft;
+    };
+
+    playSound() {
+        if (this.sound !== undefined && this.sound !== null) {
+            this.sound.play();
+        }
     };
 };
 
 export class Pistol extends Gun {
     constructor(texture) {
         super(texture);
+
+        this.sound = new Audio('http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3');
     };
 
 
