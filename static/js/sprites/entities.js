@@ -173,6 +173,8 @@ export class Player extends Entity {
         this.health = 100;
         this.invincibility = false;
 
+
+
         let reset_to_idle_timer = null;
 
         this.addEvent('move', (event) => {
