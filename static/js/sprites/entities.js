@@ -32,34 +32,43 @@ export class Entity extends Sprite {
             onChangeFrame: []
         };
 
+        this.itemInstance = null;
         this.equippedItem = null;
 
 
 
-        this.addEvent('onChangeFrame', (event) => {
-            
+        this.addEvent('onChangeFrame', () => {
+            if (this.itemInstance !== null) {
+                this.sprite_container.removeChild(this.equippedItem);
+
+                if (this.itemInstance instanceof Weapon) {
+                    this.__renderWeapon__(this.itemInstance, this.currentFrame);
+                }
+            }
         });
     };
 
 
 
     // GETTERS
-    __getWeaponFrame__(weapon, frame) {
+    __renderWeapon__(weapon, frame) {
         checks.checkIfInstance(weapon, Weapon);
         checks.checkIfString(frame);
 
         if (frame === 's') {
-            return weapon.loadSouth();
+            this.equippedItem = weapon.loadSouth();
         }
         else if (frame === 'n') {
-            return weapon.loadNorth();
+            this.equippedItem = weapon.loadNorth();
         }
         else if (frame === 'w') {
-            return weapon.loadWest();
+            this.equippedItem = weapon.loadWest();
         }
         else if (frame === 'e') {
-            return weapon.loadEast();
+            this.equippedItem = weapon.loadEast();
         }
+
+        this.sprite_container.addChild(this.equippedItem);
     };
 
     getSpeed() {
@@ -72,18 +81,17 @@ export class Entity extends Sprite {
     equip(item) {
         checks.checkIfInstance(item, Item);
 
-        if (item instanceof Weapon) {
-            this.equippedItem = this.__getWeaponFrame__(item, this.currentFrame);
-        }
+        this.itemInstance = item;
 
-        if (this.equippedItem !== undefined && this.equippedItem !== null) {
-            this.sprite_container.addChild(this.equippedItem);
+        if (item instanceof Weapon) {
+            this.__renderWeapon__(item, this.currentFrame);
         }
     };
 
     unequip() {
         this.sprite_container.removeChild(this.equippedItem);
 
+        this.itemInstance = null;
         this.equippedItem = null;
     };
 
