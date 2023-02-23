@@ -1,5 +1,6 @@
 import * as checks from '../helpers/checks.js';
 import { Item } from './base/base.js'; 
+import { updateAmmoCount } from '../core/hud.js';
 
 
 
@@ -48,9 +49,39 @@ export class Gun extends Weapon {
     };
 
     playSound() {
-        if (this.sound !== undefined && this.sound !== null) {
-            this.sound.play();
+        new Audio(this.soundFile).play();
+    };
+
+
+
+    // SETTERS
+    fire() {
+        if (this.mode === 'semi-auto') {
+            this.ammoLoaded -= 1;
         }
+
+        if (this.ammoLoaded > -1) {
+            this.playSound();
+
+            updateAmmoCount(this);
+        }
+
+        if (this.ammoLoaded === 0) {
+            this.reload();
+        }
+    };
+
+    reload() {
+        if (this.ammoLeft >= this.clipCapacity) {
+            this.ammoLeft -= this.clipCapacity;
+
+            this.ammoLoaded = this.clipCapacity;
+        }
+        else if (this.ammoLeft < this.clipCapacity) {
+            this.ammoLoaded = this.ammoLeft;
+        }
+
+        updateAmmoCount(this);
     };
 };
 
@@ -58,7 +89,11 @@ export class Pistol extends Gun {
     constructor(texture) {
         super(texture);
 
-        this.sound = new Audio('http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3');
+        this.soundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3';
+
+        this.mode = 'semi-auto';
+
+        this.clipCapacity = 12;
     };
 
 
