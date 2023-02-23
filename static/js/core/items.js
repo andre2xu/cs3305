@@ -24,6 +24,25 @@ export class Weapon extends Item {
     constructor(texture) {
         super(texture);
     };
+
+
+
+    // SETTERS
+    createCopy(texture, x, y, w, h) {
+        checks.checkIfInstance(texture, PIXI.Texture);
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+        checks.checkIfNumber(w);
+        checks.checkIfNumber(h);
+
+        const COPY = new PIXI.Sprite(this.texture);
+        COPY.x = x;
+        COPY.y = y;
+        COPY.width = w;
+        COPY.height = h;
+
+        return COPY;
+    };
 };
 
 export class Pistol extends Weapon {
@@ -35,54 +54,34 @@ export class Pistol extends Weapon {
 
     // GETTERS
     loadNorth() {
-        const COPY = new PIXI.Sprite(this.texture);
-        COPY.width = 25;
-        COPY.height = 25;
+        const PISTOL = this.createCopy(this.texture, 20, 20, 25, 25);
 
-        COPY.scale.y = -1;
-        COPY.rotation = 4.6;
+        PISTOL.scale.y = -1;
+        PISTOL.rotation = 4.6;
 
-        COPY.x = 20;
-        COPY.y = 20;
-
-        return COPY;
+        return PISTOL;
     };
 
     loadSouth() {
-        const COPY = new PIXI.Sprite(this.texture);
-        COPY.width = 25;
-        COPY.height = 25;
+        const PISTOL = this.createCopy(this.texture, 0, 20, 25, 25);
 
-        COPY.scale.y = -1;
-        COPY.rotation = 1.5;
+        PISTOL.scale.y = -1;
+        PISTOL.rotation = 1.5;
 
-        COPY.x = 0;
-        COPY.y = 20;
-
-        return COPY;
+        return PISTOL;
     };
 
     loadWest() {
-        const COPY = new PIXI.Sprite(this.texture);
-        COPY.width = 25;
-        COPY.height = 25;
+        const PISTOL = this.createCopy(this.texture, 18, 8, 25, 25);
 
-        COPY.scale.x = -1;
+        PISTOL.scale.x = -1;
 
-        COPY.x = 18;
-        COPY.y = 8;
-
-        return COPY;
+        return PISTOL;
     };
 
     loadEast() {
-        const COPY = new PIXI.Sprite(this.texture);
-        COPY.width = 25;
-        COPY.height = 25;
+        const PISTOL = this.createCopy(this.texture, 5, 8, 25, 25);
 
-        COPY.x = 5;
-        COPY.y = 8;
-
-        return COPY;
+        return PISTOL;
     };
 };
