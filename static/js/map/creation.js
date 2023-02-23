@@ -1,4 +1,5 @@
 import * as checks from '../helpers/checks.js';
+import { Weapon } from '../sprites/weapons.js';
 
 import {
     Obstacle,
@@ -70,9 +71,13 @@ export class PlayableArea {
 
         this.area.interactive = true;
 
-        this.area.on('mousedown', (event) => {
+        this.area.on('mousedown', () => {
             if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
-                
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Weapon) {
+                    new Audio('../andrew/assets/sounds/pistol.mp3').play();
+                }
             }
         });
     };
