@@ -77,7 +77,9 @@ export class Gun extends Weapon {
         if (this.ammoLoaded === 0 && this.ammoLeft > 0) {
             this.playReloadSound();
 
-            this.reload();
+            setTimeout(() => {
+                this.reload();
+            }, this.reloadDuration);
         }
     };
 
@@ -105,6 +107,8 @@ export class Pistol extends Gun {
         this.mode = 'semi-auto';
 
         this.clipCapacity = 12;
+
+        this.reloadDuration = 1000; // milliseconds
     };
 
 
