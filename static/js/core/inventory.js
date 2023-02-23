@@ -22,6 +22,7 @@ export class Inventory {
             null,
             null
         ];
+        this.currentSelItem = null;
 
         this.inventoryContainer = new PIXI.Container();
         this.inventoryContainer.x = posX;
@@ -49,6 +50,10 @@ export class Inventory {
 
     display() {
         return this.inventoryContainer;
+    };
+
+    getSelItem() {
+        return this.currentSelItem;
     };
 
 
@@ -84,6 +89,8 @@ export class Inventory {
         this.player.unequip();
 
         const SELECTED_ITEM = this.inventory[index - 1];
+
+        this.currentSelItem = SELECTED_ITEM;
 
         if (SELECTED_ITEM instanceof Item) {
             this.player.equip(SELECTED_ITEM);
