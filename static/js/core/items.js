@@ -36,27 +36,53 @@ export class Pistol extends Weapon {
     // GETTERS
     loadNorth() {
         const COPY = new PIXI.Sprite(this.texture);
+        COPY.width = 25;
+        COPY.height = 25;
+
+        COPY.scale.y = -1;
+        COPY.rotation = 4.6;
+
+        COPY.x = 20;
+        COPY.y = 20;
+
         return COPY;
     };
 
     loadSouth() {
         const COPY = new PIXI.Sprite(this.texture);
+        COPY.width = 25;
+        COPY.height = 25;
 
-        COPY.x = -5;
-        COPY.y = 20;
         COPY.scale.y = -1;
         COPY.rotation = 1.5;
+
+        COPY.x = 0;
+        COPY.y = 20;
 
         return COPY;
     };
 
     loadWest() {
         const COPY = new PIXI.Sprite(this.texture);
+        COPY.width = 25;
+        COPY.height = 25;
+
+        COPY.scale.x = -1;
+
+        COPY.x = 18;
+        COPY.y = 8;
+
         return COPY;
     };
 
     loadEast() {
         const COPY = new PIXI.Sprite(this.texture);
+        COPY.width = 25;
+        COPY.height = 25;
+
+        COPY.x = 5;
+        COPY.y = 8;
+
         return COPY;
     };
 };
