@@ -55,20 +55,22 @@ export class Entity extends Sprite {
         checks.checkIfInstance(weapon, Weapon);
         checks.checkIfString(frame);
 
-        if (frame === 's') {
-            this.equippedItem = weapon.loadSouth();
-        }
-        else if (frame === 'n') {
+        console.log(frame);
+
+        if (frame === 'n' || frame === 'nl' || frame === 'nr') {
             this.equippedItem = weapon.loadNorth();
 
             this.sprite_container.addChildAt(this.equippedItem, 0);
 
             return;
         }
-        else if (frame === 'w') {
+        else if (frame === 's' || frame === 'sl' || frame === 'sr') {
+            this.equippedItem = weapon.loadSouth();
+        }
+        else if (frame === 'w' || frame === 'wl' || frame === 'wr') {
             this.equippedItem = weapon.loadWest();
         }
-        else if (frame === 'e') {
+        else if (frame === 'e' || frame === 'el' || frame === 'er') {
             this.equippedItem = weapon.loadEast();
         }
 
@@ -176,7 +178,6 @@ export class Player extends Entity {
         this.health = 100;
         this.invincibility = false;
 
-        // movement animation
         let reset_to_idle_timer = null;
 
         this.addEvent('move', (event) => {
@@ -186,6 +187,9 @@ export class Player extends Entity {
                 this.rotateToMouse(); // resets player sprite to the idle frame
             }, 100);
 
+
+
+            // moving animation for hands
             if (new Date().getMilliseconds() % 2 === 0) {
                 if (event.currentFrame === 's' || event.currentFrame === 'sr') {
                     this.switchFrame('sl');
