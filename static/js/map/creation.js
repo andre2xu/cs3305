@@ -1,5 +1,5 @@
 import * as checks from '../helpers/checks.js';
-import { Weapon } from '../sprites/weapons.js';
+import { Gun } from '../sprites/weapons.js';
 
 import {
     Obstacle,
@@ -75,8 +75,8 @@ export class PlayableArea {
             if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
                 const SELECTED_ITEM = window.HOTBAR.getSelItem();
 
-                if (SELECTED_ITEM instanceof Weapon) {
-                    new Audio('../andrew/assets/sounds/pistol.mp3').play();
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
                 }
             }
         });
