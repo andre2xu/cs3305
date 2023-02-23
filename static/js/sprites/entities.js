@@ -320,6 +320,18 @@ export class Enemy extends Entity {
         this.detourPointIndex = 0;
 
         NON_PLAYER_ENTITIES.push(this);
+
+
+
+        this.sprite_container.interactive = true;
+
+        this.sprite_container.on('mousedown', (event) => {
+            event.stopPropagation();
+
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                
+            }
+        });
     };
 
 
