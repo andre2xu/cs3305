@@ -44,7 +44,7 @@ window.addEventListener('load', () => {
     player.addFrames(player_frames_json);
     player.switchFrame('n');
 
-    const HOTBAR = new Inventory(
+    window.HOTBAR = new Inventory(
         player,
         getTextureFromStaticJSFolder('/dev/andrew/assets/hotbar.png'),
         20,
@@ -56,8 +56,8 @@ window.addEventListener('load', () => {
         getTextureFromStaticJSFolder('/dev/andrew/assets/handgun.png')
     );
 
-    HOTBAR.addItem(HANDGUN);
-    HOTBAR.changeSelItem(1);
+    window.HOTBAR.addItem(HANDGUN);
+    window.HOTBAR.changeSelItem(1);
 
 
 
@@ -111,28 +111,28 @@ window.addEventListener('load', () => {
                 MOVEMENT_KEY_STATUSES.d = true;
                 break;
             case '1':
-                HOTBAR.changeSelItem(1);
+                window.HOTBAR.changeSelItem(1);
                 break;
             case '2':
-                HOTBAR.changeSelItem(2);
+                window.HOTBAR.changeSelItem(2);
                 break;
             case '3':
-                HOTBAR.changeSelItem(3);
+                window.HOTBAR.changeSelItem(3);
                 break;
             case '4':
-                HOTBAR.changeSelItem(4);
+                window.HOTBAR.changeSelItem(4);
                 break;
             case '5':
-                HOTBAR.changeSelItem(5);
+                window.HOTBAR.changeSelItem(5);
                 break;
             case '6':
-                HOTBAR.changeSelItem(6);
+                window.HOTBAR.changeSelItem(6);
                 break;
             case '7':
-                HOTBAR.changeSelItem(7);
+                window.HOTBAR.changeSelItem(7);
                 break;
             case '8':
-                HOTBAR.changeSelItem(8);
+                window.HOTBAR.changeSelItem(8);
                 break;
         }
 
@@ -152,10 +152,17 @@ window.addEventListener('load', () => {
 
 
 
+    // INTERACTION
+    window.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    });
+
+
+
     GAME.stage.addChild(
         FOYER.load(),
         PLAYER_HEALTH_STATUS,
-        HOTBAR.display()
+        window.HOTBAR.display()
     );
 
     GAME.ticker.add(() => {
