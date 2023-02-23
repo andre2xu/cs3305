@@ -1,16 +1,12 @@
 import * as checks from '../helpers/checks.js';
 
+// BASE
 export class Item {
-    constructor(invImage, itemID, isOverwritable,isConsumable) {
-        checks.checkIfInstance(invImage, PIXI.Texture);
-        checks.checkIfString(itemID);
-        checks.checkIfBoolean(isOverwritable);
-        checks.checkIfBoolean(isConsumable);
+    constructor(texture) {
+        checks.checkIfInstance(texture, PIXI.Texture);
 
-        this.itemID = itemID;
-
-        this.texture = invImage;
-        this.icon = new PIXI.Sprite(invImage);
+        this.texture = texture;
+        this.icon = new PIXI.Sprite(texture);
     };
 
 
@@ -19,8 +15,31 @@ export class Item {
     getIcon() {
         return this.icon;
     };
+};
 
-    load() {
+
+
+// WEAPONS
+export class Weapon extends Item {
+    constructor(texture) {
+        super(texture);
+    };
+};
+
+export class Pistol extends Weapon {
+    constructor(texture) {
+        super(texture);
+    };
+
+
+
+    // GETTERS
+    loadNorth() {
+        const COPY = new PIXI.Sprite(this.texture);
+        return COPY;
+    };
+
+    loadSouth() {
         const COPY = new PIXI.Sprite(this.texture);
 
         COPY.x = -5;
@@ -28,6 +47,16 @@ export class Item {
         COPY.scale.y = -1;
         COPY.rotation = 1.5;
 
+        return COPY;
+    };
+
+    loadWest() {
+        const COPY = new PIXI.Sprite(this.texture);
+        return COPY;
+    };
+
+    loadEast() {
+        const COPY = new PIXI.Sprite(this.texture);
         return COPY;
     };
 };
