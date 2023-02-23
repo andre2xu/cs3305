@@ -60,6 +60,10 @@ export class Entity extends Sprite {
         }
         else if (frame === 'n') {
             this.equippedItem = weapon.loadNorth();
+
+            this.sprite_container.addChildAt(this.equippedItem, 0);
+
+            return;
         }
         else if (frame === 'w') {
             this.equippedItem = weapon.loadWest();
