@@ -33,20 +33,25 @@ export class Weapon extends Item {
 export class Gun extends Weapon {
     constructor(texture) {
         super(texture);
-
-        this.ammoLoaded = 12;
-        this.ammoLeft = 60;
     };
 
 
 
     // GETTERS
     getAmmoLoaded() {
+        if (this.ammoLoaded < 0) {
+            return 0;
+        }
+
         return this.ammoLoaded;
     };
 
     getAmmoLeft() {
         return this.ammoLeft;
+    };
+
+    getClipCapacity() {
+        return this.clipCapacity;
     };
 
     playGunFireSound() {
@@ -80,25 +85,48 @@ export class Gun extends Weapon {
         }
 
         if (this.ammoLoaded === 0 && this.ammoLeft > 0) {
-            this.playReloadSound();
-
-            setTimeout(() => {
-                this.reload();
-            }, this.reloadDuration);
+            this.reload();
         }
     };
 
     reload() {
-        if (this.ammoLeft >= this.clipCapacity) {
-            this.ammoLeft -= this.clipCapacity;
+        this.playReloadSound();
 
-            this.ammoLoaded = this.clipCapacity;
-        }
-        else if (this.ammoLeft < this.clipCapacity) {
-            this.ammoLoaded = this.ammoLeft;
-        }
+        setTimeout(() => {
+            if (this.ammoLoaded < 0) {
+                // clip is empty (auto reload)
 
-        updateAmmoCount(this);
+                if (this.ammoLeft >= 12) {
+                    this.ammoLeft -= this.clipCapacity;
+
+                    this.ammoLoaded = this.clipCapacity;
+                }
+                else if (this.ammoLeft < 12) {
+                    this.ammoLoaded = this.ammoLeft;
+
+                    this.ammoLeft -= this.ammoLeft;
+                }
+            }
+            else if (this.ammoLoaded > 0) {
+                // clip is not empty (manual reload)
+
+                const AMMO_NEEDED = this.clipCapacity - this.ammoLoaded;
+
+                if (this.ammoLeft >= AMMO_NEEDED) {
+                    this.ammoLoaded += AMMO_NEEDED;
+
+                    this.ammoLeft -= AMMO_NEEDED;
+                }
+                else if (this.ammoLeft < AMMO_NEEDED) {
+                    this.ammoLoaded += this.ammoLeft;
+
+                    this.ammoLeft -= this.ammoLeft;
+                }
+            }
+
+            updateAmmoCount(this);
+
+        }, this.reloadDuration);
     };
 };
 
@@ -108,12 +136,13 @@ export class Pistol extends Gun {
 
         this.gunFireSoundFile = `${SOUND_ASSETS_FOLDER}/pistol.mp3`;
         this.reloadSoundFile = `${SOUND_ASSETS_FOLDER}/pistol_reload.mp3`;
+        this.reloadDuration = 1000; // milliseconds
 
         this.mode = 'semi-auto';
 
         this.clipCapacity = 12;
-
-        this.reloadDuration = 1000; // milliseconds
+        this.ammoLoaded = this.clipCapacity;
+        this.ammoLeft = 60;
 
         this.damage = 25;
     };

@@ -1,8 +1,12 @@
 import { FOYER } from '../../map/foyer/foyer.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
-import { Pistol } from '../../sprites/weapons.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
+
+import {
+    Gun,
+    Pistol
+} from '../../sprites/weapons.js';
 
 import {
     Player,
@@ -136,6 +140,15 @@ window.addEventListener('load', () => {
             case '8':
                 window.HOTBAR.changeSelItem(8);
                 break;
+            case 'r':
+                // manual reload
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity() && SELECTED_ITEM.getAmmoLeft() > 0) {
+                    SELECTED_ITEM.reload();
+                }
+
+                break;
         }
 
         checkForCollisionsAndMovePlayer(player);
@@ -181,13 +194,13 @@ window.addEventListener('load', () => {
 
 
 
-        const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+        // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
-        if (NUM_OF_ENTITIES > 0) {
-            for (let i=0; i < NUM_OF_ENTITIES; i++) {
-                NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-            }
-        }
+        // if (NUM_OF_ENTITIES > 0) {
+        //     for (let i=0; i < NUM_OF_ENTITIES; i++) {
+        //         NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+        //     }
+        // }
 
 
 
