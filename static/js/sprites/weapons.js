@@ -1,6 +1,7 @@
 import * as checks from '../helpers/checks.js';
 import { Item } from './base/base.js'; 
 import { updateAmmoCount } from '../core/hud.js';
+import { SOUND_ASSETS_FOLDER } from '../helpers/urls.js';
 
 
 
@@ -101,8 +102,8 @@ export class Pistol extends Gun {
     constructor(texture) {
         super(texture);
 
-        this.gunFireSoundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3';
-        this.reloadSoundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol_reload.mp3';
+        this.gunFireSoundFile = `${SOUND_ASSETS_FOLDER}/pistol.mp3`;
+        this.reloadSoundFile = `${SOUND_ASSETS_FOLDER}/pistol_reload.mp3`;
 
         this.mode = 'semi-auto';
 
