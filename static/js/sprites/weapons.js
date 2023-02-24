@@ -61,6 +61,10 @@ export class Gun extends Weapon {
         return AUDIO;
     };
 
+    getDamage() {
+        return this.damage;
+    };
+
 
 
     // SETTERS
@@ -110,6 +114,8 @@ export class Pistol extends Gun {
         this.clipCapacity = 12;
 
         this.reloadDuration = 1000; // milliseconds
+
+        this.damage = 25;
     };
 
 
