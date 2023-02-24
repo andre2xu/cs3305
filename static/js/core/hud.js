@@ -27,5 +27,9 @@ AMMO_COUNT.y = 10;
 export function updateAmmoCount(gun) {
     checks.checkIfInstance(gun, Gun);
 
-    AMMO_COUNT.text = `Ammo: ${gun.getAmmoLoaded()}/${gun.getAmmoLeft()}`
+    AMMO_COUNT.text = `Ammo: ${gun.getAmmoLoaded()}/${gun.getAmmoLeft()}`;
+};
+
+export function hideAmmoCount() {
+    AMMO_COUNT.text = '';
 };
