@@ -3,7 +3,10 @@ import { PlayableArea } from '../creation.js';
 import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
 
 import {
-    
+    Decoration,
+    DecorationFill,
+    SemiSolid,
+    SemiSolidFill
 } from '../../sprites/objects.js';
 
 export const LIBRARY = (function () {
