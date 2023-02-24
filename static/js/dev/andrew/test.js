@@ -144,7 +144,7 @@ window.addEventListener('load', () => {
                 // manual reload
                 const SELECTED_ITEM = window.HOTBAR.getSelItem();
 
-                if (SELECTED_ITEM instanceof Gun && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity()) {
+                if (SELECTED_ITEM instanceof Gun && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity() && SELECTED_ITEM.getAmmoLeft() > 0) {
                     SELECTED_ITEM.reload();
                 }
 
