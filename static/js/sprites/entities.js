@@ -2,7 +2,11 @@ import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
 import { Item } from '../sprites/base/base.js';
-import { Weapon } from './weapons.js';
+
+import {
+    Weapon,
+    Gun
+} from './weapons.js';
 
 import {
     Obstacle,
@@ -331,7 +335,11 @@ export class Enemy extends Entity {
             event.stopPropagation();
 
             if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
-                
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+                }
             }
         });
     };
