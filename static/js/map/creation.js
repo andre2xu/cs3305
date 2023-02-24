@@ -190,6 +190,8 @@ export class PlayableArea {
                 if (SPRITE.parent === null) {
                     ALL_SPRITES.splice(i, 1);
                     num_of_sprites = ALL_SPRITES.length;
+
+                    delete this.dynamicSprites[Object.keys(this.dynamicSprites)[i]];
                 }
             }
 
