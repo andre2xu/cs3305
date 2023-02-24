@@ -32,8 +32,8 @@ export const BASEMENT = (function () {
     BASEMENT.addStaticSprite(
         COUCH,
         'basecouch',
-        BASEMENT.getHalfWidth() - COUCH.getHalfWidth(),
-        -(COUCH.getSpriteFrameDimensions().h + 1)
+        BASEMENT.getHalfWidth() + COUCH.getHalfWidth(),
+        BASEMENT.getHeight() - (COUCH.getSpriteFrameDimensions().h + 100)
     );
 
 
@@ -41,15 +41,15 @@ export const BASEMENT = (function () {
     BASEMENT.addStaticSprite(
         FIREPLACE,
         'fireplace',
-        BASEMENT.getHalfWidth() - COUCH.getHalfWidth(),
-        -(COUCH.getSpriteFrameDimensions().h + 1)
+        BASEMENT.getHalfWidth() + COUCH.getHalfWidth(),
+        BASEMENT.getHeight() - (COUCH.getSpriteFrameDimensions().h + 250)
     );
 
     const BROKEN_CUPBOARD = new SemiSolid(getTextureFromStaticJSFolder('/map/basement/assets/brokencupboard.png'), 0, 0, 80, 108);
     BASEMENT.addStaticSprite(
         BROKEN_CUPBOARD,
         'brokencupboard',
-        BASEMENT.getHalfWidth() - BROKEN_CUPBOARD.getHalfWidth(),
+        BASEMENT.getWidth() - (BROKEN_CUPBOARD.getSpriteFrameDimensions().w + 450),
         BASEMENT.getHeight() - (BROKEN_CUPBOARD.getSpriteFrameDimensions().h + 5)
     );
 
@@ -57,7 +57,7 @@ export const BASEMENT = (function () {
     BASEMENT.addStaticSprite(
         STACKED_CUPBOARD,
         'stackedcupboard',
-        BASEMENT.getHalfWidth() - STACKED_CUPBOARD.getHalfWidth(),
+        BASEMENT.getWidth() - (STACKED_CUPBOARD.getSpriteFrameDimensions().w + 400),
         BASEMENT.getHeight() - (STACKED_CUPBOARD.getSpriteFrameDimensions().h + 5)
     );
 
@@ -65,11 +65,10 @@ export const BASEMENT = (function () {
     BASEMENT.addStaticSprite(
         OPEN_CHEST,
         'openchest',
-        BASEMENT.getHalfWidth() - OPEN_CHEST.getHalfWidth(),
+        BASEMENT.getWidth() - (OPEN_CHEST.getSpriteFrameDimensions().w + 340),
         BASEMENT.getHeight() - (OPEN_CHEST.getSpriteFrameDimensions().h + 5)
     );
     
-
 
     return BASEMENT;
 })();
