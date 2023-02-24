@@ -341,6 +341,8 @@ export class Enemy extends Entity {
                     SELECTED_ITEM.fire();
 
                     if (SELECTED_ITEM.ammoLoaded > 0) {
+                        this.decreaseHealth(SELECTED_ITEM.getDamage());
+
                         this.showDamage();
 
                         setTimeout(() => {
@@ -701,6 +703,12 @@ export class Enemy extends Entity {
                 this.moveSpriteNorthEast();
                 break;
         }
+    };
+
+    decreaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health -= value;
     };
 };
 
