@@ -2,6 +2,7 @@ import { FOYER } from '../../map/foyer/foyer.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { Pistol } from '../../sprites/weapons.js';
+import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
 
 import {
     Player,
@@ -63,9 +64,9 @@ window.addEventListener('load', () => {
 
 
     // ENEMY
-    const zombie = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
+    let zombie = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
     zombie.addFrames(zombie_frames_json);
-    zombie.switchFrame('n');
+    zombie.switchFrame('s');
 
 
 
@@ -139,7 +140,15 @@ window.addEventListener('load', () => {
 
         checkForCollisionsAndMovePlayer(player);
 
-        zombie.rotateToPlayer(player);
+
+
+        const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
+        if (NUM_OF_ENTITIES > 0) {
+            for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                NON_PLAYER_ENTITIES[i].rotateToPlayer(player);
+            }
+        }
     });
 
     window.addEventListener('mousemove', (event) => {
@@ -170,7 +179,15 @@ window.addEventListener('load', () => {
     GAME.ticker.add(() => {
         FOYER.sortSpriteOrder();
 
-        // zombie.moveToPlayer(player);
+
+
+        const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
+        if (NUM_OF_ENTITIES > 0) {
+            for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+            }
+        }
 
 
 
@@ -184,6 +201,4 @@ window.addEventListener('load', () => {
     window.mouseX = FOYER.getHalfWidth();
     window.mouseY = FOYER.getRightPosY();
     player.rotateToMouse();
-
-    zombie.rotateToPlayer(player);
 });
