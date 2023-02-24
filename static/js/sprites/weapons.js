@@ -42,6 +42,10 @@ export class Gun extends Weapon {
 
     // GETTERS
     getAmmoLoaded() {
+        if (this.ammoLoaded < 0) {
+            return 0;
+        }
+
         return this.ammoLoaded;
     };
 
