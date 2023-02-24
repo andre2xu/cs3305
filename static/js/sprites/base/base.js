@@ -24,6 +24,8 @@ export class Sprite {
 
         this.isFlippedHorizontally = false;
         this.isFlippedVertically = false;
+
+        this.events = {};
     };
 
 
@@ -181,6 +183,21 @@ export class Sprite {
         this.__setFrameMask__(0, 0, FRAME.w, FRAME.h);
 
         this.currentFrame = name;
+
+
+
+        const EVENT = this.events['onChangeFrame'];
+
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
+            const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
+
+            for (let i=0; i < NUM_OF_CALLBACKS; i++) {
+                EVENT_CALLBACKS[i]({
+                    currentFrame: this.currentFrame
+                });
+            }
+        }
     };
 
     flipHorizontally() {
@@ -298,5 +315,23 @@ export class FillSprite {
 
         this.fillWidth = w;
         this.fillHeight = h;
+    };
+};
+
+
+
+export class Item {
+    constructor(texture) {
+        checks.checkIfInstance(texture, PIXI.Texture);
+
+        this.texture = texture;
+        this.icon = new PIXI.Sprite(texture);
+    };
+
+
+
+    // GETTERS
+    getIcon() {
+        return this.icon;
     };
 };

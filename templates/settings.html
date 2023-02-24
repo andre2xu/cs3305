@@ -8,9 +8,12 @@
     <p>
         <a href="view"><button>Difficulty</button></a>
 
-        <button onclick=Minus_Difficulty()>-</button>
+        <form method="post" action="/">
+            <input type="submit" value="-" name="MinusDifficulty"/>
+            <input type="submit" value="+" name="IncreaseDifficulty" />
+        </form>
         {{ Difficulty_Level }}
-        <button onclick=Add_Difficulty()>+</button>
+        
 
     </p>
 

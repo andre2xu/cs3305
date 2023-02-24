@@ -1,6 +1,12 @@
 import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
+import { Item } from '../sprites/base/base.js';
+
+import {
+    Weapon,
+    Gun
+} from './weapons.js';
 
 import {
     Obstacle,
@@ -21,14 +27,55 @@ export class Entity extends Sprite {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.movementOffset = 5;
+
         this.events = {
-            move: []
+            move: [],
+            onChangeFrame: []
         };
+
+        this.itemInstance = null;
+        this.equippedItem = null;
+
+
+
+        this.addEvent('onChangeFrame', () => {
+            if (this.itemInstance !== null) {
+                this.sprite_container.removeChild(this.equippedItem);
+
+                if (this.itemInstance instanceof Weapon) {
+                    this.__renderWeapon__(this.itemInstance, this.currentFrame);
+                }
+            }
+        });
     };
 
 
 
     // GETTERS
+    __renderWeapon__(weapon, frame) {
+        checks.checkIfInstance(weapon, Weapon);
+        checks.checkIfString(frame);
+
+        if (frame === 'n' || frame === 'nl' || frame === 'nr') {
+            this.equippedItem = weapon.loadNorth();
+
+            this.sprite_container.addChildAt(this.equippedItem, 0);
+
+            return;
+        }
+        else if (frame === 's' || frame === 'sl' || frame === 'sr') {
+            this.equippedItem = weapon.loadSouth();
+        }
+        else if (frame === 'w' || frame === 'wl' || frame === 'wr') {
+            this.equippedItem = weapon.loadWest();
+        }
+        else if (frame === 'e' || frame === 'el' || frame === 'er') {
+            this.equippedItem = weapon.loadEast();
+        }
+
+        this.sprite_container.addChild(this.equippedItem);
+    };
+
     getSpeed() {
         return this.movementOffset;
     };
@@ -36,6 +83,23 @@ export class Entity extends Sprite {
 
 
     // SETTERS
+    equip(item) {
+        checks.checkIfInstance(item, Item);
+
+        this.itemInstance = item;
+
+        if (item instanceof Weapon) {
+            this.__renderWeapon__(item, this.currentFrame);
+        }
+    };
+
+    unequip() {
+        this.sprite_container.removeChild(this.equippedItem);
+
+        this.itemInstance = null;
+        this.equippedItem = null;
+    };
+
     showDamage() {
         this.sprite.tint = 0xff0000;
     };
@@ -54,8 +118,15 @@ export class Entity extends Sprite {
         checks.checkIfNumber(x);
         checks.checkIfNumber(y);
 
-        if (this.events['move'] !== null) {
-            const EVENT_CALLBACKS = this.events['move'];
+        this.sprite_container.x += x;
+        this.sprite_container.y += y;
+
+
+
+        const EVENT = this.events['move'];
+
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
             const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
 
             for (let i=0; i < NUM_OF_CALLBACKS; i++) {
@@ -64,9 +135,6 @@ export class Entity extends Sprite {
                 });
             }
         } 
-
-        this.sprite_container.x += x;
-        this.sprite_container.y += y;
     };
 
     moveSpriteNorth() {
@@ -109,7 +177,8 @@ export class Player extends Entity {
         this.health = 100;
         this.invincibility = false;
 
-        // movement animation
+
+
         let reset_to_idle_timer = null;
 
         this.addEvent('move', (event) => {
@@ -119,6 +188,9 @@ export class Player extends Entity {
                 this.rotateToMouse(); // resets player sprite to the idle frame
             }, 100);
 
+
+
+            // moving animation for hands
             if (new Date().getMilliseconds() % 2 === 0) {
                 if (event.currentFrame === 's' || event.currentFrame === 'sr') {
                     this.switchFrame('sl');
@@ -254,6 +326,32 @@ export class Enemy extends Entity {
         this.detourPointIndex = 0;
 
         NON_PLAYER_ENTITIES.push(this);
+
+
+
+        this.sprite_container.interactive = true;
+
+        this.sprite_container.on('mousedown', (event) => {
+            event.stopPropagation();
+
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+
+                    if (SELECTED_ITEM.ammoLoaded > 0) {
+                        this.decreaseHealth(SELECTED_ITEM.getDamage());
+
+                        this.showDamage();
+
+                        setTimeout(() => {
+                            this.hideDamage();
+                        }, 500);
+                    }
+                }
+            }
+        });
     };
 
 
@@ -604,6 +702,18 @@ export class Enemy extends Entity {
             case 'ne':
                 this.moveSpriteNorthEast();
                 break;
+        }
+    };
+
+    decreaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health -= value;
+
+        if (this.health === 0) {
+            this.sprite_container.parent.removeChild(this.sprite_container);
+
+            NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
         }
     };
 };

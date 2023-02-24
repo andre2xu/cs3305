@@ -1,4 +1,5 @@
 import * as checks from '../helpers/checks.js';
+import { Gun } from '../sprites/weapons.js';
 
 import {
     Obstacle,
@@ -44,7 +45,6 @@ export const MAP_NAME = (function () {
 export class PlayableArea {
     constructor(width, height) {
         this.area = new PIXI.Container();
-        this.area.interactive = true;
 
         this.width = width;
         this.height = height;
@@ -66,6 +66,20 @@ export class PlayableArea {
             this.STATIC_SPRITES_CONTAINER,
             this.DYNAMIC_SPRITES_CONTAINER
         );
+
+
+
+        this.area.interactive = true;
+
+        this.area.on('mousedown', () => {
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+                }
+            }
+        });
     };
 
 
@@ -166,13 +180,28 @@ export class PlayableArea {
     sortSpriteOrder() {
         // SPRITE ORDERING
         const ALL_SPRITES = Object.values(this.dynamicSprites);
-        const NUM_OF_SPRITES = ALL_SPRITES.length;
+        let num_of_sprites = ALL_SPRITES.length;
 
-        if (NUM_OF_SPRITES > 0) {
+        if (num_of_sprites > 0) {
+            // REMOVES SPRITES WITH NO PARENT
+            for (let i=0; i < num_of_sprites; i++) {
+                const SPRITE = ALL_SPRITES[i].getSprite();
+
+                if (SPRITE.parent === null) {
+                    ALL_SPRITES.splice(i, 1);
+                    num_of_sprites = ALL_SPRITES.length;
+
+                    delete this.dynamicSprites[Object.keys(this.dynamicSprites)[i]];
+                }
+            }
+
+
+
+            // REORDERS SPRITE
             let posY_of_sprites = [];
 
             // gets the y coordinate of the bottom edge of every sprite
-            for (let i=0; i < NUM_OF_SPRITES; i++) {
+            for (let i=0; i < num_of_sprites; i++) {
                 const CURRENT_SPRITE = ALL_SPRITES[i];
 
                 posY_of_sprites.push(CURRENT_SPRITE.getRightPosY());
@@ -181,10 +210,10 @@ export class PlayableArea {
             // sorts the y coordinates in ascending order
             posY_of_sprites = posY_of_sprites.sort();
 
-            for (let i=0; i < NUM_OF_SPRITES; i++) {
+            for (let i=0; i < num_of_sprites; i++) {
                 const CURRENT_POSY = posY_of_sprites[i];
 
-                for (let j=0; j < NUM_OF_SPRITES; j++) {
+                for (let j=0; j < num_of_sprites; j++) {
                     const UNSORTED_SPRITE = ALL_SPRITES[j];
 
                     // corrects the z-order of all the sprites according to the sorted y coordinates
