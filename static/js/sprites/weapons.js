@@ -33,9 +33,6 @@ export class Weapon extends Item {
 export class Gun extends Weapon {
     constructor(texture) {
         super(texture);
-
-        this.ammoLoaded = 12;
-        this.ammoLeft = 60;
     };
 
 
@@ -97,23 +94,34 @@ export class Gun extends Weapon {
 
         setTimeout(() => {
             if (this.ammoLoaded < 0) {
-                // clip is empty
+                // clip is empty (auto reload)
 
-                this.ammoLeft -= this.clipCapacity;
+                if (this.ammoLeft >= 12) {
+                    this.ammoLeft -= this.clipCapacity;
 
-                this.ammoLoaded = this.clipCapacity;
+                    this.ammoLoaded = this.clipCapacity;
+                }
+                else if (this.ammoLeft < 12) {
+                    this.ammoLoaded = this.ammoLeft;
+
+                    this.ammoLeft -= this.ammoLeft;
+                }
             }
             else if (this.ammoLoaded > 0) {
+                // clip is not empty (manual reload)
+
                 const AMMO_NEEDED = this.clipCapacity - this.ammoLoaded;
 
-                this.ammoLoaded += AMMO_NEEDED;
+                if (this.ammoLeft >= AMMO_NEEDED) {
+                    this.ammoLoaded += AMMO_NEEDED;
 
-                this.ammoLeft -= AMMO_NEEDED;
-            }
-            else if (this.ammoLeft < this.clipCapacity) {
-                // clip is empty AND the amount of ammo left is less than what the clip can hold
+                    this.ammoLeft -= AMMO_NEEDED;
+                }
+                else if (this.ammoLeft < AMMO_NEEDED) {
+                    this.ammoLoaded += this.ammoLeft;
 
-                this.ammoLoaded = this.ammoLeft;
+                    this.ammoLeft -= this.ammoLeft;
+                }
             }
 
             updateAmmoCount(this);
@@ -128,12 +136,13 @@ export class Pistol extends Gun {
 
         this.gunFireSoundFile = `${SOUND_ASSETS_FOLDER}/pistol.mp3`;
         this.reloadSoundFile = `${SOUND_ASSETS_FOLDER}/pistol_reload.mp3`;
+        this.reloadDuration = 1000; // milliseconds
 
         this.mode = 'semi-auto';
 
         this.clipCapacity = 12;
-
-        this.reloadDuration = 1000; // milliseconds
+        this.ammoLoaded = this.clipCapacity;
+        this.ammoLeft = 60;
 
         this.damage = 25;
     };
