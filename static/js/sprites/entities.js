@@ -339,6 +339,14 @@ export class Enemy extends Entity {
 
                 if (SELECTED_ITEM instanceof Gun) {
                     SELECTED_ITEM.fire();
+
+                    if (SELECTED_ITEM.ammoLoaded > 0) {
+                        this.showDamage();
+
+                        setTimeout(() => {
+                            this.hideDamage();
+                        }, 500);
+                    }
                 }
             }
         });
