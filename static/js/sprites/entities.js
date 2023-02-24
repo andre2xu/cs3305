@@ -713,7 +713,7 @@ export class Enemy extends Entity {
         if (this.health === 0) {
             this.sprite_container.parent.removeChild(this.sprite_container);
 
-            delete this;
+            NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
         }
     };
 };
