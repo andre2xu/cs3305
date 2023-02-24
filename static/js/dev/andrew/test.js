@@ -1,27 +1,27 @@
-import { FOYER } from '../../../map/foyer/foyer.js';
-import { getTextureFromStaticJSFolder } from '../../../helpers/pixi_helpers.js';
-import { Inventory } from '../../../core/inventory.js';
-import { Pistol } from '../../../sprites/weapons.js';
+import { FOYER } from '../../map/foyer/foyer.js';
+import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
+import { Inventory } from '../../core/inventory.js';
+import { Pistol } from '../../sprites/weapons.js';
 
 import {
     Player,
     Zombie
-} from '../../../sprites/entities.js';
+} from '../../sprites/entities.js';
 
 import {
     MOVEMENT_KEY_STATUSES,
     checkForCollisionsAndMovePlayer
-} from '../../../core/movement.js';
+} from '../../core/movement.js';
 
 import {
     PLAYER_HEALTH_STATUS,
     updatePlayerHealthStatus,
     AMMO_COUNT
-} from '../../../core/hud.js';
+} from '../../core/hud.js';
 
-import player_frames_json from '../assets/sprite_sheets/player/player.json' assert {type: 'json'};
+import player_frames_json from '../../../assets/sprite_sheets/player/player.json' assert {type: 'json'};
 
-import zombie_frames_json from '../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
+import zombie_frames_json from '../../../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
 
 
 
@@ -41,20 +41,20 @@ window.addEventListener('load', () => {
 
 
     // PLAYER
-    const player = new Player(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
+    const player = new Player(getTextureFromStaticAssetsFolder('/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
     player.switchFrame('n');
 
     window.HOTBAR = new Inventory(
         player,
-        getTextureFromStaticJSFolder('/dev/andrew/assets/hotbar.png'),
+        getTextureFromStaticAssetsFolder('/inventory/hotbar.png'),
         20,
         50,
-        getTextureFromStaticJSFolder('/dev/andrew/assets/selector.png')
+        getTextureFromStaticAssetsFolder('/inventory/selector.png')
     );
 
     const HANDGUN = new Pistol(
-        getTextureFromStaticJSFolder('/dev/andrew/assets/handgun.png')
+        getTextureFromStaticAssetsFolder('/guns/handgun.png')
     );
 
     window.HOTBAR.addItem(HANDGUN);
@@ -63,7 +63,7 @@ window.addEventListener('load', () => {
 
 
     // ENEMY
-    const zombie = new Zombie(getTextureFromStaticJSFolder('/dev/andrew/assets/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
+    const zombie = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
     zombie.addFrames(zombie_frames_json);
     zombie.switchFrame('n');
 
