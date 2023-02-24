@@ -53,6 +53,10 @@ export class Gun extends Weapon {
         return this.ammoLeft;
     };
 
+    getClipCapacity() {
+        return this.clipCapacity;
+    };
+
     playGunFireSound() {
         new Audio(this.gunFireSoundFile).play();
     };
@@ -84,25 +88,37 @@ export class Gun extends Weapon {
         }
 
         if (this.ammoLoaded === 0 && this.ammoLeft > 0) {
-            this.playReloadSound();
-
-            setTimeout(() => {
-                this.reload();
-            }, this.reloadDuration);
+            this.reload();
         }
     };
 
     reload() {
-        if (this.ammoLeft >= this.clipCapacity) {
-            this.ammoLeft -= this.clipCapacity;
+        this.playReloadSound();
 
-            this.ammoLoaded = this.clipCapacity;
-        }
-        else if (this.ammoLeft < this.clipCapacity) {
-            this.ammoLoaded = this.ammoLeft;
-        }
+        setTimeout(() => {
+            if (this.ammoLoaded < 0) {
+                // clip is empty
 
-        updateAmmoCount(this);
+                this.ammoLeft -= this.clipCapacity;
+
+                this.ammoLoaded = this.clipCapacity;
+            }
+            else if (this.ammoLoaded > 0) {
+                const AMMO_NEEDED = this.clipCapacity - this.ammoLoaded;
+
+                this.ammoLoaded += AMMO_NEEDED;
+
+                this.ammoLeft -= AMMO_NEEDED;
+            }
+            else if (this.ammoLeft < this.clipCapacity) {
+                // clip is empty AND the amount of ammo left is less than what the clip can hold
+
+                this.ammoLoaded = this.ammoLeft;
+            }
+
+            updateAmmoCount(this);
+
+        }, this.reloadDuration);
     };
 };
 
