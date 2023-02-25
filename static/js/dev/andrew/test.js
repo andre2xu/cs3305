@@ -46,6 +46,8 @@ window.addEventListener('load', () => {
 
     document.body.appendChild(GAME_VIEW);
 
+    window.GAME_PAUSED = false;
+
 
 
     // PLAYER
@@ -98,72 +100,86 @@ window.addEventListener('load', () => {
     });
 
     window.addEventListener('keydown', (event) => {
-        const SELECTED_ITEM = window.HOTBAR.getSelItem();
+        const KEY_PRESSED = event.key.toLowerCase();
 
-        switch (event.key.toLowerCase()) {
-            case 'w':
-                MOVEMENT_KEY_STATUSES.w = true;
-                break;
-            case 's':
-                MOVEMENT_KEY_STATUSES.s = true;
-                break;
-            case 'a':
-                MOVEMENT_KEY_STATUSES.a = true;
-                break;
-            case 'd':
-                MOVEMENT_KEY_STATUSES.d = true;
-                break;
-            case '1':
-                window.HOTBAR.changeSelItem(1);
-                break;
-            case '2':
-                window.HOTBAR.changeSelItem(2);
-                break;
-            case '3':
-                window.HOTBAR.changeSelItem(3);
-                break;
-            case '4':
-                window.HOTBAR.changeSelItem(4);
-                break;
-            case '5':
-                window.HOTBAR.changeSelItem(5);
-                break;
-            case '6':
-                window.HOTBAR.changeSelItem(6);
-                break;
-            case '7':
-                window.HOTBAR.changeSelItem(7);
-                break;
-            case '8':
-                window.HOTBAR.changeSelItem(8);
-                break;
-            case 'r':
-                // manual reload
-                if (SELECTED_ITEM instanceof Gun && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity() && SELECTED_ITEM.getAmmoLeft() > 0) {
-                    SELECTED_ITEM.reload();
-                }
-
-                break;
-            case ' ':
-                // spacebar
-                if (SELECTED_ITEM instanceof HealingItem && player.getHealth() < 100) {
-                    SELECTED_ITEM.heal(player);
-
-                    window.HOTBAR.removeSelItem();
-                }
-
-                break;
+        if (KEY_PRESSED === 'escape') {
+            if (window.GAME_PAUSED === false) {
+                window.GAME_PAUSED = true;
+            }
+            else if (window.GAME_PAUSED) {
+                window.GAME_PAUSED = false;
+            }
         }
 
-        checkForCollisionsAndMovePlayer(player);
 
 
+        if (window.GAME_PAUSED === false) {
+            const SELECTED_ITEM = window.HOTBAR.getSelItem();
 
-        const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+            switch (KEY_PRESSED) {
+                case 'w':
+                    MOVEMENT_KEY_STATUSES.w = true;
+                    break;
+                case 's':
+                    MOVEMENT_KEY_STATUSES.s = true;
+                    break;
+                case 'a':
+                    MOVEMENT_KEY_STATUSES.a = true;
+                    break;
+                case 'd':
+                    MOVEMENT_KEY_STATUSES.d = true;
+                    break;
+                case '1':
+                    window.HOTBAR.changeSelItem(1);
+                    break;
+                case '2':
+                    window.HOTBAR.changeSelItem(2);
+                    break;
+                case '3':
+                    window.HOTBAR.changeSelItem(3);
+                    break;
+                case '4':
+                    window.HOTBAR.changeSelItem(4);
+                    break;
+                case '5':
+                    window.HOTBAR.changeSelItem(5);
+                    break;
+                case '6':
+                    window.HOTBAR.changeSelItem(6);
+                    break;
+                case '7':
+                    window.HOTBAR.changeSelItem(7);
+                    break;
+                case '8':
+                    window.HOTBAR.changeSelItem(8);
+                    break;
+                case 'r':
+                    // manual reload
+                    if (SELECTED_ITEM instanceof Gun && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity() && SELECTED_ITEM.getAmmoLeft() > 0) {
+                        SELECTED_ITEM.reload();
+                    }
 
-        if (NUM_OF_ENTITIES > 0) {
-            for (let i=0; i < NUM_OF_ENTITIES; i++) {
-                NON_PLAYER_ENTITIES[i].rotateToPlayer(player);
+                    break;
+                case ' ':
+                    // spacebar
+                    if (SELECTED_ITEM instanceof HealingItem && player.getHealth() < 100) {
+                        SELECTED_ITEM.heal(player);
+
+                        window.HOTBAR.removeSelItem();
+                    }
+
+                    break;
+            }
+
+            checkForCollisionsAndMovePlayer(player);
+
+            // rotates enemies to player
+            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
+            if (NUM_OF_ENTITIES > 0) {
+                for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                    NON_PLAYER_ENTITIES[i].rotateToPlayer(player);
+                }
             }
         }
     });
@@ -172,7 +188,7 @@ window.addEventListener('load', () => {
         window.mouseX = event.x;
         window.mouseY = event.y;
 
-        if (MOVEMENT_KEY_STATUSES.w === false && MOVEMENT_KEY_STATUSES.a === false && MOVEMENT_KEY_STATUSES.s === false && MOVEMENT_KEY_STATUSES.d === false) {
+        if (window.GAME_PAUSED === false && MOVEMENT_KEY_STATUSES.w === false && MOVEMENT_KEY_STATUSES.a === false && MOVEMENT_KEY_STATUSES.s === false && MOVEMENT_KEY_STATUSES.d === false) {
             player.rotateToMouse();
         }
     });
@@ -187,13 +203,13 @@ window.addEventListener('load', () => {
 
 
     // MAPS
-    // FOYER.addDynamicSprite(player, 'player', 430, 15);
-    // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
+    FOYER.addDynamicSprite(player, 'player', 430, 15);
+    FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
-    // FOYER.setPosition(
-    //     GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
-    //     GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
-    // );
+    FOYER.setPosition(
+        GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
+        GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
+    );
 
 
 
@@ -216,17 +232,19 @@ window.addEventListener('load', () => {
     );
 
     GAME.ticker.add(() => {
-        // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
-
-        // if (NUM_OF_ENTITIES > 0) {
-        //     for (let i=0; i < NUM_OF_ENTITIES; i++) {
-        //         NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-        //     }
-        // }
-
-
-
-        // HUD
         updatePlayerHealthStatus(player.getHealth());
+
+
+
+        if (window.GAME_PAUSED === false) {
+            // moves enemies
+            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
+            if (NUM_OF_ENTITIES > 0) {
+                for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                    NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+                }
+            }
+        }
     });
 });
