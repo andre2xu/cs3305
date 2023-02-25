@@ -221,11 +221,11 @@ window.addEventListener('load', () => {
 
 
     GAME.stage.addChild(
-        // FOYER.load(),
-        LIBRARY.load(),
         PLAYER_HEALTH_STATUS,
         AMMO_COUNT,
-        window.HOTBAR.display()
+        window.HOTBAR.display(),
+        // FOYER.load(),
+        LIBRARY.load(),
     );
 
     GAME.ticker.add(() => {
