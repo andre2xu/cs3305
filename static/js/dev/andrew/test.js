@@ -47,6 +47,13 @@ window.addEventListener('load', () => {
 
 
 
+    // INITIALIZING GLOBALS
+    window.GAME_PAUSED = false;
+    window.playableAreaExists = false;
+    window.HOTBAR = undefined;
+
+
+
     // PLAYER
     const player = new Player(getTextureFromStaticAssetsFolder('/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
@@ -99,7 +106,7 @@ window.addEventListener('load', () => {
     window.addEventListener('keydown', (event) => {
         const KEY_PRESSED = event.key.toLowerCase();
 
-        if (KEY_PRESSED === 'escape') {
+        if (KEY_PRESSED === 'escape' && window.playableAreaExists === true) {
             if (window.GAME_PAUSED === false) {
                 window.GAME_PAUSED = true;
             }

@@ -154,6 +154,10 @@ export class PlayableArea {
         this.area.on('mousedown', this.mousedownEvent);
         this.area.on('mousemove', this.mousemoveEvent);
 
+
+
+        window.playableAreaExists = true;
+
         return this.area;
     };
 
@@ -179,6 +183,8 @@ export class PlayableArea {
 
         // un-renders the playable area from the screen
         this.area.parent.removeChild(this.area);
+
+        window.playableAreaExists = false;
     };
 
 
