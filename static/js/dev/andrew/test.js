@@ -41,12 +41,9 @@ window.addEventListener('load', () => {
     });
     const GAME_VIEW = GAME.view;
 
-    GAME_VIEW.id = 'test';
     GAME_VIEW.style.position = 'absolute';
 
     document.body.appendChild(GAME_VIEW);
-
-    document.getElementById('test').style.backgroundColor = 'red';
 
 
 
