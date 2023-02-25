@@ -158,7 +158,7 @@ window.addEventListener('load', () => {
                 break;
             case ' ':
                 // spacebar
-                if (SELECTED_ITEM instanceof HealingItem) {
+                if (SELECTED_ITEM instanceof HealingItem && player.getHealth() < 100) {
                     SELECTED_ITEM.heal(player);
 
                     window.HOTBAR.removeSelItem();
