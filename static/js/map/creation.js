@@ -72,20 +72,6 @@ export class PlayableArea {
 
 
         this.area.interactive = true;
-
-        this.area.on('mousedown', () => {
-            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
-                const SELECTED_ITEM = window.HOTBAR.getSelItem();
-
-                if (SELECTED_ITEM instanceof Gun) {
-                    SELECTED_ITEM.fire();
-                }
-            }
-        });
-
-        this.area.on('mousemove', () => {
-            toggleCrosshair(this.area);
-        });
     };
 
 
@@ -148,6 +134,23 @@ export class PlayableArea {
             this.sortSpriteOrder();
         });
         PLAYABLE_AREA_LOOP.start();
+
+
+
+        // binds events to playable area
+        this.area.on('mousedown', () => {
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+                }
+            }
+        });
+
+        this.area.on('mousemove', () => {
+            toggleCrosshair(this.area);
+        });
 
 
 
