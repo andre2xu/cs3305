@@ -1,6 +1,7 @@
 import * as checks from '../helpers/checks.js';
 import { Item } from './base/base.js';
 import { getTextureFromStaticAssetsFolder } from '../helpers/pixi_helpers.js';
+import { Player } from './entities.js';
 
 
 
@@ -11,9 +12,11 @@ export class HealingItem extends Item {
 
 
 
-    // GETTERS
-    getHealth() {
-        return this.health;
+    // SETTERS
+    heal(player) {
+        checks.checkIfInstance(player, Player);
+
+        player.increaseHealth(this.health);
     };
 };
 
