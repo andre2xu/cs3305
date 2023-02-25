@@ -4,7 +4,9 @@ import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
 
 import {
     Decoration,
-    SemiSolid
+    DecorationFill,
+    SemiSolid,
+    SemiSolidFill
 } from '../../sprites/objects.js';
 
 export const LIBRARY = (function () {
@@ -21,7 +23,7 @@ export const LIBRARY = (function () {
     LIBRARY.addStaticSprite(
         SECOND_FLOOR_MAT,
         '2f_mat',
-        LIBRARY.getWidth() - (SECOND_FLOOR_MAT.getSpriteFrameDimensions().w + 10),
+        LIBRARY.getWidth() - (SECOND_FLOOR_MAT.getSpriteFrameDimensions().w + 495),
         20
     );
 
@@ -29,8 +31,8 @@ export const LIBRARY = (function () {
     LIBRARY.addStaticSprite(
         BOOKSHELF,
         'bookshelf',
-        LIBRARY.getWidth() - (BOOKSHELF.getSpriteFrameDimensions().w + 340),
-        LIBRARY.getHeight() - (BOOKSHELF.getSpriteFrameDimensions().h + 5)
+        LIBRARY.getWidth() - (BOOKSHELF.getSpriteFrameDimensions().w + 35),
+        LIBRARY.getHeight() - (BOOKSHELF.getSpriteFrameDimensions().h + 35)
     );
     
    
@@ -38,8 +40,8 @@ export const LIBRARY = (function () {
     LIBRARY.addStaticSprite(
         BOOKSHELF2,
         'bookshelf2',
-        LIBRARY.getWidth() - (BOOKSHELF2.getSpriteFrameDimensions().w + 340),
-        LIBRARY.getHeight() - (BOOKSHELF2.getSpriteFrameDimensions().h + 5)
+        LIBRARY.getWidth() - (BOOKSHELF2.getSpriteFrameDimensions().w + 35),
+        LIBRARY.getHeight() - (BOOKSHELF2.getSpriteFrameDimensions().h + 170)
     );
     
 
@@ -47,7 +49,7 @@ export const LIBRARY = (function () {
     LIBRARY.addStaticSprite(
         CHAIRA,
         'chairA',
-        LIBRARY.getWidth() - (CHAIRA.getSpriteFrameDimensions().w + 340),
+        LIBRARY.getWidth() - (CHAIRA.getSpriteFrameDimensions().w + 435),
         LIBRARY.getHeight() - (CHAIRA.getSpriteFrameDimensions().h + 5)
     );
    
@@ -55,15 +57,15 @@ export const LIBRARY = (function () {
     LIBRARY.addStaticSprite(
         CHAIRB,
         'chairB',
-        LIBRARY.getWidth() - (CHAIRB.getSpriteFrameDimensions().w + 340),
-        LIBRARY.getHeight() - (CHAIRB.getSpriteFrameDimensions().h + 5)
+        LIBRARY.getWidth() - (CHAIRB.getSpriteFrameDimensions().w + 350),
+        LIBRARY.getHeight() - (CHAIRB.getSpriteFrameDimensions().h + 82)
     );
 
     const MATBLUE = new SemiSolid(getTextureFromStaticJSFolder('/map/library/assets/matblue.png'), 0, 0, 59, 63);
     LIBRARY.addStaticSprite(
         MATBLUE,
         'matblue',
-        LIBRARY.getWidth() - (MATBLUE.getSpriteFrameDimensions().w + 340),
+        LIBRARY.getWidth() - (MATBLUE.getSpriteFrameDimensions().w + 360),
         LIBRARY.getHeight() - (MATBLUE.getSpriteFrameDimensions().h + 5)
     );
 
@@ -71,10 +73,20 @@ export const LIBRARY = (function () {
     LIBRARY.addStaticSprite(
         TABLELAMP,
         'tablelamp',
-        LIBRARY.getWidth() - (TABLELAMP.getSpriteFrameDimensions().w + 340),
-        LIBRARY.getHeight() - (TABLELAMP.getSpriteFrameDimensions().h + 5)
+        LIBRARY.getWidth() - (TABLELAMP.getSpriteFrameDimensions().w + 455),
+        LIBRARY.getHeight() - (TABLELAMP.getSpriteFrameDimensions().h + 100)
     );
     
+
+    const WINDOW = new SemiSolid(getTextureFromStaticJSFolder('/map/library/assets/window.png'), 0, 0, 59, 63);
+    LIBRARY.addStaticSprite(
+        WINDOW,
+        'window',
+        0,
+        -(WINDOW.getSpriteFrameDimensions().h - 5)
+    );
+
+
 
 
 
