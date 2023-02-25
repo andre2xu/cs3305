@@ -26,7 +26,6 @@ import {
 
 import {
     PLAYER_HEALTH_STATUS,
-    updatePlayerHealthStatus,
     AMMO_COUNT
 } from '../../core/hud.js';
 
@@ -230,10 +229,6 @@ window.addEventListener('load', () => {
     );
 
     GAME.ticker.add(() => {
-        updatePlayerHealthStatus(player.getHealth());
-
-
-
         if (window.GAME_PAUSED === false) {
             // moves enemies
             const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;

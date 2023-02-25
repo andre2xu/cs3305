@@ -2,6 +2,7 @@ import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
 import { Item } from '../sprites/base/base.js';
+import { updatePlayerHealthStatus } from '../core/hud.js';
 
 import {
     toggleCrosshair,
@@ -308,6 +309,7 @@ export class Player extends Entity {
         this.health -= value;
 
         this.showDamage();
+        updatePlayerHealthStatus(this.health);
 
         if (this.health < 0) {
             this.health = 0;
