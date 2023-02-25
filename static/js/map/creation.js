@@ -1,4 +1,5 @@
 import * as checks from '../helpers/checks.js';
+import { OBSTACLES } from '../core/collision.js';
 
 import {
     toggleCrosshair,
@@ -66,6 +67,8 @@ export class PlayableArea {
         this.STATIC_SPRITES_CONTAINER = new PIXI.Container();
         this.DYNAMIC_SPRITES_CONTAINER = new PIXI.Container();
 
+        this.OBSTACLES = [];
+
 
 
         this.area.interactive = true;
@@ -126,6 +129,14 @@ export class PlayableArea {
             this.DYNAMIC_SPRITES_CONTAINER
         );
 
+        OBSTACLES.splice(0, OBSTACLES.length); // clears previous obstacles from queue
+
+        const NUM_OF_OBSTACLES = this.OBSTACLES.length;
+
+        for (let i=0; i < NUM_OF_OBSTACLES; i++) {
+            OBSTACLES.push(this.OBSTACLES[i]); // adds obstacles from current playable area
+        }
+
         return this.area;
     };
 
@@ -169,7 +180,9 @@ export class PlayableArea {
         this.STATIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
         this.staticSprites[id] = sprite;
 
-        
+        if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
+            this.OBSTACLES.push(sprite);
+        }
 
         sprite.setPosition(x, y);
     };
@@ -189,6 +202,10 @@ export class PlayableArea {
 
         this.DYNAMIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
         this.dynamicSprites[id] = sprite;
+
+        if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
+            this.OBSTACLES.push(sprite);
+        }
 
         sprite.setPosition(x, y);
     };
