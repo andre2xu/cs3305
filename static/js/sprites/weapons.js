@@ -1,7 +1,26 @@
 import * as checks from '../helpers/checks.js';
 import { Item } from './base/base.js'; 
 import { updateAmmoCount } from '../core/hud.js';
-import { SOUND_ASSETS_FOLDER } from '../helpers/urls.js';
+
+import {
+    STATIC_ASSETS_FOLDER,
+    SOUND_ASSETS_FOLDER
+} from '../helpers/urls.js';
+
+
+
+export function toggleCrosshair(container) {
+    checks.checkIfInstance(container, PIXI.Container);
+
+    if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+        if (window.HOTBAR.getSelItem() instanceof Gun) {
+            container.cursor = `url(${STATIC_ASSETS_FOLDER}/guns/crosshair.png), auto`;
+        }
+        else {
+            container.cursor = 'auto';
+        }
+    }
+};
 
 
 
