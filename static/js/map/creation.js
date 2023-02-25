@@ -86,6 +86,15 @@ export class PlayableArea {
         this.area.on('mousemove', () => {
             toggleCrosshair(this.area);
         });
+
+
+
+        // re-orders sprites
+        const PLAYABLE_AREA_LOOP = new PIXI.Ticker();
+        PLAYABLE_AREA_LOOP.add(() => {
+            this.sortSpriteOrder();
+        });
+        PLAYABLE_AREA_LOOP.start();
     };
 
 

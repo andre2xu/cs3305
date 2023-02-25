@@ -215,11 +215,6 @@ window.addEventListener('load', () => {
     );
 
     GAME.ticker.add(() => {
-        // FOYER.sortSpriteOrder();
-        LIBRARY.sortSpriteOrder();
-
-
-
         // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
         // if (NUM_OF_ENTITIES > 0) {
