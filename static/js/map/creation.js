@@ -1,5 +1,9 @@
 import * as checks from '../helpers/checks.js';
-import { OBSTACLES } from '../core/collision.js';
+
+import {
+    OBSTACLES,
+    NON_PLAYER_ENTITIES
+} from '../core/collision.js';
 
 import {
     toggleCrosshair,
@@ -72,6 +76,28 @@ export class PlayableArea {
 
 
         this.area.interactive = true;
+
+        this.mousedownEvent = function () {
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+                }
+            }
+        };
+
+        this.mousemoveEvent = function () {
+            toggleCrosshair(this.area);
+        };
+
+
+
+        this.infinite_loop = new PIXI.Ticker();
+
+        this.infinite_loop.add(() => {
+            this.sortSpriteOrder();
+        });
     };
 
 
@@ -110,51 +136,44 @@ export class PlayableArea {
     };
 
     load() {
+        // renders sprites
         this.area.addChild(
             this.STATIC_SPRITES_CONTAINER,
             this.DYNAMIC_SPRITES_CONTAINER
         );
 
-
-
-        // clears previous obstacles and loads in new ones
-        OBSTACLES.splice(0, OBSTACLES.length);
-
+        // adds obstacles to collision detection queue
         const NUM_OF_OBSTACLES = this.OBSTACLES.length;
 
         for (let i=0; i < NUM_OF_OBSTACLES; i++) {
             OBSTACLES.push(this.OBSTACLES[i]);
         }
 
-
-
-        // re-orders sprites
-        const PLAYABLE_AREA_LOOP = new PIXI.Ticker();
-        PLAYABLE_AREA_LOOP.add(() => {
-            this.sortSpriteOrder();
-        });
-        PLAYABLE_AREA_LOOP.start();
-
-
+        // runs local game loop
+        this.infinite_loop.start();
 
         // binds events to playable area
-        this.area.on('mousedown', () => {
-            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
-                const SELECTED_ITEM = window.HOTBAR.getSelItem();
-
-                if (SELECTED_ITEM instanceof Gun) {
-                    SELECTED_ITEM.fire();
-                }
-            }
-        });
-
-        this.area.on('mousemove', () => {
-            toggleCrosshair(this.area);
-        });
-
-
+        this.area.on('mousedown', this.mousedownEvent);
+        this.area.on('mousemove', this.mousemoveEvent);
 
         return this.area;
+    };
+
+    unload() {
+        // un-renders sprites
+        this.area.removeChild(this.STATIC_SPRITES_CONTAINER);
+
+        this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
+
+        // removes obstacles from collision detection queue
+        OBSTACLES.splice(0, OBSTACLES.length);
+
+        // stops local game loop
+        this.infinite_loop.stop();
+
+        // un-binds events to playable area
+        this.area.off('mousedown', this.mousedownEvent);
+        this.area.off('mousemove', this.mousemoveEvent);
     };
 
 
