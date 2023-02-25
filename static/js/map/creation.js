@@ -1,9 +1,5 @@
 import * as checks from '../helpers/checks.js';
-
-import {
-    OBSTACLES,
-    NON_PLAYER_ENTITIES
-} from '../core/collision.js';
+import { OBSTACLES } from '../core/collision.js';
 
 import {
     toggleCrosshair,
