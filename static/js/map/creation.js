@@ -66,11 +66,6 @@ export class PlayableArea {
         this.STATIC_SPRITES_CONTAINER = new PIXI.Container();
         this.DYNAMIC_SPRITES_CONTAINER = new PIXI.Container();
 
-        this.area.addChild(
-            this.STATIC_SPRITES_CONTAINER,
-            this.DYNAMIC_SPRITES_CONTAINER
-        );
-
 
 
         this.area.interactive = true;
@@ -126,7 +121,18 @@ export class PlayableArea {
     };
 
     load() {
+        this.area.addChild(
+            this.STATIC_SPRITES_CONTAINER,
+            this.DYNAMIC_SPRITES_CONTAINER
+        );
+
         return this.area;
+    };
+
+    unload() {
+        this.area.removeChild(this.STATIC_SPRITES_CONTAINER);
+
+        this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
     };
 
 
@@ -162,6 +168,8 @@ export class PlayableArea {
 
         this.STATIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
         this.staticSprites[id] = sprite;
+
+        
 
         sprite.setPosition(x, y);
     };
