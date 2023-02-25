@@ -4,6 +4,7 @@ import { NON_PLAYER_ENTITIES } from '../core/collision.js';
 import { Item } from '../sprites/base/base.js';
 
 import {
+    toggleCrosshair,
     Weapon,
     Gun
 } from './weapons.js';
@@ -351,6 +352,10 @@ export class Enemy extends Entity {
                     }
                 }
             }
+        });
+
+        this.sprite_container.on('mousemove', () => {
+            toggleCrosshair(this.sprite_container);
         });
     };
 
