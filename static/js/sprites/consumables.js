@@ -8,6 +8,13 @@ export class HealingItem extends Item {
     constructor(texture) {
         super(texture);
     };
+
+
+
+    // GETTERS
+    getHealth() {
+        return this.health;
+    };
 };
 
 export class BandageBox extends HealingItem {
