@@ -86,15 +86,6 @@ export class PlayableArea {
         this.area.on('mousemove', () => {
             toggleCrosshair(this.area);
         });
-
-
-
-        // re-orders sprites
-        const PLAYABLE_AREA_LOOP = new PIXI.Ticker();
-        PLAYABLE_AREA_LOOP.add(() => {
-            this.sortSpriteOrder();
-        });
-        PLAYABLE_AREA_LOOP.start();
     };
 
 
@@ -138,13 +129,27 @@ export class PlayableArea {
             this.DYNAMIC_SPRITES_CONTAINER
         );
 
-        OBSTACLES.splice(0, OBSTACLES.length); // clears previous obstacles from queue
+
+
+        // clears previous obstacles and loads in new ones
+        OBSTACLES.splice(0, OBSTACLES.length);
 
         const NUM_OF_OBSTACLES = this.OBSTACLES.length;
 
         for (let i=0; i < NUM_OF_OBSTACLES; i++) {
-            OBSTACLES.push(this.OBSTACLES[i]); // adds obstacles from current playable area
+            OBSTACLES.push(this.OBSTACLES[i]);
         }
+
+
+
+        // re-orders sprites
+        const PLAYABLE_AREA_LOOP = new PIXI.Ticker();
+        PLAYABLE_AREA_LOOP.add(() => {
+            this.sortSpriteOrder();
+        });
+        PLAYABLE_AREA_LOOP.start();
+
+
 
         return this.area;
     };
