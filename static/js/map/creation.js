@@ -84,7 +84,7 @@ export class PlayableArea {
         };
 
         this.mousemoveEvent = function () {
-            toggleCrosshair(this.area);
+            toggleCrosshair(this);
         };
 
 
@@ -174,6 +174,11 @@ export class PlayableArea {
         // un-binds events to playable area
         this.area.off('mousedown', this.mousedownEvent);
         this.area.off('mousemove', this.mousemoveEvent);
+
+
+
+        // un-renders the playable area from the screen
+        this.area.parent.removeChild(this.area);
     };
 
 
