@@ -1,4 +1,5 @@
-import { FOYER } from '../../map/foyer/foyer.js';
+// import { FOYER } from '../../map/foyer/foyer.js';
+import { LIBRARY } from '../../map/library/library.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
@@ -74,17 +75,7 @@ window.addEventListener('load', () => {
     // ENEMY
     let zombie = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
     zombie.addFrames(zombie_frames_json);
-    zombie.switchFrame('s');
-
-
-
-    FOYER.addDynamicSprite(player, 'player', 430, 15);
-    FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
-
-    FOYER.setPosition(
-        GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
-        GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
-    );
+    zombie.switchFrame('w');
 
 
 
@@ -195,15 +186,37 @@ window.addEventListener('load', () => {
 
 
 
+    // MAPS
+    // FOYER.addDynamicSprite(player, 'player', 430, 15);
+    // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
+
+    // FOYER.setPosition(
+    //     GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
+    //     GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
+    // );
+
+
+
+    LIBRARY.addDynamicSprite(player, 'player', 100, 20);
+    LIBRARY.addDynamicSprite(zombie, 'zombie', 300, 50);
+
+    LIBRARY.setPosition(
+        GAME_VIEW.width * 0.5 - LIBRARY.getHalfWidth(),
+        GAME_VIEW.height * 0.5 - LIBRARY.getHalfHeight()
+    );
+
+
+
     GAME.stage.addChild(
-        FOYER.load(),
+        LIBRARY.load(),
         PLAYER_HEALTH_STATUS,
         AMMO_COUNT,
         window.HOTBAR.display()
     );
 
     GAME.ticker.add(() => {
-        FOYER.sortSpriteOrder();
+        // FOYER.sortSpriteOrder();
+        LIBRARY.sortSpriteOrder();
 
 
 
@@ -224,7 +237,7 @@ window.addEventListener('load', () => {
 
 
     // ensures the player is facing front and standing straight & the zombie is facing them
-    window.mouseX = FOYER.getHalfWidth();
-    window.mouseY = FOYER.getRightPosY();
-    player.rotateToMouse();
+    // window.mouseX = LIBRARY.getHalfWidth();
+    // window.mouseY = LIBRARY.getRightPosY();
+    // player.rotateToMouse();
 });
