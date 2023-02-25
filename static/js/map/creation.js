@@ -1,5 +1,6 @@
 import * as checks from '../helpers/checks.js';
 import { Gun } from '../sprites/weapons.js';
+import { STATIC_ASSETS_FOLDER } from '../helpers/urls.js';
 
 import {
     Obstacle,
@@ -45,6 +46,7 @@ export const MAP_NAME = (function () {
 export class PlayableArea {
     constructor(width, height) {
         this.area = new PIXI.Container();
+        this.area.cursor = `url(${STATIC_ASSETS_FOLDER}/guns/crosshair.png), auto`;
 
         this.width = width;
         this.height = height;
