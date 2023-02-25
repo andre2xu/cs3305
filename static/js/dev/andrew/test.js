@@ -2,6 +2,7 @@ import { FOYER } from '../../map/foyer/foyer.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
+import { BandageBox } from '../../sprites/consumables.js';
 
 import {
     Gun,
@@ -64,6 +65,8 @@ window.addEventListener('load', () => {
 
     window.HOTBAR.addItem(HANDGUN);
     window.HOTBAR.changeSelItem(1);
+
+    window.HOTBAR.addItem(new BandageBox());
 
 
 
