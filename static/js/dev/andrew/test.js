@@ -1,4 +1,4 @@
-// import { FOYER } from '../../map/foyer/foyer.js';
+import { FOYER } from '../../map/foyer/foyer.js';
 import { LIBRARY } from '../../map/library/library.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
@@ -208,6 +208,7 @@ window.addEventListener('load', () => {
 
 
     GAME.stage.addChild(
+        // FOYER.load(),
         LIBRARY.load(),
         PLAYER_HEALTH_STATUS,
         AMMO_COUNT,
@@ -228,11 +229,4 @@ window.addEventListener('load', () => {
         // HUD
         updatePlayerHealthStatus(player.getHealth());
     });
-
-
-
-    // ensures the player is facing front and standing straight & the zombie is facing them
-    // window.mouseX = LIBRARY.getHalfWidth();
-    // window.mouseY = LIBRARY.getRightPosY();
-    // player.rotateToMouse();
 });
