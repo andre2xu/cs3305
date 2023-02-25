@@ -136,6 +136,8 @@ export class PlayableArea {
     };
 
     load() {
+        window.GAME_PAUSED = false;
+
         // renders sprites
         this.area.addChild(
             this.STATIC_SPRITES_CONTAINER,
@@ -160,6 +162,8 @@ export class PlayableArea {
     };
 
     unload() {
+        window.GAME_PAUSED = true;
+
         // un-renders sprites
         this.area.removeChild(this.STATIC_SPRITES_CONTAINER);
 

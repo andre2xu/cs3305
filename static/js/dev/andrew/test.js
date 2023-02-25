@@ -46,8 +46,6 @@ window.addEventListener('load', () => {
 
     document.body.appendChild(GAME_VIEW);
 
-    window.GAME_PAUSED = false;
-
 
 
     // PLAYER
