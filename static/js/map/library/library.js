@@ -33,9 +33,9 @@ export const LIBRARY = (function () {
     BOOKSHELF_1.modifyCollisionBoundary(
         null,
         BOOKSHELF_1.getSpriteFrameDimensions().h - 30, null,
-        -20
+        null
     );
-    LIBRARY.addStaticSprite(
+    LIBRARY.addDynamicSprite(
         BOOKSHELF_1,
         'bookshelf1',
         LIBRARY.getWidth() - BOOKSHELF_1.getSpriteFrameDimensions().w,
@@ -48,13 +48,13 @@ export const LIBRARY = (function () {
     BOOKSHELF_2.modifyCollisionBoundary(
         null,
         BOOKSHELF_2.getSpriteFrameDimensions().h - 30, null,
-        -20
+        null
     );
-    LIBRARY.addStaticSprite(
+    LIBRARY.addDynamicSprite(
         BOOKSHELF_2,
         'bookshelf2',
         LIBRARY.getWidth() - BOOKSHELF_2.getSpriteFrameDimensions().w,
-        LIBRARY.getHeight() - (BOOKSHELF_2.getSpriteFrameDimensions().h + 150)
+        0
     );
 
 
@@ -76,7 +76,7 @@ export const LIBRARY = (function () {
         null,
         null
     );
-    LIBRARY.addStaticSprite(
+    LIBRARY.addDynamicSprite(
         CHAIR_B,
         'chairB',
         130,
@@ -102,7 +102,7 @@ export const LIBRARY = (function () {
         null,
         null
     );
-    LIBRARY.addStaticSprite(
+    LIBRARY.addDynamicSprite(
         TABLELAMP,
         'tablelamp',
         10,
