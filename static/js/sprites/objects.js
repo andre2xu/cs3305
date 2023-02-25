@@ -5,6 +5,8 @@ import {
     FillSprite
 } from './base/base.js';
 
+
+
 export class Objects extends Sprite {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
