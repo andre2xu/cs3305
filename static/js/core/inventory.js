@@ -116,4 +116,14 @@ export class Inventory {
 
         this.selectorSprite.x = this.___getPositionInInventory__(index);
     };
+
+    removeSelItem() {
+        const ICON = this.currentSelItem.getIcon();
+        const POS_IN_INVENTORY = this.inventoryContainer.getChildIndex(ICON) - 2;
+
+        this.inventoryContainer.removeChild(ICON);
+        this.inventory.splice(POS_IN_INVENTORY, 1, null);
+
+        this.currentSelItem = null;
+    };
 };
