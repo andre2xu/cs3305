@@ -140,12 +140,6 @@ export class PlayableArea {
         return this.area;
     };
 
-    unload() {
-        this.area.removeChild(this.STATIC_SPRITES_CONTAINER);
-
-        this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
-    };
-
 
 
     // SETTERS
