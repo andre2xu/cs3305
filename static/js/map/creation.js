@@ -74,7 +74,7 @@ export class PlayableArea {
         this.area.interactive = true;
 
         this.mousedownEvent = function () {
-            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+            if (window.GAME_PAUSED === false && window.HOTBAR !== undefined && window.HOTBAR !== null) {
                 const SELECTED_ITEM = window.HOTBAR.getSelItem();
 
                 if (SELECTED_ITEM instanceof Gun) {
