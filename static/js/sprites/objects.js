@@ -1,5 +1,4 @@
 import * as checks from '../helpers/checks.js';
-import { OBSTACLES } from '../core/collision.js';
 
 import {
     Sprite,
@@ -22,8 +21,6 @@ export class Obstacle extends Objects {
             'left': [],
             'right': []
         };
-
-        OBSTACLES.push(this);
     };
 
 
@@ -259,8 +256,6 @@ export class ObstacleFill extends FillSprite {
             'left': [],
             'right': []
         };
-
-        OBSTACLES.push(this);
     };
 
 
