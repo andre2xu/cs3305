@@ -2,7 +2,11 @@ import { FOYER } from '../../map/foyer/foyer.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
-import { BandageBox } from '../../sprites/consumables.js';
+
+import {
+    HealingItem,
+    BandageBox
+} from '../../sprites/consumables.js';
 
 import {
     Gun,
@@ -64,9 +68,9 @@ window.addEventListener('load', () => {
     );
 
     window.HOTBAR.addItem(HANDGUN);
-    window.HOTBAR.changeSelItem(1);
-
     window.HOTBAR.addItem(new BandageBox());
+
+    window.HOTBAR.changeSelItem(1);
 
 
 
@@ -106,6 +110,8 @@ window.addEventListener('load', () => {
     });
 
     window.addEventListener('keydown', (event) => {
+        const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
         switch (event.key.toLowerCase()) {
             case 'w':
                 MOVEMENT_KEY_STATUSES.w = true;
@@ -145,10 +151,17 @@ window.addEventListener('load', () => {
                 break;
             case 'r':
                 // manual reload
-                const SELECTED_ITEM = window.HOTBAR.getSelItem();
-
                 if (SELECTED_ITEM instanceof Gun && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity() && SELECTED_ITEM.getAmmoLeft() > 0) {
                     SELECTED_ITEM.reload();
+                }
+
+                break;
+            case ' ':
+                // spacebar
+                if (SELECTED_ITEM instanceof HealingItem) {
+                    SELECTED_ITEM.heal(player);
+
+                    window.HOTBAR.removeSelItem();
                 }
 
                 break;
