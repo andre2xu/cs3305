@@ -12,12 +12,12 @@ export const BASEMENT = (function () {
     const BASEMENT = new PlayableArea(555, 441);
 
     const FLOOR = new Decoration(getTextureFromStaticJSFolder('/map/basement/assets/basefloor.png'), 0, 0, 555, 441);
-    // BASEMENT.addStaticSprite(
-    //     FLOOR, 
-    //     'floor', 
-    //     0,
-    //     0
-    // );
+    BASEMENT.addStaticSprite(
+        FLOOR, 
+        'floor', 
+        0,
+        0
+    );
 
 
 
