@@ -1,25 +1,32 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-
-<section>
-    <h2>Create an account</h2>
-</section>  
-    <p>
-        <form action="">
-            <p> Username <input type="text" name="Username" />  </p>
-
-            <p> Password <input type="text" name="Password"  /> </p>
-
-            <p> Confirm Password <input type="text" name="RepeatPassword"  /> </p>
-
-            <p> <input type="submit" value="Submit"  /> </p>
-        </form>
-    </p>
-
-    <p>
-        <a href="{{ url_for('index')}}"><button>Back</button></a>
-    </p>
-
+    <h2>{{ title }}</h2>
+    <form action="" method="POST" novalidate>
+        
+        {{ form.hidden_tag() }}
     
+        {{ form.username.label }}
+        {{ form.username(placeholder="User name") }}
+        {% for error in form.username.errors %}
+            {{ error }}
+        {% endfor %}
+        <br />
+        <br />
+        {{ form.password.label }}
+        {{ form.password(placeholder="Password") }}
+        {% for error in form.password.errors %}
+            {{ error }}
+        {% endfor %}
+        <br />
+        <br />
+        {{ form.password2.label }}
+        {{ form.password2(placeholder="Confirm Password") }}
+        {% for error in form.password2.errors %}
+            {{ error }}
+        {% endfor %}
+        <br />
+        {{ form.register() }}
+        
+</form>   
 {% endblock %}
