@@ -178,8 +178,10 @@ window.addEventListener('load', () => {
                     const NUM_OF_PORTALS = PORTALS.length;
 
                     for (let i=0; i < NUM_OF_PORTALS; i++) {
-                        if (PORTALS[i].playerIsInsidePortal(player)) {
-                            
+                        const PORTAL = PORTALS[i];
+
+                        if (PORTAL.playerIsInsidePortal(player)) {
+                            PORTAL.teleport(player);
                         }
                     }
 
