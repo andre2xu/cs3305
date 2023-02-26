@@ -3,6 +3,7 @@ import { LIBRARY } from '../../map/library/library.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
+import { PORTALS } from '../../sprites/portals.js';
 
 import {
     HealingItem,
@@ -74,7 +75,7 @@ window.addEventListener('load', () => {
     window.HOTBAR.addItem(HANDGUN);
     window.HOTBAR.addItem(new BandageBox());
 
-    window.HOTBAR.changeSelItem(1);
+    window.HOTBAR.changeSelItem(8);
 
 
 
@@ -170,6 +171,14 @@ window.addEventListener('load', () => {
                         SELECTED_ITEM.heal(player);
 
                         window.HOTBAR.removeSelItem();
+                    }
+
+                    break;
+                case 'q':
+                    const NUM_OF_PORTALS = PORTALS.length;
+
+                    for (let i=0; i < NUM_OF_PORTALS; i++) {
+                        PORTALS[i].checkIfPlayerIsInsidePortal(player);
                     }
 
                     break;
