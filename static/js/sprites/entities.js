@@ -2,7 +2,13 @@ import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
 import { Item } from '../sprites/base/base.js';
-import { Weapon } from './weapons.js';
+import { updatePlayerHealthStatus } from '../core/hud.js';
+
+import {
+    toggleCrosshair,
+    Weapon,
+    Gun
+} from './weapons.js';
 
 import {
     Obstacle,
@@ -303,6 +309,7 @@ export class Player extends Entity {
         this.health -= value;
 
         this.showDamage();
+        updatePlayerHealthStatus(this.health);
 
         if (this.health < 0) {
             this.health = 0;
@@ -331,8 +338,26 @@ export class Enemy extends Entity {
             event.stopPropagation();
 
             if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
-                
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+
+                    if (SELECTED_ITEM.ammoLoaded > 0) {
+                        this.decreaseHealth(SELECTED_ITEM.getDamage());
+
+                        this.showDamage();
+
+                        setTimeout(() => {
+                            this.hideDamage();
+                        }, 500);
+                    }
+                }
             }
+        });
+
+        this.sprite_container.on('mousemove', () => {
+            toggleCrosshair(this.sprite_container);
         });
     };
 
@@ -684,6 +709,18 @@ export class Enemy extends Entity {
             case 'ne':
                 this.moveSpriteNorthEast();
                 break;
+        }
+    };
+
+    decreaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health -= value;
+
+        if (this.health === 0) {
+            this.sprite_container.parent.removeChild(this.sprite_container);
+
+            NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
         }
     };
 };

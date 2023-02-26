@@ -2,6 +2,26 @@ import * as checks from '../helpers/checks.js';
 import { Item } from './base/base.js'; 
 import { updateAmmoCount } from '../core/hud.js';
 
+import {
+    STATIC_ASSETS_FOLDER,
+    SOUND_ASSETS_FOLDER
+} from '../helpers/urls.js';
+
+
+
+export function toggleCrosshair(container) {
+    checks.checkIfInstance(container, PIXI.Container);
+
+    if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+        if (window.HOTBAR.getSelItem() instanceof Gun) {
+            container.cursor = `url(${STATIC_ASSETS_FOLDER}/guns/crosshair.png), auto`;
+        }
+        else {
+            container.cursor = 'auto';
+        }
+    }
+};
+
 
 
 export class Weapon extends Item {
@@ -32,20 +52,25 @@ export class Weapon extends Item {
 export class Gun extends Weapon {
     constructor(texture) {
         super(texture);
-
-        this.ammoLoaded = 12;
-        this.ammoLeft = 60;
     };
 
 
 
     // GETTERS
     getAmmoLoaded() {
+        if (this.ammoLoaded < 0) {
+            return 0;
+        }
+
         return this.ammoLoaded;
     };
 
     getAmmoLeft() {
         return this.ammoLeft;
+    };
+
+    getClipCapacity() {
+        return this.clipCapacity;
     };
 
     playGunFireSound() {
@@ -58,6 +83,10 @@ export class Gun extends Weapon {
         AUDIO.play();
 
         return AUDIO;
+    };
+
+    getDamage() {
+        return this.damage;
     };
 
 
@@ -75,25 +104,48 @@ export class Gun extends Weapon {
         }
 
         if (this.ammoLoaded === 0 && this.ammoLeft > 0) {
-            this.playReloadSound();
-
-            setTimeout(() => {
-                this.reload();
-            }, this.reloadDuration);
+            this.reload();
         }
     };
 
     reload() {
-        if (this.ammoLeft >= this.clipCapacity) {
-            this.ammoLeft -= this.clipCapacity;
+        this.playReloadSound();
 
-            this.ammoLoaded = this.clipCapacity;
-        }
-        else if (this.ammoLeft < this.clipCapacity) {
-            this.ammoLoaded = this.ammoLeft;
-        }
+        setTimeout(() => {
+            if (this.ammoLoaded < 0) {
+                // clip is empty (auto reload)
 
-        updateAmmoCount(this);
+                if (this.ammoLeft >= 12) {
+                    this.ammoLeft -= this.clipCapacity;
+
+                    this.ammoLoaded = this.clipCapacity;
+                }
+                else if (this.ammoLeft < 12) {
+                    this.ammoLoaded = this.ammoLeft;
+
+                    this.ammoLeft -= this.ammoLeft;
+                }
+            }
+            else if (this.ammoLoaded > 0) {
+                // clip is not empty (manual reload)
+
+                const AMMO_NEEDED = this.clipCapacity - this.ammoLoaded;
+
+                if (this.ammoLeft >= AMMO_NEEDED) {
+                    this.ammoLoaded += AMMO_NEEDED;
+
+                    this.ammoLeft -= AMMO_NEEDED;
+                }
+                else if (this.ammoLeft < AMMO_NEEDED) {
+                    this.ammoLoaded += this.ammoLeft;
+
+                    this.ammoLeft -= this.ammoLeft;
+                }
+            }
+
+            updateAmmoCount(this);
+
+        }, this.reloadDuration);
     };
 };
 
@@ -101,14 +153,17 @@ export class Pistol extends Gun {
     constructor(texture) {
         super(texture);
 
-        this.gunFireSoundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol.mp3';
-        this.reloadSoundFile = 'http://127.0.0.1:5500/static/js/dev/andrew/assets/sounds/pistol_reload.mp3';
+        this.gunFireSoundFile = `${SOUND_ASSETS_FOLDER}/pistol.mp3`;
+        this.reloadSoundFile = `${SOUND_ASSETS_FOLDER}/pistol_reload.mp3`;
+        this.reloadDuration = 1000; // milliseconds
 
         this.mode = 'semi-auto';
 
         this.clipCapacity = 12;
+        this.ammoLoaded = this.clipCapacity;
+        this.ammoLeft = 60;
 
-        this.reloadDuration = 1000; // milliseconds
+        this.damage = 25;
     };
 
 

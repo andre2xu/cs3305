@@ -1,5 +1,10 @@
 import * as checks from '../helpers/checks.js';
-import { Gun } from '../sprites/weapons.js';
+import { OBSTACLES } from '../core/collision.js';
+
+import {
+    toggleCrosshair,
+    Gun
+} from '../sprites/weapons.js';
 
 import {
     Obstacle,
@@ -62,23 +67,32 @@ export class PlayableArea {
         this.STATIC_SPRITES_CONTAINER = new PIXI.Container();
         this.DYNAMIC_SPRITES_CONTAINER = new PIXI.Container();
 
-        this.area.addChild(
-            this.STATIC_SPRITES_CONTAINER,
-            this.DYNAMIC_SPRITES_CONTAINER
-        );
+        this.OBSTACLES = [];
 
 
 
         this.area.interactive = true;
 
-        this.area.on('mousedown', () => {
-            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+        this.mousedownEvent = function () {
+            if (window.GAME_PAUSED === false && window.HOTBAR !== undefined && window.HOTBAR !== null) {
                 const SELECTED_ITEM = window.HOTBAR.getSelItem();
 
                 if (SELECTED_ITEM instanceof Gun) {
                     SELECTED_ITEM.fire();
                 }
             }
+        };
+
+        this.mousemoveEvent = function () {
+            toggleCrosshair(this);
+        };
+
+
+
+        this.infinite_loop = new PIXI.Ticker();
+
+        this.infinite_loop.add(() => {
+            this.sortSpriteOrder();
         });
     };
 
@@ -118,7 +132,59 @@ export class PlayableArea {
     };
 
     load() {
+        window.GAME_PAUSED = false;
+
+        // renders sprites
+        this.area.addChild(
+            this.STATIC_SPRITES_CONTAINER,
+            this.DYNAMIC_SPRITES_CONTAINER
+        );
+
+        // adds obstacles to collision detection queue
+        const NUM_OF_OBSTACLES = this.OBSTACLES.length;
+
+        for (let i=0; i < NUM_OF_OBSTACLES; i++) {
+            OBSTACLES.push(this.OBSTACLES[i]);
+        }
+
+        // runs local game loop
+        this.infinite_loop.start();
+
+        // binds events to playable area
+        this.area.on('mousedown', this.mousedownEvent);
+        this.area.on('mousemove', this.mousemoveEvent);
+
+
+
+        window.playableAreaExists = true;
+
         return this.area;
+    };
+
+    unload() {
+        window.GAME_PAUSED = true;
+
+        // un-renders sprites
+        this.area.removeChild(this.STATIC_SPRITES_CONTAINER);
+
+        this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
+
+        // removes obstacles from collision detection queue
+        OBSTACLES.splice(0, OBSTACLES.length);
+
+        // stops local game loop
+        this.infinite_loop.stop();
+
+        // un-binds events to playable area
+        this.area.off('mousedown', this.mousedownEvent);
+        this.area.off('mousemove', this.mousemoveEvent);
+
+
+
+        // un-renders the playable area from the screen
+        this.area.parent.removeChild(this.area);
+
+        window.playableAreaExists = false;
     };
 
 
@@ -155,6 +221,10 @@ export class PlayableArea {
         this.STATIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
         this.staticSprites[id] = sprite;
 
+        if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
+            this.OBSTACLES.push(sprite);
+        }
+
         sprite.setPosition(x, y);
     };
 
@@ -174,19 +244,38 @@ export class PlayableArea {
         this.DYNAMIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
         this.dynamicSprites[id] = sprite;
 
+        if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
+            this.OBSTACLES.push(sprite);
+        }
+
         sprite.setPosition(x, y);
     };
 
     sortSpriteOrder() {
         // SPRITE ORDERING
         const ALL_SPRITES = Object.values(this.dynamicSprites);
-        const NUM_OF_SPRITES = ALL_SPRITES.length;
+        let num_of_sprites = ALL_SPRITES.length;
 
-        if (NUM_OF_SPRITES > 0) {
+        if (num_of_sprites > 0) {
+            // REMOVES SPRITES WITH NO PARENT
+            for (let i=0; i < num_of_sprites; i++) {
+                const SPRITE = ALL_SPRITES[i].getSprite();
+
+                if (SPRITE.parent === null) {
+                    ALL_SPRITES.splice(i, 1);
+                    num_of_sprites = ALL_SPRITES.length;
+
+                    delete this.dynamicSprites[Object.keys(this.dynamicSprites)[i]];
+                }
+            }
+
+
+
+            // REORDERS SPRITE
             let posY_of_sprites = [];
 
             // gets the y coordinate of the bottom edge of every sprite
-            for (let i=0; i < NUM_OF_SPRITES; i++) {
+            for (let i=0; i < num_of_sprites; i++) {
                 const CURRENT_SPRITE = ALL_SPRITES[i];
 
                 posY_of_sprites.push(CURRENT_SPRITE.getRightPosY());
@@ -195,10 +284,10 @@ export class PlayableArea {
             // sorts the y coordinates in ascending order
             posY_of_sprites = posY_of_sprites.sort();
 
-            for (let i=0; i < NUM_OF_SPRITES; i++) {
+            for (let i=0; i < num_of_sprites; i++) {
                 const CURRENT_POSY = posY_of_sprites[i];
 
-                for (let j=0; j < NUM_OF_SPRITES; j++) {
+                for (let j=0; j < num_of_sprites; j++) {
                     const UNSORTED_SPRITE = ALL_SPRITES[j];
 
                     // corrects the z-order of all the sprites according to the sorted y coordinates

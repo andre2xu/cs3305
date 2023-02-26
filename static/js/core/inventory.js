@@ -2,7 +2,13 @@ import * as checks from '../helpers/checks.js';
 import { Item } from '../sprites/base/base.js';
 import { Gun } from '../sprites/weapons.js';
 import { Player } from '../sprites/entities.js';
-import { updateAmmoCount } from './hud.js';
+
+import {
+    updateAmmoCount,
+    hideAmmoCount
+} from './hud.js';
+
+
 
 export class Inventory {
     constructor(player, texture, posX, posY, selection_texture) {
@@ -100,8 +106,24 @@ export class Inventory {
             if (SELECTED_ITEM instanceof Gun) {
                 updateAmmoCount(SELECTED_ITEM);
             }
+            else {
+                hideAmmoCount();
+            }
+        }
+        else {
+            hideAmmoCount();
         }
 
         this.selectorSprite.x = this.___getPositionInInventory__(index);
+    };
+
+    removeSelItem() {
+        const ICON = this.currentSelItem.getIcon();
+        const POS_IN_INVENTORY = this.inventoryContainer.getChildIndex(ICON) - 2;
+
+        this.inventoryContainer.removeChild(ICON);
+        this.inventory.splice(POS_IN_INVENTORY, 1, null);
+
+        this.currentSelItem = null;
     };
 };

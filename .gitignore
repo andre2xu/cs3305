@@ -1,6 +1,4 @@
-/**experiments**
-/**venv**/
-/**env**/
-/**.vscode**/
-/**node_modules**/
-run.ps1
+**/venv/**
+**/run.ps1
+**/experiments/**
+**/.vscode/**
