@@ -76,7 +76,7 @@ export const FOYER = (function () {
 
 
 
-    const ELEVATOR = new PortalFill(FOYER, 0xff0000, 0, 0, DOUBLE_DOOR.getSpriteFrameDimensions().w, 35);
+    const ELEVATOR = new PortalFill(FOYER, 0xff0000, 0, 0, DOUBLE_DOOR.getSpriteFrameDimensions().w, 40);
     ELEVATOR.setAlpha(0);
     FOYER.addStaticSprite(
         ELEVATOR,
