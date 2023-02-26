@@ -4,7 +4,8 @@ import { Portal } from '../../sprites/portals.js';
 
 import {
     Decoration,
-    SemiSolid
+    SemiSolid,
+    SemiSolidFill
 } from '../../sprites/objects.js';
 
 
@@ -19,6 +20,50 @@ export const LIBRARY = (function () {
         0,
         0
     );
+
+
+
+    const BARRIER_1 = new SemiSolidFill(0x000000, 0, 0, LIBRARY.getWidth(), 10);
+    BARRIER_1.modifyCollisionBoundary(null, null, null, -BARRIER_1.getHalfHeight());
+    LIBRARY.addStaticSprite(
+        BARRIER_1,
+        'barrier1',
+        0,
+        -BARRIER_1.getFillDimensions().h
+    );
+
+
+
+    const BARRIER_2 = new SemiSolidFill(0x000000, 0, 0, LIBRARY.getWidth(), 10);
+    LIBRARY.addStaticSprite(
+        BARRIER_2,
+        'barrier2',
+        0,
+        LIBRARY.getHeight()
+    );
+
+
+
+    const BARRIER_3 = new SemiSolidFill(0x000000, 0, 0, 10, LIBRARY.getHeight());
+    BARRIER_3.modifyCollisionBoundary(null, null, -3, null);
+    LIBRARY.addStaticSprite(
+        BARRIER_3,
+        'barrier3',
+        -BARRIER_3.getFillDimensions().w,
+        0
+    );
+
+
+
+    const BARRIER_4 = new SemiSolidFill(0x000000, 0, 0, 10, LIBRARY.getHeight());
+    BARRIER_4.modifyCollisionBoundary(-3, null, null, null);
+    LIBRARY.addStaticSprite(
+        BARRIER_4,
+        'barrier4',
+        LIBRARY.getWidth(),
+        0
+    );
+
 
 
     const SECOND_FLOOR_MAT = new Portal(LIBRARY, getTextureFromStaticJSFolder('/map/library/assets/mat2.png'), 0, 0, 32, 34);
@@ -41,7 +86,7 @@ export const LIBRARY = (function () {
         BOOKSHELF_1,
         'bookshelf1',
         LIBRARY.getWidth() - BOOKSHELF_1.getSpriteFrameDimensions().w,
-        LIBRARY.getHeight() - (BOOKSHELF_1.getSpriteFrameDimensions().h + 35)
+        LIBRARY.getHeight() - (BOOKSHELF_1.getSpriteFrameDimensions().h + 50)
     );
 
 
