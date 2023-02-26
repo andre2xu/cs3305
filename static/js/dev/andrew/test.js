@@ -222,7 +222,7 @@ window.addEventListener('load', () => {
 
 
     // MAPS
-    FOYER.addDynamicSprite(player, 'player', 430, 15);
+    FOYER.addDynamicSprite(player, 'player', 250, 15);
     // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
     FOYER.setPosition(
@@ -230,7 +230,7 @@ window.addEventListener('load', () => {
         GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
     );
     FOYER.bindPlayableAreaToPortal('2f_mat', LIBRARY, 5, 15);
-    FOYER.bindPlayableAreaToPortal('elevator', BASEMENT, 0, 0);
+    FOYER.bindPlayableAreaToPortal('elevator', BASEMENT, BASEMENT.getHalfWidth() - 10, 0);
 
 
 
@@ -246,6 +246,7 @@ window.addEventListener('load', () => {
         GAME_VIEW.width * 0.5 - BASEMENT.getHalfWidth(),
         GAME_VIEW.height * 0.5 - BASEMENT.getHalfHeight()
     );
+    BASEMENT.bindPlayableAreaToPortal('elevator', FOYER, 245, 0);
 
 
 
