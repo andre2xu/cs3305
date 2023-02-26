@@ -1,6 +1,10 @@
 import { PlayableArea } from '../creation.js';
 import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
-import { Portal } from '../../sprites/portals.js';
+
+import {
+    Portal,
+    PortalFill
+} from '../../sprites/portals.js';
 
 import {
     Decoration,
@@ -68,6 +72,17 @@ export const FOYER = (function () {
         'double_door',
         FOYER.getHalfWidth() - DOUBLE_DOOR.getHalfWidth(),
         -(DOUBLE_DOOR.getSpriteFrameDimensions().h + 1)
+    );
+
+
+
+    const ELEVATOR = new PortalFill(FOYER, 0xff0000, 0, 0, DOUBLE_DOOR.getSpriteFrameDimensions().w, 35);
+    ELEVATOR.setAlpha(0);
+    FOYER.addStaticSprite(
+        ELEVATOR,
+        'elevator',
+        FOYER.getHalfWidth() - DOUBLE_DOOR.getHalfWidth(),
+        0
     );
 
 
