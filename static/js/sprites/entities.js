@@ -301,6 +301,8 @@ export class Player extends Entity {
         if (this.health > 100) {
             this.health = 100;
         }
+
+        updatePlayerHealthStatus(this.health);
     };
 
     decreaseHealth(value) {

@@ -18,3 +18,9 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[InputRequired()])
     login = SubmitField("Login")
 
+
+""" Game Form """
+class GameForm(FlaskForm):
+    # adjust the settings here
+    
+    submit = SubmitField("Play Game")

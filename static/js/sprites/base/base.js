@@ -243,11 +243,11 @@ export class FillSprite {
         checks.checkIfNumber(width);
         checks.checkIfNumber(height);
 
-        const FILL = new PIXI.Graphics();
-        FILL.beginFill(color);
-        FILL.drawRect(0, 0, width, height);
-        FILL.endFill();
-        this.sprite = FILL
+        this.FILL = new PIXI.Graphics();
+        this.FILL.beginFill(color);
+        this.FILL.drawRect(0, 0, width, height);
+        this.FILL.endFill();
+        this.sprite = this.FILL;
 
         this.sprite.x = posX;
         this.sprite.y = posY;
@@ -315,6 +315,16 @@ export class FillSprite {
 
         this.fillWidth = w;
         this.fillHeight = h;
+    };
+
+    setAlpha(alpha) {
+        checks.checkIfNumber(alpha);
+
+        if (alpha < 0 || alpha > 1) {
+            throw Error("Alpha must be a value between 0 and 1.");
+        }
+
+        this.FILL.alpha = alpha;
     };
 };
 

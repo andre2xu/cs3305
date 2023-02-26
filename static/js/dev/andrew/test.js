@@ -3,6 +3,7 @@ import { LIBRARY } from '../../map/library/library.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
+import { PORTALS } from '../../sprites/portals.js';
 
 import {
     HealingItem,
@@ -74,7 +75,7 @@ window.addEventListener('load', () => {
     window.HOTBAR.addItem(HANDGUN);
     window.HOTBAR.addItem(new BandageBox());
 
-    window.HOTBAR.changeSelItem(1);
+    window.HOTBAR.changeSelItem(8);
 
 
 
@@ -173,6 +174,18 @@ window.addEventListener('load', () => {
                     }
 
                     break;
+                case 'q':
+                    const NUM_OF_PORTALS = PORTALS.length;
+
+                    for (let i=0; i < NUM_OF_PORTALS; i++) {
+                        const PORTAL = PORTALS[i];
+
+                        if (PORTAL.playerIsInsidePortal(player)) {
+                            PORTAL.teleport(player);
+                        }
+                    }
+
+                    break;
             }
 
             checkForCollisionsAndMovePlayer(player);
@@ -208,22 +221,21 @@ window.addEventListener('load', () => {
 
     // MAPS
     FOYER.addDynamicSprite(player, 'player', 430, 15);
-    FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
+    // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
         GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
     );
+    FOYER.bindPlayableAreaToPortal('2f_mat', LIBRARY, 5, 10);
 
 
-
-    // LIBRARY.addDynamicSprite(player, 'player', 100, 20);
-    // LIBRARY.addDynamicSprite(zombie, 'zombie', 300, 50);
 
     LIBRARY.setPosition(
         GAME_VIEW.width * 0.5 - LIBRARY.getHalfWidth(),
         GAME_VIEW.height * 0.5 - LIBRARY.getHalfHeight()
     );
+    LIBRARY.bindPlayableAreaToPortal('2f_mat', FOYER, 480, 12);
 
 
 
@@ -232,7 +244,6 @@ window.addEventListener('load', () => {
         AMMO_COUNT,
         window.HOTBAR.display(),
         FOYER.load(),
-        // LIBRARY.load(),
     );
 
     GAME.ticker.add(() => {

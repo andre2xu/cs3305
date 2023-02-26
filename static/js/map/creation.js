@@ -2,6 +2,11 @@ import * as checks from '../helpers/checks.js';
 import { OBSTACLES } from '../core/collision.js';
 
 import {
+    PORTALS,
+    Portal
+} from '../sprites/portals.js';
+
+import {
     toggleCrosshair,
     Gun
 } from '../sprites/weapons.js';
@@ -68,6 +73,7 @@ export class PlayableArea {
         this.DYNAMIC_SPRITES_CONTAINER = new PIXI.Container();
 
         this.OBSTACLES = [];
+        this.PORTALS = [];
 
 
 
@@ -147,6 +153,13 @@ export class PlayableArea {
             OBSTACLES.push(this.OBSTACLES[i]);
         }
 
+        // adds portals to map switch detection queue
+        const NUM_OF_PORTALS = this.PORTALS.length;
+
+        for (let i=0; i < NUM_OF_PORTALS; i++) {
+            PORTALS.push(this.PORTALS[i]);
+        }
+
         // runs local game loop
         this.infinite_loop.start();
 
@@ -169,11 +182,31 @@ export class PlayableArea {
 
         this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
 
+
+
+        // removes the player from sorting queue
+        if (this.dynamicSprites['player'] !== undefined) {
+            this.DYNAMIC_SPRITES_CONTAINER.removeChild(this.dynamicSprites['player']);
+
+            delete this.dynamicSprites['player'];
+        }
+
+
+
         // removes obstacles from collision detection queue
         OBSTACLES.splice(0, OBSTACLES.length);
 
+
+
+        // removes portals from map switch detection queue
+        PORTALS.splice(0, PORTALS.length);
+
+
+
         // stops local game loop
         this.infinite_loop.stop();
+
+
 
         // un-binds events to playable area
         this.area.off('mousedown', this.mousedownEvent);
@@ -223,6 +256,9 @@ export class PlayableArea {
 
         if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
             this.OBSTACLES.push(sprite);
+        }
+        else if (sprite instanceof Portal) {
+            this.PORTALS.push(sprite);
         }
 
         sprite.setPosition(x, y);
@@ -387,5 +423,17 @@ export class PlayableArea {
             array_of_points,
             color
         );
+    };
+
+    bindPlayableAreaToPortal(sprite_id, playableArea, dest_x, dest_y) {
+        checks.checkIfString(sprite_id);
+
+        const PORTAL = this.staticSprites[sprite_id];
+
+        if (PORTAL === undefined) {
+            throw Error("A portal with that ID does not exist.");
+        }
+
+        PORTAL.setDestination(playableArea, dest_x, dest_y);
     };
 };
