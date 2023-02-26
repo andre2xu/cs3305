@@ -47,12 +47,15 @@ def login_required(view):
 def index():
     return render_template("index.html", title="Game settings")
 
+
 """Decorator to play the game"""
 @app.route("/game", methods=["GET", "POST"])
 @login_required
 def game():
     return render_template("game.html", title="Play the Game")
 
+
+"""Decorator to change the settings of the game"""
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
@@ -68,16 +71,36 @@ def settings():
     return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
 
 
-@app.route("/leaderboard", methods=["GET", "POST"])
+"""Decorator to store the score of the player"""
+@app.route("/score", methods=["GET", "POST"])
 @login_required
-def leaderboard():
+def storeScore():
     form = GameForm()
     if form.validate_on_submit():
         db = get_db()
-        db.execute("""INSERT INTO scores (username, score) VALUES (?, ?)""", (session["username"], 0))
+        score = form.score.data
+        db.execute("""INSERT INTO score (score, username) VALUES (?, ?)""", (score, session["username"]))
         db.commit()
-    return render_template("leaderboard.html", title="Leaderboard", form=form)
+        return redirect(url_for("leaderboard"))
+    else:
+        return "Failed to update score"
 
+
+"""Decorator to view the leaderboard"""
+@app.route("/leaderboard", methods=["GET", "POST"])
+@login_required
+def leaderboard():
+    db = get_db()
+    details = db.execute("""SELECT * FROM score ORDER BY score, score ASC""").fetchall()
+    details = list(details)
+    scores = []
+    for row in details:
+        row = [item for item in row]
+        scores.append(row)
+    return render_template("leaderboard.html", title="Leaderboard", scores=scores)
+
+
+"""Decorator to login to access the game"""
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -92,11 +115,54 @@ def login():
         return redirect(url_for("game"))
     return render_template("login.html", title="Player Login", form=form)
 
+
+"""Decorator to register a new player"""
 @app.route("/createAccount", methods=["GET", "POST"])
 def createAccount():
-    return render_template("createAccount.html")
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        password2 = form.password2.data
+        db = get_db()
+        
+        # check if duplicate username exists
+        if db.execute("""SELECT username FROM users WHERE username = ?""", (username,)).fetchone() is not None:
+            form.username.errors.append("Invalid username. Please try again.")
+        elif password != password2:
+            form.password2.errors.append("Passwords do not match. Please try again.")
+        else:
+            db.execute("""INSERT INTO users (username, password) VALUES (?, ?)""", (username, generate_password_hash(password)))
+            db.commit()
+            return redirect(url_for("login"))
+    return render_template("createAccount.html", title="Create Account", form=form)
 
-# New code added in for Kieran to modify if necessary:
+
+"""Decorator to quit or exit the game"""
+@app.route("/quit", methods=["GET", "POST"])
+def quit():
+    session.clear()
+    return redirect(url_for("index"))
+
+
+"""Decorator for error handling"""
+"""Page not found"""
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("Oops! Please try again."), error==404
+
+"""Bad request"""
+@app.errorhandler(400)
+def bad_request(error):
+    return render_template("Non-comprehendo means we did not understand your language.  Check your spelling."), error==400
+
+"""Internal server error"""
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template("The zombies are fixing the server error.  Do you want to help them?"), error==500
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
