@@ -221,17 +221,12 @@ window.addEventListener('load', () => {
 
     // MAPS
     FOYER.addDynamicSprite(player, 'player', 430, 15);
-    FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
+    // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
         GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
     );
-
-
-
-    // LIBRARY.addDynamicSprite(player, 'player', 100, 20);
-    // LIBRARY.addDynamicSprite(zombie, 'zombie', 300, 50);
 
     LIBRARY.setPosition(
         GAME_VIEW.width * 0.5 - LIBRARY.getHalfWidth(),
@@ -245,7 +240,6 @@ window.addEventListener('load', () => {
         AMMO_COUNT,
         window.HOTBAR.display(),
         FOYER.load(),
-        // LIBRARY.load(),
     );
 
     GAME.ticker.add(() => {

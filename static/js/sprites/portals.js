@@ -47,6 +47,17 @@ export class Portal extends Decoration {
     teleport(player) {
         checks.checkIfInstance(player, Player);
 
+        const GAME_STAGE = this.origin.area.parent;
+
         this.origin.unload();
+        GAME_STAGE.removeChild(this.origin.area);
+
+        GAME_STAGE.addChild(this.destination.load());
+        this.destination.addDynamicSprite(
+            player,
+            'player',
+            this.dest_X,
+            this.dest_Y
+        );
     };
 };
