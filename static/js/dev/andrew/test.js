@@ -227,11 +227,15 @@ window.addEventListener('load', () => {
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
         GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
     );
+    FOYER.bindPlayableAreaToPortal('2f_mat', LIBRARY, 5, 10);
+
+
 
     LIBRARY.setPosition(
         GAME_VIEW.width * 0.5 - LIBRARY.getHalfWidth(),
         GAME_VIEW.height * 0.5 - LIBRARY.getHalfHeight()
     );
+    LIBRARY.bindPlayableAreaToPortal('2f_mat', FOYER, 450, 20);
 
 
 
