@@ -1,4 +1,4 @@
-import { Decoration} from "./objects";
+import { Decoration} from "./objects.js";
 
 export class Portal extends Decoration {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
