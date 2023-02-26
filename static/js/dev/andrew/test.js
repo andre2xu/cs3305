@@ -247,15 +247,15 @@ window.addEventListener('load', () => {
     );
 
     GAME.ticker.add(() => {
-        // if (window.GAME_PAUSED === false) {
-        //     // moves enemies
-        //     const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+        if (window.GAME_PAUSED === false) {
+            // moves enemies
+            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
-        //     if (NUM_OF_ENTITIES > 0) {
-        //         for (let i=0; i < NUM_OF_ENTITIES; i++) {
-        //             NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-        //         }
-        //     }
-        // }
+            if (NUM_OF_ENTITIES > 0) {
+                for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                    NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+                }
+            }
+        }
     });
 });
