@@ -57,7 +57,7 @@ window.addEventListener('load', () => {
     // PLAYER
     const player = new Player(getTextureFromStaticAssetsFolder('/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
-    player.switchFrame('n');
+    player.switchFrame('e');
 
     window.HOTBAR = new Inventory(
         player,
@@ -81,7 +81,7 @@ window.addEventListener('load', () => {
     // ENEMY
     let zombie = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
     zombie.addFrames(zombie_frames_json);
-    zombie.switchFrame('w');
+    zombie.switchFrame('s');
 
 
 
@@ -217,8 +217,8 @@ window.addEventListener('load', () => {
 
 
 
-    LIBRARY.addDynamicSprite(player, 'player', 100, 20);
-    LIBRARY.addDynamicSprite(zombie, 'zombie', 300, 50);
+    // LIBRARY.addDynamicSprite(player, 'player', 100, 20);
+    // LIBRARY.addDynamicSprite(zombie, 'zombie', 300, 50);
 
     LIBRARY.setPosition(
         GAME_VIEW.width * 0.5 - LIBRARY.getHalfWidth(),
@@ -231,20 +231,20 @@ window.addEventListener('load', () => {
         PLAYER_HEALTH_STATUS,
         AMMO_COUNT,
         window.HOTBAR.display(),
-        // FOYER.load(),
-        LIBRARY.load(),
+        FOYER.load(),
+        // LIBRARY.load(),
     );
 
     GAME.ticker.add(() => {
-        if (window.GAME_PAUSED === false) {
-            // moves enemies
-            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+        // if (window.GAME_PAUSED === false) {
+        //     // moves enemies
+        //     const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
-            if (NUM_OF_ENTITIES > 0) {
-                for (let i=0; i < NUM_OF_ENTITIES; i++) {
-                    NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-                }
-            }
-        }
+        //     if (NUM_OF_ENTITIES > 0) {
+        //         for (let i=0; i < NUM_OF_ENTITIES; i++) {
+        //             NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+        //         }
+        //     }
+        // }
     });
 });
