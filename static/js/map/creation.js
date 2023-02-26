@@ -182,14 +182,31 @@ export class PlayableArea {
 
         this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
 
+
+
+        // removes the player from sorting queue
+        if (this.dynamicSprites['player'] !== undefined) {
+            this.DYNAMIC_SPRITES_CONTAINER.removeChild(this.dynamicSprites['player']);
+
+            delete this.dynamicSprites['player'];
+        }
+
+
+
         // removes obstacles from collision detection queue
         OBSTACLES.splice(0, OBSTACLES.length);
+
+
 
         // removes portals from map switch detection queue
         PORTALS.splice(0, PORTALS.length);
 
+
+
         // stops local game loop
         this.infinite_loop.stop();
+
+
 
         // un-binds events to playable area
         this.area.off('mousedown', this.mousedownEvent);
