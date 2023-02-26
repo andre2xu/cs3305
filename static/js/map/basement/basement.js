@@ -4,7 +4,8 @@ import { PortalFill } from '../../sprites/portals.js';
 
 import {
     Decoration,
-    SemiSolid
+    SemiSolid,
+    SemiSolidFill
 } from '../../sprites/objects.js';
 
 
@@ -17,6 +18,49 @@ export const BASEMENT = (function () {
         FLOOR, 
         'floor', 
         0,
+        0
+    );
+
+
+
+    const BARRIER_1 = new SemiSolidFill(0x000000, 0, 0, BASEMENT.getWidth(), 10);
+    BARRIER_1.modifyCollisionBoundary(null, null, null, -BARRIER_1.getHalfHeight());
+    BASEMENT.addStaticSprite(
+        BARRIER_1,
+        'barrier1',
+        0,
+        -BARRIER_1.getFillDimensions().h
+    );
+
+
+
+    const BARRIER_2 = new SemiSolidFill(0x000000, 0, 0, BASEMENT.getWidth(), 10);
+    BASEMENT.addStaticSprite(
+        BARRIER_2,
+        'barrier2',
+        0,
+        BASEMENT.getHeight()
+    );
+
+
+
+    const BARRIER_3 = new SemiSolidFill(0x000000, 0, 0, 10, BASEMENT.getHeight());
+    BARRIER_3.modifyCollisionBoundary(null, null, -3, null);
+    BASEMENT.addStaticSprite(
+        BARRIER_3,
+        'barrier3',
+        -BARRIER_3.getFillDimensions().w,
+        0
+    );
+
+
+
+    const BARRIER_4 = new SemiSolidFill(0x000000, 0, 0, 10, BASEMENT.getHeight());
+    BARRIER_4.modifyCollisionBoundary(-3, null, null, null);
+    BASEMENT.addStaticSprite(
+        BARRIER_4,
+        'barrier4',
+        BASEMENT.getWidth(),
         0
     );
 
