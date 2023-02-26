@@ -1,10 +1,13 @@
 import { PlayableArea } from '../creation.js';
 import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
+import { Portal } from '../../sprites/portals.js';
 
 import {
     Decoration,
     SemiSolid
 } from '../../sprites/objects.js';
+
+
 
 export const LIBRARY = (function () {
     const LIBRARY = new PlayableArea(512, 256);
@@ -18,8 +21,7 @@ export const LIBRARY = (function () {
     );
 
 
-
-    const SECOND_FLOOR_MAT = new Decoration(getTextureFromStaticJSFolder('/map/library/assets/mat2.png'), 0, 0, 32, 34);
+    const SECOND_FLOOR_MAT = new Portal(LIBRARY, getTextureFromStaticJSFolder('/map/library/assets/mat2.png'), 0, 0, 32, 34);
     LIBRARY.addStaticSprite(
         SECOND_FLOOR_MAT,
         '2f_mat',
