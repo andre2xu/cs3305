@@ -27,7 +27,15 @@ export class Portal extends Decoration {
     playerIsInsidePortal(player) {
         checks.checkIfInstance(player, Player);
 
-        if (player.getRightPosY() < this.getRightPosY() && (player.getRightPosX() > this.getLeftPosX() || player.getLeftPosX() < this.getRightPosX())) {
+        const PLAYER_BE_above_PORTAL_BE = player.getRightPosY() < this.getRightPosY();
+
+        const PLAYER_TE_below_PORTAL_TE_THRESHOLD = player.getLeftPosY() > this.getLeftPosY() - 10;
+
+        const PLAYER_RE_inside = player.getRightPosX() > this.getLeftPosX();
+
+        const PLAYER_LE_inside = player.getLeftPosX() < this.getRightPosX();
+
+        if (PLAYER_BE_above_PORTAL_BE && PLAYER_TE_below_PORTAL_TE_THRESHOLD && (PLAYER_RE_inside || PLAYER_LE_inside)) {
             return true;
         }
 
