@@ -49,6 +49,9 @@ window.addEventListener("keyup", keysUp)
 
 weaponSprite.pistolSetPivot()
 
+// const graphics = new Pixi.Graphics()
+// var vec = new Victor(1,2)
+// graphics.lineTo()
 
 const crosshairTexture = PIXI.Texture.from("./assets/crosshair.png")
 const crosshairSprite = new PIXI.Sprite(crosshairTexture)

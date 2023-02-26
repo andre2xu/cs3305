@@ -1,7 +1,8 @@
-
+import {Victor} from "./victor"
 export class Pistol{
     constructor(texture){
         this.sprite = new PIXI.Sprite(texture);
+        this.graphics = new PIXI.Graphics()
 
 
 
@@ -21,8 +22,9 @@ export class Pistol{
         this.sprite.scale.set(scaleX,scaleY);
     };
 
+    onUse(){
 
-
+    }
     setPosX(x) {
         this.sprite.x = x;
     };
@@ -35,6 +37,11 @@ export class Pistol{
     //needs to be inside the onmousemove function
     pistolRotateToMouse(mouseY,mouseX) {
         this.sprite.rotation = Math.atan2(mouseY - this.sprite.y,mouseX - this.sprite.x)
+        let vec = new Vic.Victor(Math.cos(this.sprite.rotation),Math.sin(this.sprite.rotation))
+        this.graphics.beginFill("#0000FF")
+        let end = vec.multiplyScalar(1000)
+        this.graphics.lineTo(vec.x,vec.y)
+        this.graphics.endFill()
     }
     //moves pistol to player model + a offset so the pistol is in the sprite's hand
     pistolMoveToPlayer(playerXPos,playerYPos){

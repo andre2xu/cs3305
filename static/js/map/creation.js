@@ -162,7 +162,7 @@ export class PlayableArea {
         if ((sprite instanceof Sprite) === false && (sprite instanceof FillSprite) === false) {
             throw ReferenceError(`Not an instance of ${Sprite.name} or ${FillSprite.name}`);
         }
-
+        console.log(id)
         checks.checkIfString(id);
         checks.checkIfNumber(x);
         checks.checkIfNumber(y);

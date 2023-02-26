@@ -707,4 +707,8 @@ export class Zombie extends Enemy {
 
         player.activateInvincibility()
     };
+
+
+
+
 };
