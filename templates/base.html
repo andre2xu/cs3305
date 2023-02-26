@@ -9,17 +9,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-
+  
 
   <title>SpriteZ</title>
 
 </head>
 <body>
   <header>
-    <h1>SpriteZ</h1>        
+    <h1>SpriteZ</h1>
+    <nav>
+      <ul>
+          {% if g.user %}
+          <li><a href ="{{ url_for('index') }}">Start Game</a></li>
+          <li><a href="{{ url_for('settings') }}">Game Settings</a></li>
+          <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+          <li><a href="{{ url_for('quit') }}">Quit</a>{{ g.user }} Logged in</li>
+          {% else %}
+          <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('help') }}">Help</a></li>
+          {% endif %}
+      </ul>
+    </nav>      
   </header>
 
+  
   <main>
     {% block main_content %}{% endblock %}
   </main>
