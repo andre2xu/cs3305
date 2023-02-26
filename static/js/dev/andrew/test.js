@@ -222,7 +222,7 @@ window.addEventListener('load', () => {
 
 
     // MAPS
-    FOYER.addDynamicSprite(player, 'player', 250, 15);
+    FOYER.addDynamicSprite(player, 'player', 450, 15);
     // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
     FOYER.setPosition(

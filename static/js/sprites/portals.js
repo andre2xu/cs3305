@@ -27,15 +27,9 @@ export class Portal extends Decoration {
     playerIsInsidePortal(player) {
         checks.checkIfInstance(player, Player);
 
-        const PLAYER_BE_above_PORTAL_BE = player.getRightPosY() < this.getRightPosY();
+        const PLAYER_CENTER = player.getCenterCoordinates();
 
-        const PLAYER_TE_below_PORTAL_TE_THRESHOLD = player.getLeftPosY() > this.getLeftPosY() - 10;
-
-        const PLAYER_RE_inside = player.getRightPosX() > this.getLeftPosX();
-
-        const PLAYER_LE_inside = player.getLeftPosX() < this.getRightPosX();
-
-        if (PLAYER_BE_above_PORTAL_BE && PLAYER_TE_below_PORTAL_TE_THRESHOLD && (PLAYER_RE_inside || PLAYER_LE_inside)) {
+        if (PLAYER_CENTER.x > this.getLeftPosX() && PLAYER_CENTER.x < this.getRightPosX() && PLAYER_CENTER.y > this.getLeftPosY() && PLAYER_CENTER.y < this.getRightPosY()) {
             return true;
         }
 
@@ -92,15 +86,9 @@ export class PortalFill extends DecorationFill {
     playerIsInsidePortal(player) {
         checks.checkIfInstance(player, Player);
 
-        const PLAYER_BE_above_PORTAL_BE = player.getRightPosY() < this.getRightPosY();
+        const PLAYER_CENTER = player.getCenterCoordinates();
 
-        const PLAYER_TE_below_PORTAL_TE_THRESHOLD = player.getLeftPosY() > this.getLeftPosY() - 10;
-
-        const PLAYER_RE_inside = player.getRightPosX() > this.getLeftPosX();
-
-        const PLAYER_LE_inside = player.getLeftPosX() < this.getRightPosX();
-
-        if (PLAYER_BE_above_PORTAL_BE && PLAYER_TE_below_PORTAL_TE_THRESHOLD && (PLAYER_RE_inside || PLAYER_LE_inside)) {
+        if (PLAYER_CENTER.x > this.getLeftPosX() && PLAYER_CENTER.x < this.getRightPosX() && PLAYER_CENTER.y > this.getLeftPosY() && PLAYER_CENTER.y < this.getRightPosY()) {
             return true;
         }
 
