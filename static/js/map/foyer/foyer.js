@@ -83,7 +83,7 @@ export const FOYER = (function () {
 
 
 
-    const SECOND_FLOOR_MAT = new Portal(getTextureFromStaticJSFolder('/map/foyer/assets/mat2.png'), 0, 0, 32, 34);
+    const SECOND_FLOOR_MAT = new Portal(FOYER, getTextureFromStaticJSFolder('/map/foyer/assets/mat2.png'), 0, 0, 32, 34);
     SECOND_FLOOR_MAT.setDestination(LIBRARY, 0, 0);
     FOYER.addStaticSprite(
         SECOND_FLOOR_MAT,
