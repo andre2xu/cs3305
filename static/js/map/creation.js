@@ -185,6 +185,9 @@ export class PlayableArea {
         // removes obstacles from collision detection queue
         OBSTACLES.splice(0, OBSTACLES.length);
 
+        // removes portals from map switch detection queue
+        PORTALS.splice(0, PORTALS.length);
+
         // stops local game loop
         this.infinite_loop.stop();
 
