@@ -10,6 +10,8 @@ export class Portal extends Decoration {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.destination = null;
+        this.dest_X = null;
+        this.dest_Y = null; 
     };
 
 
@@ -28,9 +30,14 @@ export class Portal extends Decoration {
 
 
     // SETTERS
-    setDestination(playableArea) {
+    setDestination(playableArea, x, y) {
         checks.checkIfInstance(playableArea, PlayableArea);
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
 
         this.destination = playableArea;
+
+        this.dest_X = x;
+        this.dest_Y = y;
     };
 };
