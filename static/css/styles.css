@@ -3,14 +3,22 @@ html{
     background-image: url("../css/Backround_mansion.jpg");
     background-size: cover;
     display: block;
-    font-family: 'Chalkduster', 'Marker Felt', 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', serif;
+    
     color: white;
 }
+
+font-face{
+    font-family: "Pixeloid Sans", sans-serif;
+    src: url("../fonts/PixeloidSans-JR6qo.ttf");
+}
+
 body{
     padding: 2em;
     text-align: center;
 }
-h1, h2{
+
+h1, h2, h3{
+    font-family: "Pixeloid Sans", sans-serif;
     padding-left: 0.5em;
 }
 
