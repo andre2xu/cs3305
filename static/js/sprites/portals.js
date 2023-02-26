@@ -6,9 +6,12 @@ import { Player } from './entities.js';
 export const PORTALS = [];
 
 export class Portal extends Decoration {
-    constructor(texture, posX, posY, frameWidth, frameHeight) {
+    constructor(origin, texture, posX, posY, frameWidth, frameHeight) {
+        checks.checkIfInstance(origin, PlayableArea);
+
         super(texture, posX, posY, frameWidth, frameHeight);
 
+        this.origin = origin;
         this.destination = null;
         this.dest_X = null;
         this.dest_Y = null; 
@@ -39,5 +42,11 @@ export class Portal extends Decoration {
 
         this.dest_X = x;
         this.dest_Y = y;
+    };
+
+    teleport(player) {
+        checks.checkIfInstance(player, Player);
+
+        this.origin.unload();
     };
 };
