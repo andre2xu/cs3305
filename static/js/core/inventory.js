@@ -51,6 +51,8 @@ export class Inventory {
 
     // GETTERS
     ___getPositionInInventory__(index) {
+        // returns x-coordinate of item
+
         checks.checkIfNumber(index);
 
         return -2 + ((this.selectorSprite.width - 4) * (index - 1));
