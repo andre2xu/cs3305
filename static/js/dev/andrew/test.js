@@ -1,5 +1,6 @@
 import { FOYER } from '../../map/foyer/foyer.js';
 import { LIBRARY } from '../../map/library/library.js';
+import { BASEMENT } from '../../map/basement/basement.js';
 import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js';
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
@@ -182,6 +183,7 @@ window.addEventListener('load', () => {
 
                         if (PORTAL.playerIsInsidePortal(player)) {
                             PORTAL.teleport(player);
+                            break;
                         }
                     }
 
@@ -227,7 +229,8 @@ window.addEventListener('load', () => {
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
         GAME_VIEW.height * 0.5 - FOYER.getHalfHeight()
     );
-    FOYER.bindPlayableAreaToPortal('2f_mat', LIBRARY, 5, 10);
+    FOYER.bindPlayableAreaToPortal('2f_mat', LIBRARY, 5, 15);
+    FOYER.bindPlayableAreaToPortal('elevator', BASEMENT, 0, 0);
 
 
 
@@ -236,6 +239,13 @@ window.addEventListener('load', () => {
         GAME_VIEW.height * 0.5 - LIBRARY.getHalfHeight()
     );
     LIBRARY.bindPlayableAreaToPortal('2f_mat', FOYER, 480, 12);
+
+
+
+    BASEMENT.setPosition(
+        GAME_VIEW.width * 0.5 - BASEMENT.getHalfWidth(),
+        GAME_VIEW.height * 0.5 - BASEMENT.getHalfHeight()
+    );
 
 
 
@@ -249,13 +259,13 @@ window.addEventListener('load', () => {
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
             // moves enemies
-            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
-            if (NUM_OF_ENTITIES > 0) {
-                for (let i=0; i < NUM_OF_ENTITIES; i++) {
-                    NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-                }
-            }
+            // if (NUM_OF_ENTITIES > 0) {
+            //     for (let i=0; i < NUM_OF_ENTITIES; i++) {
+            //         NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+            //     }
+            // }
         }
     });
 });
