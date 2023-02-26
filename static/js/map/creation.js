@@ -406,4 +406,16 @@ export class PlayableArea {
             color
         );
     };
+
+    bindPlayableAreaToPortal(sprite_id, playableArea, dest_x, dest_y) {
+        checks.checkIfString(sprite_id);
+
+        const PORTAL = this.staticSprites[sprite_id];
+
+        if (PORTAL === undefined) {
+            throw Error("A portal with that ID does not exist.");
+        }
+
+        PORTAL.setDestination(playableArea, dest_x, dest_y);
+    };
 };
