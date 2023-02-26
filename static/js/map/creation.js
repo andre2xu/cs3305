@@ -2,6 +2,11 @@ import * as checks from '../helpers/checks.js';
 import { OBSTACLES } from '../core/collision.js';
 
 import {
+    PORTALS,
+    Portal
+} from '../sprites/portals.js';
+
+import {
     toggleCrosshair,
     Gun
 } from '../sprites/weapons.js';
@@ -68,6 +73,7 @@ export class PlayableArea {
         this.DYNAMIC_SPRITES_CONTAINER = new PIXI.Container();
 
         this.OBSTACLES = [];
+        this.PORTALS = [];
 
 
 
@@ -147,6 +153,13 @@ export class PlayableArea {
             OBSTACLES.push(this.OBSTACLES[i]);
         }
 
+        // adds portals to map switch detection queue
+        const NUM_OF_PORTALS = this.PORTALS.length;
+
+        for (let i=0; i < NUM_OF_PORTALS; i++) {
+            PORTALS.push(this.PORTALS[i]);
+        }
+
         // runs local game loop
         this.infinite_loop.start();
 
@@ -223,6 +236,9 @@ export class PlayableArea {
 
         if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
             this.OBSTACLES.push(sprite);
+        }
+        else if (sprite instanceof Portal) {
+            this.PORTALS.push(sprite);
         }
 
         sprite.setPosition(x, y);
