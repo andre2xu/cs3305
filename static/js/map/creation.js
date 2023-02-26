@@ -232,7 +232,7 @@ export class PlayableArea {
         if ((sprite instanceof Sprite) === false && (sprite instanceof FillSprite) === false) {
             throw ReferenceError(`Not an instance of ${Sprite.name} or ${FillSprite.name}`);
         }
-        console.log(id)
+        // console.log(id)
         checks.checkIfString(id);
         checks.checkIfNumber(x);
         checks.checkIfNumber(y);
@@ -243,6 +243,7 @@ export class PlayableArea {
 
         this.DYNAMIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
         this.dynamicSprites[id] = sprite;
+        // console.log(this.DYNAMIC_SPRITES_CONTAINER)
 
         if (sprite instanceof Obstacle || sprite instanceof ObstacleFill) {
             this.OBSTACLES.push(sprite);

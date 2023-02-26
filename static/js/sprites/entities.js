@@ -324,7 +324,7 @@ export class Enemy extends Entity {
         this.navigationMode = 0;
         this.objectCollidedWith = null;
         this.edgeCollidedWith = null;
-
+        this.isDead = false
         this.detourChosen = null;
         this.detourPointIndex = 0;
 
@@ -597,29 +597,38 @@ export class Enemy extends Entity {
             const CURRENT_FRAME = this.getCurrentFrame();
 
             if (player.isInvincible() === false && player.getHealth() > 0) {
-                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX()) {
+                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY()) {
+                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX()) {
+                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()) {
+                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()  && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
+
                 }
             }
         }
@@ -719,7 +728,7 @@ export class Enemy extends Entity {
 
         if (this.health === 0) {
             this.sprite_container.parent.removeChild(this.sprite_container);
-
+            this.isDead = true
             NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
         }
     };
