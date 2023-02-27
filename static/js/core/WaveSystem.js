@@ -118,7 +118,7 @@ export class WaveSystem {
         }
         */
 
-        for (let i = 0; i < toSpawn.length; i++) {
+        for (let i=0; i < toSpawn.length; i++) {
             const ENEMY = toSpawn[i];
             const ENEMY_DIMENSIONS = ENEMY.getSpriteFrameDimensions();
             ENEMY.addFrames(zombie_frames_json);
@@ -145,7 +145,7 @@ export class WaveSystem {
 
             this.map.addDynamicSprite(
                 ENEMY,
-                `zombie${i}`,
+                Date.now().toString(),
                 SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w,
                 SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h
             );
