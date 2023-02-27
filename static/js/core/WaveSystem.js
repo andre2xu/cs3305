@@ -76,6 +76,12 @@ export class WaveSystem {
 
 
     // SETTERS
+    setWaveDelay(delay) {
+        checks.checkIfNumber(delay);
+
+        this.next_wave_delay = delay;
+    };
+
     updatePlayableArea(playableArea) {
         checks.checkIfInstance(playableArea, PlayableArea);
 
