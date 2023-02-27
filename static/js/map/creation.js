@@ -1,5 +1,6 @@
 import * as checks from '../helpers/checks.js';
 import { OBSTACLES } from '../core/collision.js';
+import { Entity } from '../sprites/entities.js';
 
 import {
     PORTALS,
@@ -197,11 +198,19 @@ export class PlayableArea {
 
 
 
-        // removes the player from sorting queue
-        if (this.dynamicSprites['player'] !== undefined) {
-            this.DYNAMIC_SPRITES_CONTAINER.removeChild(this.dynamicSprites['player']);
+        // removes the entities from sorting queue & dynamic sprites container
+        const DYNAMIC_SPRITE_IDS = Object.keys(this.dynamicSprites);
+        const NUM_OF_DYNAMIC_SPRITES = DYNAMIC_SPRITE_IDS.length;
 
-            delete this.dynamicSprites['player'];
+        for (let i=0; i < NUM_OF_DYNAMIC_SPRITES; i++) {
+            const ID = DYNAMIC_SPRITE_IDS[i];
+            const CURRENT_DS = this.dynamicSprites[ID];
+
+            if (CURRENT_DS instanceof Entity) {
+                this.DYNAMIC_SPRITES_CONTAINER.removeChild(CURRENT_DS.getSprite());
+
+                delete this.dynamicSprites[ID];
+            }
         }
 
 

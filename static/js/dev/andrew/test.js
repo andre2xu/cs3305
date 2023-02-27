@@ -52,6 +52,18 @@ window.addEventListener('load', () => {
 
 
 
+    // INITIALIZING WAVES
+    const WAVE_SYSTEM = new WaveSystem(
+        FOYER,
+        [
+            new Wave(0, [1, 1], 1),
+            new Wave(0, [1], 1)
+        ],
+        2
+    );
+
+
+
     // PLAYER
     const player = new Player(getTextureFromStaticAssetsFolder('/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
     player.addFrames(player_frames_json);
@@ -172,6 +184,10 @@ window.addEventListener('load', () => {
 
                         if (PORTAL.playerIsInsidePortal(player)) {
                             PORTAL.teleport(player);
+
+                            WAVE_SYSTEM.updatePlayableArea(PORTAL.destination);
+
+                            WAVE_SYSTEM.respawnBatch();
                             break;
                         }
                     }
@@ -243,17 +259,6 @@ window.addEventListener('load', () => {
         AMMO_COUNT,
         window.HOTBAR.display(),
         FOYER.load(),
-    );
-
-
-
-    const WAVE_SYSTEM = new WaveSystem(
-        FOYER,
-        [
-            new Wave(0, [1, 1], 1),
-            new Wave(0, [1], 1)
-        ],
-        2
     );
 
     GAME.ticker.add(() => {

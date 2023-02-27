@@ -12,6 +12,9 @@ import {
 
 export const BASEMENT = (function () {
     const BASEMENT = new PlayableArea(555, 441);
+    BASEMENT.addEnemySpawnPoint(50, 50);
+    BASEMENT.addEnemySpawnPoint(50, BASEMENT.getHeight() - 150);
+    BASEMENT.addEnemySpawnPoint(280, BASEMENT.getHeight() - 30);
 
     const FLOOR = new Decoration(getTextureFromStaticJSFolder('/map/basement/assets/basefloor.png'), 0, 0, 555, 441);
     BASEMENT.addStaticSprite(

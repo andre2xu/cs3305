@@ -12,6 +12,8 @@ import {
 
 export const LIBRARY = (function () {
     const LIBRARY = new PlayableArea(512, 256);
+    LIBRARY.addEnemySpawnPoint(LIBRARY.getHalfWidth() + 130, 50);
+    LIBRARY.addEnemySpawnPoint(LIBRARY.getHalfWidth(), LIBRARY.getHeight() - 30);
 
     const FLOOR = new Decoration(getTextureFromStaticJSFolder('/map/library/assets/libraryfloor.png'), 0, 0, 512, 256);
     LIBRARY.addStaticSprite(
