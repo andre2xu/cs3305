@@ -329,8 +329,6 @@ export class Enemy extends Entity {
         this.detourChosen = null;
         this.detourPointIndex = 0;
 
-        this.isDead = false;
-
         NON_PLAYER_ENTITIES.push(this);
 
 
@@ -702,11 +700,11 @@ export class Enemy extends Entity {
         this.health -= value;
 
         if (this.health === 0) {
+            // references to enemy get deleted so that its instance can be put in the garbage collector (memory optimization)
+
             this.sprite_container.parent.removeChild(this.sprite_container);
 
             NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
-
-            this.isDead = true;
         }
     };
 };
