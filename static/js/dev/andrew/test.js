@@ -7,6 +7,7 @@ import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
 import { PORTALS } from '../../sprites/portals.js';
 import { WaveSystem } from '../../core/WaveSystem.js';
 import { Wave } from '../../core/Wave.js';
+import { Player } from '../../sprites/entities.js';
 
 import {
     HealingItem,
@@ -17,11 +18,6 @@ import {
     Gun,
     Pistol
 } from '../../sprites/weapons.js';
-
-import {
-    Player,
-    Zombie
-} from '../../sprites/entities.js';
 
 import {
     MOVEMENT_KEY_STATUSES,
@@ -253,17 +249,22 @@ window.addEventListener('load', () => {
 
     const WAVE_SYSTEM = new WaveSystem(
         FOYER,
-        [ new Wave(0, [1, 2], 1) ],
-        8
+        [
+            new Wave(0, [1, 1], 1),
+            new Wave(0, [1], 1)
+        ],
+        2
     );
 
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
             // spawns waves of enemies
-            WAVE_SYSTEM.updateEnemyTracker();
+            WAVE_SYSTEM.enemySpawnFadeIn();
 
             if (WAVE_SYSTEM.checkIfBatchDone()) {
-                WAVE_SYSTEM.spawnNextWave();
+                WAVE_SYSTEM.spawnNextBatch();
+
+                WAVE_SYSTEM.moveToNextWaveIfFinished();
             }
 
 
