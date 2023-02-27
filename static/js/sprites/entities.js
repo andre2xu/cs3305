@@ -326,9 +326,10 @@ export class Enemy extends Entity {
         this.navigationMode = 0;
         this.objectCollidedWith = null;
         this.edgeCollidedWith = null;
-        this.isDead = false
         this.detourChosen = null;
         this.detourPointIndex = 0;
+
+        this.isDead = false;
 
         NON_PLAYER_ENTITIES.push(this);
 
@@ -730,8 +731,10 @@ export class Enemy extends Entity {
 
         if (this.health === 0) {
             this.sprite_container.parent.removeChild(this.sprite_container);
-            this.isDead = true
+
             NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
+
+            this.isDead = true;
         }
     };
 };
@@ -748,15 +751,12 @@ export class Zombie extends Enemy {
 
 
 
+    // SETTERS
     __damagePlayer___(player) {
         checks.checkIfInstance(player, Player);
 
         player.decreaseHealth(this.damage);
 
-        player.activateInvincibility()
+        player.activateInvincibility();
     };
-
-
-
-
 };
