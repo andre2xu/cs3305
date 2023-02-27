@@ -75,6 +75,7 @@ export class PlayableArea {
 
         this.OBSTACLES = [];
         this.PORTALS = [];
+        this.ENEMY_SPAWN_POINTS = [];
 
 
 
@@ -285,6 +286,17 @@ export class PlayableArea {
         }
 
         sprite.setPosition(x, y);
+    };
+
+    addEnemySpawnPoint(x, y, color) {
+        checks.checkIfNumber(x);
+        checks.checkIfNumber(y);
+
+        this.ENEMY_SPAWN_POINTS.push({x: x, y: y});
+
+        if (typeof color === 'number') {
+            this.colorCoordinate(color, x, y, 5, 5);
+        }
     };
 
     sortSpriteOrder() {
