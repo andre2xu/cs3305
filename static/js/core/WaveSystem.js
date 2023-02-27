@@ -1,6 +1,7 @@
 import * as checks from '../helpers/checks.js';
 import { PlayableArea } from '../map/creation.js';
 import { Wave } from './Wave.js';
+import { NON_PLAYER_ENTITIES } from './collision.js';
 
 import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombie.json" assert {type: 'json'};
 
@@ -38,9 +39,8 @@ export class WaveSystem {
 
         this.time = 0;
 
-        this.zSpawned = []; // used to check if spawned zombies
-
-        this.spawnedThisBatch = []; // used to apply fade-in effect.
+        // this.zSpawned = []; // used to check if spawned zombies
+        // this.spawnedThisBatch = []; // used to apply fade-in effect.
     };
 
 
@@ -80,23 +80,30 @@ export class WaveSystem {
         this.spawnPoints = playableArea.getEnemySpawnPoints();
     };
 
-    spawnNextWave() {
+    moveToNextWaveIfFinished() {
+        if (NON_PLAYER_ENTITIES.length === 0 && this.current_wave_index + 1 < this.waves.length) {
+            this.current_wave_index++;
+
+            this.current_wave = this.waves[this.current_wave_index];
+        }
+    };
+
+    spawnNextBatch() {
         let toSpawn = this.current_wave.getNextBatch();
 
+        /*
         this.spawnedThisBatch = [];
 
-        if (toSpawn == 0 && this.zSpawned.length == 0) {
+        if (toSpawn === 0 && this.spawnedThisBatch.length === 0) {
             // only do if all zombies from previous wave are dead
+
             this.current_wave_index++;
 
             this.current_wave = this.waves[this.current_wave_index]; // get next wave
 
             toSpawn = this.current_wave.getNextBatch();
         }
-
-
-
-        this.isBatchDone = false;
+        */
 
         for (let i = 0; i < toSpawn.length; i++) {
             const ENEMY = toSpawn[i];
@@ -117,6 +124,7 @@ export class WaveSystem {
                 this.spawnPoints[randSpawnP][3] // max x
             );
             */
+
             const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
             const x = SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w;
             const y = SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h;
@@ -128,8 +136,8 @@ export class WaveSystem {
 
             this.map.addDynamicSprite(ENEMY, id, x, y);
 
-            this.zSpawned.push(ENEMY);
-            this.spawnedThisBatch.push(ENEMY);
+            // this.zSpawned.push(ENEMY);
+            // this.spawnedThisBatch.push(ENEMY);
 
             this.enemyID++;
 
@@ -138,17 +146,22 @@ export class WaveSystem {
     };
 
     enemySpawnFadeIn() {
-        for (let i=0; i < this.spawnedThisBatch.length; i++) {
-            const ENEMY = this.spawnedThisBatch[i].sprite;
+        const NUM_OF_NPE = NON_PLAYER_ENTITIES.length;
 
-            if (ENEMY.alpha < 1) {
-                ENEMY.alpha += 0.01;
+        if (NUM_OF_NPE > 0) {
+            for (let i=0; i < NUM_OF_NPE; i++) {
+                const ENEMY = NON_PLAYER_ENTITIES[i].sprite;
+
+                if (ENEMY.alpha < 1) {
+                    ENEMY.alpha += 0.01;
+                }
             }
         }
     };
 
+    /*
     updateEnemyTracker() {
-        // keeps track of what zombies are alive
+        keeps track of what zombies are alive
         for (let i = 0; i < this.zSpawned.length; i++) {
             if (this.zSpawned[i].isDead) {
                 this.zSpawned.splice(i, 1);
@@ -157,4 +170,5 @@ export class WaveSystem {
 
         this.enemySpawnFadeIn(); // fade in animation
     };
+    */
 };
