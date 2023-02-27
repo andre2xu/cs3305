@@ -1,23 +1,26 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-
-<section>
-    <h2>Login</h2>
-</section>  
-    <p>
-        <form action="{{ url_for('login')}}" method="post">
-            <p> Username <input type="text" name="Username" placeholder="Enter your username"/>  </p>
-
-            <p> Password <input type="text" name="Password"  placeholder="Enter your password"/> </p>
-
-            <p> <input type="submit" value="Submit" /> </p>
-        </form>
-    </p>
-
-    <p>
-        <a href="{{ url_for('index')}}"><button>Back</button></a>
-    </p>
-
+    <h2>{{ title }}</h2>
+    <form action="" method="POST" novalidate>       <!--the user's data will not be checked in the browser, but in the server-->
+        <!--This is important to have and MUST always have this.  Look up CSRF in Wikipedia-->
+        {{ form.hidden_tag() }}
     
+        {{ form.username.label }}
+        {{ form.username(placeholder="username") }}
+        {% for error in form.username.errors %}
+            {{ error }}
+        {% endfor %}
+        <br />
+        <br />
+        {{ form.password.label }}
+        {{ form.password(placeholder="password") }}
+        {% for error in form.password.errors %}
+            {{ error }}
+        {% endfor %}
+        <br />
+        <br />
+        <br />
+        {{ form.login() }}
+</form>   
 {% endblock %}

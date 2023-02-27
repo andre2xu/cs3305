@@ -2,6 +2,11 @@ import { PlayableArea } from '../creation.js';
 import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
 
 import {
+    Portal,
+    PortalFill
+} from '../../sprites/portals.js';
+
+import {
     Decoration,
     DecorationFill,
     SemiSolid,
@@ -12,6 +17,9 @@ import {
 
 export const FOYER = (function () {
     const FOYER = new PlayableArea(512, 400);
+    FOYER.addEnemySpawnPoint(30, 250, 0xff0000);
+    FOYER.addEnemySpawnPoint(FOYER.getWidth() - 30, 250, 0xff0000);
+    FOYER.addEnemySpawnPoint(255, FOYER.getHeight() - 30, 0xff0000);
 
     const FLOOR = new DecorationFill(0x735848, 0, 0, 512, 400);
     FOYER.addStaticSprite(FLOOR, 'floor', 0, 0);
@@ -71,6 +79,17 @@ export const FOYER = (function () {
 
 
 
+    const ELEVATOR = new PortalFill(FOYER, 0xff0000, 0, 0, DOUBLE_DOOR.getSpriteFrameDimensions().w, 40);
+    ELEVATOR.setAlpha(0);
+    FOYER.addStaticSprite(
+        ELEVATOR,
+        'elevator',
+        FOYER.getHalfWidth() - DOUBLE_DOOR.getHalfWidth(),
+        0
+    );
+
+
+
     const WINDOW = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/window.png'), 0, 0, 105, 75);
     FOYER.addStaticSprite(
         WINDOW,
@@ -81,7 +100,7 @@ export const FOYER = (function () {
 
 
 
-    const SECOND_FLOOR_MAT = new Decoration(getTextureFromStaticJSFolder('/map/foyer/assets/mat2.png'), 0, 0, 32, 34);
+    const SECOND_FLOOR_MAT = new Portal(FOYER, getTextureFromStaticJSFolder('/map/foyer/assets/mat2.png'), 0, 0, 32, 34);
     FOYER.addStaticSprite(
         SECOND_FLOOR_MAT,
         '2f_mat',

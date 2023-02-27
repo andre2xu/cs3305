@@ -24,6 +24,8 @@ export class Sprite {
 
         this.isFlippedHorizontally = false;
         this.isFlippedVertically = false;
+
+        this.events = {};
     };
 
 
@@ -181,6 +183,21 @@ export class Sprite {
         this.__setFrameMask__(0, 0, FRAME.w, FRAME.h);
 
         this.currentFrame = name;
+
+
+
+        const EVENT = this.events['onChangeFrame'];
+
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
+            const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
+
+            for (let i=0; i < NUM_OF_CALLBACKS; i++) {
+                EVENT_CALLBACKS[i]({
+                    currentFrame: this.currentFrame
+                });
+            }
+        }
     };
 
     flipHorizontally() {
@@ -226,11 +243,11 @@ export class FillSprite {
         checks.checkIfNumber(width);
         checks.checkIfNumber(height);
 
-        const FILL = new PIXI.Graphics();
-        FILL.beginFill(color);
-        FILL.drawRect(0, 0, width, height);
-        FILL.endFill();
-        this.sprite = FILL
+        this.FILL = new PIXI.Graphics();
+        this.FILL.beginFill(color);
+        this.FILL.drawRect(0, 0, width, height);
+        this.FILL.endFill();
+        this.sprite = this.FILL;
 
         this.sprite.x = posX;
         this.sprite.y = posY;
@@ -298,5 +315,33 @@ export class FillSprite {
 
         this.fillWidth = w;
         this.fillHeight = h;
+    };
+
+    setAlpha(alpha) {
+        checks.checkIfNumber(alpha);
+
+        if (alpha < 0 || alpha > 1) {
+            throw Error("Alpha must be a value between 0 and 1.");
+        }
+
+        this.FILL.alpha = alpha;
+    };
+};
+
+
+
+export class Item {
+    constructor(texture) {
+        checks.checkIfInstance(texture, PIXI.Texture);
+
+        this.texture = texture;
+        this.icon = new PIXI.Sprite(texture);
+    };
+
+
+
+    // GETTERS
+    getIcon() {
+        return this.icon;
     };
 };

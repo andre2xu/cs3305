@@ -9,21 +9,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='/static/favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" href="{{ url_for('static', filename='/static/favicon.ico') }}" type="image/x-icon">
 
-  <title>Zombie Manor</title>
+  <title>SpriteZ</title>
+
+  <title>Game Name</title>
 </head>
 <body>
   <header>
-    <h1>Zombie Manor</h1>        
+    <h1>Insert Game Name Here</h1>        
   </header>
 
+  
   <main>
     {% block main_content %}{% endblock %}
   </main>
 
   <footer>
-    &copy; Team 1 - CS3305 Team Software Project
+    &copy; Andrew Caumban, Sharon Coffee, Kieran Curran, Nathaniel Minghim, Elaine O'Sullivan
   </footer>
 </body>
 </html>

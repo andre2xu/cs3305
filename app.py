@@ -1,50 +1,70 @@
 # import flask modules
-from flask import Flask, redirect, render_template, request, url_for, session
-
+from flask import Flask, render_template, request, session, redirect, url_for, g 
+from database import get_db, close_db
+from forms import RegistrationForm, LoginForm, GameForm
 from flask_session import Session
+from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 
-from flask_mysqldb import MySQL 
-
-from database import *
 
 app = Flask(__name__)
-
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'your password'
-app.config['MYSQL_DB'] = 'users'
- 
-mysql = MySQL(app)
-
+app.config["SECRET_KEY"] = "secretkeycs3305"
 app.config["SESSION_PERMAMENT"] = False
-
 app.config["SESSION_TYPE"] = "filesystem"
-
 Session(app)
 
-app.config["SECRET_KEY"] = "secretkeycs3305"
 
-
-
+"""Global variables"""
 Difficulty = 5
-
 Sound = 5
-
 Music = 5
 
 
+"""Decorator to disconnect from database after use"""
+@app.teardown_appcontext
+def close_db_at_end_of_request(e=None):
+    close_db(e)
+
+
+"""Decorator at beginning of request to look into session and see if user id is logged in"""
+@app.before_request
+def load_logged_in_user():
+    g.user = session.get("user_id", None)
+    
+
+"""Decorator to allow users to access specific pages after login"""
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("login", next=request.url))
+        return view(**kwargs)
+    return wrapped_view
+
+
+"""Decorator to send index.html to root directory"""
 @app.route("/")     
 def index():
-    return render_template("index.html")
+    return render_template("index.html", title="Main Menu")
 
 
+"""Decorator to display the startgame.html page"""
+@app.route("/startgame", methods=["GET", "POST"])
+def startGame():
+    return render_template("startgame.html", title="Start Game")
+
+
+"""Decorator to play the game"""
 @app.route("/game", methods=["GET", "POST"])
+@login_required
 def game():
-    return render_template("game.html")
+    return render_template("game.html", title="Play the Game")
 
+
+"""Decorator to change the settings of the game"""
 @app.route("/settings", methods=["GET", "POST"])
+@login_required
 def settings():
-
     if request.method == 'POST':
         if request.form.get('MinusDifficulty') == '-':
             Difficulty -=1
@@ -53,85 +73,103 @@ def settings():
             Difficulty +=1
 
     elif request.method == 'GET':
-        return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music, form = form)
-
-
+        return render_template("settings.html", Difficulty_Level=Difficulty, Sound=Sound , Music=Music, form=form)
     return render_template("settings.html", Difficulty_Level = Difficulty, Sound = Sound , Music = Music)
 
 
+"""Decorator to store the score of the player"""
+@app.route("/score", methods=["GET", "POST"])
+@login_required
+def storeScore():
+    form = GameForm()
+    if form.validate_on_submit():
+        db = get_db()
+        score = form.score.data
+        db.execute("""INSERT INTO score (score, username) VALUES (?, ?)""", (score, session["username"]))
+        db.commit()
+        return redirect(url_for("leaderboard"))
+    else:
+        return "Failed to update score"
+
+
+"""Decorator to view the leaderboard"""
 @app.route("/leaderboard", methods=["GET", "POST"])
+@login_required
 def leaderboard():
-    return render_template("leaderboard.html")
-"""
+    db = get_db()
+    details = db.execute("""SELECT * FROM score ORDER BY score, score ASC""").fetchall()
+    details = list(details)
+    scores = []
+    for row in details:
+        row = [item for item in row]
+        scores.append(row)
+    return render_template("leaderboard.html", title="Leaderboard", scores=scores)
+
+
+"""Decorator to login to access the game"""
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
-"""
-# New code added in for Kieran to modify if necessary:
+    form = LoginForm()
+    if form.validate_on_submit():
+        db = get_db()
+        user = db.execute("""SELECT * FROM users WHERE username = ?""", (form.username.data,)).fetchone()
+        if user is None or not check_password_hash(user["password"], form.password.data):
+            return redirect(url_for("login"))
+        session.clear()
+        session["user_id"] = user["id"]
+        session["username"] = user["username"]
+        return redirect(url_for("game"))
+    return render_template("login.html", title="Player Login", form=form)
 
-@app.route('/register', methods =['GET', 'POST'])
+
+"""Decorator to register a new player"""
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    msg = ''
-    points = 0
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        password2 = request.form['password2']
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        password2 = form.password2.data
         db = get_db()
-        if db.execute("""SELECT * FROM users
-                        WHERE username = ?;""", (username,)).fetchone() is not None:
-            msg = 'Account already exists !'
+        
+        # check if duplicate username exists
+        if db.execute("""SELECT username FROM users WHERE username = ?""", (username,)).fetchone() is not None:
+            form.username.errors.append("Invalid username. Please try again.")
         elif password != password2:
-            msg = 'The passwords do not match !'
-        elif not username or not password:
-            msg = 'Please fill out the form !'
+            form.password2.errors.append("Passwords do not match. Please try again.")
         else:
-            db.execute("""INSERT INTO users (username, password) 
-                            VALUES (?, ?);""", 
-                            (username, password, points))
+            db.execute("""INSERT INTO users (username, password) VALUES (?, ?)""", (username, generate_password_hash(password)))
             db.commit()
-            msg = 'You have successfully registered !'
-    elif request.method == 'POST':
-        msg = 'Please fill out the form !'
-    return render_template('register.html', msg = msg)
-
-""" Decorator for login """
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        db = get_db()
-        # trying to see if user_id already exists in the database - there should be only one row
-        user = db.execute("""SELECT * FROM users
-                    WHERE username = ?;""", (username,)).fetchone()
-        # if you are not in the database, you can't log in and error message given
-        if user is None:
-            form.username.errors.append("Oops!  Wrong Username")
-        # check password matches - first get one from the database, then compare with what user has typed in.
-        elif not check_password_hash(user["password"], password):
-            form.password.errors.append("Incorrect password!")
-        else:
-            # create a session on login
-            session.clear()
-            #session["logged_in"] = True
-            #if your username is in the dictionary
-            session["username"] = username
-            # then you are logged in
-            next_page = request.args.get("next")
-            if not next_page:
-                next_page = url_for("fairiesChase")
-            # get taken back to the page that you are on
-            return redirect(next_page)
-    return render_template("login.html")
+            return redirect(url_for("login"))
+    return render_template("register.html", title="Register Here", form=form)
 
 
-@app.route("/logout")
-def logout():
-    # empty the dictionary
+"""Decorator to quit or exit the game"""
+@app.route("/quit", methods=["GET", "POST"])
+def quit():
     session.clear()
     return redirect(url_for("index"))
 
+
+"""Decorator for error handling"""
+"""Page not found"""
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("Oops! Please try again."), error==404
+
+"""Bad request"""
+@app.errorhandler(400)
+def bad_request(error):
+    return render_template("Non-comprehendo means we did not understand your language.  Check your spelling."), error==400
+
+"""Internal server error"""
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template("The zombies are fixing the server error.  Do you want to help them?"), error==500
+
+# demented for main menu
+# harpsichord for playing game
+# sound effect for clicking on buttons
 
 
 if __name__ == "__main__":

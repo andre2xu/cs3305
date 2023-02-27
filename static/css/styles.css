@@ -3,14 +3,23 @@ html{
     background-image: url("../css/Backround_mansion.jpg");
     background-size: cover;
     display: block;
-    font-family: 'Chalkduster', 'Marker Felt', 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', serif;
+    
     color: white;
 }
+
+font-face{
+    font-family: "Pixeloid Sans", "Zombik", sans-serif;
+    src: url("../fonts/PixeloidSans-JR6qo.ttf");
+}
+
 body{
     padding: 2em;
     text-align: center;
 }
-h1, h2{
+
+h1, h2, h3{
+    font-family: "Pixeloid Sans", sans-serif;
+    color: crimson;
     padding-left: 0.5em;
 }
 
@@ -22,13 +31,21 @@ main *{
     padding: 1em;
 }
 
-footer{    
-    color: white;
+footer{
+    font-family: Pixeloid Mono, sans-serif;   
+    color: rgb(220, 77, 20);
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
 }
 
 button{
+    font-family: "Pixeloid Mono", sans-serif;
+    font-size: 1.5em;
     text-align: center;
     color: white;
-    background-color: transparent;
-    border-color: white;
+    background-color: crimson;
+    border-color: rgb(30, 4, 42);
+    border-width: 0.5em;
+    border-radius: 0.5em;
 }

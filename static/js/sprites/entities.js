@@ -1,6 +1,14 @@
 import * as checks from '../helpers/checks.js';
 import { Sprite } from './base/base.js';
 import { NON_PLAYER_ENTITIES } from '../core/collision.js';
+import { Item } from '../sprites/base/base.js';
+import { updatePlayerHealthStatus } from '../core/hud.js';
+
+import {
+    toggleCrosshair,
+    Weapon,
+    Gun
+} from './weapons.js';
 
 import {
     Obstacle,
@@ -21,14 +29,55 @@ export class Entity extends Sprite {
         super(texture, posX, posY, frameWidth, frameHeight);
 
         this.movementOffset = 5;
+
         this.events = {
-            move: []
+            move: [],
+            onChangeFrame: []
         };
+
+        this.itemInstance = null;
+        this.equippedItem = null;
+
+
+
+        this.addEvent('onChangeFrame', () => {
+            if (this.itemInstance !== null) {
+                this.sprite_container.removeChild(this.equippedItem);
+
+                if (this.itemInstance instanceof Weapon) {
+                    this.__renderWeapon__(this.itemInstance, this.currentFrame);
+                }
+            }
+        });
     };
 
 
 
     // GETTERS
+    __renderWeapon__(weapon, frame) {
+        checks.checkIfInstance(weapon, Weapon);
+        checks.checkIfString(frame);
+
+        if (frame === 'n' || frame === 'nl' || frame === 'nr') {
+            this.equippedItem = weapon.loadNorth();
+
+            this.sprite_container.addChildAt(this.equippedItem, 0);
+
+            return;
+        }
+        else if (frame === 's' || frame === 'sl' || frame === 'sr') {
+            this.equippedItem = weapon.loadSouth();
+        }
+        else if (frame === 'w' || frame === 'wl' || frame === 'wr') {
+            this.equippedItem = weapon.loadWest();
+        }
+        else if (frame === 'e' || frame === 'el' || frame === 'er') {
+            this.equippedItem = weapon.loadEast();
+        }
+
+        this.sprite_container.addChild(this.equippedItem);
+    };
+
     getSpeed() {
         return this.movementOffset;
     };
@@ -36,6 +85,23 @@ export class Entity extends Sprite {
 
 
     // SETTERS
+    equip(item) {
+        checks.checkIfInstance(item, Item);
+
+        this.itemInstance = item;
+
+        if (item instanceof Weapon) {
+            this.__renderWeapon__(item, this.currentFrame);
+        }
+    };
+
+    unequip() {
+        this.sprite_container.removeChild(this.equippedItem);
+
+        this.itemInstance = null;
+        this.equippedItem = null;
+    };
+
     showDamage() {
         this.sprite.tint = 0xff0000;
     };
@@ -54,8 +120,15 @@ export class Entity extends Sprite {
         checks.checkIfNumber(x);
         checks.checkIfNumber(y);
 
-        if (this.events['move'] !== null) {
-            const EVENT_CALLBACKS = this.events['move'];
+        this.sprite_container.x += x;
+        this.sprite_container.y += y;
+
+
+
+        const EVENT = this.events['move'];
+
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
             const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
 
             for (let i=0; i < NUM_OF_CALLBACKS; i++) {
@@ -64,9 +137,6 @@ export class Entity extends Sprite {
                 });
             }
         } 
-
-        this.sprite_container.x += x;
-        this.sprite_container.y += y;
     };
 
     moveSpriteNorth() {
@@ -109,7 +179,8 @@ export class Player extends Entity {
         this.health = 100;
         this.invincibility = false;
 
-        // movement animation
+
+
         let reset_to_idle_timer = null;
 
         this.addEvent('move', (event) => {
@@ -119,6 +190,9 @@ export class Player extends Entity {
                 this.rotateToMouse(); // resets player sprite to the idle frame
             }, 100);
 
+
+
+            // moving animation for hands
             if (new Date().getMilliseconds() % 2 === 0) {
                 if (event.currentFrame === 's' || event.currentFrame === 'sr') {
                     this.switchFrame('sl');
@@ -227,6 +301,8 @@ export class Player extends Entity {
         if (this.health > 100) {
             this.health = 100;
         }
+
+        updatePlayerHealthStatus(this.health);
     };
 
     decreaseHealth(value) {
@@ -235,6 +311,7 @@ export class Player extends Entity {
         this.health -= value;
 
         this.showDamage();
+        updatePlayerHealthStatus(this.health);
 
         if (this.health < 0) {
             this.health = 0;
@@ -249,11 +326,42 @@ export class Enemy extends Entity {
         this.navigationMode = 0;
         this.objectCollidedWith = null;
         this.edgeCollidedWith = null;
-
         this.detourChosen = null;
         this.detourPointIndex = 0;
 
+        this.isDead = false;
+
         NON_PLAYER_ENTITIES.push(this);
+
+
+
+        this.sprite_container.interactive = true;
+
+        this.sprite_container.on('mousedown', (event) => {
+            event.stopPropagation();
+
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+
+                if (SELECTED_ITEM instanceof Gun) {
+                    SELECTED_ITEM.fire();
+
+                    if (SELECTED_ITEM.ammoLoaded > 0) {
+                        this.decreaseHealth(SELECTED_ITEM.getDamage());
+
+                        this.showDamage();
+
+                        setTimeout(() => {
+                            this.hideDamage();
+                        }, 500);
+                    }
+                }
+            }
+        });
+
+        this.sprite_container.on('mousemove', () => {
+            toggleCrosshair(this.sprite_container);
+        });
     };
 
 
@@ -492,29 +600,38 @@ export class Enemy extends Entity {
             const CURRENT_FRAME = this.getCurrentFrame();
 
             if (player.isInvincible() === false && player.getHealth() > 0) {
-                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX()) {
+                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY()) {
+                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX()) {
+                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()) {
+                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()  && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX()) {
+                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
                 }
-                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX()) {
+                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
                     this.__damagePlayer___(player);
+
+
                 }
             }
         }
@@ -606,6 +723,20 @@ export class Enemy extends Entity {
                 break;
         }
     };
+
+    decreaseHealth(value) {
+        checks.checkIfNumber(value);
+
+        this.health -= value;
+
+        if (this.health === 0) {
+            this.sprite_container.parent.removeChild(this.sprite_container);
+
+            NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
+
+            this.isDead = true;
+        }
+    };
 };
 
 export class Zombie extends Enemy {
@@ -620,11 +751,12 @@ export class Zombie extends Enemy {
 
 
 
+    // SETTERS
     __damagePlayer___(player) {
         checks.checkIfInstance(player, Player);
 
         player.decreaseHealth(this.damage);
 
-        player.activateInvincibility()
+        player.activateInvincibility();
     };
 };

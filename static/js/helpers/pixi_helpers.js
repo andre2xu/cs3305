@@ -1,8 +1,11 @@
 import * as checks from './checks.js';
 
-const ABSOLUTE_URL = window.location.href;
-const CURRENT_WORKING_DIRECTORY = ABSOLUTE_URL.substring(0, ABSOLUTE_URL.indexOf('/static/'));
-const STATIC_JS_FOLDER_URL = `${CURRENT_WORKING_DIRECTORY}/static/js/`;
+import {
+    STATIC_JS_FOLDER,
+    STATIC_ASSETS_FOLDER
+} from './urls.js';
+
+
 
 export function getTextureFromStaticJSFolder(path) {
     checks.checkIfString(path);
@@ -11,5 +14,15 @@ export function getTextureFromStaticJSFolder(path) {
         throw ReferenceError("Paths must start with /");
     }
 
-    return PIXI.Texture.from(`${STATIC_JS_FOLDER_URL}${path}`);
+    return PIXI.Texture.from(`${STATIC_JS_FOLDER}${path}`);
+};
+
+export function getTextureFromStaticAssetsFolder(path) {
+    checks.checkIfString(path);
+
+    if (path[0] !== '/') {
+        throw ReferenceError("Paths must start with /");
+    }
+
+    return PIXI.Texture.from(`${STATIC_ASSETS_FOLDER}${path}`);
 };

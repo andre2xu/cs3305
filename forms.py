@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.fields.core import SelectField
 from wtforms.validators import InputRequired, EqualTo
 
 
@@ -18,3 +17,9 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[InputRequired()])
     login = SubmitField("Login")
 
+
+""" Game Form """
+class GameForm(FlaskForm):
+    # adjust the settings here
+    
+    submit = SubmitField("Play Game")

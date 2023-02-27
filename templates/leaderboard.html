@@ -3,8 +3,40 @@
 {% block main_content %}
 
 <section>
-    <h2>Leaderboard</h2>
-</section>  
+    <h2>{{title}}</h2>
+</section>
+
+<!--create a table for the leaderboard where the scores are ranked according to the shortest time-->
+<table>
+
+
+<table>
+    <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">User ID</th>
+        <th scope="col">Score</th>
+        <th scope="col">Time (in seconds)</th>
+    </tr>
+    ${rank} = 1
+    ${scores} = sorted(scores, key=lambda x: x[2])
+    ${sql} = "SELECT * FROM scores ORDER BY score ASC"
+    ${cursor} = mysql.connection.cursor()
+    ${cursor}.execute(${sql})
+    ${scores} = ${cursor}.fetchall()
+
+    {% for score in scores %}
+    ${timeElapsed} = score[3]
+    ${timeElapsed} = time.strftime('%H:%M:%S', time.gmtime(${timeElapsed}))
+    <tr>
+        <td>${rank}</td>
+        <td>{{ score[1] }}</td>
+        <td>{{ score[2] }}</td>
+        <td>${timeElapsed}</td>
+        
+    </tr>
+    ${rank} += 1
+    {% endfor %}
+</table> 
 
     <p>
         <a href="{{ url_for('index')}}"><button>Back</button></a>
