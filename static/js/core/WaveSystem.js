@@ -38,20 +38,13 @@ export class WaveSystem {
         this.batch_delay = batch_delay;
         this.isBatchDone = false;
 
-        // this.enemyID = 1; // used to generate unique ID for each zombie
-
         this.time = 0;
-
-        // this.zSpawned = []; // used to check if spawned zombies
-        // this.spawnedThisBatch = []; // used to apply fade-in effect.
     };
 
 
 
     // GETTERS
     getRandomInt(min, max) {
-        // TODO: move this somewhere else lol.
-
         checks.checkIfNumber(min);
         checks.checkIfNumber(max);
 
@@ -104,44 +97,13 @@ export class WaveSystem {
     spawnNextBatch() {
         let toSpawn = this.current_wave.getNextBatch();
 
-        /*
-        this.spawnedThisBatch = [];
-
-        if (toSpawn === 0 && this.spawnedThisBatch.length === 0) {
-            // only do if all zombies from previous wave are dead
-
-            this.current_wave_index++;
-
-            this.current_wave = this.waves[this.current_wave_index]; // get next wave
-
-            toSpawn = this.current_wave.getNextBatch();
-        }
-        */
-
         for (let i=0; i < toSpawn.length; i++) {
             const ENEMY = toSpawn[i];
             const ENEMY_DIMENSIONS = ENEMY.getSpriteFrameDimensions();
             ENEMY.addFrames(zombie_frames_json);
             ENEMY.switchFrame('n');
 
-            /*
-            let randSpawnP = this.getRandomInt(0, this.spawnPoints.length - 1); // selects one of the spawn points randomly
-
-            let y = this.getRandomInt(
-                this.spawnPoints[randSpawnP][0], // min y
-                this.spawnPoints[randSpawnP][1] // max y
-            );
-
-            let x = this.getRandomInt(
-                this.spawnPoints[randSpawnP][2], // min x
-                this.spawnPoints[randSpawnP][3] // max x
-            );
-            */
-
             const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
-
-            // let id = "zombie";
-            // eval("id=id + this.enemyID.toString()"); //generating unique id
 
             this.map.addDynamicSprite(
                 ENEMY,
@@ -151,11 +113,6 @@ export class WaveSystem {
             );
 
             ENEMY.sprite.alpha = 0; // prepares for fade-in animation
-
-            // this.zSpawned.push(ENEMY);
-            // this.spawnedThisBatch.push(ENEMY);
-
-            // this.enemyID++;
 
             this.time = Math.floor(Date.now() / 1000); // gets time zombies spawned
         }
@@ -178,9 +135,9 @@ export class WaveSystem {
                     SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h
                 );
 
-                ENEMY.sprite.alpha = 0; // prepares for fade-in animation
+                ENEMY.sprite.alpha = 0;
 
-                this.time = Math.floor(Date.now() / 1000); // gets time zombies spawned
+                this.time = Math.floor(Date.now() / 1000);
             }
         }
     };
@@ -198,17 +155,4 @@ export class WaveSystem {
             }
         }
     };
-
-    /*
-    updateEnemyTracker() {
-        keeps track of what zombies are alive
-        for (let i = 0; i < this.zSpawned.length; i++) {
-            if (this.zSpawned[i].isDead) {
-                this.zSpawned.splice(i, 1);
-            }
-        }
-
-        this.enemySpawnFadeIn(); // fade in animation
-    };
-    */
 };
