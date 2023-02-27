@@ -29,6 +29,7 @@ export class WaveSystem {
 
 
 
+    // GETTERS
     getRandomInt(min, max) {
         // TODO: move this somewhere else lol.
 
@@ -38,6 +39,21 @@ export class WaveSystem {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
+    checkIfBatchDone() {
+        if (Math.floor(Date.now() / 1000) - this.time >= this.batchDelay) {
+            // only allows next batch to spawn if batchDelay has passed
+            this.isBatchDone = true;
+        }
+        else {
+            this.isBatchDone = false;
+        }
+
+        return this.isBatchDone;
+    };
+
+
+
+    // SETTERS
     spawnNextWave() {
         let toSpawn = this.wave.getNextBatch();
 
@@ -84,18 +100,6 @@ export class WaveSystem {
 
             this.time = Math.floor(Date.now() / 1000); // gets time zombies spawned
         }
-    };
-
-    checkIfBatchDone() {
-        if (Math.floor(Date.now() / 1000) - this.time >= this.batchDelay) {
-            // only allows next batch to spawn if batchDelay has passed
-            this.isBatchDone = true;
-        }
-        else {
-            this.isBatchDone = false;
-        }
-
-        return this.isBatchDone;
     };
 
     enemySpawnFadeIn() {
