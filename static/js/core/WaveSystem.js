@@ -1,6 +1,6 @@
 // check the wavesys init and the game ticker in my test.js file for more info
 
-import zombie_frames_json from "../dev/nathaniel/assets/sprite_sheets/enemies/clothed_zombie.json" assert {type: 'json'};
+import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombie.json" assert {type: 'json'};
 
 
 
