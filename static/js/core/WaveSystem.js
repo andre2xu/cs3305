@@ -6,31 +6,34 @@ import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombi
 
 
 
-// check the wavesys init and the game ticker in my test.js file for more info
 export class WaveSystem {
-    constructor(map, waves, spawnPoints, batchDelay) {
-        checks.checkIfInstance(map, PlayableArea);
+    constructor(starting_map, waves, batch_delay) {
+        checks.checkIfInstance(starting_map, PlayableArea);
+
         checks.checkIfArray(waves);
-        waves.every((element) => {
-            return element instanceof Wave;
+        if (waves.length === 0) {
+            throw Error("Waves cannot be empty.");
+        }
+        waves.every((wave) => {
+            if (wave instanceof Wave === false) {
+                throw TypeError("All waves must be an instance of the Wave class.");
+            }
         });
-        checks.checkIfNumber(batchDelay);
 
-        this.map = map;
+        checks.checkIfNumber(batch_delay);
 
-        this.waves = waves; 
-        this.currentWave = 0;
-        this.wave = waves[0];
 
-        this.spawnPoints = spawnPoints; // 2d array containing delimiters for each spawnpoint, each 1d array in the 2d array is a square determining, and each element is a spawn point is, in order, y min delimiter,y max delimiter, x min delimiter, x max delimiter
+
+        this.map = starting_map;
+        this.spawnPoints = starting_map.getEnemySpawnPoints(); // array containing {x: ?, y: ?}
+
+        this.current_wave_index = 0;
+        this.waves = waves;
+        this.current_wave = this.waves[0];
 
         this.enemyID = 1; // used to generate unique ID for each zombie
 
-        this.isBatchDone = false;
-
         this.time = 0;
-
-        this.batchDelay = batchDelay; // time between spawning batches
 
         this.zSpawned = []; // used to check if spawned zombies
 
@@ -53,8 +56,8 @@ export class WaveSystem {
     };
 
     checkIfBatchDone() {
-        if (Math.floor(Date.now() / 1000) - this.time >= this.batchDelay) {
-            // only allows next batch to spawn if batchDelay has passed
+        if (Math.floor(Date.now() / 1000) - this.time >= this.batch_delay) {
+            // only allows next batch to spawn if batch_delay has passed
             this.isBatchDone = true;
         }
         else {
@@ -67,18 +70,25 @@ export class WaveSystem {
 
 
     // SETTERS
+    updatePlayableArea(playableArea) {
+        checks.checkIfInstance(playableArea, PlayableArea);
+
+        this.map = playableArea;
+        this.spawnPoints = playableArea.getEnemySpawnPoints();
+    };
+
     spawnNextWave() {
-        let toSpawn = this.wave.getNextBatch();
+        let toSpawn = this.current_wave.getNextBatch();
 
         this.spawnedThisBatch = [];
 
         if (toSpawn == 0 && this.zSpawned.length == 0) {
             // only do if all zombies from previous wave are dead
-            this.currentWave++;
+            this.current_wave_index++;
 
-            this.wave = this.waves[this.currentWave]; // get next wave
+            this.current_wave = this.waves[this.current_wave_index]; // get next wave
 
-            toSpawn = this.wave.getNextBatch();
+            toSpawn = this.current_wave.getNextBatch();
         }
 
         let id = "zombie";
@@ -86,10 +96,13 @@ export class WaveSystem {
         this.isBatchDone = false;
 
         for (let i = 0; i < toSpawn.length; i++) {
-            let randSpawnP = this.getRandomInt(0, this.spawnPoints.length - 1); // selects one of the spawn points randomly
+            const ENEMY = toSpawn[i];
+            const ENEMY_DIMENSIONS = ENEMY.getSpriteFrameDimensions();
+            ENEMY.addFrames(zombie_frames_json);
+            ENEMY.switchFrame('n');
 
-            toSpawn[i].addFrames(zombie_frames_json);
-            toSpawn[i].switchFrame('n');
+            /*
+            let randSpawnP = this.getRandomInt(0, this.spawnPoints.length - 1); // selects one of the spawn points randomly
 
             let y = this.getRandomInt(
                 this.spawnPoints[randSpawnP][0], // min y
@@ -100,14 +113,19 @@ export class WaveSystem {
                 this.spawnPoints[randSpawnP][2], // min x
                 this.spawnPoints[randSpawnP][3] // max x
             );
+            */
+            const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
+            const x = SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w;
+            const y = SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h;
 
             eval("id=id + this.enemyID.toString()"); //generating unique id
 
-            toSpawn[i].sprite.alpha = 0; // prepares for fade-in animation
-            this.map.addDynamicSprite(toSpawn[i], id, x, y);
+            ENEMY.sprite.alpha = 0; // prepares for fade-in animation
 
-            this.zSpawned.push(toSpawn[i]);
-            this.spawnedThisBatch.push(toSpawn[i]);
+            this.map.addDynamicSprite(ENEMY, id, x, y);
+
+            this.zSpawned.push(ENEMY);
+            this.spawnedThisBatch.push(ENEMY);
 
             this.enemyID++;
 
@@ -116,10 +134,12 @@ export class WaveSystem {
     };
 
     enemySpawnFadeIn() {
-        for (let i = 0; i < this.spawnedThisBatch.length; i++) {
-            // console.log(this.spawnedThisBatch)
+        for (let i=0; i < this.spawnedThisBatch.length; i++) {
+            const ENEMY = this.spawnedThisBatch[i].sprite;
 
-            this.spawnedThisBatch[i].sprite.alpha += 0.01;
+            if (ENEMY.alpha < 1) {
+                ENEMY.alpha += 0.01;
+            }
         }
     };
 
