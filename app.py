@@ -45,7 +45,13 @@ def login_required(view):
 """Decorator to send index.html to root directory"""
 @app.route("/")     
 def index():
-    return render_template("index.html", title="Game settings")
+    return render_template("index.html", title="Main Menu")
+
+
+"""Decorator to display the startgame.html page"""
+@app.route("/startgame", methods=["GET", "POST"])
+def startGame():
+    return render_template("startgame.html", title="Start Game")
 
 
 """Decorator to play the game"""
@@ -117,8 +123,8 @@ def login():
 
 
 """Decorator to register a new player"""
-@app.route("/createAccount", methods=["GET", "POST"])
-def createAccount():
+@app.route("/register", methods=["GET", "POST"])
+def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -135,7 +141,7 @@ def createAccount():
             db.execute("""INSERT INTO users (username, password) VALUES (?, ?)""", (username, generate_password_hash(password)))
             db.commit()
             return redirect(url_for("login"))
-    return render_template("createAccount.html", title="Create Account", form=form)
+    return render_template("register.html", title="Register Here", form=form)
 
 
 """Decorator to quit or exit the game"""
@@ -161,7 +167,9 @@ def bad_request(error):
 def internal_server_error(error):
     return render_template("The zombies are fixing the server error.  Do you want to help them?"), error==500
 
-
+# demented for main menu
+# harpsichord for playing game
+# sound effect for clicking on buttons
 
 
 if __name__ == "__main__":
