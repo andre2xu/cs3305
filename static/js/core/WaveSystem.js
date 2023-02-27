@@ -38,7 +38,7 @@ export class WaveSystem {
         this.batch_delay = batch_delay;
         this.isBatchDone = false;
 
-        this.enemyID = 1; // used to generate unique ID for each zombie
+        // this.enemyID = 1; // used to generate unique ID for each zombie
 
         this.time = 0;
 
@@ -139,22 +139,49 @@ export class WaveSystem {
             */
 
             const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
-            const x = SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w;
-            const y = SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h;
 
-            let id = "zombie";
-            eval("id=id + this.enemyID.toString()"); //generating unique id
+            // let id = "zombie";
+            // eval("id=id + this.enemyID.toString()"); //generating unique id
+
+            this.map.addDynamicSprite(
+                ENEMY,
+                `zombie${i}`,
+                SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w,
+                SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h
+            );
 
             ENEMY.sprite.alpha = 0; // prepares for fade-in animation
-
-            this.map.addDynamicSprite(ENEMY, id, x, y);
 
             // this.zSpawned.push(ENEMY);
             // this.spawnedThisBatch.push(ENEMY);
 
-            this.enemyID++;
+            // this.enemyID++;
 
             this.time = Math.floor(Date.now() / 1000); // gets time zombies spawned
+        }
+    };
+
+    respawnBatch() {
+        const NUM_OF_ENEMIES_LEFT = NON_PLAYER_ENTITIES.length;
+
+        if (NUM_OF_ENEMIES_LEFT > 0) {
+            for (let i=0; i < NUM_OF_ENEMIES_LEFT; i++) {
+                const ENEMY = NON_PLAYER_ENTITIES[i];
+                const ENEMY_DIMENSIONS = ENEMY.getSpriteFrameDimensions();
+
+                const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
+
+                this.map.addDynamicSprite(
+                    ENEMY,
+                    `zombie${i}`,
+                    SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w,
+                    SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h
+                );
+
+                ENEMY.sprite.alpha = 0; // prepares for fade-in animation
+
+                this.time = Math.floor(Date.now() / 1000); // gets time zombies spawned
+            }
         }
     };
 
