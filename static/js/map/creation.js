@@ -76,6 +76,7 @@ export class PlayableArea {
         this.OBSTACLES = [];
         this.PORTALS = [];
         this.ENEMY_SPAWN_POINTS = [];
+        this.COLORED_COORDINATES = [];
 
 
 
@@ -149,8 +150,15 @@ export class PlayableArea {
         // renders sprites
         this.area.addChild(
             this.STATIC_SPRITES_CONTAINER,
-            this.DYNAMIC_SPRITES_CONTAINER
+            this.DYNAMIC_SPRITES_CONTAINER,
         );
+
+        // renders colored coordinates
+        const NUM_OF_COLORED_COORDINATES = this.COLORED_COORDINATES.length;
+
+        for (let i=0; i < NUM_OF_COLORED_COORDINATES; i++) {
+            this.area.addChild(this.COLORED_COORDINATES[i]);
+        }
 
         // adds obstacles to collision detection queue
         const NUM_OF_OBSTACLES = this.OBSTACLES.length;
@@ -358,9 +366,6 @@ export class PlayableArea {
         checks.checkIfNumber(w);
         checks.checkIfNumber(h);
 
-        const P = new DecorationFill(color, x, y, w, w);
-        this.area.addChild(P.getSprite());
-
         if (w > 1) {
             x = x - (w * 0.5);
         }
@@ -368,7 +373,12 @@ export class PlayableArea {
             y = y - (h * 0.5);
         }
 
-        P.setPosition(x, y);
+        const COLORED_COORDINATE = new PIXI.Graphics();
+        COLORED_COORDINATE.beginFill(color);
+        COLORED_COORDINATE.drawRect(x, y, w, h);
+        COLORED_COORDINATE.endFill();
+
+        this.COLORED_COORDINATES.push(COLORED_COORDINATE);
     };
 
     __addDetour__(object, edge, array_of_points, color) {
