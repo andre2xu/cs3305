@@ -112,7 +112,7 @@ export class Gun extends Weapon {
         this.playReloadSound();
 
         setTimeout(() => {
-            if (this.ammoLoaded < 0) {
+            if (this.ammoLoaded <= 0) {
                 // clip is empty (auto reload)
 
                 if (this.ammoLeft >= 12) {
