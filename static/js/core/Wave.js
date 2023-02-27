@@ -1,3 +1,4 @@
+import * as checks from '../helpers/checks.js';
 import { Zombie } from "../sprites/entities.js";
 import { getTextureFromStaticJSFolder } from '../helpers/pixi_helpers.js';
 
@@ -7,19 +8,24 @@ import zombie_frames_json from '../dev/nathaniel/assets/sprite_sheets/enemies/cl
 
 export class Wave {
     constructor(id, batches, difficultyMod) {
-        this.id = id; //unused as of now, might be useful later
-        this.batches = batches; //an array containing the number of zombies to spawn in each batch i.e. {3,5,7} would spawn 3 zombies then 5 then 7
+        checks.checkIfArray(batches);
+
+        this.id = id; // unused as of now, might be useful later
+        this.batches = batches; // an array containing the number of zombies to spawn in each batch i.e. [3, 5, 7] would spawn 3 zombies, then 5, then 7
 
 
-        //this.zombieTypes = zombieTypes todo if we have more zombie types
-        this.difficultyMod = difficultyMod; //unused as of now, later I will add interaction with the zombies' stats
+        // this.zombieTypes = zombieTypes todo if we have more zombie types
+        this.difficultyMod = difficultyMod; // unused as of now, later I will add interaction with the zombies' stats
         this.currentBatch = 0;
         this.toSpawnNext = [];
     };
 
 
 
-    getNextBatch() { //generates an array containing all zombies to be spawned based of the numbers in batches[]
+    // GETTERS
+    getNextBatch() {
+        // generates an array containing all zombies to be spawned based of the numbers in this.batches
+
         this.toSpawnNext = [];
 
         if (this.currentBatch >= this.batches.length) {
