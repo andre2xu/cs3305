@@ -6,10 +6,10 @@
     <h2>Login</h2>
 </section>  
     <p>
-        <form action="">
-            <p> Username <input type="text" name="Username" />  </p>
+        <form action="{{ url_for('login')}}" method="post">
+            <p> Username <input type="text" name="Username" placeholder="Enter your username"/>  </p>
 
-            <p> Password <input type="text" name="Password"  /> </p>
+            <p> Password <input type="text" name="Password"  placeholder="Enter your password"/> </p>
 
             <p> <input type="submit" value="Submit" /> </p>
         </form>
