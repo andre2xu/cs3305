@@ -17,9 +17,9 @@ import {
 
 export const FOYER = (function () {
     const FOYER = new PlayableArea(512, 400);
-    FOYER.addEnemySpawnPoint(30, 250, 0xff0000);
-    FOYER.addEnemySpawnPoint(FOYER.getWidth() - 30, 250, 0xff0000);
-    FOYER.addEnemySpawnPoint(255, FOYER.getHeight() - 30, 0xff0000);
+    FOYER.addEnemySpawnPoint(30, 250);
+    FOYER.addEnemySpawnPoint(FOYER.getWidth() - 30, 250);
+    FOYER.addEnemySpawnPoint(255, FOYER.getHeight() - 30);
 
     const FLOOR = new DecorationFill(0x735848, 0, 0, 512, 400);
     FOYER.addStaticSprite(FLOOR, 'floor', 0, 0);
