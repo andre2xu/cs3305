@@ -597,41 +597,13 @@ export class Enemy extends Entity {
 
 
             // deals damage to player on contact
-            const CURRENT_FRAME = this.getCurrentFrame();
+            if (player.isInvincible() === false && player.getHealth() > 0 && this.sprite.alpha >= 1) {
+                const DIFFERENCES = this.__getEnemyXandYDistanceFromPlayer__(player);
 
-            if (player.isInvincible() === false && player.getHealth() > 0) {
-                if (CURRENT_FRAME === 'e' && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
+                const DISTANCE_BETWEEN_ENEMY_CENTER_AND_PLAYER_CENTER = Math.sqrt(Math.pow(DIFFERENCES.dx, 2) + Math.pow(DIFFERENCES.dy, 2));
+
+                if (DISTANCE_BETWEEN_ENEMY_CENTER_AND_PLAYER_CENTER <= 40) {
                     this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 's' && this.getRightPosY() > player.getLeftPosY() && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 'w' && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 'n' && this.getLeftPosY() < player.getRightPosY()  && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 'nw' && this.getLeftPosY() < player.getRightPosY() && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 'ne' && this.getLeftPosY() < player.getRightPosY() && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 'sw' && this.getRightPosY() > player.getLeftPosY() && this.getLeftPosX() < player.getRightPosX() && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-                }
-                else if (CURRENT_FRAME === 'se' && this.getRightPosY() > player.getLeftPosY() && this.getRightPosX() > player.getLeftPosX() && this.sprite.alpha >= 1.0) {
-                    this.__damagePlayer___(player);
-
-
                 }
             }
         }

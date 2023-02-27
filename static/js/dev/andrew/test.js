@@ -5,6 +5,8 @@ import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js'
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
 import { PORTALS } from '../../sprites/portals.js';
+import { WaveSystem } from '../../core/WaveSystem.js';
+import { Wave } from '../../core/Wave.js';
 
 import {
     HealingItem,
@@ -32,8 +34,6 @@ import {
 } from '../../core/hud.js';
 
 import player_frames_json from '../../../assets/sprite_sheets/player/player.json' assert {type: 'json'};
-
-import zombie_frames_json from '../../../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
 
 
 
@@ -77,13 +77,6 @@ window.addEventListener('load', () => {
     window.HOTBAR.addItem(new BandageBox());
 
     window.HOTBAR.changeSelItem(8);
-
-
-
-    // ENEMY
-    let zombie = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
-    zombie.addFrames(zombie_frames_json);
-    zombie.switchFrame('s');
 
 
 
@@ -223,7 +216,6 @@ window.addEventListener('load', () => {
 
     // MAPS
     FOYER.addDynamicSprite(player, 'player', 450, 15);
-    // FOYER.addDynamicSprite(zombie, 'zombie', 240, 150);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
@@ -257,8 +249,25 @@ window.addEventListener('load', () => {
         FOYER.load(),
     );
 
+
+
+    const WAVE_SYSTEM = new WaveSystem(
+        FOYER,
+        [ new Wave(0, [1, 2], 1) ],
+        8
+    );
+
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
+            // spawns waves of enemies
+            WAVE_SYSTEM.updateEnemyTracker();
+
+            if (WAVE_SYSTEM.checkIfBatchDone()) {
+                WAVE_SYSTEM.spawnNextWave();
+            }
+
+
+
             // moves enemies
             // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
