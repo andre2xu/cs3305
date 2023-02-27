@@ -14,8 +14,7 @@ import {
 
 import {
     Obstacle,
-    ObstacleFill,
-    DecorationFill
+    ObstacleFill
 } from '../sprites/objects.js';
 
 import {
