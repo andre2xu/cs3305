@@ -32,6 +32,9 @@ export class WaveSystem {
         this.waves = waves;
         this.current_wave = this.waves[0];
 
+        this.next_wave_timeout = null;
+        this.next_wave_delay = 3000;
+
         this.batch_delay = batch_delay;
         this.isBatchDone = false;
 
@@ -81,10 +84,14 @@ export class WaveSystem {
     };
 
     moveToNextWaveIfFinished() {
-        if (NON_PLAYER_ENTITIES.length === 0 && this.current_wave_index + 1 < this.waves.length) {
-            this.current_wave_index++;
+        if (this.next_wave_timeout === null && NON_PLAYER_ENTITIES.length === 0 && this.current_wave_index + 1 < this.waves.length) {
+            this.next_wave_timeout = setTimeout(() => {
+                this.current_wave_index++;
 
-            this.current_wave = this.waves[this.current_wave_index];
+                this.current_wave = this.waves[this.current_wave_index];
+
+                this.next_wave_timeout = null;
+            }, this.next_wave_delay);
         }
     };
 
