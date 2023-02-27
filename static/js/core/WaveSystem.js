@@ -1,14 +1,24 @@
-// check the wavesys init and the game ticker in my test.js file for more info
+import * as checks from '../helpers/checks.js';
+import { PlayableArea } from '../map/creation.js';
+import { Wave } from './Wave.js';
 
 import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombie.json" assert {type: 'json'};
 
 
 
+// check the wavesys init and the game ticker in my test.js file for more info
 export class WaveSystem {
     constructor(map, waves, spawnPoints, batchDelay) {
+        checks.checkIfInstance(map, PlayableArea);
+        checks.checkIfArray(waves);
+        waves.every((element) => {
+            return element instanceof Wave;
+        });
+        checks.checkIfNumber(batchDelay);
+
         this.map = map;
 
-        this.waves = waves;
+        this.waves = waves; 
         this.currentWave = 0;
         this.wave = waves[0];
 
@@ -32,6 +42,9 @@ export class WaveSystem {
     // GETTERS
     getRandomInt(min, max) {
         // TODO: move this somewhere else lol.
+
+        checks.checkIfNumber(min);
+        checks.checkIfNumber(max);
 
         min = Math.ceil(min);
         max = Math.floor(max);
