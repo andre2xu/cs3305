@@ -178,6 +178,7 @@ export class Player extends Entity {
 
         this.health = 100;
         this.invincibility = false;
+        this.currentPoints = 100;
 
 
 

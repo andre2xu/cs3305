@@ -2,6 +2,7 @@
 import {Pistol} from "./pistol.js"
 import {Inventory} from "./Inventory.js"
 import {Item} from "./Item.js";
+import {Interactable, ammoCache} from "../../../../js/sprites/interactable";
 
 const Application = PIXI.Application;
 
@@ -73,7 +74,6 @@ const wpnInv = PIXI.Texture.from("./assets/pistol1.png")
 
 var sampleItem = new Item(0,0,wpnInv,0,0)
 var sampleItem2 = new Item(0,0,wpnInv,0,0)
-
 
 // inventorySprite.addItem(wpnSprite)
 // inventorySprite.addItem(wpnSprite2)

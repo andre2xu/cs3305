@@ -62,13 +62,7 @@ export class WaveSystem {
     };
 
     checkIfBatchDone() {
-        if (Math.floor(Date.now() / 1000) - this.time >= this.batch_delay) {
-            // only allows next batch to spawn if batch_delay has passed
-            this.isBatchDone = true;
-        }
-        else {
-            this.isBatchDone = false;
-        }
+        this.isBatchDone = Math.floor(Date.now() / 1000) - this.time >= this.batch_delay;
 
         return this.isBatchDone;
     };

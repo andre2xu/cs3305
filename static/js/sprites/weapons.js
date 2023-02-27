@@ -147,6 +147,12 @@ export class Gun extends Weapon {
 
         }, this.reloadDuration);
     };
+
+    addMaxAmmo(amount){
+        this.ammoLeft += amount
+        updateAmmoCount(this)
+
+    }
 };
 
 export class Pistol extends Gun {

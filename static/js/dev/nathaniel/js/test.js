@@ -31,6 +31,7 @@ import player_frames_json from '../assets/sprite_sheets/player/player.json' asse
 import zombie_frames_json from '../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
 import {Wave} from "../../../core/Wave.js";
 import {NON_PLAYER_ENTITIES} from "../../../core/collision.js";
+import {ammoCache, Interactable} from "../../../sprites/interactable.js";
 
 
 //WAVE SYSTEM SETUP
@@ -40,7 +41,9 @@ var waves = [wave1,wave2]
 var spawnPoint1 = [0,0,200,300]
 var spawnPoint2 = [320,380,150,320]
 var spawnPoints = [spawnPoint1,spawnPoint2]
-var wavesys = new WaveSystem(FOYER,waves,spawnPoints,8)
+// var wavesys = new WaveSystem(FOYER,waves,spawnPoints,8)
+
+
 
 window.addEventListener('load', () => {
         const GAME = new PIXI.Application({
@@ -58,7 +61,7 @@ window.addEventListener('load', () => {
 
 
         // PLAYER
-        const player = new Player(getTextureFromStaticJSFolder('/../assets/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
+        var player = new Player(getTextureFromStaticJSFolder('/../assets/sprite_sheets/player/player.png'), 0, 0, player_frames_json.s.w, player_frames_json.s.h);
         player.addFrames(player_frames_json);
         player.switchFrame('n');
 
@@ -77,9 +80,14 @@ window.addEventListener('load', () => {
         window.HOTBAR.addItem(HANDGUN);
         window.HOTBAR.changeSelItem(1);
 
+        // const cacheTexture = PIXI.Texture.from("/assets/ammoCache.png")
+
+        let ammoCache1 = new Interactable(getTextureFromStaticJSFolder('/../js/map/shared/ammoCache.png'),240,140,50,50,[50,50,200,200],0,100,function (){ammoCache(HANDGUN)},player)
 
 
-        // ENEMY
+
+
+    // ENEMY
         const zombie = new Zombie(getTextureFromStaticJSFolder('/../assets/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
         const zombie2 = new Zombie(getTextureFromStaticJSFolder('/../assets/sprite_sheets/enemies/clothed_zombie.png'), 0, 0, zombie_frames_json.s.w, zombie_frames_json.s.h);
         zombie.addFrames(zombie_frames_json);
@@ -144,10 +152,10 @@ window.addEventListener('load', () => {
                     window.HOTBAR.changeSelItem(4);
                     break;
                 case '5':
-                    window.HOTBAR.changeSelItem(5);
+                    ammoCache1.onInteract()
                     break;
                 case '6':
-                    console.log(wavesys.zSpawned)
+                    // console.log(wavesys.zSpawned)
                     // window.HOTBAR.changeSelItem(6);
                     break;
                 case '7':
@@ -201,10 +209,13 @@ window.addEventListener('load', () => {
 
 
             FOYER.sortSpriteOrder();
-            wavesys.updateEnemyTracker()
-            if (wavesys.checkIfBatchDone()){
-                wavesys.spawnNextWave()
-            }
+            // wavesys.updateEnemyTracker()
+            // if (wavesys.checkIfBatchDone()){
+            //     wavesys.spawnNextWave()
+            // }
+
+            ammoCache1.playerIsNearInteractable()
+            // console.log(player.getCenterCoordinates())
 
             const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
