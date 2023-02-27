@@ -1,8 +1,8 @@
 import * as checks from '../helpers/checks.js';
 import { Zombie } from "../sprites/entities.js";
-import { getTextureFromStaticJSFolder } from '../helpers/pixi_helpers.js';
+import { getTextureFromStaticAssetsFolder } from '../helpers/pixi_helpers.js';
 
-import zombie_frames_json from '../dev/nathaniel/assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
+import zombie_frames_json from '../../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
 
 
 
@@ -33,7 +33,7 @@ export class Wave {
         }
         else {
             for (let i = 0; i < this.batches[this.currentBatch]; i++) {
-                const ZOMBIE = new Zombie(getTextureFromStaticJSFolder('/../assets/sprite_sheets/enemies/clothed_zombie.png'),
+                const ZOMBIE = new Zombie(getTextureFromStaticAssetsFolder('/sprite_sheets/enemies/clothed_zombie.png'),
                 0,
                 0,
                 zombie_frames_json.s.w, zombie_frames_json.s.h
