@@ -134,7 +134,7 @@ export const LIBRARY = (function () {
 
 
 
-    const MATBLUE = new Decoration(getTextureFromStaticJSFolder('/map/library/assets/matblue.png'), 0, 0, 71, 54);
+    const MATBLUE = new Decoration(getTextureFromStaticJSFolder('/map/library/assets/matBlue.png'), 0, 0, 71, 54);
     LIBRARY.addStaticSprite(
         MATBLUE,
         'matblue',
@@ -144,7 +144,7 @@ export const LIBRARY = (function () {
 
 
 
-    const TABLELAMP = new SemiSolid(getTextureFromStaticJSFolder('/map/library/assets/tablelamp.png'), 0, 0, 95, 66);
+    const TABLELAMP = new SemiSolid(getTextureFromStaticJSFolder('/map/library/assets/tableLamp.png'), 0, 0, 95, 66);
     TABLELAMP.modifyCollisionBoundary(
         null,
         30,

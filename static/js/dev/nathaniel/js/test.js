@@ -41,7 +41,7 @@ var waves = [wave1,wave2]
 var spawnPoint1 = [0,0,200,300]
 var spawnPoint2 = [320,380,150,320]
 var spawnPoints = [spawnPoint1,spawnPoint2]
-// var wavesys = new WaveSystem(FOYER,waves,spawnPoints,8)
+var wavesys = new WaveSystem(FOYER,waves,4)
 
 
 
@@ -82,7 +82,7 @@ window.addEventListener('load', () => {
 
         // const cacheTexture = PIXI.Texture.from("/assets/ammoCache.png")
 
-        let ammoCache1 = new Interactable(getTextureFromStaticJSFolder('/../js/map/shared/ammoCache.png'),240,140,50,50,[50,50,200,200],0,100,function (){ammoCache(HANDGUN)},player)
+        let ammoCache1 = new Interactable(getTextureFromStaticJSFolder('/../js/map/shared/ammoCache.png'),240,140,50,50,0,false,function (){ammoCache(HANDGUN)},player)
 
 
 
@@ -163,7 +163,7 @@ window.addEventListener('load', () => {
                     break;
                 case '8':
                     // window.HOTBAR.changeSelItem(8);
-                    wavesys.isBatchDone = true
+                    // wavesys.isBatchDone = true
                     break;
             }
 
@@ -208,11 +208,15 @@ window.addEventListener('load', () => {
         GAME.ticker.add(() => {
 
 
-            FOYER.sortSpriteOrder();
-            // wavesys.updateEnemyTracker()
-            // if (wavesys.checkIfBatchDone()){
-            //     wavesys.spawnNextWave()
-            // }
+            // FOYER.sortSpriteOrder();
+            wavesys.enemySpawnFadeIn();
+
+            if (wavesys.checkIfBatchDone()) {
+                wavesys.spawnNextBatch();
+
+                wavesys.moveToNextWaveIfFinished();
+            }
+
 
             ammoCache1.playerIsNearInteractable()
             // console.log(player.getCenterCoordinates())
