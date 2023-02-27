@@ -250,7 +250,7 @@ window.addEventListener('load', () => {
     const WAVE_SYSTEM = new WaveSystem(
         FOYER,
         [
-            new Wave(0, [1, 1], 1),
+            // new Wave(0, [1, 1], 1),
             new Wave(0, [1], 1)
         ],
         2
