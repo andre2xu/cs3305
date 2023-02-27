@@ -31,6 +31,9 @@ export class WaveSystem {
         this.waves = waves;
         this.current_wave = this.waves[0];
 
+        this.batch_delay = batch_delay;
+        this.isBatchDone = false;
+
         this.enemyID = 1; // used to generate unique ID for each zombie
 
         this.time = 0;
@@ -91,7 +94,7 @@ export class WaveSystem {
             toSpawn = this.current_wave.getNextBatch();
         }
 
-        let id = "zombie";
+
 
         this.isBatchDone = false;
 
@@ -118,6 +121,7 @@ export class WaveSystem {
             const x = SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w;
             const y = SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h;
 
+            let id = "zombie";
             eval("id=id + this.enemyID.toString()"); //generating unique id
 
             ENEMY.sprite.alpha = 0; // prepares for fade-in animation
