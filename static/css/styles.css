@@ -63,3 +63,36 @@ a:link, a:visited {
     background-color: red;
     color: white;
   }
+
+  form {
+    color: red;
+}
+
+input[type=text] {
+    border: 2px solid red;
+    border-radius: 4px;
+    background-color: white;
+    border-color: red;
+  }
+
+  input[type=password] {
+    border: 2px solid red;
+    border-radius: 4px;
+    background-color: white;
+    border-color: red;
+  }
+
+  input[type=button], input[type=submit], input[type=reset] {
+    background-color: white;
+    color: red;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-color: red;
+  }
+
+  li {
+    list-style-type: none;
+}
