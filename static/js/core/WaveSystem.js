@@ -145,7 +145,7 @@ export class WaveSystem {
 
             this.map.addDynamicSprite(
                 ENEMY,
-                Date.now().toString(),
+                (Date.now() * 2).toString(),
                 SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w,
                 SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h
             );
