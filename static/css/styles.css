@@ -92,3 +92,7 @@ input[type=text] {
     cursor: pointer;
     border-color: red;
   }
+
+  li {
+    list-style-type: none;
+}
