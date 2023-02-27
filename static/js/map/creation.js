@@ -139,6 +139,10 @@ export class PlayableArea {
         return this.height * 0.5;
     };
 
+    getEnemySpawnPoints() {
+        return this.ENEMY_SPAWN_POINTS;
+    };
+
     load() {
         window.GAME_PAUSED = false;
 
