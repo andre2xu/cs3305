@@ -150,6 +150,10 @@ def quit():
     session.clear()
     return redirect(url_for("index"))
 
+@app.route("/help", methods=["GET", "POST"])
+def help():
+    return render_template("help.html")
+
 
 """Decorator for error handling"""
 """Page not found"""
