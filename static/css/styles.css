@@ -65,18 +65,19 @@ a:link, a:visited {
   }
 
   form {
-    color: red;
+    color: orange;
+    
 }
 
 input[type=text] {
-    border: 2px solid red;
+    border: 2px solid orange;
     border-radius: 4px;
     background-color: white;
     border-color: red;
   }
 
   input[type=password] {
-    border: 2px solid red;
+    border: 2px solid orange;
     border-radius: 4px;
     background-color: white;
     border-color: red;
@@ -92,7 +93,3 @@ input[type=text] {
     cursor: pointer;
     border-color: red;
   }
-
-  li {
-    list-style-type: none;
-}
