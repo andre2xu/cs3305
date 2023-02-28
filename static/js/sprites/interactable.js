@@ -47,14 +47,14 @@ export class AmmoCache extends Interactable {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
-        this.isEmpty = false;
+        this.available = true;
     };
 
 
 
     // GETTERS
     isEmpty() {
-        return this.isEmpty;
+        return this.available === false;
     };
 
 
@@ -67,6 +67,6 @@ export class AmmoCache extends Interactable {
 
         gun.playReloadSound();
 
-        this.isEmpty = true;
+        this.available = false;
     };
 };
