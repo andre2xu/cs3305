@@ -7,7 +7,7 @@
         {{ form.hidden_tag() }}
     
         {{ form.username.label }}
-        {{ form.username(placeholder="User name") }}
+        {{ form.username(placeholder="Username") }}
         {% for error in form.username.errors %}
             {{ error }}
         {% endfor %}
@@ -21,7 +21,7 @@
         <br />
         <br />
         {{ form.password2.label }}
-        {{ form.password2(placeholder="Confirm Password") }}
+        {{ form.password2(placeholder="Re-enter Password") }}
         {% for error in form.password2.errors %}
             {{ error }}
         {% endfor %}
