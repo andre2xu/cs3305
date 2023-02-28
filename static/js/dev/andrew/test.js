@@ -5,6 +5,7 @@ import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js'
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
 import { PORTALS } from '../../sprites/portals.js';
+import { INTERACTABLES } from '../../sprites/interactable.js';
 import { WaveSystem } from '../../core/WaveSystem.js';
 import { Wave } from '../../core/Wave.js';
 import { Player } from '../../sprites/entities.js';
@@ -185,16 +186,30 @@ window.addEventListener('load', () => {
                 case 'q':
                     const NUM_OF_PORTALS = PORTALS.length;
 
-                    for (let i=0; i < NUM_OF_PORTALS; i++) {
-                        const PORTAL = PORTALS[i];
+                    if (NUM_OF_PORTALS > 0) {
+                        for (let i=0; i < NUM_OF_PORTALS; i++) {
+                            const PORTAL = PORTALS[i];
 
-                        if (PORTAL.playerIsInsidePortal(player)) {
-                            PORTAL.teleport(player);
+                            if (PORTAL.playerIsInsidePortal(player)) {
+                                PORTAL.teleport(player);
 
-                            WAVE_SYSTEM.updatePlayableArea(PORTAL.destination);
+                                WAVE_SYSTEM.updatePlayableArea(PORTAL.destination);
 
-                            WAVE_SYSTEM.respawnBatch();
-                            break;
+                                WAVE_SYSTEM.respawnBatch();
+                                break;
+                            }
+                        }
+                    }
+
+                    break;
+                case 'e':
+                    const NUM_OF_INTERACTABLES = INTERACTABLES.length;
+
+                    for (let i=0; i < NUM_OF_INTERACTABLES; i++) {
+                        const INTERACTABLE = INTERACTABLES[i];
+
+                        if (INTERACTABLE.playerIsNearInteractable(player)) {
+                            
                         }
                     }
 
@@ -233,7 +248,7 @@ window.addEventListener('load', () => {
 
 
     // MAPS
-    FOYER.addDynamicSprite(player, 'player', 450, 15);
+    FOYER.addDynamicSprite(player, 'player', 250, 150);
 
     FOYER.setPosition(
         GAME_VIEW.width * 0.5 - FOYER.getHalfWidth(),
