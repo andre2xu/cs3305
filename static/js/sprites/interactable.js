@@ -5,31 +5,11 @@ import { Gun } from './weapons.js';
 
 
 
-export function ammoCache(gun) {
-    checks.checkIfInstance(gun, Gun);
-
-    gun.addMaxAmmo(60);
-};
-
-
-
 export const INTERACTABLES = [];
 
 export class Interactable extends Objects {
-    constructor(texture, posX, posY, frameWidth, frameHeight, price, isPaidOnlyOnce, onUse) {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
-
-        checks.checkIfNumber(price);
-        checks.checkIfBoolean(isPaidOnlyOnce);
-        checks.checkIfFunction(onUse);
-
-
-
-        this.price = price;
-
-        this.isPaidOnlyOnce = isPaidOnlyOnce; // flag to differ between interactables that only need to be paid once (e.g. doors), and those that need to be repeatedly paid for (e.g. ammo cache)
-
-        this.onUse = onUse // function to be executed when user interacts
 
         this.areaOfEffect = 20; // adds extra area for the interactble range
     };
@@ -60,5 +40,20 @@ export class Interactable extends Objects {
         checks.checkIfNumber(value);
 
         this.areaOfEffect = value;
+    };
+};
+
+export class AmmoCache extends Interactable {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+    };
+
+
+
+    // SETTERS
+    resupply(gun) {
+        checks.checkIfInstance(gun, Gun);
+
+        gun.addMaxAmmo(60);
     };
 };
