@@ -1,5 +1,8 @@
 import { PlayableArea } from '../creation.js';
-import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
+
+import {
+    getTextureFromStaticAssetsFolder, getTextureFromStaticJSFolder
+} from '../../helpers/pixi_helpers.js';
 
 import {
     Portal,
@@ -368,13 +371,24 @@ export const FOYER = (function () {
 
 
 
-    // const AMMO_CACHE = new Decoration(getTextureFromStaticJSFolder('/map/shared/ammoCache.png'),0,0,50,50);
-    // FOYER.addStaticSprite(
-    //     AMMO_CACHE,
-    //     "ammo_cache1",
-    //     240,
-    //     140
-    // );
+    const AMMO_CACHE = new Interactable(
+        getTextureFromStaticAssetsFolder('/consumables/ammoCache.png'),
+        240,
+        140,
+        50,
+        50,
+        0,
+        false,
+        function () {
+            // ammoCache(HANDGUN);
+        }
+    );
+    FOYER.addStaticSprite(
+        AMMO_CACHE,
+        "ammo_cache1",
+        240,
+        120
+    );
 
 
 
