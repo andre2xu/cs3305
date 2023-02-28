@@ -5,31 +5,11 @@ import { Gun } from './weapons.js';
 
 
 
-export function ammoCache(gun) {
-    checks.checkIfInstance(gun, Gun);
-
-    gun.addMaxAmmo(60);
-};
-
-
-
 export const INTERACTABLES = [];
 
-export class Interactable extends Objects{
-    constructor(texture, posX, posY, frameWidth, frameHeight, price, isPaidOnlyOnce, onUse) {
+export class Interactable extends Objects {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
-
-        checks.checkIfNumber(price);
-        checks.checkIfBoolean(isPaidOnlyOnce);
-        checks.checkIfFunction(onUse);
-
-
-
-        this.price = price;
-
-        this.isPaidOnlyOnce = isPaidOnlyOnce; // flag to differ between interactables that only need to be paid once (e.g. doors), and those that need to be repeatedly paid for (e.g. ammo cache)
-
-        this.onUse = onUse // function to be executed when user interacts
 
         this.areaOfEffect = 20; // adds extra area for the interactble range
     };
@@ -56,18 +36,37 @@ export class Interactable extends Objects{
 
 
     // SETTERS
-    // onInteract(){
-    //     if (this.player.currentPoints >= this.price && this.isActive) {
-    //         if (this.isPaidOnlyOnce) {
-    //             this.price = 0;
-    //             this.isPaidOnlyOnce = false;
-    //         }
+    setAreaOfEffect(value) {
+        checks.checkIfNumber(value);
 
-    //         this.player.points -= this.price;
-    //         this.onUse();
-    //     }
-    //     else {
-    //         console.log("Not enough points!") //todo: make this a popup text
-    //     }
-    // };
+        this.areaOfEffect = value;
+    };
+};
+
+export class AmmoCache extends Interactable {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+
+        this.isEmpty = false;
+    };
+
+
+
+    // GETTERS
+    isEmpty() {
+        return this.isEmpty;
+    };
+
+
+
+    // SETTERS
+    resupply(gun) {
+        checks.checkIfInstance(gun, Gun);
+
+        gun.addMaxAmmo(60);
+
+        gun.playReloadSound();
+
+        this.isEmpty = true;
+    };
 };

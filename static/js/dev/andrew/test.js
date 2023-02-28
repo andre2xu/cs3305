@@ -5,10 +5,14 @@ import { getTextureFromStaticAssetsFolder } from '../../helpers/pixi_helpers.js'
 import { Inventory } from '../../core/inventory.js';
 import { NON_PLAYER_ENTITIES } from '../../core/collision.js';
 import { PORTALS } from '../../sprites/portals.js';
-import { INTERACTABLES } from '../../sprites/interactable.js';
 import { WaveSystem } from '../../core/WaveSystem.js';
 import { Wave } from '../../core/Wave.js';
 import { Player } from '../../sprites/entities.js';
+
+import {
+    INTERACTABLES,
+    AmmoCache
+} from '../../sprites/interactable.js';
 
 import {
     showPauseMenu,
@@ -209,7 +213,9 @@ window.addEventListener('load', () => {
                         const INTERACTABLE = INTERACTABLES[i];
 
                         if (INTERACTABLE.playerIsNearInteractable(player)) {
-                            
+                            if (INTERACTABLE instanceof AmmoCache && INTERACTABLE.isEmpty() === false && window.HOTBAR.getSelItem() instanceof Gun) {
+                                INTERACTABLE.resupply(window.HOTBAR.getSelItem());
+                            }
                         }
                     }
 
