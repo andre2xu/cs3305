@@ -149,10 +149,10 @@ export class Gun extends Weapon {
     };
 
     addMaxAmmo(amount){
-        this.ammoLeft += amount
-        updateAmmoCount(this)
+        this.ammoLeft = amount;
 
-    }
+        updateAmmoCount(this);
+    };
 };
 
 export class Pistol extends Gun {
