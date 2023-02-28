@@ -16,9 +16,13 @@ PAUSE_MENU.addEventListener('click', (event) => {
 });
 
 export function showPauseMenu() {
+    window.GAME_PAUSED = true;
+
     PAUSE_MENU.classList.remove('hide');
 };
 
 export function hidePauseMenu() {
+    window.GAME_PAUSED = false;
+
     PAUSE_MENU.classList.add('hide');
 };
