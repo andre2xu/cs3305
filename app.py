@@ -1,7 +1,7 @@
 # import flask modules
-from flask import Flask, render_template, request, session, redirect, url_for, g 
+from flask import Flask, flash, get_flashed_messages, render_template, request, session, redirect, url_for, g 
 from database import get_db, close_db
-from forms import RegistrationForm, LoginForm, GameForm
+from forms import RegistrationForm, LoginForm, StartGameForm, GameForm
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -48,9 +48,59 @@ def index():
     return render_template("index.html", title="Main Menu")
 
 
+"""Decorator to login to access the game"""
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        db = get_db()
+        user = db.execute("""SELECT * FROM users WHERE username = ?""", (form.username.data,)).fetchone()
+        if user is None or not check_password_hash(user["password"], form.password.data):
+            flash("Invalid username or password. Please try again.")
+            get_flashed_messages()
+        else:
+            session.clear()
+            session["user_id"] = user["id"]
+            session["username"] = user["username"]
+            return redirect(url_for("startgame"))
+    return render_template("login.html", title="Player Login", form=form)
+
+
+"""Decorator to register a new player"""
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        password2 = form.password2.data
+        db = get_db()
+        
+        # check if duplicate username exists
+        if db.execute("""SELECT username FROM users WHERE username = ?""", (username,)).fetchone() is not None:
+            form.username.errors.append("Invalid username. Please try again.")
+        elif password != password2:
+            form.password2.errors.append("Passwords do not match. Please try again.")
+        else:
+            db.execute("""INSERT INTO users (username, password) VALUES (?, ?)""", (username, generate_password_hash(password)))
+            db.commit()
+            return redirect(url_for("login"))
+    return render_template("register.html", title="Register Here", form=form)
+  
+
+"""Decorator to display the help.html page"""
+@app.route("/help", methods=["GET", "POST"])
+def help():
+    return render_template("help.html")
+
+
 """Decorator to display the startgame.html page"""
 @app.route("/startgame", methods=["GET", "POST"])
+@login_required
 def startGame():
+    form = StartGameForm()
+    if form.validate_on_submit():    
+        return redirect (url_for("game"))
     return render_template("startgame.html", title="Start Game")
 
 
@@ -58,6 +108,9 @@ def startGame():
 @app.route("/game", methods=["GET", "POST"])
 @login_required
 def game():
+    form = GameForm()
+    if form.validate_on_submit():
+        return redirect (url_for("storeScore"))
     return render_template("game.html", title="Play the Game")
 
 
@@ -106,53 +159,12 @@ def leaderboard():
     return render_template("leaderboard.html", title="Leaderboard", scores=scores)
 
 
-"""Decorator to login to access the game"""
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        db = get_db()
-        user = db.execute("""SELECT * FROM users WHERE username = ?""", (form.username.data,)).fetchone()
-        if user is None or not check_password_hash(user["password"], form.password.data):
-            return redirect(url_for("login"))
-        session.clear()
-        session["user_id"] = user["id"]
-        session["username"] = user["username"]
-        return redirect(url_for("game"))
-    return render_template("login.html", title="Player Login", form=form)
-
-
-"""Decorator to register a new player"""
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        password2 = form.password2.data
-        db = get_db()
-        
-        # check if duplicate username exists
-        if db.execute("""SELECT username FROM users WHERE username = ?""", (username,)).fetchone() is not None:
-            form.username.errors.append("Invalid username. Please try again.")
-        elif password != password2:
-            form.password2.errors.append("Passwords do not match. Please try again.")
-        else:
-            db.execute("""INSERT INTO users (username, password) VALUES (?, ?)""", (username, generate_password_hash(password)))
-            db.commit()
-            return redirect(url_for("login"))
-    return render_template("register.html", title="Register Here", form=form)
-
-
 """Decorator to quit or exit the game"""
 @app.route("/quit", methods=["GET", "POST"])
+@login_required
 def quit():
     session.clear()
     return redirect(url_for("index"))
-
-@app.route("/help", methods=["GET", "POST"])
-def help():
-    return render_template("help.html")
 
 
 """Decorator for error handling"""

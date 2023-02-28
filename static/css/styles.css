@@ -7,9 +7,10 @@ html{
     color: white;
 }
 
-font-face{
+@font-face{
     font-family: "Pixeloid Sans", "Zombik", sans-serif;
     src: url("../fonts/PixeloidSans-JR6qo.ttf");
+    src: url("../fonts/Zombik.ttf");
 }
 
 body{
@@ -23,6 +24,21 @@ h1, h2, h3{
     padding-left: 0.5em;
 }
 
+#Sprite, #Zee{
+    display: inline-block;
+
+}
+
+#Sprite{
+    font-size: 5em;
+}
+
+#Zee{
+    font-family: "Zombik", sans-serif;
+    font-size: 6em;
+    margin-left: -0.5em; /*Add some space between the two headings*/
+}
+
 main{
     margin-top: 1rem;
 }
@@ -33,7 +49,7 @@ main *{
 
 footer{
     font-family: Pixeloid Mono, sans-serif;   
-    color: rgb(220, 77, 20);
+    color: rgb(255, 128, 0);
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -51,8 +67,9 @@ button{
 }
 
 a:link, a:visited {
+    font-family: "Pixeloid Mono", sans-serif;
     background-color: white;
-    color: red;
+    color: crimson;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
@@ -60,36 +77,45 @@ a:link, a:visited {
   }
   
   a:hover, a:active {
-    background-color: red;
+    background-color: crimson;
     color: white;
   }
 
   form {
-    color: orange;
-    
+    font-family: "Pixeloid Mono", sans-serif;
+    color: rgb(255, 128, 0);
 }
 
 input[type=text] {
-    border: 2px solid orange;
+    font-family: "Pixeloid Mono", sans-serif;
+    border: 2px solid rgb(255, 128, 0);
     border-radius: 4px;
     background-color: white;
-    border-color: red;
+    border-color: rgb(255, 128, 0);
   }
 
   input[type=password] {
-    border: 2px solid orange;
+    font-family: "Pixeloid Mono", sans-serif;
+    border: 2px solid rgb(255, 128, 0);
     border-radius: 4px;
     background-color: white;
-    border-color: red;
+    border-color: rgb(255, 128, 0);
   }
 
+
   input[type=button], input[type=submit], input[type=reset] {
+    font-family: "Pixeloid Mono", sans-serif;
     background-color: white;
-    color: red;
+    color: crimson;
+    margin: 25px 2px;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    border-color: red;
+    border-color: crimson;
   }
+
+  li {
+    list-style-type: none;
+}

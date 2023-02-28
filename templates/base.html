@@ -14,11 +14,24 @@
 
   <title>SpriteZ</title>
 
-  <title>Game Name</title>
 </head>
 <body>
   <header>
-    <h1>Insert Game Name Here</h1>        
+    <h1 id="Sprite" >Sprite</h1>
+    <h1 id="Zee" >Z</h1>
+    <nav>    
+          {% if g.user %}
+          <a href ="{{ url_for('index') }}">Start Game</a>
+          <a href="{{ url_for('settings') }}">Game Settings</a>
+          <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+          <a href="{{ url_for('quit') }}">Quit</a>{{ g.user }} Logged in
+          {% else %}
+          <a href="{{ url_for('register') }}">Sign Up</a>
+          <a href="{{ url_for('login') }}">Login</a>
+          <a href="{{ url_for('help') }}">Help</a>
+          {% endif %}
+      </ul>
+    </nav>      
   </header>
 
   
