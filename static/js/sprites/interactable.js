@@ -4,8 +4,8 @@ import { Objects } from './objects.js';
 import { Gun } from './weapons.js';
 
 
-
 export const INTERACTABLES = [];
+
 
 export class Interactable extends Objects {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
@@ -13,6 +13,7 @@ export class Interactable extends Objects {
 
         this.areaOfEffect = 20; // adds extra area for the interactble range
     };
+
 
 
 
@@ -29,9 +30,9 @@ export class Interactable extends Objects {
         if (PLAYER_INSIDE_LR_EDGES && PLAYER_INSIDE_TB_EDGES) {
             return true;
         }
-
         return false;
     };
+
 
 
 
@@ -41,6 +42,9 @@ export class Interactable extends Objects {
 
         this.areaOfEffect = value;
     };
+
+
+
 };
 
 export class AmmoCache extends Interactable {
@@ -69,4 +73,6 @@ export class AmmoCache extends Interactable {
 
         this.available = false;
     };
+
+
 };

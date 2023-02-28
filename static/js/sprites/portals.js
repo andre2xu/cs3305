@@ -32,7 +32,6 @@ export class Portal extends Decoration {
         if (PLAYER_CENTER.x > this.getLeftPosX() && PLAYER_CENTER.x < this.getRightPosX() && PLAYER_CENTER.y > this.getLeftPosY() && PLAYER_CENTER.y < this.getRightPosY()) {
             return true;
         }
-
         return false;
     };
 
