@@ -46,6 +46,7 @@ window.addEventListener('load', () => {
 
 
     // INITIALIZING GLOBALS
+    window.timeGameStarted = new Date().getMilliseconds();
     window.GAME_PAUSED = false;
     window.playableAreaExists = false;
     window.HOTBAR = undefined;
@@ -59,7 +60,7 @@ window.addEventListener('load', () => {
             new Wave(0, [1, 1], 1),
             new Wave(0, [1], 1)
         ],
-        2
+        5
     );
 
 
@@ -263,6 +264,8 @@ window.addEventListener('load', () => {
 
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
+            // WAVE_SYSTEM.playMusic();
+
             // spawns waves of enemies
             WAVE_SYSTEM.enemySpawnFadeIn();
 
