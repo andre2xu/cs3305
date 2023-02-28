@@ -100,18 +100,15 @@ def help():
 def startGame():
     form = StartGameForm()
     if form.validate_on_submit():    
-        return redirect (url_for("game"))
+        return redirect (url_for("playgame"))
     return render_template("startgame.html", title="Start Game")
 
 
 """Decorator to play the game"""
-@app.route("/game", methods=["GET", "POST"])
+@app.route("/playgame", methods=["GET", "POST"])
 @login_required
-def game():
-    form = GameForm()
-    if form.validate_on_submit():
-        return redirect (url_for("storeScore"))
-    return render_template("game.html", title="Play the Game")
+def playgame():
+    return render_template("playgame.html", title="Play the Game")
 
 
 """Decorator to change the settings of the game"""

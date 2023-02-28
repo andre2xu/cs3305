@@ -47,6 +47,12 @@ main *{
     padding: 1em;
 }
 
+p{
+    font-family: "Pixeloid Mono", sans-serif;
+    color: rgb(132, 255, 0);
+    font-size: 1em;
+}
+
 footer{
     font-family: Pixeloid Mono, sans-serif;   
     color: rgb(255, 128, 0);
