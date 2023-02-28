@@ -192,7 +192,7 @@ export class PlayableArea {
         const NUM_OF_INTERACTABLES = this.INTERACTABLES.length;
 
         for (let i=0; i < NUM_OF_INTERACTABLES; i++) {
-            PORTALS.push(this.INTERACTABLES[i]);
+            INTERACTABLES.push(this.INTERACTABLES[i]);
         }
 
 
