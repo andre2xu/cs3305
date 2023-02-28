@@ -1,4 +1,5 @@
 import { PlayableArea } from '../creation.js';
+import { AmmoCache } from "../../sprites/interactable.js";
 
 import {
     getTextureFromStaticAssetsFolder, getTextureFromStaticJSFolder
@@ -15,11 +16,6 @@ import {
     SemiSolid,
     SemiSolidFill
 } from '../../sprites/objects.js';
-
-import {
-    ammoCache,
-    Interactable
-} from "../../sprites/interactable.js";
 
 
 
@@ -371,18 +367,7 @@ export const FOYER = (function () {
 
 
 
-    const AMMO_CACHE = new Interactable(
-        getTextureFromStaticAssetsFolder('/consumables/ammoCache.png'),
-        240,
-        140,
-        50,
-        50,
-        0,
-        false,
-        function () {
-            // ammoCache(HANDGUN);
-        }
-    );
+    const AMMO_CACHE = new AmmoCache(getTextureFromStaticAssetsFolder('/consumables/ammoCache.png'), 240, 140, 50, 50);
     FOYER.addStaticSprite(
         AMMO_CACHE,
         "ammo_cache1",
