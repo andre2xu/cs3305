@@ -10,6 +10,11 @@ import { Wave } from '../../core/Wave.js';
 import { Player } from '../../sprites/entities.js';
 
 import {
+    showPauseMenu,
+    hidePauseMenu
+} from '../../core/pause_menu.js';
+
+import {
     HealingItem,
     BandageBox
 } from '../../sprites/consumables.js';
@@ -113,9 +118,13 @@ window.addEventListener('load', () => {
         if (KEY_PRESSED === 'escape' && window.playableAreaExists === true) {
             if (window.GAME_PAUSED === false) {
                 window.GAME_PAUSED = true;
+
+                showPauseMenu();
             }
             else if (window.GAME_PAUSED) {
                 window.GAME_PAUSED = false;
+
+                hidePauseMenu();
             }
         }
 
