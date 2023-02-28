@@ -3,6 +3,11 @@ import { OBSTACLES } from '../core/collision.js';
 import { Entity } from '../sprites/entities.js';
 
 import {
+    INTERACTABLES,
+    Interactable
+} from '../sprites/interactable.js';
+
+import {
     PORTALS,
     Portal,
     PortalFill
@@ -75,6 +80,7 @@ export class PlayableArea {
 
         this.OBSTACLES = [];
         this.PORTALS = [];
+        this.INTERACTABLES = [];
         this.ENEMY_SPAWN_POINTS = [];
         this.COLORED_COORDINATES = [];
 
@@ -153,12 +159,16 @@ export class PlayableArea {
             this.DYNAMIC_SPRITES_CONTAINER,
         );
 
+
+
         // renders colored coordinates
         const NUM_OF_COLORED_COORDINATES = this.COLORED_COORDINATES.length;
 
         for (let i=0; i < NUM_OF_COLORED_COORDINATES; i++) {
             this.area.addChild(this.COLORED_COORDINATES[i]);
         }
+
+
 
         // adds obstacles to collision detection queue
         const NUM_OF_OBSTACLES = this.OBSTACLES.length;
@@ -167,6 +177,8 @@ export class PlayableArea {
             OBSTACLES.push(this.OBSTACLES[i]);
         }
 
+
+
         // adds portals to map switch detection queue
         const NUM_OF_PORTALS = this.PORTALS.length;
 
@@ -174,8 +186,21 @@ export class PlayableArea {
             PORTALS.push(this.PORTALS[i]);
         }
 
+
+
+        // adds interactables to interaction detection queue
+        const NUM_OF_INTERACTABLES = this.INTERACTABLES.length;
+
+        for (let i=0; i < NUM_OF_INTERACTABLES; i++) {
+            PORTALS.push(this.INTERACTABLES[i]);
+        }
+
+
+
         // runs local game loop
         this.infinite_loop.start();
+
+
 
         // binds events to playable area
         this.area.on('mousedown', this.mousedownEvent);
@@ -222,6 +247,11 @@ export class PlayableArea {
 
         // removes portals from map switch detection queue
         PORTALS.splice(0, PORTALS.length);
+
+
+
+        // removes interactables from interaction detection queue
+        INTERACTABLES.splice(0, INTERACTABLES.length);
 
 
 
@@ -281,6 +311,9 @@ export class PlayableArea {
         }
         else if (sprite instanceof Portal || sprite instanceof PortalFill) {
             this.PORTALS.push(sprite);
+        }
+        else if (sprite instanceof Interactable) {
+            this.INTERACTABLES.push(sprite);
         }
 
         sprite.setPosition(x, y);
