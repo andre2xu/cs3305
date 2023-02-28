@@ -2,35 +2,33 @@
 
 {% block main_content %}
 
-<section>
     <h2>{{title}}</h2>
-</section>
-
     <p>
         Welcome to the Zombie Apocalypse, where foul-smelling undead creatures have overrun the world. 
         You have been on the move for some time now, trying to stay alive and one step ahead of the horde of zombies. 
         Tonight, with the moon shining full and bright, you come across an abandoned manor house. 
         Just in time, too, as your supplies are low, and you need refuge for a while. 
-        You are on edge, but it has been so long since you have had respite, so you enter.
+        You are on edge, but it has been so long since you have had a respite, so you enter.
 
         The heavy door creaks and groans as you open it. A massive foyer greets you. You carefully step forward. 
-        Each step you take echoes loudly through the room.
+        Each step you take echoes loudly through the room. You see a movement from the corner of your eye, but it's only the plant, blowing gently in the breeze.
         It smells musty in here. Is that from the long-vacant house or the smell of zombies? 
         As you venture deeper inside, you think you hear faint sounds in the distance. 
         You might be paranoid, but just in case, you draw your weapon and prepare yourself — your heart races as you realise that you are not alone. 
         You are not safe here, but you have come this far.
         
-        Will you be able to find what you need here and survive? 
+        Will you be able to find what you need in here and survive? 
         Well, dear player, there is only one way to find out. 
         Press “Start” and defend yourself from whatever lurks in the darkness.
         
         Your reward is your life and some supplies if you are lucky. 
         Advance to the top of the leaderboard and show the zombies that you are not on the menu!
     </p>
-
-    <p>
-        <a href="{{ url_for('playgame')}}"><button>Play Game</button></a>
-    </p>
-
+    <form action="" method="POST" novalidate>       <!--the user's data will not be checked in the browser, but in the server-->
+        <!--This is important to have and MUST always have this.  Look up CSRF in Wikipedia-->
+        {{ form.hidden_tag() }}
+    
+        {{ form.start() }}
+    </form>   
     
 {% endblock %}

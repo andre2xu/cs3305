@@ -1,7 +1,7 @@
 # import flask modules
 from flask import Flask, flash, get_flashed_messages, render_template, request, session, redirect, url_for, g 
 from database import get_db, close_db
-from forms import RegistrationForm, LoginForm, StartGameForm, GameForm
+from forms import RegistrationForm, LoginForm, StartGameForm
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
@@ -48,23 +48,6 @@ def index():
     return render_template("index.html", title="Main Menu")
 
 
-"""Decorator to login to access the game"""
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        db = get_db()
-        user = db.execute("""SELECT * FROM users WHERE username = ?""", (form.username.data,)).fetchone()
-        if user is None or not check_password_hash(user["password"], form.password.data):
-            flash("Invalid username or password. Please try again.")
-            get_flashed_messages()
-        else:
-            session.clear()
-            session["user_id"] = user["id"]
-            session["username"] = user["username"]
-            return redirect(url_for("startgame"))
-    return render_template("login.html", title="Player Login", form=form)
-
 
 """Decorator to register a new player"""
 @app.route("/register", methods=["GET", "POST"])
@@ -74,8 +57,7 @@ def register():
         username = form.username.data
         password = form.password.data
         password2 = form.password2.data
-        db = get_db()
-        
+        db = get_db()        
         # check if duplicate username exists
         if db.execute("""SELECT username FROM users WHERE username = ?""", (username,)).fetchone() is not None:
             form.username.errors.append("Invalid username. Please try again.")
@@ -87,6 +69,32 @@ def register():
             return redirect(url_for("login"))
     return render_template("register.html", title="Register Here", form=form)
   
+
+"""Decorator to login to access the game"""
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        db = get_db()
+        user = db.execute("""SELECT * FROM users WHERE username = ?""", (form.username.data,)).fetchone()
+        if user is None or user != form.username.data:
+            form.username.errors.append("The zombies stole your identity. Please try again.")
+        # check password matches - first get one from the database, then compare with what user has typed in.
+        elif not check_password_hash(user["password"], form.password.data):
+            form.password.errors.append("The zombies stole your password. Please try again.")
+        else:
+            session.clear()   
+            #if your username is in the dictionary
+            session["username"] = user["username"]
+            # then you are logged in
+            next_page = request.args.get("next")
+            if not next_page:
+                next_page = url_for("startgame")
+            # get taken back to the page that you are on
+            return redirect(next_page)
+    return render_template("login.html", title="Player Login", form=form)
+
+
 
 """Decorator to display the help.html page"""
 @app.route("/help", methods=["GET", "POST"])
