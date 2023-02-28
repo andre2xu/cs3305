@@ -56,6 +56,12 @@ export class Interactable extends Objects{
 
 
     // SETTERS
+    setAreaOfEffect(value) {
+        checks.checkIfNumber(value);
+
+        this.areaOfEffect = value;
+    };
+
     // onInteract(){
     //     if (this.player.currentPoints >= this.price && this.isActive) {
     //         if (this.isPaidOnlyOnce) {
