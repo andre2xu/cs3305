@@ -1,6 +1,5 @@
 import * as checks from '../helpers/checks.js';
 import { Objects } from './objects.js';
-import { Player } from "./entities.js";
 import { Gun } from './weapons.js';
 
 
