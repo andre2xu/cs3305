@@ -82,6 +82,8 @@ export class WaveSystem {
 
     moveToNextWaveIfFinished() {
         if (this.next_wave_timeout === null && NON_PLAYER_ENTITIES.length === 0 && this.current_wave_index + 1 < this.waves.length) {
+            this.waves.splice(this.waves.indexOf(this.current_wave), 1, null); // the instance of the finished wave is thrown in the garbage collector
+
             this.next_wave_timeout = setTimeout(() => {
                 this.current_wave_index++;
 
