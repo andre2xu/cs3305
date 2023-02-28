@@ -31,13 +31,14 @@ def close_db_at_end_of_request(e=None):
 """Decorator at beginning of request to look into session and see if user id is logged in"""
 @app.before_request
 def load_logged_in_user():
-    g.user = session.get("user_id", None)
+    g.user = session.get("username", None)
     
 
 """Decorator to allow users to access specific pages after login"""
 def login_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
+        # if user is not logged in - redirect to login page
         if g.user is None:
             return redirect(url_for("login", next=request.url))
         return view(**kwargs)
@@ -91,12 +92,12 @@ def login():
             #session["username"] = user["username"]
             session["username"] = username
             # then you are logged in
-            ##next_page = request.args.get("next")
-            ##if not next_page:
-            ##    next_page = url_for("startgame")
+            next_page = request.args.get("next")
+            if not next_page:
+                next_page = url_for("startgame")
             # get taken back to the page that you are on
-            ##return redirect(next_page)
-            return redirect(url_for("startgame"))
+            return redirect(next_page)
+            ##return redirect(url_for("startgame"))
     return render_template("login.html", title="Player Login", form=form)
 
 
