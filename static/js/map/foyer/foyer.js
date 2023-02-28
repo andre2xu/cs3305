@@ -12,7 +12,11 @@ import {
     SemiSolid,
     SemiSolidFill
 } from '../../sprites/objects.js';
-// import {ammoCache, Interactable} from "../../sprites/interactable.";
+
+import {
+    ammoCache,
+    Interactable
+} from "../../sprites/interactable.js";
 
 
 
@@ -362,13 +366,16 @@ export const FOYER = (function () {
         FOYER.getHeight() - (PLANT_2.getSpriteFrameDimensions().h + 5)
     );
 
-    const AMMO_CACHE = new Decoration(getTextureFromStaticJSFolder('/map/shared/ammoCache.png'),0,0,50,50)
-    FOYER.addStaticSprite(
-        AMMO_CACHE,
-        "ammo_cache1",
-        240,
-        140
-    )
+
+
+    // const AMMO_CACHE = new Decoration(getTextureFromStaticJSFolder('/map/shared/ammoCache.png'),0,0,50,50);
+    // FOYER.addStaticSprite(
+    //     AMMO_CACHE,
+    //     "ammo_cache1",
+    //     240,
+    //     140
+    // );
+
 
 
     return FOYER;
