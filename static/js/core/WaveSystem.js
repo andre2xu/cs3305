@@ -2,6 +2,7 @@ import * as checks from '../helpers/checks.js';
 import { PlayableArea } from '../map/creation.js';
 import { Wave } from './Wave.js';
 import { NON_PLAYER_ENTITIES } from './collision.js';
+import { STATIC_ASSETS_FOLDER } from '../helpers/urls.js';
 
 import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombie.json" assert {type: 'json'};
 
@@ -39,6 +40,11 @@ export class WaveSystem {
         this.isBatchDone = false;
 
         this.time = 0;
+
+        this.music = new Audio(`${STATIC_ASSETS_FOLDER}/sounds/haunted-harpsichord.mp3`);
+        this.music.volume = 0.1;
+        this.music.play();
+        this.music.loop = true;
     };
 
 
