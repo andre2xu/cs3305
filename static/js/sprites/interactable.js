@@ -15,7 +15,7 @@ export function ammoCache(gun) {
 
 export const INTERACTABLES = [];
 
-export class Interactable extends Objects{
+export class Interactable extends Objects {
     constructor(texture, posX, posY, frameWidth, frameHeight, price, isPaidOnlyOnce, onUse) {
         super(texture, posX, posY, frameWidth, frameHeight);
 
@@ -61,19 +61,4 @@ export class Interactable extends Objects{
 
         this.areaOfEffect = value;
     };
-
-    // onInteract(){
-    //     if (this.player.currentPoints >= this.price && this.isActive) {
-    //         if (this.isPaidOnlyOnce) {
-    //             this.price = 0;
-    //             this.isPaidOnlyOnce = false;
-    //         }
-
-    //         this.player.points -= this.price;
-    //         this.onUse();
-    //     }
-    //     else {
-    //         console.log("Not enough points!") //todo: make this a popup text
-    //     }
-    // };
 };
