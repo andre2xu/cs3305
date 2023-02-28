@@ -1,4 +1,5 @@
 import * as checks from '../helpers/checks.js';
+import { Player } from './entities.js';
 import { Objects } from './objects.js';
 import { Gun } from './weapons.js';
 
@@ -30,8 +31,6 @@ export class Interactable extends Objects{
 
         this.onUse = onUse // function to be executed when user interacts
 
-        this.isActive = false;
-
         this.areaOfEffect = 20; // adds extra area for the interactble range
     };
 
@@ -39,20 +38,19 @@ export class Interactable extends Objects{
 
     // GETTERS
     playerIsNearInteractable(player) {
-        checks.checkIfInstance(player);
+        checks.checkIfInstance(player, Player);
 
-        const PLAYER_CENTER = this.player.getCenterCoordinates();
+        const PLAYER_CENTER = player.getCenterCoordinates();
 
         const PLAYER_INSIDE_LR_EDGES = PLAYER_CENTER.x > (this.getLeftPosX() - this.areaOfEffect) && PLAYER_CENTER.x < (this.getRightPosX() + this.areaOfEffect);
 
         const PLAYER_INSIDE_TB_EDGES = PLAYER_CENTER.y > (this.getLeftPosY() - this.areaOfEffect) && PLAYER_CENTER.y < (this.getRightPosY() + this.areaOfEffect);
 
         if (PLAYER_INSIDE_LR_EDGES && PLAYER_INSIDE_TB_EDGES) {
-            this.isActive = true;
+            return true;
         }
-        else {
-            this.isActive = false;
-        }
+
+        return false;
     };
 
 
