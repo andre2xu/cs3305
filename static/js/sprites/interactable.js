@@ -55,5 +55,7 @@ export class AmmoCache extends Interactable {
         checks.checkIfInstance(gun, Gun);
 
         gun.addMaxAmmo(60);
+
+        gun.playReloadSound();
     };
 };
