@@ -18,8 +18,11 @@ class LoginForm(FlaskForm):
     login = SubmitField("Login")
 
 
+""" Start Game Form """
+class StartGameForm(FlaskForm):   
+    start = SubmitField("Start Game")
+
+
 """ Game Form """
 class GameForm(FlaskForm):
-    # adjust the settings here
-    
-    submit = SubmitField("Play Game")
+    play = SubmitField("Play Game")
