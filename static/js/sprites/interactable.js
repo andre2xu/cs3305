@@ -46,6 +46,15 @@ export class Interactable extends Objects {
 export class AmmoCache extends Interactable {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
+
+        this.isEmpty = false;
+    };
+
+
+
+    // GETTERS
+    isEmpty() {
+        return this.isEmpty;
     };
 
 
@@ -57,5 +66,7 @@ export class AmmoCache extends Interactable {
         gun.addMaxAmmo(60);
 
         gun.playReloadSound();
+
+        this.isEmpty = true;
     };
 };

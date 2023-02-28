@@ -213,7 +213,7 @@ window.addEventListener('load', () => {
                         const INTERACTABLE = INTERACTABLES[i];
 
                         if (INTERACTABLE.playerIsNearInteractable(player)) {
-                            if (INTERACTABLE instanceof AmmoCache && window.HOTBAR.getSelItem() instanceof Gun) {
+                            if (INTERACTABLE instanceof AmmoCache && INTERACTABLE.isEmpty() === false && window.HOTBAR.getSelItem() instanceof Gun) {
                                 INTERACTABLE.resupply(window.HOTBAR.getSelItem());
                             }
                         }
