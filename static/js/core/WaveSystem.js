@@ -43,8 +43,6 @@ export class WaveSystem {
 
         this.music = new Audio(`${STATIC_ASSETS_FOLDER}/sounds/haunted-harpsichord.mp3`);
         this.music.volume = 0.1;
-        this.music.play();
-        this.music.loop = true;
     };
 
 
@@ -153,6 +151,12 @@ export class WaveSystem {
                     ENEMY.alpha += 0.01;
                 }
             }
+        }
+    };
+
+    playMusic() {
+        if (this.music.paused) {
+            this.music.play();
         }
     };
 };

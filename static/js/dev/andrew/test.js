@@ -60,7 +60,7 @@ window.addEventListener('load', () => {
             new Wave(0, [1, 1], 1),
             new Wave(0, [1], 1)
         ],
-        2
+        5
     );
 
 
@@ -264,6 +264,8 @@ window.addEventListener('load', () => {
 
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
+            WAVE_SYSTEM.playMusic();
+
             // spawns waves of enemies
             WAVE_SYSTEM.enemySpawnFadeIn();
 
@@ -276,13 +278,13 @@ window.addEventListener('load', () => {
 
 
             // moves enemies
-            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
-            // if (NUM_OF_ENTITIES > 0) {
-            //     for (let i=0; i < NUM_OF_ENTITIES; i++) {
-            //         NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-            //     }
-            // }
+            if (NUM_OF_ENTITIES > 0) {
+                for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                    NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+                }
+            }
         }
     });
 });
