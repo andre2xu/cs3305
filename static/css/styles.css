@@ -18,10 +18,18 @@ body{
     text-align: center;
 }
 
-h1, h2, h3{
+h1, h2{
     font-family: "Pixeloid Sans", sans-serif;
     color: crimson;
+    margin: 0;
     padding-left: 0.5em;
+}
+
+h3{
+    font-family: "Pixeloid Sans", sans-serif;
+    color: white;
+    padding-left: 0.5em;
+    font-size: 1.5em;
 }
 
 #Sprite, #Zee{
