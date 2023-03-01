@@ -92,12 +92,12 @@ def login():
             #session["username"] = user["username"]
             session["username"] = username
             # then you are logged in
-            next_page = request.args.get("next")
-            if not next_page:
-                next_page = url_for("startgame")
+            ##next_page = request.args.get("next")
+            ##if not next_page:
+            ##    next_page = url_for("startgame")
             # get taken back to the page that you are on
-            return redirect(next_page)
-            ##return redirect(url_for("startgame"))
+            ##return redirect(next_page)
+            return redirect(url_for("startgame"))
     return render_template("login.html", title="Player Login", form=form)
 
 
