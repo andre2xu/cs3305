@@ -7,6 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
 
+
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secretkeycs3305"
 app.config["SESSION_PERMAMENT"] = False
@@ -29,13 +31,14 @@ def close_db_at_end_of_request(e=None):
 """Decorator at beginning of request to look into session and see if user id is logged in"""
 @app.before_request
 def load_logged_in_user():
-    g.user = session.get("user_id", None)
+    g.user = session.get("username", None)
     
 
 """Decorator to allow users to access specific pages after login"""
 def login_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
+        # if user is not logged in - redirect to login page
         if g.user is None:
             return redirect(url_for("login", next=request.url))
         return view(**kwargs)
@@ -46,7 +49,6 @@ def login_required(view):
 @app.route("/")     
 def index():
     return render_template("index.html", title="Main Menu")
-
 
 
 """Decorator to register a new player"""
@@ -75,25 +77,28 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
         db = get_db()
-        user = db.execute("""SELECT * FROM users WHERE username = ?""", (form.username.data,)).fetchone()
-        if user is None or user != form.username.data:
+        user = db.execute("""SELECT * FROM users WHERE username = ?""", (username,)).fetchone()
+        if user is None:
             form.username.errors.append("The zombies stole your identity. Please try again.")
         # check password matches - first get one from the database, then compare with what user has typed in.
-        elif not check_password_hash(user["password"], form.password.data):
-            form.password.errors.append("The zombies stole your password. Please try again.")
+        elif not check_password_hash(user["password"], password):
+            form.password.errors.append("The zombies ate your password. Please try again.")
         else:
             session.clear()   
             #if your username is in the dictionary
-            session["username"] = user["username"]
+            #session["username"] = user["username"]
+            session["username"] = username
             # then you are logged in
             next_page = request.args.get("next")
             if not next_page:
                 next_page = url_for("startgame")
             # get taken back to the page that you are on
             return redirect(next_page)
+            ##return redirect(url_for("startgame"))
     return render_template("login.html", title="Player Login", form=form)
-
 
 
 """Decorator to display the help.html page"""
@@ -106,6 +111,8 @@ def help():
 @app.route("/startgame", methods=["GET", "POST"])
 @login_required
 def startGame():
+    db = get_db()
+    username = g.user 
     form = StartGameForm()
     if form.validate_on_submit():    
         return redirect (url_for("playgame"))
@@ -139,15 +146,18 @@ def settings():
 @app.route("/score", methods=["GET", "POST"])
 @login_required
 def storeScore():
-    form = GameForm()
-    if form.validate_on_submit():
-        db = get_db()
-        score = form.score.data
-        db.execute("""INSERT INTO score (score, username) VALUES (?, ?)""", (score, session["username"]))
-        db.commit()
-        return redirect(url_for("leaderboard"))
+    score = int(request.form["score"])
+    db = get_db()
+    username = g.user
+    # additional validators
+    if score <= 0:
+        return "Score is below zero."
+    # Here insert the score into the database
     else:
-        return "Failed to update score"
+        db.execute("""INSERT INTO leaderboard (rank, user_id, score, time) VALUES (?, ?, ?, ?);""", (rank, user_id, score, time))
+        db.commit()
+        # if update is successful return success, otherwise return failure
+    return "success"
 
 
 """Decorator to view the leaderboard"""
