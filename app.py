@@ -111,6 +111,8 @@ def help():
 @app.route("/startgame", methods=["GET", "POST"])
 @login_required
 def startGame():
+    db = get_db()
+    username = g.user 
     form = StartGameForm()
     if form.validate_on_submit():    
         return redirect (url_for("playgame"))
