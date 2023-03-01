@@ -20,5 +20,5 @@ class LoginForm(FlaskForm):
 
 """ Start Game Form """
 class StartGameForm(FlaskForm):   
-    start = SubmitField("Start Game")
+    play = SubmitField("Play Game")
 
