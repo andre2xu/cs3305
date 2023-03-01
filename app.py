@@ -71,7 +71,7 @@ def register():
             db.commit()
             return redirect(url_for("login"))
     return render_template("register.html", title="Register Here", form=form)
-  
+
 
 """Decorator to login to access the game"""
 @app.route("/login", methods=["GET", "POST"])
