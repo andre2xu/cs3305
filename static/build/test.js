@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"cSuqJ":[function(require,module,exports) {
+})({"gGCcE":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "611fdb664fc12597";
+module.bundle.HMR_BUNDLE_ID = "73f52d17f2cd716b";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -3188,6 +3188,6 @@ function checkForCollisionsAndMovePlayer(sprite) {
 },{"../helpers/checks.js":"hGT0N","../sprites/entities.js":"77n58","../core/collision.js":"3zsV5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cT2YJ":[function(require,module,exports) {
 module.exports = JSON.parse('{"e":{"x":0,"y":0,"w":23,"h":32},"el":{"x":23,"y":0,"w":23,"h":31},"er":{"x":46,"y":0,"w":23,"h":31},"n":{"x":69,"y":0,"w":23,"h":32},"nl":{"x":92,"y":0,"w":23,"h":31},"nr":{"x":115,"y":0,"w":23,"h":31},"s":{"x":138,"y":0,"w":23,"h":33},"sl":{"x":161,"y":0,"w":23,"h":31},"sr":{"x":184,"y":0,"w":23,"h":31},"w":{"x":207,"y":0,"w":23,"h":32},"wl":{"x":230,"y":0,"w":23,"h":31},"wr":{"x":253,"y":0,"w":23,"h":31}}');
 
-},{}]},["cSuqJ","4YftG"], "4YftG", "parcelRequire90aa")
+},{}]},["gGCcE","4YftG"], "4YftG", "parcelRequire90aa")
 
 //# sourceMappingURL=test.js.map
