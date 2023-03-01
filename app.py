@@ -110,7 +110,7 @@ def help():
 """Decorator to display the startgame.html page"""
 @app.route("/startgame", methods=["GET", "POST"])
 @login_required
-def startGame():
+def startgame():
     db = get_db()
     username = g.user 
     form = StartGameForm()
