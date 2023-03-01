@@ -1,5 +1,5 @@
 # import flask modules
-from flask import Flask, flash, get_flashed_messages, render_template, request, session, redirect, url_for, g 
+from flask import Flask, render_template, request, session, redirect, url_for, g 
 from database import get_db, close_db
 from forms import RegistrationForm, LoginForm, StartGameForm
 from flask_session import Session
