@@ -123,7 +123,7 @@ def startgame():
 @app.route("/playgame", methods=["GET", "POST"])
 @login_required
 def playgame():
-    return render_template("playgame.html", title="Play the Game")
+    return render_template("{{url_for('static', filename=js/dev/nathaniel/test.html)}}", title="Play the Game")
 
 
 """Decorator to change the settings of the game"""
