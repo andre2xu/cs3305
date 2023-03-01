@@ -13,6 +13,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "secretkeycs3305"
 app.config["SESSION_PERMAMENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SESSION_FILE_THRESHOLD'] = 1 
 Session(app)
 
 
