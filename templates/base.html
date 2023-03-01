@@ -21,8 +21,6 @@
     <h1 id="Zee" >Z</h1>
     <nav>    
           {% if g.user %}
-          <a href ="{{ url_for('startgame') }}">Start Game</a>
-          <a href ="{{ url_for('playgame') }}">Play Game</a>
           <a href="{{ url_for('settings') }}">Game Settings</a>
           <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
           <a href="{{ url_for('quit') }}">Quit</a>{{ g.user }} Logged in
