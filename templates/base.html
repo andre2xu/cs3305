@@ -23,7 +23,7 @@
           {% if g.user %}
           <a href="{{ url_for('settings') }}">Game Settings</a>
           <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
-          <a href="{{ url_for('quit') }}">Quit</a>{{ g.user }} Logged in
+          <a href="{{ url_for('quit') }}">Quit</a>
           {% else %}
           <a href="{{ url_for('register') }}">Sign Up</a>
           <a href="{{ url_for('login') }}">Login</a>
