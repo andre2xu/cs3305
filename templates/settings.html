@@ -18,20 +18,39 @@
     </p>
 
     <p>
-        <a href="view"><button>Sound</button></a>
-        <button>-</button>
+        <button onclick="play_Audio()" type="button">Sound</button>
+        <form method="post" action="/">
+            <input type="submit" value="-" name="MinusSound"/>
+            <input type="submit" value="+" name="IncreaseSound" />
+        </form>
         {{ Sound }}
-        <button>+</button>
+        
     </p>
     <p>
         <a href="view"><button>Music</button></a>
-        <button>-</button>
+        <form method="post" action="/">
+            <input type="submit" value="-" name="MinusMusic"/>
+            <input type="submit" value="+" name="IncreaseMusic"/>
+        </form>
         {{ Music }}
-        <button>+</button>
+
     </p>
     <p>
         <a href="{{ url_for('index')}}"><button>Back</button></a>
     </p>
 
+    <audio id="Sound">
+        <source src= "../static/assets/sounds/pistol_reload.mp3"
+                type="audio/ogg">
+      
+    </audio>
+
+    <script>
+        var GFG = document.getElementById("Sound");
+ 
+        function play_Audio() {
+            GFG.play();
+        }
+    </script>
     
 {% endblock %}
