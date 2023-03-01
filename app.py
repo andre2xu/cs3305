@@ -116,7 +116,7 @@ def startgame():
     form = StartGameForm()
     if form.validate_on_submit():    
         return redirect (url_for("playgame"))
-    return render_template("startgame.html", title="Start Game")
+    return render_template("startgame.html", title="Start Game", form=form)
 
 
 """Decorator to play the game"""
