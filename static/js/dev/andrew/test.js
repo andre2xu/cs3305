@@ -39,7 +39,7 @@ import {
     AMMO_COUNT
 } from '../../core/hud.js';
 
-import player_frames_json from '../../../assets/sprite_sheets/player/player.json' assert {type: 'json'};
+import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
 
 
 
