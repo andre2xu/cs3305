@@ -4,7 +4,7 @@ import { Wave } from './Wave.js';
 import { NON_PLAYER_ENTITIES } from './collision.js';
 import { STATIC_ASSETS_FOLDER } from '../helpers/urls.js';
 
-import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombie.json" assert {type: 'json'};
+import zombie_frames_json from "../../assets/sprite_sheets/enemies/clothed_zombie.json";
 
 
 

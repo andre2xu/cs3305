@@ -1,5 +1,5 @@
 # import flask modules
-from flask import Flask, flash, get_flashed_messages, render_template, request, session, redirect, url_for, g 
+from flask import Flask, render_template, request, session, redirect, url_for, g 
 from database import get_db, close_db
 from forms import RegistrationForm, LoginForm, StartGameForm
 from flask_session import Session
@@ -9,10 +9,15 @@ from functools import wraps
 
 
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder='./templates',
+    static_folder='./static'
+)
 app.config["SECRET_KEY"] = "secretkeycs3305"
 app.config["SESSION_PERMAMENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SESSION_FILE_THRESHOLD'] = 1 
 Session(app)
 
 
@@ -70,7 +75,7 @@ def register():
             db.commit()
             return redirect(url_for("login"))
     return render_template("register.html", title="Register Here", form=form)
-  
+
 
 """Decorator to login to access the game"""
 @app.route("/login", methods=["GET", "POST"])
@@ -111,19 +116,17 @@ def help():
 @app.route("/startgame", methods=["GET", "POST"])
 @login_required
 def startgame():
-    db = get_db()
-    username = g.user 
     form = StartGameForm()
     if form.validate_on_submit():    
-        return redirect (url_for("playgame"))
+        return redirect (url_for("game"))
     return render_template("startgame.html", title="Start Game", form=form)
 
 
 """Decorator to play the game"""
-@app.route("/playgame", methods=["GET", "POST"])
+@app.route("/game", methods=["GET"])
 @login_required
-def playgame():
-    return render_template("{{url_for('static', filename=js/dev/nathaniel/test.html)}}", title="Play the Game")
+def game():
+    return render_template("game.html")
 
 
 """Decorator to change the settings of the game"""

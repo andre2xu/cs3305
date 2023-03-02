@@ -2,7 +2,7 @@ import * as checks from '../helpers/checks.js';
 import { Zombie } from "../sprites/entities.js";
 import { getTextureFromStaticAssetsFolder } from '../helpers/pixi_helpers.js';
 
-import zombie_frames_json from '../../assets/sprite_sheets/enemies/clothed_zombie.json' assert {type: 'json'};
+import zombie_frames_json from '../../assets/sprite_sheets/enemies/clothed_zombie.json';
 
 
 
