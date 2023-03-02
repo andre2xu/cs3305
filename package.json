@@ -1,0 +1,22 @@
+{
+  "name": "cs3305",
+  "version": "1.0.0",
+  "description": "3rd year team project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andre2xu/cs3305.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andre2xu/cs3305/issues"
+  },
+  "homepage": "https://github.com/andre2xu/cs3305#readme",
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}

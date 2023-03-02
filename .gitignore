@@ -3,3 +3,6 @@
 **/experiments/**
 **/.vscode/**
 **/__pycache__/**
+**/node_modules/**
+**/*cache*/**
+**/flask_session/**

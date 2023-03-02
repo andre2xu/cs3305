@@ -24,7 +24,12 @@
         Your reward is your life and some supplies if you are lucky. 
         Advance to the top of the leaderboard and show the zombies that you are not on the menu!
     </p>
-    
-    <a href="/static/js/dev/nathaniel/test.html">Play Game</a>
-    
+
+    <form action="" method="POST" novalidate>        
+        <!--the user's data will not be checked in the browser, but in the server. This is important to have and MUST always have this.  Look up CSRF in Wikipedia-->
+        {{ form.hidden_tag() }}
+
+        {{ form.play() }}
+    </form>
+
 {% endblock %}
