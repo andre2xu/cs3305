@@ -6,6 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  
+  "targets": {
+    "default": {
+      "distDir": "./static/build"
+    }
+  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andre2xu/cs3305.git"
