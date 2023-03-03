@@ -574,8 +574,15 @@ var _consumablesJs = require("../../sprites/consumables.js");
 var _weaponsJs = require("../../sprites/weapons.js");
 var _movementJs = require("../../core/movement.js");
 var _hudJs = require("../../core/hud.js");
+var _popupsJs = require("../../sprites/popups.js");
 var _playerJson = require("../../../assets/sprite_sheets/player/player.json");
 var _playerJsonDefault = parcelHelpers.interopDefault(_playerJson);
+(0, _popupsJs.AMMO_CACHE_POPUP).anchor.set(0.5);
+(0, _popupsJs.AMMO_CACHE_POPUP).x = window.innerWidth / 2;
+(0, _popupsJs.AMMO_CACHE_POPUP).y = 20;
+(0, _popupsJs.PORTAL_POPUP).anchor.set(0.5);
+(0, _popupsJs.PORTAL_POPUP).x = window.innerWidth / 2;
+(0, _popupsJs.PORTAL_POPUP).y = 20;
 window.addEventListener("load", ()=>{
     const GAME = new PIXI.Application({
         resizeTo: window
@@ -695,7 +702,7 @@ window.addEventListener("load", ()=>{
                     const NUM_OF_INTERACTABLES = (0, _interactableJs.INTERACTABLES).length;
                     for(let i = 0; i < NUM_OF_INTERACTABLES; i++){
                         const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
-                        if (INTERACTABLE.playerIsNearInteractable(player)) {
+                        if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.AMMO_CACHE_POPUP))) {
                             if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache) && INTERACTABLE.isEmpty() === false && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) INTERACTABLE.resupply(window.HOTBAR.getSelItem());
                         }
                     }
@@ -725,7 +732,7 @@ window.addEventListener("load", ()=>{
     (0, _libraryJs.LIBRARY).bindPlayableAreaToPortal("2f_mat", (0, _foyerJs.FOYER), 480, 12);
     (0, _basementJs.BASEMENT).setPosition(GAME_VIEW.width * 0.5 - (0, _basementJs.BASEMENT).getHalfWidth(), GAME_VIEW.height * 0.5 - (0, _basementJs.BASEMENT).getHalfHeight());
     (0, _basementJs.BASEMENT).bindPlayableAreaToPortal("elevator", (0, _foyerJs.FOYER), 245, 0);
-    GAME.stage.addChild((0, _hudJs.PLAYER_HEALTH_STATUS), (0, _hudJs.AMMO_COUNT), window.HOTBAR.display(), (0, _foyerJs.FOYER).load());
+    GAME.stage.addChild((0, _hudJs.PLAYER_HEALTH_STATUS), (0, _hudJs.AMMO_COUNT), (0, _popupsJs.AMMO_CACHE_POPUP), (0, _popupsJs.PORTAL_POPUP), window.HOTBAR.display(), (0, _foyerJs.FOYER).load());
     GAME.ticker.add(()=>{
         if (window.GAME_PAUSED === false) {
             // WAVE_SYSTEM.playMusic();
@@ -734,6 +741,29 @@ window.addEventListener("load", ()=>{
             if (WAVE_SYSTEM.checkIfBatchDone()) {
                 WAVE_SYSTEM.spawnNextBatch();
                 WAVE_SYSTEM.moveToNextWaveIfFinished();
+            }
+            let isClose = false;
+            //manages popups for all interactables
+            //still need to make popup for when ammo cache is empty
+            const NUM_OF_INTERACTABLES = (0, _interactableJs.INTERACTABLES).length;
+            const POPUPS = [
+                (0, _popupsJs.AMMO_CACHE_POPUP)
+            ];
+            for(let i = 0; i < NUM_OF_INTERACTABLES; i++){
+                const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
+                const POPUP = POPUPS[i];
+                isClose = INTERACTABLE.playerIsNearInteractable(player);
+                (0, _popupsJs.managePopUp)(POPUP, player, isClose);
+            }
+            //manages popups for all portals
+            const NUM_OF_PORTALS = (0, _portalsJs.PORTALS).length;
+            isClose = false;
+            if (NUM_OF_PORTALS > 0) {
+                for(let i = 0; i < NUM_OF_PORTALS; i++){
+                    const PORTAL = (0, _portalsJs.PORTALS)[i];
+                    isClose = isClose || PORTAL.playerIsInsidePortal(player); //if player is near ANY of the portals
+                }
+                (0, _popupsJs.managePopUp)((0, _popupsJs.PORTAL_POPUP), player, isClose);
             }
         // moves enemies
         // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
@@ -746,7 +776,7 @@ window.addEventListener("load", ()=>{
     });
 });
 
-},{"../../map/foyer/foyer.js":"dhM1a","../../map/library/library.js":"bjs5C","../../map/basement/basement.js":"7XqC1","../../helpers/pixi_helpers.js":"bZOjp","../../core/inventory.js":"hc8XD","../../core/collision.js":"3zsV5","../../sprites/portals.js":"7dDrd","../../core/WaveSystem.js":"9sJQQ","../../core/Wave.js":"eNy6a","../../sprites/entities.js":"77n58","../../sprites/interactable.js":"a1CCR","../../core/pause_menu.js":"b2oXW","../../sprites/consumables.js":"kdffl","../../sprites/weapons.js":"gRu1U","../../core/movement.js":"c7kyU","../../core/hud.js":"3PEGa","../../../assets/sprite_sheets/player/player.json":"cT2YJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dhM1a":[function(require,module,exports) {
+},{"../../map/foyer/foyer.js":"dhM1a","../../map/library/library.js":"bjs5C","../../map/basement/basement.js":"7XqC1","../../helpers/pixi_helpers.js":"bZOjp","../../core/inventory.js":"hc8XD","../../core/collision.js":"3zsV5","../../sprites/portals.js":"7dDrd","../../core/WaveSystem.js":"9sJQQ","../../core/Wave.js":"eNy6a","../../sprites/entities.js":"77n58","../../sprites/interactable.js":"a1CCR","../../core/pause_menu.js":"b2oXW","../../sprites/consumables.js":"kdffl","../../sprites/weapons.js":"gRu1U","../../core/movement.js":"c7kyU","../../core/hud.js":"3PEGa","../../../assets/sprite_sheets/player/player.json":"cT2YJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../sprites/popups.js":"16erO"}],"dhM1a":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "FOYER", ()=>FOYER);
@@ -3188,6 +3218,26 @@ function checkForCollisionsAndMovePlayer(sprite) {
 },{"../helpers/checks.js":"hGT0N","../sprites/entities.js":"77n58","../core/collision.js":"3zsV5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cT2YJ":[function(require,module,exports) {
 module.exports = JSON.parse('{"e":{"x":0,"y":0,"w":23,"h":32},"el":{"x":23,"y":0,"w":23,"h":31},"er":{"x":46,"y":0,"w":23,"h":31},"n":{"x":69,"y":0,"w":23,"h":32},"nl":{"x":92,"y":0,"w":23,"h":31},"nr":{"x":115,"y":0,"w":23,"h":31},"s":{"x":138,"y":0,"w":23,"h":33},"sl":{"x":161,"y":0,"w":23,"h":31},"sr":{"x":184,"y":0,"w":23,"h":31},"w":{"x":207,"y":0,"w":23,"h":32},"wl":{"x":230,"y":0,"w":23,"h":31},"wr":{"x":253,"y":0,"w":23,"h":31}}');
 
-},{}]},["gGCcE","4YftG"], "4YftG", "parcelRequire90aa")
+},{}],"16erO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AMMO_CACHE_POPUP", ()=>AMMO_CACHE_POPUP);
+parcelHelpers.export(exports, "PORTAL_POPUP", ()=>PORTAL_POPUP);
+parcelHelpers.export(exports, "managePopUp", ()=>managePopUp);
+const TEXT_STYLE = {
+    fontSize: 20,
+    fill: 0xffffff
+};
+const AMMO_CACHE_POPUP = new PIXI.Text("Press E to refill ammo.", TEXT_STYLE);
+AMMO_CACHE_POPUP.alpha = 0;
+const PORTAL_POPUP = new PIXI.Text("Press Q to change rooms.", TEXT_STYLE);
+PORTAL_POPUP.alpha = 0;
+function managePopUp(popup, player, isClose) {
+    if (isClose) {
+        if (popup.alpha < 1.0) popup.alpha += 0.01;
+    } else if (popup.alpha > 0.0) popup.alpha -= 0.01;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gGCcE","4YftG"], "4YftG", "parcelRequire90aa")
 
 //# sourceMappingURL=test.js.map

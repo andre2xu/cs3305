@@ -39,7 +39,7 @@ import {
     AMMO_COUNT
 } from '../../core/hud.js';
 
-import player_frames_json from '../../../assets/sprite_sheets/player/player.json' assert {type: 'json'};
+import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
 import {
     AMMO_CACHE_POPUP,
     managePopUp,
@@ -340,7 +340,8 @@ window.addEventListener('load', () => {
             // if (NUM_OF_PORTALS > 0) {
             for (let i = 0; i < NUM_OF_PORTALS; i++) {
                 const PORTAL = PORTALS[i];
-                isClose = isClose | PORTAL.playerIsInsidePortal(player) //if player is near ANY of the portals
+                console.log("hi")
+                isClose = isClose || PORTAL.playerIsInsidePortal(player) //if player is near ANY of the portals
 
 
             }
