@@ -11,7 +11,7 @@ import { Player } from '../../sprites/entities.js';
 
 import {
     INTERACTABLES,
-    AmmoCache
+    AmmoCache, UpgradeBench
 } from '../../sprites/interactable.js';
 
 import {
@@ -36,27 +36,30 @@ import {
 
 import {
     PLAYER_HEALTH_STATUS,
-    AMMO_COUNT
+    AMMO_COUNT, updatePlayerPointsText, PLAYER_POINTS
 } from '../../core/hud.js';
 
+import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
 import {
     AMMO_CACHE_POPUP,
     managePopUp,
-    PORTAL_POPUP
+    PORTAL_POPUP, UPGRADE_BENCH, UPGRADE_BENCH_POPUP
 } from "../../sprites/popups.js";
 
-import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
 
 
 
-AMMO_CACHE_POPUP.anchor.set(0.5);
-AMMO_CACHE_POPUP.x = window.innerWidth / 2;
-AMMO_CACHE_POPUP.y = 20;
+AMMO_CACHE_POPUP.anchor.set(0.5)
+AMMO_CACHE_POPUP.x = window.innerWidth/2
+AMMO_CACHE_POPUP.y = 20
 
-PORTAL_POPUP.anchor.set(0.5);
-PORTAL_POPUP.x = window.innerWidth / 2;
-PORTAL_POPUP.y = 20;
+PORTAL_POPUP.anchor.set(0.5)
+PORTAL_POPUP.x = window.innerWidth/2
+PORTAL_POPUP.y = 20
 
+UPGRADE_BENCH_POPUP.anchor.set(0.5)
+UPGRADE_BENCH_POPUP.x = window.innerWidth/2
+UPGRADE_BENCH_POPUP.y = 20
 
 
 window.addEventListener('load', () => {
@@ -83,8 +86,8 @@ window.addEventListener('load', () => {
     const WAVE_SYSTEM = new WaveSystem(
         FOYER,
         [
-            new Wave(0, [1], 1),
-            new Wave(0, [1], 1)
+            new Wave(0, [1,2], 1),
+            new Wave(0, [1,1,2], 1)
         ],
         5
     );
@@ -222,6 +225,20 @@ window.addEventListener('load', () => {
                     }
 
                     break;
+                case 't':
+
+
+                    for (let i=0; i < INTERACTABLES.length; i++) {
+                        const INTERACTABLE = INTERACTABLES[i];
+                        if (INTERACTABLE.playerIsNearInteractable(player, UPGRADE_BENCH_POPUP)) {
+                            if (INTERACTABLE instanceof UpgradeBench && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof Gun) {
+                                player.currentPoints -= INTERACTABLE.pointCost
+                                updatePlayerPointsText(player.currentPoints)
+                                INTERACTABLE.upgradeGun(window.HOTBAR.getSelItem(), false)
+                            }
+
+                        }
+                    }
                 case 'e':
                     const NUM_OF_INTERACTABLES = INTERACTABLES.length;
 
@@ -229,10 +246,24 @@ window.addEventListener('load', () => {
                         const INTERACTABLE = INTERACTABLES[i];
 
                         if (INTERACTABLE.playerIsNearInteractable(player,AMMO_CACHE_POPUP)) {
-                            if (INTERACTABLE instanceof AmmoCache && window.HOTBAR.getSelItem() instanceof Gun) {
+                            if (INTERACTABLE instanceof AmmoCache && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof Gun) {
+                                player.currentPoints -= INTERACTABLE.pointCost
+                                updatePlayerPointsText(player.currentPoints)
                                 INTERACTABLE.resupply(window.HOTBAR.getSelItem());
                             }
+
                         }
+
+                        if (INTERACTABLE.playerIsNearInteractable(player,UPGRADE_BENCH_POPUP)) {
+                            if (INTERACTABLE instanceof UpgradeBench && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof Gun) {
+                                player.currentPoints -= INTERACTABLE.pointCost
+                                updatePlayerPointsText(player.currentPoints)
+                                INTERACTABLE.upgradeGun(window.HOTBAR.getSelItem(),true)
+                            }
+
+                        }
+
+
                     }
 
                     break;
@@ -300,6 +331,8 @@ window.addEventListener('load', () => {
     GAME.stage.addChild(
         PLAYER_HEALTH_STATUS,
         AMMO_COUNT,
+        PLAYER_POINTS,
+        UPGRADE_BENCH_POPUP,
         AMMO_CACHE_POPUP,
         PORTAL_POPUP,
         window.HOTBAR.display(),
@@ -319,44 +352,69 @@ window.addEventListener('load', () => {
                 WAVE_SYSTEM.moveToNextWaveIfFinished();
             }
 
-
-
-            let isClose = false;
-
+            let isClose = false
             //manages popups for all interactables
             //still need to make popup for when ammo cache is empty
             const NUM_OF_INTERACTABLES = INTERACTABLES.length;
-            const POPUPS = [AMMO_CACHE_POPUP];
+            const POPUPS = [AMMO_CACHE_POPUP,UPGRADE_BENCH_POPUP]
+            var INTERACTABLE;
+            var POPUP;
+            for (let i = 0; i < INTERACTABLES.length; i++) {
+                INTERACTABLE = INTERACTABLES[i];
 
-            for (let i = 0; i < NUM_OF_INTERACTABLES; i++) {
-                const INTERACTABLE = INTERACTABLES[i];
-                const POPUP = POPUPS[i];
-                isClose = INTERACTABLE.playerIsNearInteractable(player);
 
-                managePopUp(POPUP, player, isClose);
+                isClose = INTERACTABLE.playerIsNearInteractable(player)
+               if (INTERACTABLE instanceof AmmoCache){
+                   managePopUp(POPUPS[0], player, isClose)
+               }
+               if (INTERACTABLE instanceof UpgradeBench){
+                   managePopUp(POPUPS[1], player, isClose)
+               }
+
+
+
             }
-
             //manages popups for all portals
             const NUM_OF_PORTALS = PORTALS.length;
 
-            isClose = false;
+            isClose = false
+            // if (NUM_OF_PORTALS > 0) {
+            for (let i = 0; i < NUM_OF_PORTALS; i++) {
+                const PORTAL = PORTALS[i];
 
-            if (NUM_OF_PORTALS > 0) {
-                for (let i = 0; i < NUM_OF_PORTALS; i++) {
-                    const PORTAL = PORTALS[i];
+                isClose = isClose || PORTAL.playerIsInsidePortal(player) //if player is near ANY of the portals
 
-                    isClose = isClose || PORTAL.playerIsInsidePortal(player); //if player is near ANY of the portals
-                }
-                managePopUp(PORTAL_POPUP, player, isClose);
+
             }
+            managePopUp(PORTAL_POPUP, player, isClose)
+
+            let NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
+
+            if (NUM_OF_ENTITIES > 0) {
+                for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
+                    if (NON_PLAYER_ENTITIES[i].removeSelf()){
+                        player.currentPoints += 100
+                        updatePlayerPointsText(player.currentPoints)
+
+                    }
+                }
+            }
+
+
+        // }
+
+
+
+
 
 
 
             // moves enemies
-            const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
-
+            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+            NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length
             if (NUM_OF_ENTITIES > 0) {
-                for (let i=0; i < NUM_OF_ENTITIES; i++) {
+                for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
                     NON_PLAYER_ENTITIES[i].moveToPlayer(player);
                 }
             }
