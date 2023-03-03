@@ -146,9 +146,9 @@ def settings():
 
 
 """Decorator to store the score of the player"""
-@app.route("/score", methods=["GET", "POST"])
+@app.route("/store_score", methods=["GET", "POST"])
 @login_required
-def storeScore():
+def store_score():
     score = int(request.form["score"])
     db = get_db()
     username = g.user
@@ -157,7 +157,7 @@ def storeScore():
         return "Score is below zero."
     # Here insert the score into the database
     else:
-        db.execute("""INSERT INTO leaderboard (rank, user_id, score, time) VALUES (?, ?, ?, ?);""", (rank, user_id, score, time))
+        db.execute("""INSERT INTO scores (username, score) VALUES (?, ?);""", (username, score))
         db.commit()
         # if update is successful return success, otherwise return failure
     return "success"
