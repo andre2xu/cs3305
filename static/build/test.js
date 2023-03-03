@@ -574,15 +574,18 @@ var _consumablesJs = require("../../sprites/consumables.js");
 var _weaponsJs = require("../../sprites/weapons.js");
 var _movementJs = require("../../core/movement.js");
 var _hudJs = require("../../core/hud.js");
-var _popupsJs = require("../../sprites/popups.js");
 var _playerJson = require("../../../assets/sprite_sheets/player/player.json");
 var _playerJsonDefault = parcelHelpers.interopDefault(_playerJson);
+var _popupsJs = require("../../sprites/popups.js");
 (0, _popupsJs.AMMO_CACHE_POPUP).anchor.set(0.5);
 (0, _popupsJs.AMMO_CACHE_POPUP).x = window.innerWidth / 2;
 (0, _popupsJs.AMMO_CACHE_POPUP).y = 20;
 (0, _popupsJs.PORTAL_POPUP).anchor.set(0.5);
 (0, _popupsJs.PORTAL_POPUP).x = window.innerWidth / 2;
 (0, _popupsJs.PORTAL_POPUP).y = 20;
+(0, _popupsJs.UPGRADE_BENCH_POPUP).anchor.set(0.5);
+(0, _popupsJs.UPGRADE_BENCH_POPUP).x = window.innerWidth / 2;
+(0, _popupsJs.UPGRADE_BENCH_POPUP).y = 20;
 window.addEventListener("load", ()=>{
     const GAME = new PIXI.Application({
         resizeTo: window
@@ -598,10 +601,13 @@ window.addEventListener("load", ()=>{
     // INITIALIZING WAVES
     const WAVE_SYSTEM = new (0, _waveSystemJs.WaveSystem)((0, _foyerJs.FOYER), [
         new (0, _waveJs.Wave)(0, [
-            1
+            1,
+            2
         ], 1),
         new (0, _waveJs.Wave)(0, [
-            1
+            1,
+            1,
+            2
         ], 1)
     ], 5);
     // PLAYER
@@ -698,12 +704,34 @@ window.addEventListener("load", ()=>{
                         }
                     }
                     break;
+                case "t":
+                    for(let i = 0; i < (0, _interactableJs.INTERACTABLES).length; i++){
+                        const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
+                        if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.UPGRADE_BENCH_POPUP))) {
+                            if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench) && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) {
+                                player.currentPoints -= INTERACTABLE.pointCost;
+                                (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                                INTERACTABLE.upgradeGun(window.HOTBAR.getSelItem(), false);
+                            }
+                        }
+                    }
                 case "e":
                     const NUM_OF_INTERACTABLES = (0, _interactableJs.INTERACTABLES).length;
                     for(let i = 0; i < NUM_OF_INTERACTABLES; i++){
                         const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
                         if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.AMMO_CACHE_POPUP))) {
-                            if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache) && INTERACTABLE.isEmpty() === false && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) INTERACTABLE.resupply(window.HOTBAR.getSelItem());
+                            if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache) && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) {
+                                player.currentPoints -= INTERACTABLE.pointCost;
+                                (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                                INTERACTABLE.resupply(window.HOTBAR.getSelItem());
+                            }
+                        }
+                        if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.UPGRADE_BENCH_POPUP))) {
+                            if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench) && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) {
+                                player.currentPoints -= INTERACTABLE.pointCost;
+                                (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                                INTERACTABLE.upgradeGun(window.HOTBAR.getSelItem(), true);
+                            }
                         }
                     }
                     break;
@@ -732,7 +760,7 @@ window.addEventListener("load", ()=>{
     (0, _libraryJs.LIBRARY).bindPlayableAreaToPortal("2f_mat", (0, _foyerJs.FOYER), 480, 12);
     (0, _basementJs.BASEMENT).setPosition(GAME_VIEW.width * 0.5 - (0, _basementJs.BASEMENT).getHalfWidth(), GAME_VIEW.height * 0.5 - (0, _basementJs.BASEMENT).getHalfHeight());
     (0, _basementJs.BASEMENT).bindPlayableAreaToPortal("elevator", (0, _foyerJs.FOYER), 245, 0);
-    GAME.stage.addChild((0, _hudJs.PLAYER_HEALTH_STATUS), (0, _hudJs.AMMO_COUNT), (0, _popupsJs.AMMO_CACHE_POPUP), (0, _popupsJs.PORTAL_POPUP), window.HOTBAR.display(), (0, _foyerJs.FOYER).load());
+    GAME.stage.addChild((0, _hudJs.PLAYER_HEALTH_STATUS), (0, _hudJs.AMMO_COUNT), (0, _hudJs.PLAYER_POINTS), (0, _popupsJs.UPGRADE_BENCH_POPUP), (0, _popupsJs.AMMO_CACHE_POPUP), (0, _popupsJs.PORTAL_POPUP), window.HOTBAR.display(), (0, _foyerJs.FOYER).load());
     GAME.ticker.add(()=>{
         if (window.GAME_PAUSED === false) {
             // WAVE_SYSTEM.playMusic();
@@ -747,27 +775,39 @@ window.addEventListener("load", ()=>{
             //still need to make popup for when ammo cache is empty
             const NUM_OF_INTERACTABLES = (0, _interactableJs.INTERACTABLES).length;
             const POPUPS = [
-                (0, _popupsJs.AMMO_CACHE_POPUP)
+                (0, _popupsJs.AMMO_CACHE_POPUP),
+                (0, _popupsJs.UPGRADE_BENCH_POPUP)
             ];
-            for(let i = 0; i < NUM_OF_INTERACTABLES; i++){
-                const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
-                const POPUP = POPUPS[i];
+            var INTERACTABLE;
+            var POPUP;
+            for(let i = 0; i < (0, _interactableJs.INTERACTABLES).length; i++){
+                INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
                 isClose = INTERACTABLE.playerIsNearInteractable(player);
-                (0, _popupsJs.managePopUp)(POPUP, player, isClose);
+                if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache)) (0, _popupsJs.managePopUp)(POPUPS[0], player, isClose);
+                if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench)) (0, _popupsJs.managePopUp)(POPUPS[1], player, isClose);
             }
             //manages popups for all portals
             const NUM_OF_PORTALS = (0, _portalsJs.PORTALS).length;
             isClose = false;
-            if (NUM_OF_PORTALS > 0) {
-                for(let i = 0; i < NUM_OF_PORTALS; i++){
-                    const PORTAL = (0, _portalsJs.PORTALS)[i];
-                    isClose = isClose || PORTAL.playerIsInsidePortal(player); //if player is near ANY of the portals
-                }
-                (0, _popupsJs.managePopUp)((0, _popupsJs.PORTAL_POPUP), player, isClose);
+            // if (NUM_OF_PORTALS > 0) {
+            for(let i = 0; i < NUM_OF_PORTALS; i++){
+                const PORTAL = (0, _portalsJs.PORTALS)[i];
+                isClose = isClose || PORTAL.playerIsInsidePortal(player) //if player is near ANY of the portals
+                ;
             }
+            (0, _popupsJs.managePopUp)((0, _popupsJs.PORTAL_POPUP), player, isClose);
+            let NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+            if (NUM_OF_ENTITIES > 0) {
+                for(let i = 0; i < (0, _collisionJs.NON_PLAYER_ENTITIES).length; i++)if ((0, _collisionJs.NON_PLAYER_ENTITIES)[i].removeSelf()) {
+                    player.currentPoints += 100;
+                    (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                }
+            }
+            // }
             // moves enemies
-            const NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
-            if (NUM_OF_ENTITIES > 0) for(let i = 0; i < NUM_OF_ENTITIES; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].moveToPlayer(player);
+            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+            NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+            if (NUM_OF_ENTITIES > 0) for(let i = 0; i < (0, _collisionJs.NON_PLAYER_ENTITIES).length; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].moveToPlayer(player);
         }
     });
 });
@@ -1910,7 +1950,6 @@ class Enemy extends Entity {
     decreaseHealth(value) {
         _checksJs.checkIfNumber(value);
         this.health -= value;
-        this.removeSelf();
     }
     removeSelf() {
         if (this.health <= 0) {

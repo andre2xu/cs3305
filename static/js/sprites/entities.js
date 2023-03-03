@@ -712,8 +712,6 @@ export class Enemy extends Entity {
         checks.checkIfNumber(value);
 
         this.health -= value;
-
-        this.removeSelf();
     };
 
     removeSelf(){
