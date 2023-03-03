@@ -765,13 +765,9 @@ window.addEventListener("load", ()=>{
                 }
                 (0, _popupsJs.managePopUp)((0, _popupsJs.PORTAL_POPUP), player, isClose);
             }
-        // moves enemies
-        // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
-        // if (NUM_OF_ENTITIES > 0) {
-        //     for (let i=0; i < NUM_OF_ENTITIES; i++) {
-        //         NON_PLAYER_ENTITIES[i].moveToPlayer(player);
-        //     }
-        // }
+            // moves enemies
+            const NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+            if (NUM_OF_ENTITIES > 0) for(let i = 0; i < NUM_OF_ENTITIES; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].moveToPlayer(player);
         }
     });
 });
@@ -1914,6 +1910,7 @@ class Enemy extends Entity {
     decreaseHealth(value) {
         _checksJs.checkIfNumber(value);
         this.health -= value;
+        this.removeSelf();
     }
     removeSelf() {
         if (this.health <= 0) {

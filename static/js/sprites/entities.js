@@ -713,11 +713,10 @@ export class Enemy extends Entity {
 
         this.health -= value;
 
-
+        this.removeSelf();
     };
 
     removeSelf(){
-
         if (this.health <= 0) {
             // references to enemy get deleted so that its instance can be put in the garbage collector (memory optimization)
             new Audio(this.deathSoundFile).play()
