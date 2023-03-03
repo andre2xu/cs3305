@@ -39,7 +39,23 @@ import {
     AMMO_COUNT
 } from '../../core/hud.js';
 
+import {
+    AMMO_CACHE_POPUP,
+    managePopUp,
+    PORTAL_POPUP
+} from "../../sprites/popups.js";
+
 import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
+
+
+
+AMMO_CACHE_POPUP.anchor.set(0.5);
+AMMO_CACHE_POPUP.x = window.innerWidth / 2;
+AMMO_CACHE_POPUP.y = 20;
+
+PORTAL_POPUP.anchor.set(0.5);
+PORTAL_POPUP.x = window.innerWidth / 2;
+PORTAL_POPUP.y = 20;
 
 
 
@@ -212,7 +228,7 @@ window.addEventListener('load', () => {
                     for (let i=0; i < NUM_OF_INTERACTABLES; i++) {
                         const INTERACTABLE = INTERACTABLES[i];
 
-                        if (INTERACTABLE.playerIsNearInteractable(player)) {
+                        if (INTERACTABLE.playerIsNearInteractable(player,AMMO_CACHE_POPUP)) {
                             if (INTERACTABLE instanceof AmmoCache && INTERACTABLE.isEmpty() === false && window.HOTBAR.getSelItem() instanceof Gun) {
                                 INTERACTABLE.resupply(window.HOTBAR.getSelItem());
                             }
@@ -284,6 +300,8 @@ window.addEventListener('load', () => {
     GAME.stage.addChild(
         PLAYER_HEALTH_STATUS,
         AMMO_COUNT,
+        AMMO_CACHE_POPUP,
+        PORTAL_POPUP,
         window.HOTBAR.display(),
         FOYER.load(),
     );
@@ -299,6 +317,37 @@ window.addEventListener('load', () => {
                 WAVE_SYSTEM.spawnNextBatch();
 
                 WAVE_SYSTEM.moveToNextWaveIfFinished();
+            }
+
+
+
+            let isClose = false;
+
+            //manages popups for all interactables
+            //still need to make popup for when ammo cache is empty
+            const NUM_OF_INTERACTABLES = INTERACTABLES.length;
+            const POPUPS = [AMMO_CACHE_POPUP];
+
+            for (let i = 0; i < NUM_OF_INTERACTABLES; i++) {
+                const INTERACTABLE = INTERACTABLES[i];
+                const POPUP = POPUPS[i];
+                isClose = INTERACTABLE.playerIsNearInteractable(player);
+
+                managePopUp(POPUP, player, isClose);
+            }
+
+            //manages popups for all portals
+            const NUM_OF_PORTALS = PORTALS.length;
+
+            isClose = false;
+
+            if (NUM_OF_PORTALS > 0) {
+                for (let i = 0; i < NUM_OF_PORTALS; i++) {
+                    const PORTAL = PORTALS[i];
+
+                    isClose = isClose || PORTAL.playerIsInsidePortal(player); //if player is near ANY of the portals
+                }
+                managePopUp(PORTAL_POPUP, player, isClose);
             }
 
 
