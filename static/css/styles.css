@@ -8,9 +8,13 @@ html{
 }
 
 @font-face{
-    font-family: "Pixeloid Sans", "Zombik", sans-serif;
-    src: url("../fonts/PixeloidSans-JR6qo.ttf");
-    src: url("../fonts/Zombik.ttf");
+    font-family: "Pixeloid Sans";
+    src: url("./fonts/PixeloidSans-JR6qo.ttf");
+}
+
+@font-face {
+    font-family: "Zombik";
+    src: url("./fonts/ZombikRegular-nRm1M.ttf");
 }
 
 body{
