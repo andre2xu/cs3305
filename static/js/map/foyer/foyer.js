@@ -1,5 +1,5 @@
 import { PlayableArea } from '../creation.js';
-import { AmmoCache } from "../../sprites/interactable.js";
+import {AmmoCache, UpgradeBench} from "../../sprites/interactable.js";
 
 import {
     getTextureFromStaticAssetsFolder, getTextureFromStaticJSFolder
@@ -374,6 +374,10 @@ export const FOYER = (function () {
         240,
         120
     );
+
+
+
+
 
 
 

@@ -27,6 +27,7 @@ export function toggleCrosshair(container) {
 export class Weapon extends Item {
     constructor(texture) {
         super(texture);
+
     };
 
 
@@ -64,6 +65,10 @@ export class Gun extends Weapon {
 
         return this.ammoLoaded;
     };
+
+    getMaxAmmo(){
+        return this.maxAmmo
+    }
 
     getAmmoLeft() {
         return this.ammoLeft;
@@ -153,6 +158,25 @@ export class Gun extends Weapon {
 
         updateAmmoCount(this);
     };
+
+    setDamage(amount){
+        this.damage = amount
+    }
+
+    increaseDamage(amount){
+        this.damage += amount
+    }
+
+    increaseClipCapacity(amount){
+        this.clipCapacity += amount
+    }
+
+    increaseMaxAmmo(amount){
+        this.maxAmmo += amount
+    }
+
+
+
 };
 
 export class Pistol extends Gun {
@@ -168,7 +192,7 @@ export class Pistol extends Gun {
         this.clipCapacity = 12;
         this.ammoLoaded = this.clipCapacity;
         this.ammoLeft = 60;
-
+        this.maxAmmo = this.ammoLeft
         this.damage = 25;
     };
 
