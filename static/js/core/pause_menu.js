@@ -10,7 +10,7 @@ PAUSE_MENU.addEventListener('click', (event) => {
             hidePauseMenu();
         }
         else if (ACTION === 'exit') {
-            // redirect to main menu route
+            window.location.assign('/');
         }
     };
 });

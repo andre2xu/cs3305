@@ -75,7 +75,7 @@ window.addEventListener('load', () => {
 
 
     // INITIALIZING GLOBALS
-    window.timeGameStarted = new Date().getMilliseconds();
+    window.timeGameStarted = new Date();
     window.GAME_PAUSED = false;
     window.playableAreaExists = false;
     window.HOTBAR = undefined;
