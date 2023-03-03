@@ -4,6 +4,8 @@
     box-sizing:border-box
 }
 
+
+
 #pause {
     position: absolute;
     color: #fff;
@@ -40,4 +42,68 @@
 
 #pause button:hover {
     transform: scale(1.05);
+}
+
+
+
+#death-screen {
+    position: absolute;
+    color: #fff;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(74, 78, 84);
+    padding: 45px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
+    height: 40%;
+    outline: 2px solid #404042;
+    color: #2c2e30;
+}
+
+#death-screen h1 {
+    font-family: serif;
+    color: #333638;
+    margin-bottom: 15%;
+    text-shadow: 1px 1px #000000;
+}
+
+#death-screen span {
+    font-weight: bold;
+    margin-bottom: 15%;
+    font-style: italic;
+}
+
+#death-screen ul {
+    list-style-type: none;
+    font-weight: bold;
+    margin-bottom: 20%;
+    font-size: 15px;
+}
+
+#death-screen ul li {
+    margin-bottom: 5%;
+}
+
+#death-screen button {
+    background: none;
+    border: 1px solid #2c2e30;
+    padding: 1px 5px;
+    color: #2c2e30;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#death-screen button:hover {
+    transform: scale(1.1);
+}
+
+#death-screen.hide {
+    display: none;
 }
