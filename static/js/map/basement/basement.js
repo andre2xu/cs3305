@@ -1,5 +1,5 @@
 import { PlayableArea } from '../creation.js';
-import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
+import {getTextureFromStaticAssetsFolder, getTextureFromStaticJSFolder} from '../../helpers/pixi_helpers.js';
 import { PortalFill } from '../../sprites/portals.js';
 
 import {
@@ -7,6 +7,7 @@ import {
     SemiSolid,
     SemiSolidFill
 } from '../../sprites/objects.js';
+import {UpgradeBench} from "../../sprites/interactable";
 
 
 
@@ -138,6 +139,14 @@ export const BASEMENT = (function () {
         'openchest',
         BASEMENT.getWidth() - (OPEN_CHEST.getSpriteFrameDimensions().w + 340),
         BASEMENT.getHeight() - (OPEN_CHEST.getSpriteFrameDimensions().h + 5)
+    );
+
+    const UPGRADE_BENCH = new UpgradeBench(getTextureFromStaticAssetsFolder('/consumables/ammoCache.png'), 240, 140, 50, 50);
+    BASEMENT.addStaticSprite(
+        UPGRADE_BENCH,
+        "upgrade_bench1",
+        240,
+        120
     );
 
 

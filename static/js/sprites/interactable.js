@@ -50,15 +50,7 @@ export class Interactable extends Objects {
 export class AmmoCache extends Interactable {
     constructor(texture, posX, posY, frameWidth, frameHeight) {
         super(texture, posX, posY, frameWidth, frameHeight);
-
-        this.available = true;
-    };
-
-
-
-    // GETTERS
-    isEmpty() {
-        return this.available === false;
+        this.pointCost = 500
     };
 
 
@@ -67,12 +59,38 @@ export class AmmoCache extends Interactable {
     resupply(gun) {
         checks.checkIfInstance(gun, Gun);
 
-        gun.addMaxAmmo(60);
+        gun.addMaxAmmo(gun.getMaxAmmo());
 
         gun.playReloadSound();
 
-        this.available = false;
+
     };
 
 
 };
+
+
+export class UpgradeBench extends Interactable {
+    constructor(texture, posX, posY, frameWidth, frameHeight) {
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.pointCost = 1000
+    };
+
+    upgradeGun(gun,option){
+        checks.checkIfInstance(gun, Gun);
+        //true = upgrade ammo, false = upgrade damage
+        if (option){
+            gun.increaseMaxAmmo(10)
+            gun.increaseClipCapacity(3)
+        } else {
+            gun.increaseDamage(10)
+        }
+
+    }
+
+
+
+
+
+}
+

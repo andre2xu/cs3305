@@ -21,6 +21,7 @@ import {
     checkCollisionWithRightEdgesOfObstacles,
     checkCollisionWithTopEdgesOfObstacles
 } from '../core/collision.js';
+import {SOUND_ASSETS_FOLDER} from "../helpers/urls";
 
 
 
@@ -178,7 +179,7 @@ export class Player extends Entity {
 
         this.health = 100;
         this.invincibility = false;
-        this.currentPoints = 100;
+        this.currentPoints = 1000;
 
 
 
@@ -329,6 +330,7 @@ export class Enemy extends Entity {
         this.edgeCollidedWith = null;
         this.detourChosen = null;
         this.detourPointIndex = 0;
+        this.isDead = false
 
         NON_PLAYER_ENTITIES.push(this);
 
@@ -700,14 +702,22 @@ export class Enemy extends Entity {
 
         this.health -= value;
 
-        if (this.health === 0) {
-            // references to enemy get deleted so that its instance can be put in the garbage collector (memory optimization)
 
+    };
+
+    removeSelf(){
+
+        if (this.health <= 0) {
+            // references to enemy get deleted so that its instance can be put in the garbage collector (memory optimization)
+            new Audio(this.deathSoundFile).play()
             this.sprite_container.parent.removeChild(this.sprite_container);
 
             NON_PLAYER_ENTITIES.splice(NON_PLAYER_ENTITIES.indexOf(this), 1);
+            return true
         }
-    };
+        return false
+
+    }
 };
 
 export class Zombie extends Enemy {
@@ -716,6 +726,7 @@ export class Zombie extends Enemy {
 
         this.health = 100;
         this.damage = 20;
+        this.deathSoundFile = `${SOUND_ASSETS_FOLDER}/zombie-death.mp3` //https://www.fesliyanstudios.com/royalty-free-sound-effects-download/zombie-174
 
         this.setSpeed(0.5);
     };
