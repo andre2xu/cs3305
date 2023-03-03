@@ -5,6 +5,11 @@ import { Item } from '../sprites/base/base.js';
 import { updatePlayerHealthStatus } from '../core/hud.js';
 
 import {
+    showDeathScreen,
+    hideDeathScreen
+} from '../core/death_screen.js';
+
+import {
     toggleCrosshair,
     Weapon,
     Gun
@@ -316,6 +321,12 @@ export class Player extends Entity {
 
         if (this.health < 0) {
             this.health = 0;
+        }
+
+        if (this.health === 0) {
+            this.sprite.parent.removeChild(this.sprite); // un-renders player
+
+            showDeathScreen();
         }
     };
 };

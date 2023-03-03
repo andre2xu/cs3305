@@ -4,7 +4,8 @@
   "description": "3rd year team project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle_a": "parcel ./static/js/dev/andrew/test.js --dist-dir ./static/build",
+    "bundle_n": "parcel ./static/js/dev/nathaniel/test.js --dist-dir ./static/build"
   },
   
   "targets": {

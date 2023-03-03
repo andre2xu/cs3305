@@ -1505,6 +1505,7 @@ var _baseJs = require("./base/base.js");
 var _collisionJs = require("../core/collision.js");
 var _baseJs1 = require("../sprites/base/base.js");
 var _hudJs = require("../core/hud.js");
+var _deathScreenJs = require("../core/death_screen.js");
 var _weaponsJs = require("./weapons.js");
 var _objectsJs = require("../sprites/objects.js");
 class Entity extends (0, _baseJs.Sprite) {
@@ -1679,6 +1680,10 @@ class Player extends Entity {
         this.showDamage();
         (0, _hudJs.updatePlayerHealthStatus)(this.health);
         if (this.health < 0) this.health = 0;
+        if (this.health === 0) {
+            this.sprite.parent.removeChild(this.sprite); // un-renders player
+            (0, _deathScreenJs.showDeathScreen)();
+        }
     }
 }
 class Enemy extends Entity {
@@ -1929,7 +1934,7 @@ class Zombie extends Enemy {
     }
 }
 
-},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","../core/collision.js":"3zsV5","../sprites/base/base.js":"bXEua","../core/hud.js":"3PEGa","./weapons.js":"gRu1U","../sprites/objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bXEua":[function(require,module,exports) {
+},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","../core/collision.js":"3zsV5","../sprites/base/base.js":"bXEua","../core/hud.js":"3PEGa","./weapons.js":"gRu1U","../sprites/objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../core/death_screen.js":"l0hrc"}],"bXEua":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Sprite", ()=>Sprite);
@@ -2652,7 +2657,24 @@ class SemiSolidFill extends ObstacleFill {
     }
 }
 
-},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a1CCR":[function(require,module,exports) {
+},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l0hrc":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "showDeathScreen", ()=>showDeathScreen);
+const DEATH_SCREEN = document.getElementById("death-screen");
+DEATH_SCREEN.addEventListener("click", (event)=>{
+    const ELEMENT_CLICKED = event.target;
+    if (ELEMENT_CLICKED.tagName === "BUTTON") {
+        const ACTION = ELEMENT_CLICKED.getAttribute("data-action");
+        ACTION;
+    }
+});
+function showDeathScreen() {
+    window.GAME_PAUSED = true;
+    DEATH_SCREEN.classList.remove("hide");
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a1CCR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "INTERACTABLES", ()=>INTERACTABLES);
