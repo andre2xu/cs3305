@@ -14,7 +14,26 @@
 
   <title>SpriteZ</title>
 
+  <script type="text/javascript">
+    window.onload = function() 
+    {
+        setInterval(fade_out, 200);
+    }
+
+    function fade_out() 
+    {
+      {
+        var h1_sprite = document.getElementById('Sprite');
+        h1_sprite.style.opacity = h1_sprite.style.opacity == 0 ? 1 : 0;
+        h1_sprite.style.transition = "opacity 0.5s ease-in-out";
+        var h1_zee = document.getElementById('Zee');
+        h1_zee.style.opacity = h1_zee.style.opacity == 0 ? 1 : 0;
+        h1_zee.style.transition = "opacity 0.5s ease-in-out";
+      }       
+    }
+</script>
 </head>
+
 <body>
   <header>
     <h1 id="Sprite" >Sprite</h1>
@@ -28,6 +47,7 @@
           <a href="{{ url_for('register') }}">Sign Up</a>
           <a href="{{ url_for('login') }}">Login</a>
           <a href="{{ url_for('help') }}">Help</a>
+          <a href="{{ url_for('credits') }}">Credits</a>
           {% endif %}
       </ul>
     </nav>      
@@ -39,7 +59,7 @@
   </main>
 
   <footer>
-    &copy; Andrew Caumban, Sharon Coffee, Kieran Curran, Nathaniel Minghim, Elaine O'Sullivan
+    &copy; See credits
   </footer>
   <embed src="../static/assets/sounds/Demented-Nightmare-MP3.mp3" loop="true" autostart="true" width="2" height="0">
 </body>

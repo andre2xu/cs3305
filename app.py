@@ -112,6 +112,12 @@ def help():
     return render_template("help.html")
 
 
+""" Decorator for credits page """
+@app.route("/credits", methods=["GET", "POST"])
+def credits():
+    return render_template("credits.html", title="Credits")
+
+
 """Decorator to display the startgame.html page"""
 @app.route("/startgame", methods=["GET", "POST"])
 @login_required
