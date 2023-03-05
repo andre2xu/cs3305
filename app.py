@@ -148,8 +148,8 @@ def settings():
 """Decorator to store the score of the player"""
 @app.route("/store_score", methods=["GET", "POST"])
 @login_required
-def store_score():
-    score = int(request.form["score"])
+def store_score(data):
+    score = data
     db = get_db()
     username = g.user
     # additional validators
@@ -183,6 +183,10 @@ def leaderboard():
 def quit():
     session.clear()
     return redirect(url_for("index"))
+
+@app.route("/credit", methods=["GET", "POST"])
+def credit():
+    return render_template("credit.html", title = "Credits")
 
 
 """Decorator for error handling"""
