@@ -43,5 +43,15 @@ export function showDeathScreen() {
 
 
 
+    const XHR = new XMLHttpRequest();
+    XHR.open('POST', '/store_score');
+    XHR.setRequestHeader('Content-Type', 'application/json');
+    XHR.send(JSON.stringify({
+        millisecondsSurvived: MS_ELAPSED,
+        pointsEarned: 0
+    }));
+
+
+
     DEATH_SCREEN.classList.remove('hide');
 };
