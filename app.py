@@ -152,21 +152,32 @@ def settings():
 
 
 """Decorator to store the score of the player"""
-@app.route("/store_score", methods=["GET", "POST"])
+@app.route("/store_score", methods=["POST"])
 @login_required
-def store_score(data):
-    score = data
-    db = get_db()
-    username = g.user
-    # additional validators
-    if score <= 0:
-        return "Score is below zero."
-    # Here insert the score into the database
-    else:
-        db.execute("""INSERT INTO scores (username, score) VALUES (?, ?);""", (username, score))
-        db.commit()
-        # if update is successful return success, otherwise return failure
-    return "success"
+def store_score():
+    # { millisecondsSurvived: ?, pointsEarned: ? }
+    game_data = request.get_json()
+
+    time_survived = game_data['millisecondsSurvived']
+    points_earned = game_data['pointsEarned']
+
+
+
+    # score = data
+    # db = get_db()
+    # username = g.user
+    # # additional validators
+    # if score <= 0:
+    #     return "Score is below zero."
+    # # Here insert the score into the database
+    # else:
+    #     db.execute("""INSERT INTO scores (username, score) VALUES (?, ?);""", (username, score))
+    #     db.commit()
+    #     # if update is successful return success, otherwise return failure
+
+
+
+    return "" # leave this as an empty string. Also, no other return is needed
 
 
 """Decorator to view the leaderboard"""
