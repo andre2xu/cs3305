@@ -187,13 +187,7 @@ window.addEventListener("load", ()=>{
     // INITIALIZING WAVES
     const WAVE_SYSTEM = new (0, _waveSystemJs.WaveSystem)((0, _foyerJs.FOYER), [
         new (0, _waveJs.Wave)(0, [
-            1,
-            2
-        ], 1),
-        new (0, _waveJs.Wave)(0, [
-            1,
-            1,
-            2
+            1
         ], 1)
     ], 5);
     // PLAYER
@@ -389,10 +383,16 @@ window.addEventListener("load", ()=>{
                     (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
                 }
             }
-            // moves enemies
-            NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
-            if (NUM_OF_ENTITIES > 0) for(let i = 0; i < (0, _collisionJs.NON_PLAYER_ENTITIES).length; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].moveToPlayer(player);
-        }
+        // moves enemies
+        /*
+            NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
+            if (NUM_OF_ENTITIES > 0) {
+                for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
+                    NON_PLAYER_ENTITIES[i].moveToPlayer(player);
+                }
+            }
+            */ }
     });
 });
 

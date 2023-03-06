@@ -86,8 +86,8 @@ window.addEventListener('load', () => {
     const WAVE_SYSTEM = new WaveSystem(
         FOYER,
         [
-            new Wave(0, [1,2], 1),
-            new Wave(0, [1,1,2], 1)
+            new Wave(0, [1], 1),
+            // new Wave(0, [1,1,2], 1)
         ],
         5
     );
@@ -404,6 +404,7 @@ window.addEventListener('load', () => {
             }
 
             // moves enemies
+            /*
             NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
             if (NUM_OF_ENTITIES > 0) {
@@ -411,6 +412,7 @@ window.addEventListener('load', () => {
                     NON_PLAYER_ENTITIES[i].moveToPlayer(player);
                 }
             }
+            */
         }
     });
 });
