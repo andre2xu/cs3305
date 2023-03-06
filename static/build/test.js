@@ -370,7 +370,7 @@ window.addEventListener("load", ()=>{
                 INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
                 isClose = INTERACTABLE.playerIsNearInteractable(player);
                 if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache)) (0, _popupsJs.managePopUp)(POPUPS[0], player, isClose);
-                if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench)) (0, _popupsJs.managePopUp)(POPUPS[1], player, isClose);
+                else if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench)) (0, _popupsJs.managePopUp)(POPUPS[1], player, isClose);
             }
             //manages popups for all portals
             const NUM_OF_PORTALS = (0, _portalsJs.PORTALS).length;
@@ -389,9 +389,7 @@ window.addEventListener("load", ()=>{
                     (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
                 }
             }
-            // }
             // moves enemies
-            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
             NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
             if (NUM_OF_ENTITIES > 0) for(let i = 0; i < (0, _collisionJs.NON_PLAYER_ENTITIES).length; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].moveToPlayer(player);
         }
@@ -2341,6 +2339,13 @@ function showDeathScreen() {
     if (MINS > 0.1) mins = MINS;
     if (SECS > 0.1) secs = SECS;
     TIME_SURVIVED.innerText = `${hrs}h:${mins}m:${secs}s`;
+    const XHR = new XMLHttpRequest();
+    XHR.open("POST", "/store_score");
+    XHR.setRequestHeader("Content-Type", "application/json");
+    XHR.send(JSON.stringify({
+        millisecondsSurvived: MS_ELAPSED,
+        pointsEarned: 0
+    }));
     DEATH_SCREEN.classList.remove("hide");
 }
 
