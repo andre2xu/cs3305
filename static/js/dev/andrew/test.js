@@ -352,28 +352,32 @@ window.addEventListener('load', () => {
                 WAVE_SYSTEM.moveToNextWaveIfFinished();
             }
 
-            let isClose = false
+            let isClose = false;
+
             //manages popups for all interactables
             //still need to make popup for when ammo cache is empty
             const NUM_OF_INTERACTABLES = INTERACTABLES.length;
-            const POPUPS = [AMMO_CACHE_POPUP,UPGRADE_BENCH_POPUP]
+            const POPUPS = [
+                AMMO_CACHE_POPUP,
+                UPGRADE_BENCH_POPUP
+            ];
             var INTERACTABLE;
             var POPUP;
+
             for (let i = 0; i < INTERACTABLES.length; i++) {
                 INTERACTABLE = INTERACTABLES[i];
 
 
-                isClose = INTERACTABLE.playerIsNearInteractable(player)
-               if (INTERACTABLE instanceof AmmoCache){
-                   managePopUp(POPUPS[0], player, isClose)
-               }
-               if (INTERACTABLE instanceof UpgradeBench){
-                   managePopUp(POPUPS[1], player, isClose)
-               }
+                isClose = INTERACTABLE.playerIsNearInteractable(player);
 
-
-
+                if (INTERACTABLE instanceof AmmoCache){
+                    managePopUp(POPUPS[0], player, isClose)
+                }
+                else if (INTERACTABLE instanceof UpgradeBench){
+                    managePopUp(POPUPS[1], player, isClose)
+                }
             }
+
             //manages popups for all portals
             const NUM_OF_PORTALS = PORTALS.length;
 
@@ -383,36 +387,25 @@ window.addEventListener('load', () => {
                 const PORTAL = PORTALS[i];
 
                 isClose = isClose || PORTAL.playerIsInsidePortal(player) //if player is near ANY of the portals
-
-
             }
-            managePopUp(PORTAL_POPUP, player, isClose)
+
+            managePopUp(PORTAL_POPUP, player, isClose);
 
             let NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
 
-
             if (NUM_OF_ENTITIES > 0) {
                 for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
-                    if (NON_PLAYER_ENTITIES[i].removeSelf()){
-                        player.currentPoints += 100
-                        updatePlayerPointsText(player.currentPoints)
+                    if (NON_PLAYER_ENTITIES[i].removeSelf()) {
+                        player.currentPoints += 100;
 
+                        updatePlayerPointsText(player.currentPoints);
                     }
                 }
             }
 
-
-        // }
-
-
-
-
-
-
-
             // moves enemies
-            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
-            NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length
+            NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
             if (NUM_OF_ENTITIES > 0) {
                 for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
                     NON_PLAYER_ENTITIES[i].moveToPlayer(player);
