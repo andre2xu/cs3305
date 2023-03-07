@@ -1,2 +1,2953 @@
-(()=>{function t(t){return t&&t.__esModule?t.default:t}function e(t){if("string"!=typeof t)throw TypeError("Not a string")}function i(t){if("number"!=typeof t)throw TypeError("Not an integer or float")}function s(t,e){if(!(e instanceof Object))throw TypeError("Not a class");{const t=Object.getOwnPropertyDescriptors(e);if(void 0===t.prototype||void 0===t.prototype.writable||!0===t.prototype.writable)throw TypeError("Not a class")}if(t instanceof e==!1)throw TypeError("Not an instance of "+e.name)}function n(t){if(void 0===t.constructor||null===t.constructor||t.constructor!==Object)throw TypeError("Not an object")}function o(t){if("function"!=typeof t||"[object Function]"!==Object.prototype.toString.call(t))throw TypeError("Not a function")}function r(t){if(t.constructor!==Array)throw TypeError("Not an array")}class a{constructor(t,e,n,o,r){s(t,PIXI.Texture),i(e),i(n),i(o),i(r),this.sprite=new PIXI.Sprite(t),this.spriteFrameWidth=o,this.spriteFrameHeight=r,this.sprite_container=new PIXI.Container,this.sprite_container.addChild(this.sprite),this.sprite_container.x=e,this.sprite_container.y=n,this.original_tint=this.sprite.tint,this.frameMask=null,this.frames={},this.currentFrame=null,this.isFlippedHorizontally=!1,this.isFlippedVertically=!1,this.events={}}getLeftPosX(){return this.isFlippedHorizontally?this.sprite_container.x-this.spriteFrameWidth:this.sprite_container.x}getLeftPosY(){return this.isFlippedVertically?this.sprite_container.y-this.spriteFrameHeight:this.sprite_container.y}getRightPosX(){return this.isFlippedHorizontally?this.sprite_container.x:this.sprite_container.x+this.spriteFrameWidth}getRightPosY(){return this.isFlippedVertically?this.sprite_container.y:this.sprite_container.y+this.spriteFrameHeight}getCenterCoordinates(){return{x:this.getLeftPosX()+this.getHalfWidth(),y:this.getLeftPosY()+this.getHalfHeight()}}getSpriteFrameDimensions(){return{w:this.spriteFrameWidth,h:this.spriteFrameHeight}}getHalfWidth(){return.5*this.spriteFrameWidth}getHalfHeight(){return.5*this.spriteFrameHeight}getCurrentFrame(){return this.currentFrame}getSprite(){return this.sprite_container}__setFrameMask__(t,e,s,n){i(t),i(e),i(s),i(n),this.sprite_container.removeChild(this.frameMask);const o=new PIXI.Graphics;o.beginFill("black"),o.drawRect(t,e,s,n),o.endFill(),this.sprite.mask=o,this.sprite_container.addChild(o),this.frameMask=o,this.spriteFrameWidth=s,this.spriteFrameHeight=n}setPosition(t,e){i(t),i(e),this.sprite_container.x=t,this.sprite_container.y=e}addEvent(t,i){if(e(t),o(i),void 0===this.events[t])throw ReferenceError("Not a valid event");this.events[t].push(i)}addFrame(t,s,n,o,r){e(t),i(s),i(n),i(o),i(r),this.frames[t]={x:s,y:n,w:o,h:r}}addFrames(t){n(t);const e=Object.keys(t),i=e.length;if(i>0)for(let s=0;s<i;s++){const i=e[s],n=t[i];this.addFrame(i,n.x,n.y,n.w,n.h)}}switchFrame(t){const e=this.frames[t];this.sprite.x=-e.x,this.sprite.y=-e.y,this.__setFrameMask__(0,0,e.w,e.h),this.currentFrame=t;const i=this.events.onChangeFrame;if(null!=i){const t=i,e=t.length;for(let i=0;i<e;i++)t[i]({currentFrame:this.currentFrame})}}flipHorizontally(){this.isFlippedHorizontally?(this.sprite_container.scale.x=1,this.sprite_container.x-=this.spriteFrameWidth,this.isFlippedHorizontally=!1):(this.sprite_container.scale.x=-1,this.sprite_container.x+=this.spriteFrameWidth,this.isFlippedHorizontally=!0)}flipVertically(){this.isFlippedVertically?(this.sprite_container.scale.y=1,this.sprite_container.y-=this.spriteFrameHeight,this.isFlippedVertically=!1):(this.sprite_container.scale.y=-1,this.sprite_container.y+=this.spriteFrameHeight,this.isFlippedVertically=!0)}}class h{constructor(t,e,s,n,o){i(t),i(e),i(s),i(n),i(o),this.FILL=new PIXI.Graphics,this.FILL.beginFill(t),this.FILL.drawRect(0,0,n,o),this.FILL.endFill(),this.sprite=this.FILL,this.sprite.x=e,this.sprite.y=s,this.fillWidth=n,this.fillHeight=o}getLeftPosX(){return this.sprite.x}getLeftPosY(){return this.sprite.y}getRightPosX(){return this.sprite.x+this.fillWidth}getRightPosY(){return this.sprite.y+this.fillHeight}getCenterCoordinates(){return{x:this.getLeftPosX()+this.getHalfWidth(),y:this.getLeftPosY()+this.getHalfHeight()}}getFillDimensions(){return{w:this.fillWidth,h:this.fillHeight}}getHalfWidth(){return.5*this.fillWidth}getHalfHeight(){return.5*this.fillHeight}getSprite(){return this.sprite}setPosition(t,e){i(t),i(e),this.sprite.x=t,this.sprite.y=e}setFillDimensions(t,e){i(t),i(e),this.fillWidth=t,this.fillHeight=e}setAlpha(t){if(i(t),t<0||t>1)throw Error("Alpha must be a value between 0 and 1.");this.FILL.alpha=t}}class l{constructor(t){s(t,PIXI.Texture),this.texture=t,this.icon=new PIXI.Sprite(t)}getIcon(){return this.icon}}const d=window.location.href,c=`${d.substring(0,d.indexOf("/static/"))}/static`,g=`${c}/js`,u=`${c}/assets`,p=`${u}/sounds`;function m(t){s(t,PIXI.Container),void 0!==window.HOTBAR&&null!==window.HOTBAR&&(window.HOTBAR.getSelItem()instanceof w?t.cursor=`url(${u}/guns/crosshair.png), auto`:t.cursor="auto")}class f extends l{constructor(t){super(t)}createCopy(t,e,n,o,r){s(t,PIXI.Texture),i(e),i(n),i(o),i(r);const a=new PIXI.Sprite(this.texture);return a.x=e,a.y=n,a.width=o,a.height=r,a}}class w extends f{constructor(t){super(t)}getAmmoLoaded(){return this.ammoLoaded<0?0:this.ammoLoaded}getMaxAmmo(){return this.maxAmmo}getAmmoLeft(){return this.ammoLeft}getClipCapacity(){return this.clipCapacity}playGunFireSound(){new Audio(this.gunFireSoundFile).play()}playReloadSound(){const t=new Audio(this.reloadSoundFile);return t.play(),t}getDamage(){return this.damage}fire(){"semi-auto"===this.mode&&(this.ammoLoaded-=1),this.ammoLoaded>-1&&(this.playGunFireSound(),I(this)),0===this.ammoLoaded&&this.ammoLeft>0&&this.reload()}reload(){this.playReloadSound(),setTimeout((()=>{if(this.ammoLoaded<=0)this.ammoLeft>=12?(this.ammoLeft-=this.clipCapacity,this.ammoLoaded=this.clipCapacity):this.ammoLeft<12&&(this.ammoLoaded=this.ammoLeft,this.ammoLeft-=this.ammoLeft);else if(this.ammoLoaded>0){const t=this.clipCapacity-this.ammoLoaded;this.ammoLeft>=t?(this.ammoLoaded+=t,this.ammoLeft-=t):this.ammoLeft<t&&(this.ammoLoaded+=this.ammoLeft,this.ammoLeft-=this.ammoLeft)}I(this)}),this.reloadDuration)}addMaxAmmo(t){this.ammoLeft=t,I(this)}setDamage(t){this.damage=t}increaseDamage(t){this.damage+=t}increaseClipCapacity(t){this.clipCapacity+=t}increaseMaxAmmo(t){this.maxAmmo+=t}}class y extends w{constructor(t){super(t),this.gunFireSoundFile=`${p}/pistol.mp3`,this.reloadSoundFile=`${p}/pistol_reload.mp3`,this.reloadDuration=1e3,this.mode="semi-auto",this.clipCapacity=12,this.ammoLoaded=this.clipCapacity,this.ammoLeft=60,this.maxAmmo=this.ammoLeft,this.damage=25}loadNorth(){const t=this.createCopy(this.texture,25,18,25,25);return t.scale.y=-1,t.rotation=4.6,t}loadSouth(){const t=this.createCopy(this.texture,0,20,25,25);return t.scale.y=-1,t.rotation=1.5,t}loadWest(){const t=this.createCopy(this.texture,18,8,25,25);return t.scale.x=-1,t}loadEast(){return this.createCopy(this.texture,5,8,25,25)}}const S={fontSize:20,fill:16777215},_=new PIXI.Text("Health: 100",S);function P(t){i(t),_.text="Health: "+t}_.x=20,_.y=10;const v=new PIXI.Text("Points: 1000",S);function b(t){i(t),v.text="Points: "+t}v.x=300,v.y=10;const x=new PIXI.Text("Ammo: n/a",S);function I(t){s(t,w),x.text=`Ammo: ${t.getAmmoLoaded()}/${t.getAmmoLeft()}`}function E(){x.text=""}x.x=160,x.y=10;const C=document.getElementById("death-screen"),F=document.getElementById("time-survived");document.getElementById("points-earned");function A(){window.GAME_PAUSED=!0;const t=new Date-window.timeGameStarted,e=Math.round(t/36e5),i=Math.round(t/6e4),s=Math.round(t/1e3);let n=0,o=0,r=0;e>.1&&(n=e),i>.1&&(o=i),s>.1&&(r=s),F.innerText=`${n}h:${o}m:${r}s`;const a=new XMLHttpRequest;a.open("POST","/store_score"),a.setRequestHeader("Content-Type","application/json"),a.send(JSON.stringify({millisecondsSurvived:t,pointsEarned:0})),C.classList.remove("hide")}C.addEventListener("click",(t=>{const e=t.target;if("BUTTON"===e.tagName){"exit"===e.getAttribute("data-action")&&window.location.assign("/")}}));class L extends a{constructor(t,e,i,s,n){super(t,e,i,s,n)}}class D extends L{constructor(t,e,i,s,n){super(t,e,i,s,n),this.detours={top:[],bottom:[],left:[],right:[]}}checkIfLeftEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosY()<this.getLeftPosY())&&(!(t.getLeftPosY()>this.getRightPosY())&&(!(t.getRightPosX()<this.getLeftPosX())&&!(t.getLeftPosX()>this.getLeftPosX())))}checkIfRightEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosY()<this.getLeftPosY())&&(!(t.getLeftPosY()>this.getRightPosY())&&(!(t.getLeftPosX()>this.getRightPosX())&&!(t.getRightPosX()<this.getRightPosX())))}checkIfTopEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosX()<this.getLeftPosX())&&(!(t.getLeftPosX()>this.getRightPosX())&&(!(t.getRightPosY()<this.getLeftPosY())&&!(t.getLeftPosY()>this.getLeftPosY())))}checkIfBottomEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosX()<this.getLeftPosX())&&(!(t.getLeftPosX()>this.getRightPosX())&&(!(t.getLeftPosY()>this.getRightPosY())&&!(t.getRightPosY()<this.getRightPosY())))}getDetours(t){return e(t),this.detours[t]}__addDetour__(t,s){r(t),e(s);const o=t.length;for(let e=0;e<o;e++){const s=t[e];if(n(s),void 0===s.x||void 0===s.y)throw SyntaxError(`Element ${e} is not a valid point object. It must have an x and a y property`);i(s.x),i(s.y)}this.detours[s].push(t)}addBottomEdgeDetour(t){this.__addDetour__(t,"bottom")}addTopEdgeDetour(t){this.__addDetour__(t,"top")}addLeftEdgeDetour(t){this.__addDetour__(t,"left")}addRightEdgeDetour(t){this.__addDetour__(t,"right")}}class R extends L{constructor(t,e,i,s,n){super(t,e,i,s,n)}}class T extends D{constructor(t,e,i,s,n){super(t,e,i,s,n),this.boundaryLeftX=0,this.boundaryLeftY=0,this.boundaryRightX=0,this.boundaryRightY=0}modifyCollisionBoundary(t,e,s,n){null!=t&&(i(t),this.boundaryLeftX=t),null!=e&&(i(e),this.boundaryLeftY=e),null!=s&&(i(s),this.boundaryRightX=s),null!=n&&(i(n),this.boundaryRightY=n)}getLeftPosX(){return this.isFlippedHorizontally?this.sprite_container.x+this.boundaryLeftX-this.spriteFrameWidth:this.sprite_container.x+this.boundaryLeftX}getLeftPosY(){return this.isFlippedVertically?this.sprite_container.y+this.boundaryLeftY-this.spriteFrameHeight:this.sprite_container.y+this.boundaryLeftY}getRightPosX(){return this.isFlippedHorizontally?this.sprite_container.x+this.boundaryLeftX:this.sprite_container.x+(this.spriteFrameWidth+this.boundaryRightX)}getRightPosY(){return this.isFlippedVertically?this.sprite_container.y+this.boundaryLeftY:this.sprite_container.y+(this.spriteFrameHeight+this.boundaryRightY)}}class H extends h{constructor(t,e,i,s,n){super(t,e,i,s,n),this.detours={top:[],bottom:[],left:[],right:[]}}checkIfLeftEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosY()<this.getLeftPosY())&&(!(t.getLeftPosY()>this.getRightPosY())&&(!(t.getRightPosX()<this.getLeftPosX())&&!(t.getLeftPosX()>this.getLeftPosX())))}checkIfRightEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosY()<this.getLeftPosY())&&(!(t.getLeftPosY()>this.getRightPosY())&&(!(t.getLeftPosX()>this.getRightPosX())&&!(t.getRightPosX()<this.getRightPosX())))}checkIfTopEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosX()<this.getLeftPosX())&&(!(t.getLeftPosX()>this.getRightPosX())&&(!(t.getRightPosY()<this.getLeftPosY())&&!(t.getLeftPosY()>this.getLeftPosY())))}checkIfBottomEdgeCollisionOccurred(t){return s(t,a),!(t.getRightPosX()<this.getLeftPosX())&&(!(t.getLeftPosX()>this.getRightPosX())&&(!(t.getLeftPosY()>this.getRightPosY())&&!(t.getRightPosY()<this.getRightPosY())))}getDetours(t){return e(t),this.detours[t]}__addDetour__(t,s){r(t),e(s);const o=t.length;for(let e=0;e<o;e++){const s=t[e];if(n(s),void 0===s.x||void 0===s.y)throw SyntaxError(`Element ${e} is not a valid point object. It must have an x and a y property`);i(s.x),i(s.y)}this.detours[s].push(t)}addBottomEdgeDetour(t){this.__addDetour__(t,"bottom")}addTopEdgeDetour(t){this.__addDetour__(t,"top")}addLeftEdgeDetour(t){this.__addDetour__(t,"left")}addRightEdgeDetour(t){this.__addDetour__(t,"right")}}class O extends h{constructor(t,e,i,s,n){super(t,e,i,s,n)}}class X extends H{constructor(t,e,i,s,n){super(t,e,i,s,n),this.boundaryLeftX=0,this.boundaryLeftY=0,this.boundaryRightX=0,this.boundaryRightY=0}modifyCollisionBoundary(t,e,s,n){null!=t&&(i(t),this.boundaryLeftX=t),null!=e&&(i(e),this.boundaryLeftY=e),null!=s&&(i(s),this.boundaryRightX=s),null!=n&&(i(n),this.boundaryRightY=n)}getLeftPosX(){return this.sprite.x+this.boundaryLeftX}getLeftPosY(){return this.sprite.y+this.boundaryLeftY}getRightPosX(){return this.sprite.x+(this.fillWidth+this.boundaryRightX)}getRightPosY(){return this.sprite.y+(this.fillHeight+this.boundaryRightY)}}class Y extends a{constructor(t,e,i,s,n){super(t,e,i,s,n),this.movementOffset=5,this.events={move:[],onChangeFrame:[]},this.itemInstance=null,this.equippedItem=null,this.addEvent("onChangeFrame",(()=>{null!==this.itemInstance&&(this.sprite_container.removeChild(this.equippedItem),this.itemInstance instanceof f&&this.__renderWeapon__(this.itemInstance,this.currentFrame))}))}__renderWeapon__(t,i){if(s(t,f),e(i),"n"===i||"nl"===i||"nr"===i)return this.equippedItem=t.loadNorth(),void this.sprite_container.addChildAt(this.equippedItem,0);"s"===i||"sl"===i||"sr"===i?this.equippedItem=t.loadSouth():"w"===i||"wl"===i||"wr"===i?this.equippedItem=t.loadWest():"e"!==i&&"el"!==i&&"er"!==i||(this.equippedItem=t.loadEast()),this.sprite_container.addChild(this.equippedItem)}getSpeed(){return this.movementOffset}equip(t){s(t,l),this.itemInstance=t,t instanceof f&&this.__renderWeapon__(t,this.currentFrame)}unequip(){this.sprite_container.removeChild(this.equippedItem),this.itemInstance=null,this.equippedItem=null}showDamage(){this.sprite.tint=16711680}hideDamage(){this.sprite.tint=this.original_tint}setSpeed(t){i(t),this.movementOffset=t}moveSprite(t,e){i(t),i(e),this.sprite_container.x+=t,this.sprite_container.y+=e;const s=this.events.move;if(null!=s){const t=s,e=t.length;for(let i=0;i<e;i++)t[i]({currentFrame:this.currentFrame})}}moveSpriteNorth(){this.moveSprite(0,-this.movementOffset)}moveSpriteNorthWest(){this.moveSprite(-this.movementOffset,-this.movementOffset)}moveSpriteNorthEast(){this.moveSprite(this.movementOffset,-this.movementOffset)}moveSpriteWest(){this.moveSprite(-this.movementOffset,0)}moveSpriteEast(){this.moveSprite(this.movementOffset,0)}moveSpriteSouth(){this.moveSprite(0,this.movementOffset)}moveSpriteSouthWest(){this.moveSprite(-this.movementOffset,this.movementOffset)}moveSpriteSouthEast(){this.moveSprite(this.movementOffset,this.movementOffset)}}class W extends Y{constructor(t,e,i,s,n){super(t,e,i,s,n),this.health=100,this.invincibility=!1,this.currentPoints=1e3;let o=null;this.addEvent("move",(t=>{clearTimeout(o),o=setTimeout((()=>{this.rotateToMouse()}),100),(new Date).getMilliseconds()%2==0&&("s"===t.currentFrame||"sr"===t.currentFrame?this.switchFrame("sl"):"sl"===t.currentFrame?this.switchFrame("sr"):"e"===t.currentFrame||"er"===t.currentFrame?this.switchFrame("el"):"w"===t.currentFrame||"wr"===t.currentFrame?this.switchFrame("wl"):"wl"===t.currentFrame?this.switchFrame("wr"):"e"===t.currentFrame||"er"===t.currentFrame?this.switchFrame("el"):"el"===t.currentFrame?this.switchFrame("er"):"n"===t.currentFrame||"nr"===t.currentFrame?this.switchFrame("nl"):"nl"===t.currentFrame&&this.switchFrame("nr"))}))}isInvincible(){return this.invincibility}getHealth(){return this.health}rotateToMouse(){const t=this.getCenterCoordinates();let e=this.sprite_container.parent,i=t.x+e.x,s=t.y+e.y;for(;null!==e.parent;)e=e.parent,i+=e.x,s+=e.y;const n=window.mouseX-i,o=window.mouseY-s,r=Math.round(180*Math.atan2(o,n)/Math.PI);r>=-145&&r<=-45?this.switchFrame("n"):r>=-180&&r<-145||r<=180&&r>145?this.switchFrame("w"):r<=145&&r>45?this.switchFrame("s"):(r>=0&&r<=45||r<0&&r>-45)&&this.switchFrame("e")}activateInvincibility(){this.invincibility=!0,setTimeout((()=>{this.invincibility=!1,this.hideDamage()}),1e3)}setHealth(t){i(t),this.health=t}increaseHealth(t){i(t),this.health+=t,this.health>100&&(this.health=100),P(this.health)}decreaseHealth(t){i(t),this.health-=t,this.showDamage(),P(this.health),this.health<0&&(this.health=0),0===this.health&&(this.sprite.parent.removeChild(this.sprite),A())}}class B extends Y{constructor(t,e,i,s,n){super(t,e,i,s,n),this.navigationMode=0,this.objectCollidedWith=null,this.edgeCollidedWith=null,this.detourChosen=null,this.detourPointIndex=0,this.isDead=!1,k.push(this),this.sprite_container.interactive=!0,this.sprite_container.on("mousedown",(t=>{if(t.stopPropagation(),void 0!==window.HOTBAR&&null!==window.HOTBAR){const t=window.HOTBAR.getSelItem();t instanceof w&&(t.fire(),t.ammoLoaded>0&&(this.decreaseHealth(t.getDamage()),this.showDamage(),setTimeout((()=>{this.hideDamage()}),500)))}})),this.sprite_container.on("mousemove",(()=>{m(this.sprite_container)}))}__getMoveDirectionFromAngle__(t){return i(t),t>=-120&&t<=-60?"n":t>=-150&&t<=-120?"nw":t>=-180&&t<=-150||t<=180&&t>=150?"w":t<=150&&t>=120?"sw":t<=120&&t>=60?"s":t<=60&&t>=30?"se":t<=30&&t>=0||t<=0&&t>=-30?"e":t<=-30&&t>=-60?"ne":void 0}__getEnemyXandYDistanceFromPlayer__(t){s(t,W);const e=t.getSprite(),i=t.getCenterCoordinates(),n=this.getCenterCoordinates();return{dx:i.x+e.x-(n.x+this.sprite_container.x),dy:i.y+e.y-(n.y+this.sprite_container.y)}}__getAngleToPlayer__(t){const e=this.__getEnemyXandYDistanceFromPlayer__(t);return Math.round(180*Math.atan2(e.dy,e.dx)/Math.PI)}getClosestDetour(t,i){if(t instanceof D==!1&&t instanceof H==!1)return;if(e(i),"bottom"!==(i=i.toLowerCase())&&"top"!==i&&"left"!==i&&"right"!==i)throw ReferenceError("Edge can only be one of the following: top, bottom, left, right");const s=t.getDetours(i),n=this.getCenterCoordinates();let o=null,r=null;const a=s.length;for(let t=0;t<a;t++){const e=s[t][0],i=Math.round(Math.sqrt(Math.pow(n.x-e.x,2)+Math.pow(n.y-e.y,2)));(null===o||i<r)&&(o=s[t],r=i)}return null!==o?[...o]:null}__switchFrameToAngle__(t){t>=-145&&t<=-45?this.switchFrame("n"):t>=-180&&t<-145||t<=180&&t>145?this.switchFrame("w"):t<=145&&t>45?this.switchFrame("s"):(t>=0&&t<=45||t<0&&t>-45)&&this.switchFrame("e")}rotateToPlayer(t){const e=this.__getAngleToPlayer__(t);this.__switchFrameToAngle__(e)}stopFollowingPlayerAndMoveAroundObject(t){if(n(t),t.object instanceof D==!1&&t.object instanceof H==!1)throw TypeError("Object must be an obstacle.");if(void 0===t.edge)throw SyntaxError("Collision data is missing edge information.");e(t.edge),this.navigationMode=1,this.objectCollidedWith=t.object,this.edgeCollidedWith=t.edge}stopFollowingDetourAndChasePlayerAgain(t){s(t,W),this.detourChosen=null,this.detourPointIndex=0,this.navigationMode=0,this.objectCollidedWith=null,this.edgeCollidedWith=null,this.__switchFrameToAngle__(this.__getAngleToPlayer__(t))}moveToPlayer(t){const e=this.__getAngleToPlayer__(t);if(0===this.navigationMode){const i=this.__getMoveDirectionFromAngle__(e),s=z(this),n=q(this);if("e"===i||"ne"===i||"se"===i){const t=$(this);switch(i){case"e":!1===t.status?this.moveSpriteEast():!0===t.status&&this.stopFollowingPlayerAndMoveAroundObject(t);break;case"ne":!1===s.status&&!1===t.status&&this.moveSpriteNorthEast();break;case"se":!1===n.status&&!1===t.status&&this.moveSpriteSouthEast()}}else if("w"===i||"nw"===i||"sw"===i){const t=G(this);switch(i){case"w":!1===t.status?this.moveSpriteWest():!0===t.status&&this.stopFollowingPlayerAndMoveAroundObject(t);break;case"nw":!1===s.status&&!1===t.status&&this.moveSpriteNorthWest();break;case"sw":!1===n.status&&!1===t.status&&this.moveSpriteSouthWest()}}else"n"===i?!1===s.status?this.moveSpriteNorth():!0===s.status&&this.stopFollowingPlayerAndMoveAroundObject(s):"s"===i&&(!1===n.status?this.moveSpriteSouth():!0===n.status&&this.stopFollowingPlayerAndMoveAroundObject(n));if(!1===t.isInvincible()&&t.getHealth()>0&&this.sprite.alpha>=1){const e=this.__getEnemyXandYDistanceFromPlayer__(t);Math.sqrt(Math.pow(e.dx,2)+Math.pow(e.dy,2))<=40&&this.__damagePlayer___(t)}}else if(1===this.navigationMode){const e=this.__getEnemyXandYDistanceFromPlayer__(t),i=Math.round(Math.sqrt(Math.pow(e.dx,2)+Math.pow(e.dy,2)));if(null===this.detourChosen&&null!==this.edgeCollidedWith)this.detourChosen=this.getClosestDetour(this.objectCollidedWith,this.edgeCollidedWith);else if(null!==this.detourChosen&&this.detourChosen.constructor===Array){if(this.detourChosen.length>0){const e=this.detourChosen[this.detourPointIndex],s=this.getCenterCoordinates();if(!(Math.round(Math.sqrt(Math.pow(s.x-e.x,2)+Math.pow(s.y-e.y,2)))<i))return void this.stopFollowingDetourAndChasePlayerAgain(t);this.moveToDetourPoint(e),Math.round(s.x)===e.x&&Math.round(s.y)===e.y&&(this.detourPointIndex+=1),this.detourPointIndex===this.detourChosen.length&&this.stopFollowingDetourAndChasePlayerAgain(t)}}}}moveToDetourPoint(t){if(n(t),void 0===t.x||void 0===t.y)throw SyntaxError("Point must be an object with x and y as properties.");i(t.x),i(t.y);const e=this.getCenterCoordinates(),s=Math.round(180*Math.atan2(t.y-e.y,t.x-e.x)/Math.PI);this.__switchFrameToAngle__(s);switch(this.__getMoveDirectionFromAngle__(s)){case"n":this.moveSpriteNorth();break;case"nw":this.moveSpriteNorthWest();break;case"w":this.moveSpriteWest();break;case"sw":this.moveSpriteSouthWest();break;case"s":this.moveSpriteSouth();break;case"se":this.moveSpriteSouthEast();break;case"e":this.moveSpriteEast();break;case"ne":this.moveSpriteNorthEast()}}decreaseHealth(t){i(t),this.health-=t}removeSelf(){return this.health<=0&&(new Audio(this.deathSoundFile).play(),this.sprite_container.parent.removeChild(this.sprite_container),k.splice(k.indexOf(this),1),!0)}}class N extends B{constructor(t,e,i,s,n){super(t,e,i,s,n),this.health=100,this.damage=20,this.deathSoundFile=`${p}/zombie-death.mp3`,this.setSpeed(.5)}__damagePlayer___(t){s(t,W),t.decreaseHealth(this.damage),t.activateInvincibility()}}const M=[],k=[];function j(t,e){s(t,Y);const i=M.length;if(i>0){const s=t.getSpeed(),n=t.getLeftPosX()-s,o=t.getLeftPosY()-s,r=t.getRightPosX()+s,a=t.getRightPosY()+s;for(let t=0;t<i;t++){const i=M[t],h=i.getLeftPosX(),l=i.getLeftPosY(),d=i.getRightPosX(),c=i.getRightPosY();if("top"===e){const t=a<l,e=n>=h&&r<=d,g=n<h,u=r>d,p=n>=h&&n<=d,m=r>=h&&r<=d,f=r-s;if(a>c&&a>l)continue;if(f<h&&o<c)continue;if(f<h&&a>l)continue;if(!1===t){if(e)return{status:!0,object:i,edge:"top"};if(g&&m)return{status:!0,object:i,edge:"top"};if(u&&p)return{status:!0,object:i,edge:"top"}}}else if("left"===e){const t=r<h,e=o>=l&&a<=c,g=o<l,u=a>c,p=o>=l&&o<=c,m=a>=l&&a<=c,f=a-s;if(r>h&&r>d)continue;if(f<l&&n>h)continue;if(f>c&&n>h)continue;if(!1===t){if(e)return{status:!0,object:i,edge:"left"};if(g&&m)return{status:!0,object:i,edge:"left"};if(u&&p)return{status:!0,object:i,edge:"left"}}}else if("right"===e){const t=n>d,e=o>=l&&a<=c,g=o<l,u=a>c,p=o>=l&&o<=c,m=a>=l&&a<=c,f=a-s;if(n<h&&n<d)continue;if(f<l&&r<d)continue;if(f>c&&r<d)continue;if(!1===t){if(e)return{status:!0,object:i,edge:"right"};if(g&&m)return{status:!0,object:i,edge:"right"};if(u&&p)return{status:!0,object:i,edge:"right"}}}else if("bottom"===e){const t=o>c,e=n>=h&&r<=d,g=n<h,u=r>d,p=n>=h&&n<=d,m=r>=h&&r<=d,f=n+s;if(o<c&&o<l)continue;if(f>d&&o<c)continue;if(f>d&&a>l)continue;if(!1===t){if(e)return{status:!0,object:i,edge:"bottom"};if(g&&m)return{status:!0,object:i,edge:"bottom"};if(u&&p)return{status:!0,object:i,edge:"bottom"}}}}}return{status:!1,object:void 0,edge:void 0}}function $(t){return j(t,"left")}function G(t){return j(t,"right")}function q(t){return j(t,"top")}function z(t){return j(t,"bottom")}const U=[];class V extends L{constructor(t,e,i,s,n){super(t,e,i,s,n),this.areaOfEffect=20}playerIsNearInteractable(t){s(t,W);const e=t.getCenterCoordinates(),i=e.x>this.getLeftPosX()-this.areaOfEffect&&e.x<this.getRightPosX()+this.areaOfEffect,n=e.y>this.getLeftPosY()-this.areaOfEffect&&e.y<this.getRightPosY()+this.areaOfEffect;return!(!i||!n)}setAreaOfEffect(t){i(t),this.areaOfEffect=t}}class J extends V{constructor(t,e,i,s,n){super(t,e,i,s,n),this.pointCost=500}resupply(t){s(t,w),t.addMaxAmmo(t.getMaxAmmo()),t.playReloadSound()}}class Q extends V{constructor(t,e,i,s,n){super(t,e,i,s,n),this.pointCost=1e3}upgradeGun(t,e){s(t,w),e?(t.increaseMaxAmmo(10),t.increaseClipCapacity(3)):t.increaseDamage(10)}}const K=[];class Z extends R{constructor(t,e,i,n,o,r){s(t,et),super(e,i,n,o,r),this.origin=t,this.destination=null,this.dest_X=null,this.dest_Y=null}playerIsInsidePortal(t){s(t,W);const e=t.getCenterCoordinates();return e.x>this.getLeftPosX()&&e.x<this.getRightPosX()&&e.y>this.getLeftPosY()&&e.y<this.getRightPosY()}setDestination(t,e,n){s(t,et),i(e),i(n),this.destination=t,this.dest_X=e,this.dest_Y=n}teleport(t){s(t,W);const e=this.origin.area.parent;this.origin.unload(),e.removeChild(this.origin.area),e.addChild(this.destination.load()),this.destination.addDynamicSprite(t,"player",this.dest_X,this.dest_Y)}}class tt extends O{constructor(t,e,i,n,o,r){s(t,et),super(e,i,n,o,r),this.origin=t,this.destination=null,this.dest_X=null,this.dest_Y=null}playerIsInsidePortal(t){s(t,W);const e=t.getCenterCoordinates();return e.x>this.getLeftPosX()&&e.x<this.getRightPosX()&&e.y>this.getLeftPosY()&&e.y<this.getRightPosY()}setDestination(t,e,n){s(t,et),i(e),i(n),this.destination=t,this.dest_X=e,this.dest_Y=n}teleport(t){s(t,W);const e=this.origin.area.parent;this.origin.unload(),e.removeChild(this.origin.area),e.addChild(this.destination.load()),this.destination.addDynamicSprite(t,"player",this.dest_X,this.dest_Y)}}class et{constructor(t,e){this.area=new PIXI.Container,this.width=t,this.height=e;const i=new PIXI.Graphics;i.beginFill(16777215),i.drawRect(0,0,t,e),i.endFill(),this.area.addChild(i),this.staticSprites={},this.dynamicSprites={},this.STATIC_SPRITES_CONTAINER=new PIXI.Container,this.DYNAMIC_SPRITES_CONTAINER=new PIXI.Container,this.OBSTACLES=[],this.PORTALS=[],this.INTERACTABLES=[],this.ENEMY_SPAWN_POINTS=[],this.COLORED_COORDINATES=[],this.area.interactive=!0,this.mousedownEvent=function(){if(!1===window.GAME_PAUSED&&void 0!==window.HOTBAR&&null!==window.HOTBAR){const t=window.HOTBAR.getSelItem();t instanceof w&&t.fire()}},this.mousemoveEvent=function(){m(this)},this.infinite_loop=new PIXI.Ticker,this.infinite_loop.add((()=>{this.sortSpriteOrder()}))}getLeftPosX(){return this.area.x}getLeftPosY(){return this.area.y}getRightPosX(){return this.area.x+this.area.width}getRightPosY(){return this.area.y+this.area.height}getWidth(){return this.width}getHeight(){return this.height}getHalfWidth(){return.5*this.width}getHalfHeight(){return.5*this.height}getEnemySpawnPoints(){return this.ENEMY_SPAWN_POINTS}load(){window.GAME_PAUSED=!1,this.area.addChild(this.STATIC_SPRITES_CONTAINER,this.DYNAMIC_SPRITES_CONTAINER);const t=this.COLORED_COORDINATES.length;for(let e=0;e<t;e++)this.area.addChild(this.COLORED_COORDINATES[e]);const e=this.OBSTACLES.length;for(let t=0;t<e;t++)M.push(this.OBSTACLES[t]);const i=this.PORTALS.length;for(let t=0;t<i;t++)K.push(this.PORTALS[t]);const s=this.INTERACTABLES.length;for(let t=0;t<s;t++)U.push(this.INTERACTABLES[t]);return this.infinite_loop.start(),this.area.on("mousedown",this.mousedownEvent),this.area.on("mousemove",this.mousemoveEvent),window.playableAreaExists=!0,this.area}unload(){window.GAME_PAUSED=!0,this.area.removeChild(this.STATIC_SPRITES_CONTAINER),this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);const t=Object.keys(this.dynamicSprites),e=t.length;for(let i=0;i<e;i++){const e=t[i],s=this.dynamicSprites[e];s instanceof Y&&(this.DYNAMIC_SPRITES_CONTAINER.removeChild(s.getSprite()),delete this.dynamicSprites[e])}M.splice(0,M.length),K.splice(0,K.length),U.splice(0,U.length),this.infinite_loop.stop(),this.area.off("mousedown",this.mousedownEvent),this.area.off("mousemove",this.mousemoveEvent),this.area.parent.removeChild(this.area),window.playableAreaExists=!1}setPosition(t,e){i(t),i(e),this.area.x=t,this.area.y=e}addEvent(t,i){e(t),o(i),this.area.on(t,i)}addStaticSprite(t,s,n,o){if(t instanceof a==!1&&t instanceof h==!1)throw ReferenceError(`Not an instance of ${a.name} or ${h.name}`);if(e(s),i(n),i(o),void 0!==this.staticSprites[s])throw ReferenceError(`A sprite with the id '${s}' already exists`);this.STATIC_SPRITES_CONTAINER.addChild(t.getSprite()),this.staticSprites[s]=t,t instanceof D||t instanceof H?this.OBSTACLES.push(t):t instanceof Z||t instanceof tt?this.PORTALS.push(t):t instanceof V&&this.INTERACTABLES.push(t),t.setPosition(n,o)}addDynamicSprite(t,s,n,o){if(t instanceof a==!1&&t instanceof h==!1)throw ReferenceError(`Not an instance of ${a.name} or ${h.name}`);if(e(s),i(n),i(o),void 0!==this.dynamicSprites[s])throw ReferenceError(`A sprite with the id '${s}' already exists`);this.DYNAMIC_SPRITES_CONTAINER.addChild(t.getSprite()),this.dynamicSprites[s]=t,(t instanceof D||t instanceof H)&&this.OBSTACLES.push(t),t.setPosition(n,o)}addEnemySpawnPoint(t,e,s){i(t),i(e),this.ENEMY_SPAWN_POINTS.push({x:t,y:e}),"number"==typeof s&&this.colorCoordinate(s,t,e,5,5)}sortSpriteOrder(){const t=Object.values(this.dynamicSprites);let e=t.length;if(e>0){for(let i=0;i<e;i++){null===t[i].getSprite().parent&&(t.splice(i,1),e=t.length,delete this.dynamicSprites[Object.keys(this.dynamicSprites)[i]])}let i=[];for(let s=0;s<e;s++){const e=t[s];i.push(e.getRightPosY())}i=i.sort();for(let s=0;s<e;s++){const n=i[s];for(let i=0;i<e;i++){const e=t[i];e.getRightPosY()===n&&this.DYNAMIC_SPRITES_CONTAINER.setChildIndex(e.getSprite(),s)}}}}colorCoordinate(t,e,s,n,o){i(t),i(e),i(s),i(n),i(o),n>1&&(e-=.5*n),o>1&&(s-=.5*o);const r=new PIXI.Graphics;r.beginFill(t),r.drawRect(e,s,n,o),r.endFill(),this.COLORED_COORDINATES.push(r)}__addDetour__(t,i,s,n){if(t instanceof D==!1&&t instanceof H==!1)throw TypeError("Object must be an obstacle.");switch(e(i),i){case"bottom":t.addBottomEdgeDetour(s);break;case"top":t.addTopEdgeDetour(s);break;case"left":t.addLeftEdgeDetour(s);break;case"right":t.addRightEdgeDetour(s)}if("number"==typeof n){const t=s.length;for(let e=0;e<t;e++){const t=s[e];this.colorCoordinate(n,t.x,t.y,5,5)}}}addBottomEdgeDetour(t,e,i){this.__addDetour__(t,"bottom",e,i)}addTopEdgeDetour(t,e,i){this.__addDetour__(t,"top",e,i)}addLeftEdgeDetour(t,e,i){this.__addDetour__(t,"left",e,i)}addRightEdgeDetour(t,e,i){this.__addDetour__(t,"right",e,i)}bindPlayableAreaToPortal(t,i,s,n){e(t);const o=this.staticSprites[t];if(void 0===o)throw Error("A portal with that ID does not exist.");o.setDestination(i,s,n)}}function it(t){if(e(t),"/"!==t[0])throw ReferenceError("Paths must start with /");return PIXI.Texture.from(`${g}${t}`)}function st(t){if(e(t),"/"!==t[0])throw ReferenceError("Paths must start with /");return PIXI.Texture.from(`${u}${t}`)}const nt=function(){const t=new et(512,400);t.addEnemySpawnPoint(30,250),t.addEnemySpawnPoint(t.getWidth()-30,250),t.addEnemySpawnPoint(255,t.getHeight()-30);const e=new O(7559240,0,0,512,400);t.addStaticSprite(e,"floor",0,0);const i=new X(0,0,0,t.getWidth(),10);i.modifyCollisionBoundary(null,null,null,-i.getHalfHeight()),t.addStaticSprite(i,"barrier1",0,-i.getFillDimensions().h);const s=new X(0,0,0,t.getWidth(),10);t.addStaticSprite(s,"barrier2",0,t.getHeight());const n=new X(0,0,0,10,t.getHeight());n.modifyCollisionBoundary(null,null,-3,null),t.addStaticSprite(n,"barrier3",-n.getFillDimensions().w,0);const o=new X(0,0,0,10,t.getHeight());o.modifyCollisionBoundary(-3,null,null,null),t.addStaticSprite(o,"barrier4",t.getWidth(),0);const r=new T(it("/map/foyer/assets/Door1.png"),0,0,96,48);t.addStaticSprite(r,"double_door",t.getHalfWidth()-r.getHalfWidth(),-(r.getSpriteFrameDimensions().h+1));const a=new tt(t,16711680,0,0,r.getSpriteFrameDimensions().w,40);a.setAlpha(0),t.addStaticSprite(a,"elevator",t.getHalfWidth()-r.getHalfWidth(),0);const h=new R(it("/map/foyer/assets/window.png"),0,0,105,75);t.addStaticSprite(h,"window",50,-(h.getSpriteFrameDimensions().h-5));const l=new Z(t,it("/map/foyer/assets/mat2.png"),0,0,32,34);t.addStaticSprite(l,"2f_mat",t.getWidth()-(l.getSpriteFrameDimensions().w-10),20);const d=new X(16119260,0,0,278,60);d.modifyCollisionBoundary(null,-15,null,-20),t.addBottomEdgeDetour(d,[{x:190,y:220},{x:60,y:220},{x:60,y:30}]),t.addBottomEdgeDetour(d,[{x:310,y:220},{x:455,y:220},{x:455,y:30}]),t.addLeftEdgeDetour(d,[{x:80,y:30},{x:260,y:30},{x:440,y:30},{x:440,y:200}]),t.addLeftEdgeDetour(d,[{x:60,y:170}]),t.addRightEdgeDetour(d,[{x:425,y:30},{x:260,y:30},{x:60,y:30},{x:60,y:200}]),t.addRightEdgeDetour(d,[{x:460,y:170}]),t.addTopEdgeDetour(d,[{x:180,y:30},{x:60,y:30},{x:60,y:200}]),t.addTopEdgeDetour(d,[{x:330,y:30},{x:440,y:30},{x:440,y:200}]),t.addStaticSprite(d,"wall",117,80);const c=new R(it("/map/foyer/assets/stairs.png"),0,0,117,95);t.addStaticSprite(c,"stairs1",0,d.getLeftPosY()+15);const g=new R(it("/map/foyer/assets/stairs.png"),0,0,117,95);t.addStaticSprite(g,"stairs2",t.getWidth()-g.getSpriteFrameDimensions().w,c.getLeftPosY());const u=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(u,"railing1",c.getRightPosX()+4,d.getLeftPosY()+15-5-(u.getSpriteFrameDimensions().h-5));const p=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(p,"railing2",u.getRightPosX(),u.getLeftPosY());const m=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(m,"railing3",p.getRightPosX(),p.getLeftPosY());const f=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(f,"railing4",m.getRightPosX(),m.getLeftPosY());const w=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(w,"railing5",f.getRightPosX(),f.getLeftPosY());const y=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(y,"railing6",w.getRightPosX(),w.getLeftPosY());const S=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(S,"railing7",y.getRightPosX(),y.getLeftPosY());const _=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(_,"railing8",S.getRightPosX(),S.getLeftPosY());const P=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(P,"railing9",_.getRightPosX(),_.getLeftPosY());const v=new R(it("/map/foyer/assets/railing.png"),0,0,27,18);t.addStaticSprite(v,"railing10",P.getRightPosX(),P.getLeftPosY());const b=new R(it("/map/foyer/assets/mat.png"),0,0,48,96);t.addStaticSprite(b,"1f_mat",t.getHalfWidth()-(b.getSpriteFrameDimensions().w-6),t.getHeight()-(b.getSpriteFrameDimensions().h+15));const x=new T(it("/map/foyer/assets/plantA.png"),0,0,48,96);x.modifyCollisionBoundary(null,50,null,null),t.addDynamicSprite(x,"plant1",0,t.getHeight()-(x.getSpriteFrameDimensions().h+5));const I=new T(it("/map/foyer/assets/plantA.png"),0,0,48,96);I.modifyCollisionBoundary(null,50,null,null),t.addDynamicSprite(I,"plant2",t.getWidth()-I.getSpriteFrameDimensions().w,t.getHeight()-(I.getSpriteFrameDimensions().h+5));const E=new J(st("/consumables/ammoCache.png"),240,140,50,50);return t.addStaticSprite(E,"ammo_cache1",240,120),t}(),ot=function(){const t=new et(512,256);t.addEnemySpawnPoint(t.getHalfWidth()+130,50),t.addEnemySpawnPoint(t.getHalfWidth(),t.getHeight()-30);const e=new R(it("/map/library/assets/libraryfloor.png"),0,0,512,256);t.addStaticSprite(e,"libraryfloor",0,0);const i=new X(0,0,0,t.getWidth(),10);i.modifyCollisionBoundary(null,null,null,-i.getHalfHeight()),t.addStaticSprite(i,"barrier1",0,-i.getFillDimensions().h);const s=new X(0,0,0,t.getWidth(),10);t.addStaticSprite(s,"barrier2",0,t.getHeight());const n=new X(0,0,0,10,t.getHeight());n.modifyCollisionBoundary(null,null,-3,null),t.addStaticSprite(n,"barrier3",-n.getFillDimensions().w,0);const o=new X(0,0,0,10,t.getHeight());o.modifyCollisionBoundary(-3,null,null,null),t.addStaticSprite(o,"barrier4",t.getWidth(),0);const r=new Z(t,it("/map/library/assets/mat2.png"),0,0,32,34);t.addStaticSprite(r,"2f_mat",t.getWidth()-(r.getSpriteFrameDimensions().w+495),20);const a=new T(it("/map/library/assets/bookshelf.png"),0,0,95,97);a.modifyCollisionBoundary(null,a.getSpriteFrameDimensions().h-30,null,null),t.addDynamicSprite(a,"bookshelf1",t.getWidth()-a.getSpriteFrameDimensions().w,t.getHeight()-(a.getSpriteFrameDimensions().h+50));const h=new T(it("/map/library/assets/bookshelf.png"),0,0,95,97);h.modifyCollisionBoundary(null,h.getSpriteFrameDimensions().h-30,null,null),t.addDynamicSprite(h,"bookshelf2",t.getWidth()-h.getSpriteFrameDimensions().w,0);const l=new T(it("/map/library/assets/chairA.png"),0,0,75,48);t.addStaticSprite(l,"chairA",20,t.getHeight()-(l.getSpriteFrameDimensions().h+15));const d=new T(it("/map/library/assets/chairB.png"),0,0,48,75);d.modifyCollisionBoundary(null,40,null,null),t.addDynamicSprite(d,"chairB",130,t.getHeight()-(d.getSpriteFrameDimensions().h+75));const c=new R(it("/map/library/assets/matBlue.png"),0,0,71,54);t.addStaticSprite(c,"matblue",120,t.getHeight()-(c.getSpriteFrameDimensions().h+12));const g=new T(it("/map/library/assets/tableLamp.png"),0,0,95,66);g.modifyCollisionBoundary(null,30,null,null),t.addDynamicSprite(g,"tablelamp",10,t.getHeight()-(g.getSpriteFrameDimensions().h+80));const u=new R(it("/map/library/assets/window.png"),0,0,525,75);return t.addStaticSprite(u,"window",-6,-(u.getSpriteFrameDimensions().h-5)),t}(),rt=function(){const t=new et(555,441);t.addEnemySpawnPoint(50,50),t.addEnemySpawnPoint(50,t.getHeight()-150),t.addEnemySpawnPoint(280,t.getHeight()-30);const e=new R(it("/map/basement/assets/basefloor.png"),0,0,555,441);t.addStaticSprite(e,"floor",0,0);const i=new X(0,0,0,t.getWidth(),10);i.modifyCollisionBoundary(null,null,null,-i.getHalfHeight()),t.addStaticSprite(i,"barrier1",0,-i.getFillDimensions().h);const s=new X(0,0,0,t.getWidth(),10);t.addStaticSprite(s,"barrier2",0,t.getHeight());const n=new X(0,0,0,10,t.getHeight());n.modifyCollisionBoundary(null,null,-3,null),t.addStaticSprite(n,"barrier3",-n.getFillDimensions().w,0);const o=new X(0,0,0,10,t.getHeight());o.modifyCollisionBoundary(-3,null,null,null),t.addStaticSprite(o,"barrier4",t.getWidth(),0);const r=new T(it("/map/basement/assets/baseelevator.png"),0,0,96,48);t.addStaticSprite(r,"double_door",t.getHalfWidth()-r.getHalfWidth(),-(r.getSpriteFrameDimensions().h+1));const a=new tt(t,16711680,0,0,r.getSpriteFrameDimensions().w,35);a.setAlpha(0),t.addStaticSprite(a,"elevator",r.getLeftPosX(),r.getRightPosY());const h=new T(it("/map/basement/assets/basecouch.png"),0,0,143,165);h.modifyCollisionBoundary(null,10,null,null),t.addStaticSprite(h,"basecouch",t.getHalfWidth()+h.getHalfWidth(),t.getHeight()-(h.getSpriteFrameDimensions().h+90));const l=new T(it("/map/basement/assets/fireplace.png"),0,0,94,116);l.modifyCollisionBoundary(null,30,null,-10),t.addStaticSprite(l,"fireplace",t.getHalfWidth()+h.getHalfWidth(),t.getHeight()-(h.getSpriteFrameDimensions().h+250));const d=new T(it("/map/basement/assets/brokencupboard.png"),0,0,80,108);t.addStaticSprite(d,"brokencupboard",t.getWidth()-(d.getSpriteFrameDimensions().w+450),t.getHeight()-(d.getSpriteFrameDimensions().h+5));const c=new T(it("/map/basement/assets/stackedcupboard.png"),0,0,48,107);t.addStaticSprite(c,"stackedcupboard",t.getWidth()-(c.getSpriteFrameDimensions().w+400),t.getHeight()-(c.getSpriteFrameDimensions().h+5));const g=new T(it("/map/basement/assets/openchest.png"),0,0,59,63);t.addStaticSprite(g,"openchest",t.getWidth()-(g.getSpriteFrameDimensions().w+340),t.getHeight()-(g.getSpriteFrameDimensions().h+5));const u=new Q(st("/consumables/upgradeBench.png"),240,140,50,50);return t.addStaticSprite(u,"upgrade_bench1",240,120),t}();class at{constructor(t,e,n,o,r){s(t,W),s(e,PIXI.Texture),i(n),i(o),s(r,PIXI.Texture),this.sprite=new PIXI.Sprite(e),this.inventory=[null,null,null,null,null,null,null,null],this.currentSelItem=null,this.inventoryContainer=new PIXI.Container,this.inventoryContainer.x=n,this.inventoryContainer.y=o,this.selectorSprite=new PIXI.Sprite(r),this.selectorSprite.x=-2,this.selectorSprite.y=-2,this.selectorSprite.width=36,this.selectorSprite.height=36,this.inventoryContainer.addChild(this.sprite,this.selectorSprite),this.player=t}___getPositionInInventory__(t){return i(t),(this.selectorSprite.width-4)*(t-1)-2}display(){return this.inventoryContainer}getSelItem(){return this.currentSelItem}addItem(t){s(t,l);const e=t.getIcon();this.inventoryContainer.addChild(e);const i=this.inventory.length;let n=!1;for(let s=0;s<i;s++)if(null===this.inventory[s]){this.inventory.splice(s,1,t),e.x=this.___getPositionInInventory__(s+1)+2,n=!0;break}}changeSelItem(t){this.player.unequip();const e=this.inventory[t-1];this.currentSelItem=e,e instanceof l?(this.player.equip(e),e instanceof w?I(e):E()):E(),this.selectorSprite.x=this.___getPositionInInventory__(t)}removeSelItem(){const t=this.currentSelItem.getIcon(),e=this.inventoryContainer.getChildIndex(t)-2;this.inventoryContainer.removeChild(t),this.inventory.splice(e,1,null),this.currentSelItem=null}}var ht;ht=JSON.parse('{"el":{"x":0,"y":0,"w":30,"h":46},"er":{"x":33,"y":1,"w":29,"h":46},"e":{"x":64,"y":1,"w":29,"h":47},"nl":{"x":95,"y":1,"w":30,"h":46},"nr":{"x":127,"y":1,"w":30,"h":46},"n":{"x":159,"y":1,"w":29,"h":47},"sl":{"x":190,"y":1,"w":30,"h":46},"sr":{"x":222,"y":1,"w":30,"h":46},"s":{"x":254,"y":1,"w":29,"h":46},"wl":{"x":285,"y":1,"w":29,"h":46},"w":{"x":316,"y":1,"w":29,"h":47},"wr":{"x":347,"y":1,"w":29,"h":46}}');class lt{constructor(t,e,i){r(e),this.id=t,this.batches=e,this.difficultyMod=i,this.currentBatch=0,this.toSpawnNext=[]}getNextBatch(){if(this.toSpawnNext=[],this.currentBatch>=this.batches.length)return 0;for(let e=0;e<this.batches[this.currentBatch];e++){const e=new N(st("/sprite_sheets/enemies/clothed_zombie.png"),0,0,t(ht).s.w,t(ht).s.h);this.toSpawnNext.push(e)}return this.currentBatch++,this.toSpawnNext}}class dt{constructor(t,e,n){if(s(t,et),r(e),0===e.length)throw Error("Waves cannot be empty.");e.every((t=>{if(t instanceof lt==!1)throw TypeError("All waves must be an instance of the Wave class.")})),i(n),this.map=t,this.spawnPoints=t.getEnemySpawnPoints(),this.current_wave_index=0,this.waves=e,this.current_wave=this.waves[0],this.next_wave_timeout=null,this.next_wave_delay=3e3,this.batch_delay=n,this.isBatchDone=!1,this.time=0,this.music=new Audio(`${u}/sounds/haunted-harpsichord.mp3`),this.music.volume=.1}getRandomInt(t,e){return i(t),i(e),t=Math.ceil(t),e=Math.floor(e),Math.floor(Math.random()*(e-t+1))+t}checkIfBatchDone(){return this.isBatchDone=Math.floor(Date.now()/1e3)-this.time>=this.batch_delay,this.isBatchDone}setWaveDelay(t){i(t),this.next_wave_delay=t}updatePlayableArea(t){s(t,et),this.map=t,this.spawnPoints=t.getEnemySpawnPoints()}moveToNextWaveIfFinished(){null===this.next_wave_timeout&&0===k.length&&this.current_wave_index+1<this.waves.length&&(this.waves.splice(this.waves.indexOf(this.current_wave),1,null),this.next_wave_timeout=setTimeout((()=>{this.current_wave_index++,this.current_wave=this.waves[this.current_wave_index],this.next_wave_timeout=null}),this.next_wave_delay))}spawnNextBatch(){let e=this.current_wave.getNextBatch();for(let i=0;i<e.length;i++){const s=e[i],n=s.getSpriteFrameDimensions();s.addFrames(t(ht)),s.switchFrame("n");const o=this.spawnPoints[this.getRandomInt(0,this.spawnPoints.length-1)];this.map.addDynamicSprite(s,(Date.now()*(i+1)).toString(),o.x-n.w,o.y-n.h),s.sprite.alpha=0,this.time=Math.floor(Date.now()/1e3)}}respawnBatch(){const t=k.length;if(t>0)for(let e=0;e<t;e++){const t=k[e],i=t.getSpriteFrameDimensions(),s=this.spawnPoints[this.getRandomInt(0,this.spawnPoints.length-1)];this.map.addDynamicSprite(t,`zombie${e}`,s.x-i.w,s.y-i.h),t.sprite.alpha=0,this.time=Math.floor(Date.now()/1e3)}}enemySpawnFadeIn(){const t=k.length;if(t>0)for(let e=0;e<t;e++){const t=k[e].sprite;t.alpha<1&&(t.alpha+=.01)}}playMusic(){this.music.paused&&this.music.play()}}const ct=document.getElementById("pause");function gt(){window.GAME_PAUSED=!1,ct.classList.add("hide")}ct.addEventListener("click",(t=>{const e=t.target;if("BUTTON"===e.tagName){const t=e.getAttribute("data-action");"resume"===t?gt():"exit"===t&&window.location.assign("/")}}));class ut extends l{constructor(t){super(t)}heal(t){s(t,W),t.increaseHealth(this.health)}}class pt extends ut{constructor(){super(st("/consumables/bandage_box.png")),this.health=20}}const mt={w:!1,s:!1,a:!1,d:!1};function ft(t){if(s(t,W),mt.s&&mt.d){const e=q(t).status,i=$(t).status;!1===e&&!1===i?t.moveSpriteSouthEast():e&&!1===i?t.moveSpriteEast():i&&!1===e&&t.moveSpriteSouth()}else if(mt.s&&mt.a){const e=q(t).status,i=G(t).status;!1===e&&!1===i?t.moveSpriteSouthWest():e&&!1===i?t.moveSpriteWest():i&&!1===e&&t.moveSpriteSouth()}else if(mt.w&&mt.d){const e=z(t).status,i=$(t).status;!1===e&&!1===i?t.moveSpriteNorthEast():e&&!1===i?t.moveSpriteEast():i&&!1===e&&t.moveSpriteNorth()}else if(mt.w&&mt.a){const e=z(t).status,i=G(t).status;!1===e&&!1===i?t.moveSpriteNorthWest():e&&!1===i?t.moveSpriteWest():i&&!1===e&&t.moveSpriteNorth()}else mt.w&&!1===z(t).status?t.moveSpriteNorth():mt.s&&!1===q(t).status?t.moveSpriteSouth():mt.a&&!1===G(t).status?t.moveSpriteWest():mt.d&&!1===$(t).status&&t.moveSpriteEast()}var wt;wt=JSON.parse('{"e":{"x":0,"y":0,"w":23,"h":32},"el":{"x":23,"y":0,"w":23,"h":31},"er":{"x":46,"y":0,"w":23,"h":31},"n":{"x":69,"y":0,"w":23,"h":32},"nl":{"x":92,"y":0,"w":23,"h":31},"nr":{"x":115,"y":0,"w":23,"h":31},"s":{"x":138,"y":0,"w":23,"h":33},"sl":{"x":161,"y":0,"w":23,"h":31},"sr":{"x":184,"y":0,"w":23,"h":31},"w":{"x":207,"y":0,"w":23,"h":32},"wl":{"x":230,"y":0,"w":23,"h":31},"wr":{"x":253,"y":0,"w":23,"h":31}}');const yt={fontSize:20,fill:16777215},St=new PIXI.Text("Press E to refill ammo.(500)",yt);St.alpha=0;const _t=new PIXI.Text("Press Q to change rooms.",yt);_t.alpha=0;const Pt=new PIXI.Text("CHOOSE UPGRADE(1000): E: Ammo and clip size. T: Damage",yt);function vt(t,e,i){i?t.alpha<1&&(t.alpha+=.01):t.alpha>0&&(t.alpha-=.01)}Pt.alpha=0,St.anchor.set(.5),St.x=window.innerWidth/2,St.y=20,_t.anchor.set(.5),_t.x=window.innerWidth/2,_t.y=20,Pt.anchor.set(.5),Pt.x=window.innerWidth/2,Pt.y=20,window.addEventListener("load",(()=>{const e=new PIXI.Application({resizeTo:window}),i=e.view;i.style.position="absolute",document.body.appendChild(i),window.timeGameStarted=new Date,window.GAME_PAUSED=!1,window.playableAreaExists=!1,window.HOTBAR=void 0;const s=new dt(nt,[new lt(0,[1],1)],5),n=new W(st("/sprite_sheets/player/player.png"),0,0,t(wt).s.w,t(wt).s.h);n.addFrames(t(wt)),n.switchFrame("e"),window.HOTBAR=new at(n,st("/inventory/hotbar.png"),20,50,st("/inventory/selector.png"));const o=new y(st("/guns/handgun.png"));window.HOTBAR.addItem(o),window.HOTBAR.addItem(new pt),window.HOTBAR.changeSelItem(8),window.addEventListener("keyup",(t=>{switch(t.key.toLowerCase()){case"w":mt.w=!1;break;case"s":mt.s=!1;break;case"a":mt.a=!1;break;case"d":mt.d=!1}})),window.addEventListener("keydown",(t=>{const e=t.key.toLowerCase();if("escape"===e&&!0===window.playableAreaExists&&(!1===window.GAME_PAUSED?(window.GAME_PAUSED=!0,ct.classList.remove("hide")):window.GAME_PAUSED&&gt()),!1===window.GAME_PAUSED){const t=window.HOTBAR.getSelItem();switch(e){case"w":mt.w=!0;break;case"s":mt.s=!0;break;case"a":mt.a=!0;break;case"d":mt.d=!0;break;case"1":window.HOTBAR.changeSelItem(1);break;case"2":window.HOTBAR.changeSelItem(2);break;case"3":window.HOTBAR.changeSelItem(3);break;case"4":window.HOTBAR.changeSelItem(4);break;case"5":window.HOTBAR.changeSelItem(5);break;case"6":window.HOTBAR.changeSelItem(6);break;case"7":window.HOTBAR.changeSelItem(7);break;case"8":window.HOTBAR.changeSelItem(8);break;case"r":t instanceof w&&t.getAmmoLoaded()!==t.getClipCapacity()&&t.getAmmoLeft()>0&&t.reload();break;case" ":t instanceof ut&&n.getHealth()<100&&(t.heal(n),window.HOTBAR.removeSelItem());break;case"q":const e=K.length;if(e>0)for(let t=0;t<e;t++){const e=K[t];if(e.playerIsInsidePortal(n)){e.teleport(n),s.updatePlayableArea(e.destination),s.respawnBatch();break}}break;case"t":for(let t=0;t<U.length;t++){const e=U[t];e.playerIsNearInteractable(n,Pt)&&e instanceof Q&&n.currentPoints>=e.pointCost&&window.HOTBAR.getSelItem()instanceof w&&(n.currentPoints-=e.pointCost,b(n.currentPoints),e.upgradeGun(window.HOTBAR.getSelItem(),!1))}case"e":const i=U.length;for(let t=0;t<i;t++){const e=U[t];e.playerIsNearInteractable(n,St)&&e instanceof J&&n.currentPoints>=e.pointCost&&window.HOTBAR.getSelItem()instanceof w&&(n.currentPoints-=e.pointCost,b(n.currentPoints),e.resupply(window.HOTBAR.getSelItem())),e.playerIsNearInteractable(n,Pt)&&e instanceof Q&&n.currentPoints>=e.pointCost&&window.HOTBAR.getSelItem()instanceof w&&(n.currentPoints-=e.pointCost,b(n.currentPoints),e.upgradeGun(window.HOTBAR.getSelItem(),!0))}}ft(n);const i=k.length;if(i>0)for(let t=0;t<i;t++)k[t].rotateToPlayer(n)}})),window.addEventListener("mousemove",(t=>{window.mouseX=t.x,window.mouseY=t.y,!1===window.GAME_PAUSED&&!1===mt.w&&!1===mt.a&&!1===mt.s&&!1===mt.d&&n.rotateToMouse()})),window.addEventListener("contextmenu",(t=>{t.preventDefault()})),nt.addDynamicSprite(n,"player",250,150),nt.setPosition(.5*i.width-nt.getHalfWidth(),.5*i.height-nt.getHalfHeight()),nt.bindPlayableAreaToPortal("2f_mat",ot,5,15),nt.bindPlayableAreaToPortal("elevator",rt,rt.getHalfWidth()-10,0),ot.setPosition(.5*i.width-ot.getHalfWidth(),.5*i.height-ot.getHalfHeight()),ot.bindPlayableAreaToPortal("2f_mat",nt,480,12),rt.setPosition(.5*i.width-rt.getHalfWidth(),.5*i.height-rt.getHalfHeight()),rt.bindPlayableAreaToPortal("elevator",nt,245,0),e.stage.addChild(_,x,v,Pt,St,_t,window.HOTBAR.display(),nt.load()),e.ticker.add((()=>{if(!1===window.GAME_PAUSED){s.enemySpawnFadeIn(),s.checkIfBatchDone()&&(s.spawnNextBatch(),s.moveToNextWaveIfFinished());let e=!1;const i=[St,Pt];var t;for(let s=0;s<U.length;s++)e=(t=U[s]).playerIsNearInteractable(n),t instanceof J?vt(i[0],0,e):t instanceof Q&&vt(i[1],0,e);const o=K.length;e=!1;for(let t=0;t<o;t++){e=e||K[t].playerIsInsidePortal(n)}if(vt(_t,0,e),k.length>0)for(let t=0;t<k.length;t++)k[t].removeSelf()&&(n.currentPoints+=100,b(n.currentPoints))}}))}))})();
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+
+(function (modules, entry, mainEntry, parcelRequireName, globalName) {
+  /* eslint-disable no-undef */
+  var globalObject =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof self !== 'undefined'
+      ? self
+      : typeof window !== 'undefined'
+      ? window
+      : typeof global !== 'undefined'
+      ? global
+      : {};
+  /* eslint-enable no-undef */
+
+  // Save the require from previous bundle to this closure if any
+  var previousRequire =
+    typeof globalObject[parcelRequireName] === 'function' &&
+    globalObject[parcelRequireName];
+
+  var cache = previousRequire.cache || {};
+  // Do not use `require` to prevent Webpack from trying to bundle this call
+  var nodeRequire =
+    typeof module !== 'undefined' &&
+    typeof module.require === 'function' &&
+    module.require.bind(module);
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire =
+          typeof globalObject[parcelRequireName] === 'function' &&
+          globalObject[parcelRequireName];
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error("Cannot find module '" + name + "'");
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = (cache[name] = new newRequire.Module(name));
+
+      modules[name][0].call(
+        module.exports,
+        localRequire,
+        module,
+        module.exports,
+        this
+      );
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x) {
+      var res = localRequire.resolve(x);
+      return res === false ? {} : newRequire(res);
+    }
+
+    function resolve(x) {
+      var id = modules[name][1][x];
+      return id != null ? id : x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [
+      function (require, module) {
+        module.exports = exports;
+      },
+      {},
+    ];
+  };
+
+  Object.defineProperty(newRequire, 'root', {
+    get: function () {
+      return globalObject[parcelRequireName];
+    },
+  });
+
+  globalObject[parcelRequireName] = newRequire;
+
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
+
+  if (mainEntry) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(mainEntry);
+
+    // CommonJS
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+      module.exports = mainExports;
+
+      // RequireJS
+    } else if (typeof define === 'function' && define.amd) {
+      define(function () {
+        return mainExports;
+      });
+
+      // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+})({"4YftG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _foyerJs = require("../../map/foyer/foyer.js");
+var _libraryJs = require("../../map/library/library.js");
+var _basementJs = require("../../map/basement/basement.js");
+var _pixiHelpersJs = require("../../helpers/pixi_helpers.js");
+var _inventoryJs = require("../../core/inventory.js");
+var _collisionJs = require("../../core/collision.js");
+var _portalsJs = require("../../sprites/portals.js");
+var _waveSystemJs = require("../../core/WaveSystem.js");
+var _waveJs = require("../../core/Wave.js");
+var _entitiesJs = require("../../sprites/entities.js");
+var _interactableJs = require("../../sprites/interactable.js");
+var _pauseMenuJs = require("../../core/pause_menu.js");
+var _consumablesJs = require("../../sprites/consumables.js");
+var _weaponsJs = require("../../sprites/weapons.js");
+var _movementJs = require("../../core/movement.js");
+var _hudJs = require("../../core/hud.js");
+var _popupsJs = require("../../sprites/popups.js");
+var _playerJson = require("../../../assets/sprite_sheets/player/player.json");
+var _playerJsonDefault = parcelHelpers.interopDefault(_playerJson);
+(0, _popupsJs.AMMO_CACHE_POPUP).anchor.set(0.5);
+(0, _popupsJs.AMMO_CACHE_POPUP).x = window.innerWidth / 2;
+(0, _popupsJs.AMMO_CACHE_POPUP).y = 20;
+(0, _popupsJs.PORTAL_POPUP).anchor.set(0.5);
+(0, _popupsJs.PORTAL_POPUP).x = window.innerWidth / 2;
+(0, _popupsJs.PORTAL_POPUP).y = 20;
+(0, _popupsJs.UPGRADE_BENCH_POPUP).anchor.set(0.5);
+(0, _popupsJs.UPGRADE_BENCH_POPUP).x = window.innerWidth / 2;
+(0, _popupsJs.UPGRADE_BENCH_POPUP).y = 20;
+window.addEventListener("load", ()=>{
+    const GAME = new PIXI.Application({
+        resizeTo: window
+    });
+    const GAME_VIEW = GAME.view;
+    GAME_VIEW.style.position = "absolute";
+    document.body.appendChild(GAME_VIEW);
+    // INITIALIZING GLOBALS
+    window.timeGameStarted = new Date();
+    window.GAME_PAUSED = false;
+    window.playableAreaExists = false;
+    window.HOTBAR = undefined;
+    // INITIALIZING WAVES
+    const WAVE_SYSTEM = new (0, _waveSystemJs.WaveSystem)((0, _foyerJs.FOYER), [
+        new (0, _waveJs.Wave)(0, [
+            1,
+            1
+        ], 0),
+        new (0, _waveJs.Wave)(0, [
+            2,
+            3
+        ], 0)
+    ], 5);
+    // PLAYER
+    const player = new (0, _entitiesJs.Player)((0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/sprite_sheets/player/player.png"), 0, 0, (0, _playerJsonDefault.default).s.w, (0, _playerJsonDefault.default).s.h);
+    player.addFrames((0, _playerJsonDefault.default));
+    player.switchFrame("e");
+    window.HOTBAR = new (0, _inventoryJs.Inventory)(player, (0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/inventory/hotbar.png"), 20, 50, (0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/inventory/selector.png"));
+    const HANDGUN = new (0, _weaponsJs.Pistol)((0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/guns/handgun.png"));
+    window.HOTBAR.addItem(HANDGUN);
+    window.HOTBAR.addItem(new (0, _consumablesJs.BandageBox)());
+    window.HOTBAR.changeSelItem(8);
+    // MOVEMENT
+    window.addEventListener("keyup", (event)=>{
+        switch(event.key.toLowerCase()){
+            case "w":
+                (0, _movementJs.MOVEMENT_KEY_STATUSES).w = false;
+                break;
+            case "s":
+                (0, _movementJs.MOVEMENT_KEY_STATUSES).s = false;
+                break;
+            case "a":
+                (0, _movementJs.MOVEMENT_KEY_STATUSES).a = false;
+                break;
+            case "d":
+                (0, _movementJs.MOVEMENT_KEY_STATUSES).d = false;
+                break;
+        }
+    });
+    window.addEventListener("keydown", (event)=>{
+        const KEY_PRESSED = event.key.toLowerCase();
+        if (KEY_PRESSED === "escape" && window.playableAreaExists === true) {
+            if (window.GAME_PAUSED === false) (0, _pauseMenuJs.showPauseMenu)();
+            else if (window.GAME_PAUSED) (0, _pauseMenuJs.hidePauseMenu)();
+        }
+        if (window.GAME_PAUSED === false) {
+            const SELECTED_ITEM = window.HOTBAR.getSelItem();
+            switch(KEY_PRESSED){
+                case "w":
+                    (0, _movementJs.MOVEMENT_KEY_STATUSES).w = true;
+                    break;
+                case "s":
+                    (0, _movementJs.MOVEMENT_KEY_STATUSES).s = true;
+                    break;
+                case "a":
+                    (0, _movementJs.MOVEMENT_KEY_STATUSES).a = true;
+                    break;
+                case "d":
+                    (0, _movementJs.MOVEMENT_KEY_STATUSES).d = true;
+                    break;
+                case "1":
+                    window.HOTBAR.changeSelItem(1);
+                    break;
+                case "2":
+                    window.HOTBAR.changeSelItem(2);
+                    break;
+                case "3":
+                    window.HOTBAR.changeSelItem(3);
+                    break;
+                case "4":
+                    window.HOTBAR.changeSelItem(4);
+                    break;
+                case "5":
+                    window.HOTBAR.changeSelItem(5);
+                    break;
+                case "6":
+                    window.HOTBAR.changeSelItem(6);
+                    break;
+                case "7":
+                    window.HOTBAR.changeSelItem(7);
+                    break;
+                case "8":
+                    window.HOTBAR.changeSelItem(8);
+                    break;
+                case "r":
+                    // manual reload
+                    if (SELECTED_ITEM instanceof (0, _weaponsJs.Gun) && SELECTED_ITEM.getAmmoLoaded() !== SELECTED_ITEM.getClipCapacity() && SELECTED_ITEM.getAmmoLeft() > 0) SELECTED_ITEM.reload();
+                    break;
+                case " ":
+                    // spacebar
+                    if (SELECTED_ITEM instanceof (0, _consumablesJs.HealingItem) && player.getHealth() < 100) {
+                        SELECTED_ITEM.heal(player);
+                        window.HOTBAR.removeSelItem();
+                    }
+                    break;
+                case "q":
+                    const NUM_OF_PORTALS = (0, _portalsJs.PORTALS).length;
+                    if (NUM_OF_PORTALS > 0) for(let i = 0; i < NUM_OF_PORTALS; i++){
+                        const PORTAL = (0, _portalsJs.PORTALS)[i];
+                        if (PORTAL.playerIsInsidePortal(player)) {
+                            PORTAL.teleport(player);
+                            WAVE_SYSTEM.updatePlayableArea(PORTAL.destination);
+                            WAVE_SYSTEM.respawnBatch();
+                            break;
+                        }
+                    }
+                    break;
+                case "t":
+                    for(let i = 0; i < (0, _interactableJs.INTERACTABLES).length; i++){
+                        const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
+                        if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.UPGRADE_BENCH_POPUP))) {
+                            if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench) && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) {
+                                player.currentPoints -= INTERACTABLE.pointCost;
+                                (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                                INTERACTABLE.upgradeGun(window.HOTBAR.getSelItem(), false);
+                            }
+                        }
+                    }
+                case "e":
+                    const NUM_OF_INTERACTABLES = (0, _interactableJs.INTERACTABLES).length;
+                    for(let i = 0; i < NUM_OF_INTERACTABLES; i++){
+                        const INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
+                        if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.AMMO_CACHE_POPUP))) {
+                            if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache) && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) {
+                                player.currentPoints -= INTERACTABLE.pointCost;
+                                (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                                INTERACTABLE.resupply(window.HOTBAR.getSelItem());
+                            }
+                        }
+                        if (INTERACTABLE.playerIsNearInteractable(player, (0, _popupsJs.UPGRADE_BENCH_POPUP))) {
+                            if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench) && player.currentPoints >= INTERACTABLE.pointCost && window.HOTBAR.getSelItem() instanceof (0, _weaponsJs.Gun)) {
+                                player.currentPoints -= INTERACTABLE.pointCost;
+                                (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                                INTERACTABLE.upgradeGun(window.HOTBAR.getSelItem(), true);
+                            }
+                        }
+                    }
+                    break;
+            }
+            (0, _movementJs.checkForCollisionsAndMovePlayer)(player);
+            // rotates enemies to player
+            const NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+            if (NUM_OF_ENTITIES > 0) for(let i = 0; i < NUM_OF_ENTITIES; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].rotateToPlayer(player);
+        }
+    });
+    window.addEventListener("mousemove", (event)=>{
+        window.mouseX = event.x;
+        window.mouseY = event.y;
+        if (window.GAME_PAUSED === false && (0, _movementJs.MOVEMENT_KEY_STATUSES).w === false && (0, _movementJs.MOVEMENT_KEY_STATUSES).a === false && (0, _movementJs.MOVEMENT_KEY_STATUSES).s === false && (0, _movementJs.MOVEMENT_KEY_STATUSES).d === false) player.rotateToMouse();
+    });
+    // INTERACTION
+    window.addEventListener("contextmenu", (event)=>{
+        event.preventDefault();
+    });
+    // MAPS
+    (0, _foyerJs.FOYER).addDynamicSprite(player, "player", 250, 150);
+    (0, _foyerJs.FOYER).setPosition(GAME_VIEW.width * 0.5 - (0, _foyerJs.FOYER).getHalfWidth(), GAME_VIEW.height * 0.5 - (0, _foyerJs.FOYER).getHalfHeight());
+    (0, _foyerJs.FOYER).bindPlayableAreaToPortal("2f_mat", (0, _libraryJs.LIBRARY), 5, 15);
+    (0, _foyerJs.FOYER).bindPlayableAreaToPortal("elevator", (0, _basementJs.BASEMENT), (0, _basementJs.BASEMENT).getHalfWidth() - 10, 0);
+    (0, _libraryJs.LIBRARY).setPosition(GAME_VIEW.width * 0.5 - (0, _libraryJs.LIBRARY).getHalfWidth(), GAME_VIEW.height * 0.5 - (0, _libraryJs.LIBRARY).getHalfHeight());
+    (0, _libraryJs.LIBRARY).bindPlayableAreaToPortal("2f_mat", (0, _foyerJs.FOYER), 480, 12);
+    (0, _basementJs.BASEMENT).setPosition(GAME_VIEW.width * 0.5 - (0, _basementJs.BASEMENT).getHalfWidth(), GAME_VIEW.height * 0.5 - (0, _basementJs.BASEMENT).getHalfHeight());
+    (0, _basementJs.BASEMENT).bindPlayableAreaToPortal("elevator", (0, _foyerJs.FOYER), 245, 0);
+    GAME.stage.addChild((0, _hudJs.PLAYER_HEALTH_STATUS), (0, _hudJs.AMMO_COUNT), (0, _hudJs.PLAYER_POINTS), (0, _popupsJs.UPGRADE_BENCH_POPUP), (0, _popupsJs.AMMO_CACHE_POPUP), (0, _popupsJs.PORTAL_POPUP), window.HOTBAR.display(), (0, _foyerJs.FOYER).load());
+    GAME.ticker.add(()=>{
+        if (window.GAME_PAUSED === false) {
+            WAVE_SYSTEM.playMusic();
+            // spawns waves of enemies
+            WAVE_SYSTEM.enemySpawnFadeIn();
+            if (WAVE_SYSTEM.checkIfBatchDone()) {
+                WAVE_SYSTEM.spawnNextBatch();
+                WAVE_SYSTEM.moveToNextWaveIfFinished();
+            }
+            // interactable popup ***still need to make popup for when ammo cache is empty
+            const POPUPS = [
+                (0, _popupsJs.AMMO_CACHE_POPUP),
+                (0, _popupsJs.UPGRADE_BENCH_POPUP)
+            ];
+            var INTERACTABLE;
+            for(let i = 0; i < (0, _interactableJs.INTERACTABLES).length; i++){
+                INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
+                let isClose1 = false;
+                isClose1 = INTERACTABLE.playerIsNearInteractable(player);
+                if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache)) (0, _popupsJs.managePopUp)(POPUPS[0], player, isClose1);
+                else if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench)) (0, _popupsJs.managePopUp)(POPUPS[1], player, isClose1);
+            }
+            // portal popup
+            const NUM_OF_PORTALS = (0, _portalsJs.PORTALS).length;
+            isClose = false;
+            if (NUM_OF_PORTALS > 0) {
+                for(let i = 0; i < NUM_OF_PORTALS; i++){
+                    const PORTAL = (0, _portalsJs.PORTALS)[i];
+                    isClose = isClose || PORTAL.playerIsInsidePortal(player); // if player is near ANY of the portals
+                }
+                (0, _popupsJs.managePopUp)((0, _popupsJs.PORTAL_POPUP), player, isClose);
+            }
+            // points
+            let NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+            if (NUM_OF_ENTITIES > 0) {
+                for(let i = 0; i < (0, _collisionJs.NON_PLAYER_ENTITIES).length; i++)if ((0, _collisionJs.NON_PLAYER_ENTITIES)[i].removeSelf()) {
+                    player.currentPoints += 100;
+                    (0, _hudJs.updatePlayerPointsText)(player.currentPoints);
+                }
+            }
+            // moves enemies
+            NUM_OF_ENTITIES = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+            if (NUM_OF_ENTITIES > 0) for(let i = 0; i < (0, _collisionJs.NON_PLAYER_ENTITIES).length; i++)(0, _collisionJs.NON_PLAYER_ENTITIES)[i].moveToPlayer(player);
+        }
+    });
+});
+
+},{"../../map/foyer/foyer.js":"dhM1a","../../map/library/library.js":"bjs5C","../../map/basement/basement.js":"7XqC1","../../helpers/pixi_helpers.js":"bZOjp","../../core/inventory.js":"hc8XD","../../core/collision.js":"3zsV5","../../sprites/portals.js":"7dDrd","../../core/WaveSystem.js":"9sJQQ","../../core/Wave.js":"eNy6a","../../sprites/entities.js":"77n58","../../sprites/interactable.js":"a1CCR","../../core/pause_menu.js":"b2oXW","../../sprites/consumables.js":"kdffl","../../sprites/weapons.js":"gRu1U","../../core/movement.js":"c7kyU","../../core/hud.js":"3PEGa","../../../assets/sprite_sheets/player/player.json":"cT2YJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../sprites/popups.js":"16erO"}],"dhM1a":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FOYER", ()=>FOYER);
+var _creationJs = require("../creation.js");
+var _interactableJs = require("../../sprites/interactable.js");
+var _pixiHelpersJs = require("../../helpers/pixi_helpers.js");
+var _portalsJs = require("../../sprites/portals.js");
+var _objectsJs = require("../../sprites/objects.js");
+const FOYER = function() {
+    const FOYER = new (0, _creationJs.PlayableArea)(512, 400);
+    FOYER.addEnemySpawnPoint(30, 250);
+    FOYER.addEnemySpawnPoint(FOYER.getWidth() - 30, 250);
+    FOYER.addEnemySpawnPoint(255, FOYER.getHeight() - 30);
+    const FLOOR = new (0, _objectsJs.DecorationFill)(0x735848, 0, 0, 512, 400);
+    FOYER.addStaticSprite(FLOOR, "floor", 0, 0);
+    const BARRIER_1 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, FOYER.getWidth(), 10);
+    BARRIER_1.modifyCollisionBoundary(null, null, null, -BARRIER_1.getHalfHeight());
+    FOYER.addStaticSprite(BARRIER_1, "barrier1", 0, -BARRIER_1.getFillDimensions().h);
+    const BARRIER_2 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, FOYER.getWidth(), 10);
+    FOYER.addStaticSprite(BARRIER_2, "barrier2", 0, FOYER.getHeight());
+    const BARRIER_3 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, 10, FOYER.getHeight());
+    BARRIER_3.modifyCollisionBoundary(null, null, -3, null);
+    FOYER.addStaticSprite(BARRIER_3, "barrier3", -BARRIER_3.getFillDimensions().w, 0);
+    const BARRIER_4 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, 10, FOYER.getHeight());
+    BARRIER_4.modifyCollisionBoundary(-3, null, null, null);
+    FOYER.addStaticSprite(BARRIER_4, "barrier4", FOYER.getWidth(), 0);
+    const DOUBLE_DOOR = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/Door1.png"), 0, 0, 96, 48);
+    FOYER.addStaticSprite(DOUBLE_DOOR, "double_door", FOYER.getHalfWidth() - DOUBLE_DOOR.getHalfWidth(), -(DOUBLE_DOOR.getSpriteFrameDimensions().h + 1));
+    const ELEVATOR = new (0, _portalsJs.PortalFill)(FOYER, 0xff0000, 0, 0, DOUBLE_DOOR.getSpriteFrameDimensions().w, 40);
+    ELEVATOR.setAlpha(0);
+    FOYER.addStaticSprite(ELEVATOR, "elevator", FOYER.getHalfWidth() - DOUBLE_DOOR.getHalfWidth(), 0);
+    const WINDOW = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/window.png"), 0, 0, 105, 75);
+    FOYER.addStaticSprite(WINDOW, "window", 50, -(WINDOW.getSpriteFrameDimensions().h - 5));
+    const SECOND_FLOOR_MAT = new (0, _portalsJs.Portal)(FOYER, (0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/mat2.png"), 0, 0, 32, 34);
+    FOYER.addStaticSprite(SECOND_FLOOR_MAT, "2f_mat", FOYER.getWidth() - (SECOND_FLOOR_MAT.getSpriteFrameDimensions().w - 10), 20);
+    const WALL = new (0, _objectsJs.SemiSolidFill)(0xF5F5DC, 0, 0, 278, 60);
+    const WALL_TOP_Y_REDUCTION = 15;
+    WALL.modifyCollisionBoundary(null, -WALL_TOP_Y_REDUCTION, null, -20);
+    // WALL BOTTOM EDGE DETOURS
+    FOYER.addBottomEdgeDetour(WALL, [
+        {
+            x: 190,
+            y: 220
+        },
+        {
+            x: 60,
+            y: 220
+        },
+        {
+            x: 60,
+            y: 30
+        }
+    ]);
+    FOYER.addBottomEdgeDetour(WALL, [
+        {
+            x: 310,
+            y: 220
+        },
+        {
+            x: 455,
+            y: 220
+        },
+        {
+            x: 455,
+            y: 30
+        }
+    ]);
+    // WALL LEFT EDGE DETOURS
+    FOYER.addLeftEdgeDetour(WALL, [
+        {
+            x: 80,
+            y: 30
+        },
+        {
+            x: 260,
+            y: 30
+        },
+        {
+            x: 440,
+            y: 30
+        },
+        {
+            x: 440,
+            y: 200
+        }
+    ]);
+    FOYER.addLeftEdgeDetour(WALL, [
+        {
+            x: 60,
+            y: 170
+        }
+    ]);
+    // WALL RIGHT EDGE DETOURS
+    FOYER.addRightEdgeDetour(WALL, [
+        {
+            x: 425,
+            y: 30
+        },
+        {
+            x: 260,
+            y: 30
+        },
+        {
+            x: 60,
+            y: 30
+        },
+        {
+            x: 60,
+            y: 200
+        }
+    ]);
+    FOYER.addRightEdgeDetour(WALL, [
+        {
+            x: 460,
+            y: 170
+        }
+    ]);
+    // WALL TOP EDGE DETOURS
+    FOYER.addTopEdgeDetour(WALL, [
+        {
+            x: 180,
+            y: 30
+        },
+        {
+            x: 60,
+            y: 30
+        },
+        {
+            x: 60,
+            y: 200
+        }
+    ]);
+    FOYER.addTopEdgeDetour(WALL, [
+        {
+            x: 330,
+            y: 30
+        },
+        {
+            x: 440,
+            y: 30
+        },
+        {
+            x: 440,
+            y: 200
+        }
+    ]);
+    FOYER.addStaticSprite(WALL, "wall", 117, 80);
+    const STAIRS_1 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/stairs.png"), 0, 0, 117, 95);
+    FOYER.addStaticSprite(STAIRS_1, "stairs1", 0, WALL.getLeftPosY() + WALL_TOP_Y_REDUCTION);
+    const STAIRS_2 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/stairs.png"), 0, 0, 117, 95);
+    FOYER.addStaticSprite(STAIRS_2, "stairs2", FOYER.getWidth() - STAIRS_2.getSpriteFrameDimensions().w, STAIRS_1.getLeftPosY());
+    const RAILING_1 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_1, "railing1", STAIRS_1.getRightPosX() + 4, WALL.getLeftPosY() + WALL_TOP_Y_REDUCTION - 5 - (RAILING_1.getSpriteFrameDimensions().h - 5));
+    const RAILING_2 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_2, "railing2", RAILING_1.getRightPosX(), RAILING_1.getLeftPosY());
+    const RAILING_3 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_3, "railing3", RAILING_2.getRightPosX(), RAILING_2.getLeftPosY());
+    const RAILING_4 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_4, "railing4", RAILING_3.getRightPosX(), RAILING_3.getLeftPosY());
+    const RAILING_5 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_5, "railing5", RAILING_4.getRightPosX(), RAILING_4.getLeftPosY());
+    const RAILING_6 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_6, "railing6", RAILING_5.getRightPosX(), RAILING_5.getLeftPosY());
+    const RAILING_7 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_7, "railing7", RAILING_6.getRightPosX(), RAILING_6.getLeftPosY());
+    const RAILING_8 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_8, "railing8", RAILING_7.getRightPosX(), RAILING_7.getLeftPosY());
+    const RAILING_9 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_9, "railing9", RAILING_8.getRightPosX(), RAILING_8.getLeftPosY());
+    const RAILING_10 = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/railing.png"), 0, 0, 27, 18);
+    FOYER.addStaticSprite(RAILING_10, "railing10", RAILING_9.getRightPosX(), RAILING_9.getLeftPosY());
+    const FIRST_FLOOR_MAT = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/mat.png"), 0, 0, 48, 96);
+    FOYER.addStaticSprite(FIRST_FLOOR_MAT, "1f_mat", FOYER.getHalfWidth() - (FIRST_FLOOR_MAT.getSpriteFrameDimensions().w - 6), FOYER.getHeight() - (FIRST_FLOOR_MAT.getSpriteFrameDimensions().h + 15));
+    const PLANT_1 = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/plantA.png"), 0, 0, 48, 96);
+    PLANT_1.modifyCollisionBoundary(null, 50, null, null);
+    FOYER.addDynamicSprite(PLANT_1, "plant1", 0, FOYER.getHeight() - (PLANT_1.getSpriteFrameDimensions().h + 5));
+    const PLANT_2 = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/foyer/assets/plantA.png"), 0, 0, 48, 96);
+    PLANT_2.modifyCollisionBoundary(null, 50, null, null);
+    FOYER.addDynamicSprite(PLANT_2, "plant2", FOYER.getWidth() - PLANT_2.getSpriteFrameDimensions().w, FOYER.getHeight() - (PLANT_2.getSpriteFrameDimensions().h + 5));
+    const AMMO_CACHE = new (0, _interactableJs.AmmoCache)((0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/consumables/ammoCache.png"), 240, 140, 50, 50);
+    FOYER.addStaticSprite(AMMO_CACHE, "ammo_cache1", 240, 120);
+    return FOYER;
+}();
+
+},{"../creation.js":"ibUM7","../../sprites/interactable.js":"a1CCR","../../helpers/pixi_helpers.js":"bZOjp","../../sprites/portals.js":"7dDrd","../../sprites/objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ibUM7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// MAP SYNTAX
+/*
+import { PlayableArea } from '../creation.js';
+import { getTextureFromStaticJSFolder } from '../../helpers/pixi_helpers.js';
+
+import {
+    
+} from '../../sprites/objects.js';
+
+export const MAP_NAME = (function () {
+    const MAP_NAME = new PlayableArea(w, h); // DO NOT REMOVE
+
+    const OBJECT = new ObjectClass(getTextureFromStaticJSFolder('path/to/object/image/from/static/js.png'), 0, 0, w, h);
+    FOYER.addStaticSprite(
+        OBJECT,
+        'object_id',
+        x,
+        y
+    );
+
+    ...
+
+    return MAP_NAME; // DO NOT REMOVE
+})();
+*/ parcelHelpers.export(exports, "PlayableArea", ()=>PlayableArea);
+var _checksJs = require("../helpers/checks.js");
+var _collisionJs = require("../core/collision.js");
+var _entitiesJs = require("../sprites/entities.js");
+var _interactableJs = require("../sprites/interactable.js");
+var _portalsJs = require("../sprites/portals.js");
+var _weaponsJs = require("../sprites/weapons.js");
+var _objectsJs = require("../sprites/objects.js");
+var _baseJs = require("../sprites/base/base.js");
+class PlayableArea {
+    constructor(width, height){
+        this.area = new PIXI.Container();
+        this.width = width;
+        this.height = height;
+        const BACKGROUND = new PIXI.Graphics();
+        BACKGROUND.beginFill(0xFFFFFF);
+        BACKGROUND.drawRect(0, 0, width, height);
+        BACKGROUND.endFill();
+        this.area.addChild(BACKGROUND);
+        this.staticSprites = {};
+        this.dynamicSprites = {};
+        this.STATIC_SPRITES_CONTAINER = new PIXI.Container();
+        this.DYNAMIC_SPRITES_CONTAINER = new PIXI.Container();
+        this.OBSTACLES = [];
+        this.PORTALS = [];
+        this.INTERACTABLES = [];
+        this.ENEMY_SPAWN_POINTS = [];
+        this.COLORED_COORDINATES = [];
+        this.area.interactive = true;
+        this.mousedownEvent = function() {
+            if (window.GAME_PAUSED === false && window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+                if (SELECTED_ITEM instanceof (0, _weaponsJs.Gun)) SELECTED_ITEM.fire();
+            }
+        };
+        this.mousemoveEvent = function() {
+            (0, _weaponsJs.toggleCrosshair)(this);
+        };
+        this.infinite_loop = new PIXI.Ticker();
+        this.infinite_loop.add(()=>{
+            this.sortSpriteOrder();
+        });
+    }
+    // GETTERS
+    getLeftPosX() {
+        return this.area.x;
+    }
+    getLeftPosY() {
+        return this.area.y;
+    }
+    getRightPosX() {
+        return this.area.x + this.area.width;
+    }
+    getRightPosY() {
+        return this.area.y + this.area.height;
+    }
+    getWidth() {
+        return this.width;
+    }
+    getHeight() {
+        return this.height;
+    }
+    getHalfWidth() {
+        return this.width * 0.5;
+    }
+    getHalfHeight() {
+        return this.height * 0.5;
+    }
+    getEnemySpawnPoints() {
+        return this.ENEMY_SPAWN_POINTS;
+    }
+    load() {
+        window.GAME_PAUSED = false;
+        // renders sprites
+        this.area.addChild(this.STATIC_SPRITES_CONTAINER, this.DYNAMIC_SPRITES_CONTAINER);
+        // renders colored coordinates
+        const NUM_OF_COLORED_COORDINATES = this.COLORED_COORDINATES.length;
+        for(let i = 0; i < NUM_OF_COLORED_COORDINATES; i++)this.area.addChild(this.COLORED_COORDINATES[i]);
+        // adds obstacles to collision detection queue
+        const NUM_OF_OBSTACLES = this.OBSTACLES.length;
+        for(let i = 0; i < NUM_OF_OBSTACLES; i++)(0, _collisionJs.OBSTACLES).push(this.OBSTACLES[i]);
+        // adds portals to map switch detection queue
+        const NUM_OF_PORTALS = this.PORTALS.length;
+        for(let i = 0; i < NUM_OF_PORTALS; i++)(0, _portalsJs.PORTALS).push(this.PORTALS[i]);
+        // adds interactables to interaction detection queue
+        const NUM_OF_INTERACTABLES = this.INTERACTABLES.length;
+        for(let i = 0; i < NUM_OF_INTERACTABLES; i++)(0, _interactableJs.INTERACTABLES).push(this.INTERACTABLES[i]);
+        // runs local game loop
+        this.infinite_loop.start();
+        // binds events to playable area
+        this.area.on("mousedown", this.mousedownEvent);
+        this.area.on("mousemove", this.mousemoveEvent);
+        window.playableAreaExists = true;
+        return this.area;
+    }
+    unload() {
+        window.GAME_PAUSED = true;
+        // un-renders sprites
+        this.area.removeChild(this.STATIC_SPRITES_CONTAINER);
+        this.area.removeChild(this.DYNAMIC_SPRITES_CONTAINER);
+        // removes the entities from sorting queue & dynamic sprites container
+        const DYNAMIC_SPRITE_IDS = Object.keys(this.dynamicSprites);
+        const NUM_OF_DYNAMIC_SPRITES = DYNAMIC_SPRITE_IDS.length;
+        for(let i = 0; i < NUM_OF_DYNAMIC_SPRITES; i++){
+            const ID = DYNAMIC_SPRITE_IDS[i];
+            const CURRENT_DS = this.dynamicSprites[ID];
+            if (CURRENT_DS instanceof (0, _entitiesJs.Entity)) {
+                this.DYNAMIC_SPRITES_CONTAINER.removeChild(CURRENT_DS.getSprite());
+                delete this.dynamicSprites[ID];
+            }
+        }
+        // removes obstacles from collision detection queue
+        (0, _collisionJs.OBSTACLES).splice(0, (0, _collisionJs.OBSTACLES).length);
+        // removes portals from map switch detection queue
+        (0, _portalsJs.PORTALS).splice(0, (0, _portalsJs.PORTALS).length);
+        // removes interactables from interaction detection queue
+        (0, _interactableJs.INTERACTABLES).splice(0, (0, _interactableJs.INTERACTABLES).length);
+        // stops local game loop
+        this.infinite_loop.stop();
+        // un-binds events to playable area
+        this.area.off("mousedown", this.mousedownEvent);
+        this.area.off("mousemove", this.mousemoveEvent);
+        // un-renders the playable area from the screen
+        this.area.parent.removeChild(this.area);
+        window.playableAreaExists = false;
+    }
+    // SETTERS
+    setPosition(x, y) {
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.area.x = x;
+        this.area.y = y;
+    }
+    addEvent(event, callback) {
+        _checksJs.checkIfString(event);
+        _checksJs.checkIfFunction(callback);
+        this.area.on(event, callback);
+    }
+    addStaticSprite(sprite, id, x, y) {
+        if (sprite instanceof (0, _baseJs.Sprite) === false && sprite instanceof (0, _baseJs.FillSprite) === false) throw ReferenceError(`Not an instance of ${(0, _baseJs.Sprite).name} or ${(0, _baseJs.FillSprite).name}`);
+        _checksJs.checkIfString(id);
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        if (this.staticSprites[id] !== undefined) throw ReferenceError(`A sprite with the id '${id}' already exists`);
+        this.STATIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
+        this.staticSprites[id] = sprite;
+        if (sprite instanceof (0, _objectsJs.Obstacle) || sprite instanceof (0, _objectsJs.ObstacleFill)) this.OBSTACLES.push(sprite);
+        else if (sprite instanceof (0, _portalsJs.Portal) || sprite instanceof (0, _portalsJs.PortalFill)) this.PORTALS.push(sprite);
+        else if (sprite instanceof (0, _interactableJs.Interactable)) this.INTERACTABLES.push(sprite);
+        sprite.setPosition(x, y);
+    }
+    addDynamicSprite(sprite, id, x, y) {
+        if (sprite instanceof (0, _baseJs.Sprite) === false && sprite instanceof (0, _baseJs.FillSprite) === false) throw ReferenceError(`Not an instance of ${(0, _baseJs.Sprite).name} or ${(0, _baseJs.FillSprite).name}`);
+        _checksJs.checkIfString(id);
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        if (this.dynamicSprites[id] !== undefined) throw ReferenceError(`A sprite with the id '${id}' already exists`);
+        this.DYNAMIC_SPRITES_CONTAINER.addChild(sprite.getSprite());
+        this.dynamicSprites[id] = sprite;
+        if (sprite instanceof (0, _objectsJs.Obstacle) || sprite instanceof (0, _objectsJs.ObstacleFill)) this.OBSTACLES.push(sprite);
+        sprite.setPosition(x, y);
+    }
+    addEnemySpawnPoint(x, y, color) {
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.ENEMY_SPAWN_POINTS.push({
+            x: x,
+            y: y
+        });
+        if (typeof color === "number") this.colorCoordinate(color, x, y, 5, 5);
+    }
+    sortSpriteOrder() {
+        // SPRITE ORDERING
+        const ALL_SPRITES = Object.values(this.dynamicSprites);
+        let num_of_sprites = ALL_SPRITES.length;
+        if (num_of_sprites > 0) {
+            // REMOVES SPRITES WITH NO PARENT
+            for(let i = 0; i < num_of_sprites; i++){
+                const SPRITE = ALL_SPRITES[i].getSprite();
+                if (SPRITE.parent === null) {
+                    ALL_SPRITES.splice(i, 1);
+                    num_of_sprites = ALL_SPRITES.length;
+                    delete this.dynamicSprites[Object.keys(this.dynamicSprites)[i]];
+                }
+            }
+            // REORDERS SPRITE
+            let posY_of_sprites = [];
+            // gets the y coordinate of the bottom edge of every sprite
+            for(let i = 0; i < num_of_sprites; i++){
+                const CURRENT_SPRITE = ALL_SPRITES[i];
+                posY_of_sprites.push(CURRENT_SPRITE.getRightPosY());
+            }
+            // sorts the y coordinates in ascending order
+            posY_of_sprites = posY_of_sprites.sort();
+            for(let i = 0; i < num_of_sprites; i++){
+                const CURRENT_POSY = posY_of_sprites[i];
+                for(let j = 0; j < num_of_sprites; j++){
+                    const UNSORTED_SPRITE = ALL_SPRITES[j];
+                    // corrects the z-order of all the sprites according to the sorted y coordinates
+                    if (UNSORTED_SPRITE.getRightPosY() === CURRENT_POSY) this.DYNAMIC_SPRITES_CONTAINER.setChildIndex(UNSORTED_SPRITE.getSprite(), i);
+                }
+            }
+        }
+    }
+    colorCoordinate(color, x, y, w, h) {
+        _checksJs.checkIfNumber(color);
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        _checksJs.checkIfNumber(w);
+        _checksJs.checkIfNumber(h);
+        if (w > 1) x = x - w * 0.5;
+        if (h > 1) y = y - h * 0.5;
+        const COLORED_COORDINATE = new PIXI.Graphics();
+        COLORED_COORDINATE.beginFill(color);
+        COLORED_COORDINATE.drawRect(x, y, w, h);
+        COLORED_COORDINATE.endFill();
+        this.COLORED_COORDINATES.push(COLORED_COORDINATE);
+    }
+    __addDetour__(object, edge, array_of_points, color) {
+        if (object instanceof (0, _objectsJs.Obstacle) === false && object instanceof (0, _objectsJs.ObstacleFill) === false) throw TypeError("Object must be an obstacle.");
+        _checksJs.checkIfString(edge);
+        switch(edge){
+            case "bottom":
+                object.addBottomEdgeDetour(array_of_points);
+                break;
+            case "top":
+                object.addTopEdgeDetour(array_of_points);
+                break;
+            case "left":
+                object.addLeftEdgeDetour(array_of_points);
+                break;
+            case "right":
+                object.addRightEdgeDetour(array_of_points);
+                break;
+        }
+        if (typeof color === "number") {
+            const NUM_OF_POINTS = array_of_points.length;
+            for(let i = 0; i < NUM_OF_POINTS; i++){
+                const POINT = array_of_points[i];
+                this.colorCoordinate(color, POINT.x, POINT.y, 5, 5);
+            }
+        }
+    }
+    addBottomEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(object, "bottom", array_of_points, color);
+    }
+    addTopEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(object, "top", array_of_points, color);
+    }
+    addLeftEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(object, "left", array_of_points, color);
+    }
+    addRightEdgeDetour(object, array_of_points, color) {
+        this.__addDetour__(object, "right", array_of_points, color);
+    }
+    bindPlayableAreaToPortal(sprite_id, playableArea, dest_x, dest_y) {
+        _checksJs.checkIfString(sprite_id);
+        const PORTAL = this.staticSprites[sprite_id];
+        if (PORTAL === undefined) throw Error("A portal with that ID does not exist.");
+        PORTAL.setDestination(playableArea, dest_x, dest_y);
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","../core/collision.js":"3zsV5","../sprites/entities.js":"77n58","../sprites/interactable.js":"a1CCR","../sprites/portals.js":"7dDrd","../sprites/weapons.js":"gRu1U","../sprites/objects.js":"fQRa1","../sprites/base/base.js":"bXEua","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGT0N":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "checkIfString", ()=>checkIfString);
+parcelHelpers.export(exports, "checkIfNumber", ()=>checkIfNumber);
+parcelHelpers.export(exports, "checkIfInstance", ()=>checkIfInstance);
+parcelHelpers.export(exports, "checkIfObject", ()=>checkIfObject);
+parcelHelpers.export(exports, "checkIfFunction", ()=>checkIfFunction);
+parcelHelpers.export(exports, "checkIfKeyExistsInObject", ()=>checkIfKeyExistsInObject);
+parcelHelpers.export(exports, "checkIfArray", ()=>checkIfArray);
+parcelHelpers.export(exports, "checkIfBoolean", ()=>checkIfBoolean);
+function checkIfString(x) {
+    if (typeof x !== "string") throw TypeError("Not a string");
+}
+function checkIfNumber(x) {
+    if (typeof x !== "number") throw TypeError("Not an integer or float");
+}
+function checkIfInstance(x, c) {
+    if (c instanceof Object) {
+        const DESCRIPTORS = Object.getOwnPropertyDescriptors(c);
+        if (DESCRIPTORS.prototype === undefined || DESCRIPTORS.prototype.writable === undefined || DESCRIPTORS.prototype.writable === true) throw TypeError("Not a class");
+    } else throw TypeError("Not a class");
+    if (x instanceof c === false) throw TypeError("Not an instance of " + c.name);
+}
+function checkIfObject(x) {
+    if (x.constructor === undefined || x.constructor === null || x.constructor !== Object) throw TypeError("Not an object");
+}
+function checkIfFunction(x) {
+    if (typeof x !== "function" || Object.prototype.toString.call(x) !== "[object Function]") throw TypeError("Not a function");
+}
+function checkIfKeyExistsInObject(o, k) {
+    checkIfObject(o);
+    checkIfString(k);
+    if (o[k] === undefined) throw ReferenceError(`The key '${k}' doesn't exist in the object`);
+}
+function checkIfArray(x) {
+    if (x.constructor !== Array) throw TypeError("Not an array");
+}
+function checkIfBoolean(x) {
+    if (typeof x !== "boolean") throw TypeError("Not a boolean.");
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"3zsV5":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "OBSTACLES", ()=>OBSTACLES);
+parcelHelpers.export(exports, "NON_PLAYER_ENTITIES", ()=>NON_PLAYER_ENTITIES);
+parcelHelpers.export(exports, "checkCollisionWithLeftEdgesOfObstacles", ()=>checkCollisionWithLeftEdgesOfObstacles);
+parcelHelpers.export(exports, "checkCollisionWithRightEdgesOfObstacles", ()=>checkCollisionWithRightEdgesOfObstacles);
+parcelHelpers.export(exports, "checkCollisionWithTopEdgesOfObstacles", ()=>checkCollisionWithTopEdgesOfObstacles);
+parcelHelpers.export(exports, "checkCollisionWithBottomEdgesOfObstacles", ()=>checkCollisionWithBottomEdgesOfObstacles);
+var _checksJs = require("../helpers/checks.js");
+var _entitiesJs = require("../sprites/entities.js");
+const OBSTACLES = [];
+const NON_PLAYER_ENTITIES = [];
+function checkCollisionWithObstacles(sprite, side) {
+    _checksJs.checkIfInstance(sprite, (0, _entitiesJs.Entity));
+    const NUM_OF_OBSTACLES = OBSTACLES.length;
+    if (NUM_OF_OBSTACLES > 0) {
+        const SPRITE_SPEED = sprite.getSpeed();
+        const SLX = sprite.getLeftPosX() - SPRITE_SPEED;
+        const SLY = sprite.getLeftPosY() - SPRITE_SPEED;
+        const SRX = sprite.getRightPosX() + SPRITE_SPEED;
+        const SRY = sprite.getRightPosY() + SPRITE_SPEED;
+        for(let i = 0; i < NUM_OF_OBSTACLES; i++){
+            const OBSTACLE = OBSTACLES[i];
+            const OLX = OBSTACLE.getLeftPosX();
+            const OLY = OBSTACLE.getLeftPosY();
+            const ORX = OBSTACLE.getRightPosX();
+            const ORY = OBSTACLE.getRightPosY();
+            if (side === "top") {
+                const SB_above_TE = SRY < OLY;
+                const SB_below_TE = SRY > OLY;
+                const SB_below_BE = SRY > ORY;
+                const SLSR_between_LERE = SLX >= OLX && SRX <= ORX;
+                const SL_before_LE = SLX < OLX;
+                const SR_after_RE = SRX > ORX;
+                const SL_between_LERE = SLX >= OLX && SLX <= ORX;
+                const SR_between_LERE = SRX >= OLX && SRX <= ORX;
+                const CORRECTED_SR = SRX - SPRITE_SPEED;
+                if (SB_below_BE && SB_below_TE) continue;
+                else if (CORRECTED_SR < OLX && SLY < ORY) continue;
+                else if (CORRECTED_SR < OLX && SRY > OLY) continue;
+                else if (SB_above_TE === false) {
+                    if (SLSR_between_LERE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "top"
+                    };
+                    else if (SL_before_LE && SR_between_LERE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "top"
+                    };
+                    else if (SR_after_RE && SL_between_LERE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "top"
+                    };
+                }
+            } else if (side === "left") {
+                const SR_before_LE = SRX < OLX;
+                const SR_after_LE = SRX > OLX;
+                const SR_after_RE = SRX > ORX;
+                const STSB_between_TEBE = SLY >= OLY && SRY <= ORY;
+                const ST_above_TE = SLY < OLY;
+                const SB_below_BE = SRY > ORY;
+                const ST_between_TEBE = SLY >= OLY && SLY <= ORY;
+                const SB_between_TEBE = SRY >= OLY && SRY <= ORY;
+                const CORRECTED_SB = SRY - SPRITE_SPEED;
+                if (SR_after_LE && SR_after_RE) continue;
+                else if (CORRECTED_SB < OLY && SLX > OLX) continue;
+                else if (CORRECTED_SB > ORY && SLX > OLX) continue;
+                else if (SR_before_LE === false) {
+                    if (STSB_between_TEBE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "left"
+                    };
+                    else if (ST_above_TE && SB_between_TEBE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "left"
+                    };
+                    else if (SB_below_BE && ST_between_TEBE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "left"
+                    };
+                }
+            } else if (side === "right") {
+                const SL_after_RE = SLX > ORX;
+                const SL_before_LE = SLX < OLX;
+                const SL_before_RE = SLX < ORX;
+                const STSB_between_TEBE = SLY >= OLY && SRY <= ORY;
+                const ST_above_TE = SLY < OLY;
+                const SB_below_BE = SRY > ORY;
+                const ST_between_TEBE = SLY >= OLY && SLY <= ORY;
+                const SB_between_TEBE = SRY >= OLY && SRY <= ORY;
+                const CORRECTED_SB = SRY - SPRITE_SPEED;
+                if (SL_before_LE && SL_before_RE) continue;
+                else if (CORRECTED_SB < OLY && SRX < ORX) continue;
+                else if (CORRECTED_SB > ORY && SRX < ORX) continue;
+                else if (SL_after_RE === false) {
+                    if (STSB_between_TEBE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "right"
+                    };
+                    else if (ST_above_TE && SB_between_TEBE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "right"
+                    };
+                    else if (SB_below_BE && ST_between_TEBE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "right"
+                    };
+                }
+            } else if (side === "bottom") {
+                const ST_below_BE = SLY > ORY;
+                const ST_above_TE = SLY < OLY;
+                const ST_above_BE = SLY < ORY;
+                const SLSR_between_LERE = SLX >= OLX && SRX <= ORX;
+                const SL_before_LE = SLX < OLX;
+                const SR_after_RE = SRX > ORX;
+                const SL_between_LERE = SLX >= OLX && SLX <= ORX;
+                const SR_between_LERE = SRX >= OLX && SRX <= ORX;
+                const CORRECTED_SL = SLX + SPRITE_SPEED;
+                if (ST_above_BE && ST_above_TE) continue;
+                else if (CORRECTED_SL > ORX && SLY < ORY) continue;
+                else if (CORRECTED_SL > ORX && SRY > OLY) continue;
+                else if (ST_below_BE === false) {
+                    if (SLSR_between_LERE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "bottom"
+                    };
+                    else if (SL_before_LE && SR_between_LERE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "bottom"
+                    };
+                    else if (SR_after_RE && SL_between_LERE) return {
+                        status: true,
+                        object: OBSTACLE,
+                        edge: "bottom"
+                    };
+                }
+            }
+        }
+    }
+    return {
+        status: false,
+        object: undefined,
+        edge: undefined
+    };
+}
+function checkCollisionWithLeftEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, "left");
+}
+function checkCollisionWithRightEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, "right");
+}
+function checkCollisionWithTopEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, "top");
+}
+function checkCollisionWithBottomEdgesOfObstacles(sprite) {
+    return checkCollisionWithObstacles(sprite, "bottom");
+}
+
+},{"../helpers/checks.js":"hGT0N","../sprites/entities.js":"77n58","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"77n58":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Entity", ()=>Entity);
+parcelHelpers.export(exports, "Player", ()=>Player);
+parcelHelpers.export(exports, "Enemy", ()=>Enemy);
+parcelHelpers.export(exports, "Zombie", ()=>Zombie);
+var _checksJs = require("../helpers/checks.js");
+var _baseJs = require("./base/base.js");
+var _collisionJs = require("../core/collision.js");
+var _baseJs1 = require("../sprites/base/base.js");
+var _hudJs = require("../core/hud.js");
+var _deathScreenJs = require("../core/death_screen.js");
+var _weaponsJs = require("./weapons.js");
+var _objectsJs = require("../sprites/objects.js");
+var _urls = require("../helpers/urls");
+class Entity extends (0, _baseJs.Sprite) {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.movementOffset = 5;
+        this.events = {
+            move: [],
+            onChangeFrame: []
+        };
+        this.itemInstance = null;
+        this.equippedItem = null;
+        this.addEvent("onChangeFrame", ()=>{
+            if (this.itemInstance !== null) {
+                this.sprite_container.removeChild(this.equippedItem);
+                if (this.itemInstance instanceof (0, _weaponsJs.Weapon)) this.__renderWeapon__(this.itemInstance, this.currentFrame);
+            }
+        });
+    }
+    // GETTERS
+    __renderWeapon__(weapon, frame) {
+        _checksJs.checkIfInstance(weapon, (0, _weaponsJs.Weapon));
+        _checksJs.checkIfString(frame);
+        if (frame === "n" || frame === "nl" || frame === "nr") {
+            this.equippedItem = weapon.loadNorth();
+            this.sprite_container.addChildAt(this.equippedItem, 0);
+            return;
+        } else if (frame === "s" || frame === "sl" || frame === "sr") this.equippedItem = weapon.loadSouth();
+        else if (frame === "w" || frame === "wl" || frame === "wr") this.equippedItem = weapon.loadWest();
+        else if (frame === "e" || frame === "el" || frame === "er") this.equippedItem = weapon.loadEast();
+        this.sprite_container.addChild(this.equippedItem);
+    }
+    getSpeed() {
+        return this.movementOffset;
+    }
+    // SETTERS
+    equip(item) {
+        _checksJs.checkIfInstance(item, (0, _baseJs1.Item));
+        this.itemInstance = item;
+        if (item instanceof (0, _weaponsJs.Weapon)) this.__renderWeapon__(item, this.currentFrame);
+    }
+    unequip() {
+        this.sprite_container.removeChild(this.equippedItem);
+        this.itemInstance = null;
+        this.equippedItem = null;
+    }
+    showDamage() {
+        this.sprite.tint = 0xff0000;
+    }
+    hideDamage() {
+        this.sprite.tint = this.original_tint;
+    }
+    setSpeed(speed) {
+        _checksJs.checkIfNumber(speed);
+        this.movementOffset = speed;
+    }
+    moveSprite(x, y) {
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.sprite_container.x += x;
+        this.sprite_container.y += y;
+        const EVENT = this.events["move"];
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
+            const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
+            for(let i = 0; i < NUM_OF_CALLBACKS; i++)EVENT_CALLBACKS[i]({
+                currentFrame: this.currentFrame
+            });
+        }
+    }
+    moveSpriteNorth() {
+        this.moveSprite(0, -this.movementOffset);
+    }
+    moveSpriteNorthWest() {
+        this.moveSprite(-this.movementOffset, -this.movementOffset);
+    }
+    moveSpriteNorthEast() {
+        this.moveSprite(this.movementOffset, -this.movementOffset);
+    }
+    moveSpriteWest() {
+        this.moveSprite(-this.movementOffset, 0);
+    }
+    moveSpriteEast() {
+        this.moveSprite(this.movementOffset, 0);
+    }
+    moveSpriteSouth() {
+        this.moveSprite(0, this.movementOffset);
+    }
+    moveSpriteSouthWest() {
+        this.moveSprite(-this.movementOffset, this.movementOffset);
+    }
+    moveSpriteSouthEast() {
+        this.moveSprite(this.movementOffset, this.movementOffset);
+    }
+}
+class Player extends Entity {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.health = 100;
+        this.invincibility = false;
+        this.currentPoints = 1000;
+        let reset_to_idle_timer = null;
+        this.addEvent("move", (event)=>{
+            clearTimeout(reset_to_idle_timer);
+            reset_to_idle_timer = setTimeout(()=>{
+                this.rotateToMouse(); // resets player sprite to the idle frame
+            }, 100);
+            // moving animation for hands
+            if (new Date().getMilliseconds() % 2 === 0) {
+                if (event.currentFrame === "s" || event.currentFrame === "sr") this.switchFrame("sl");
+                else if (event.currentFrame === "sl") this.switchFrame("sr");
+                else if (event.currentFrame === "e" || event.currentFrame === "er") this.switchFrame("el");
+                else if (event.currentFrame === "w" || event.currentFrame === "wr") this.switchFrame("wl");
+                else if (event.currentFrame === "wl") this.switchFrame("wr");
+                else if (event.currentFrame === "e" || event.currentFrame === "er") this.switchFrame("el");
+                else if (event.currentFrame === "el") this.switchFrame("er");
+                else if (event.currentFrame === "n" || event.currentFrame === "nr") this.switchFrame("nl");
+                else if (event.currentFrame === "nl") this.switchFrame("nr");
+            }
+        });
+    }
+    // GETTERS
+    isInvincible() {
+        return this.invincibility;
+    }
+    getHealth() {
+        return this.health;
+    }
+    // SETTERS
+    rotateToMouse() {
+        const PLAYER_CENTER = this.getCenterCoordinates(); // relative to parent
+        let player_sprite_parent = this.sprite_container.parent;
+        let corrected_offsetX = PLAYER_CENTER.x + player_sprite_parent.x;
+        let corrected_offsetY = PLAYER_CENTER.y + player_sprite_parent.y;
+        while(player_sprite_parent.parent !== null){
+            player_sprite_parent = player_sprite_parent.parent;
+            corrected_offsetX += player_sprite_parent.x;
+            corrected_offsetY += player_sprite_parent.y;
+        }
+        const MOUSE_X_DISTANCE_FROM_PLAYER = window.mouseX - corrected_offsetX;
+        const MOUSE_Y_DISTANCE_FROM_PLAYER = window.mouseY - corrected_offsetY;
+        const MOUSE_ANGLE_FROM_PLAYER = Math.round(Math.atan2(MOUSE_Y_DISTANCE_FROM_PLAYER, MOUSE_X_DISTANCE_FROM_PLAYER) * 180 / Math.PI);
+        /*
+            -90
+        -180    0
+            90
+        */ if (MOUSE_ANGLE_FROM_PLAYER >= -145 && MOUSE_ANGLE_FROM_PLAYER <= -45) this.switchFrame("n");
+        else if (MOUSE_ANGLE_FROM_PLAYER >= -180 && MOUSE_ANGLE_FROM_PLAYER < -145 || MOUSE_ANGLE_FROM_PLAYER <= 180 && MOUSE_ANGLE_FROM_PLAYER > 145) this.switchFrame("w");
+        else if (MOUSE_ANGLE_FROM_PLAYER <= 145 && MOUSE_ANGLE_FROM_PLAYER > 45) this.switchFrame("s");
+        else if (MOUSE_ANGLE_FROM_PLAYER >= 0 && MOUSE_ANGLE_FROM_PLAYER <= 45 || MOUSE_ANGLE_FROM_PLAYER < 0 && MOUSE_ANGLE_FROM_PLAYER > -45) this.switchFrame("e");
+    }
+    activateInvincibility() {
+        this.invincibility = true;
+        setTimeout(()=>{
+            this.invincibility = false;
+            this.hideDamage();
+        }, 1000);
+    }
+    setHealth(health) {
+        _checksJs.checkIfNumber(health);
+        this.health = health;
+    }
+    increaseHealth(value) {
+        _checksJs.checkIfNumber(value);
+        this.health += value;
+        if (this.health > 100) this.health = 100;
+        (0, _hudJs.updatePlayerHealthStatus)(this.health);
+    }
+    decreaseHealth(value) {
+        _checksJs.checkIfNumber(value);
+        this.health -= value;
+        this.showDamage();
+        (0, _hudJs.updatePlayerHealthStatus)(this.health);
+        if (this.health < 0) this.health = 0;
+        if (this.health === 0) {
+            this.sprite.parent.removeChild(this.sprite); // un-renders player
+            (0, _deathScreenJs.showDeathScreen)();
+        }
+    }
+}
+class Enemy extends Entity {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.navigationMode = 0;
+        this.objectCollidedWith = null;
+        this.edgeCollidedWith = null;
+        this.detourChosen = null;
+        this.detourPointIndex = 0;
+        this.isDead = false;
+        (0, _collisionJs.NON_PLAYER_ENTITIES).push(this);
+        this.sprite_container.interactive = true;
+        this.sprite_container.on("mousedown", (event)=>{
+            event.stopPropagation();
+            if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+                const SELECTED_ITEM = window.HOTBAR.getSelItem();
+                if (SELECTED_ITEM instanceof (0, _weaponsJs.Gun)) {
+                    SELECTED_ITEM.fire();
+                    if (SELECTED_ITEM.ammoLoaded > 0) {
+                        this.decreaseHealth(SELECTED_ITEM.getDamage());
+                        this.showDamage();
+                        setTimeout(()=>{
+                            this.hideDamage();
+                        }, 500);
+                    }
+                }
+            }
+        });
+        this.sprite_container.on("mousemove", ()=>{
+            (0, _weaponsJs.toggleCrosshair)(this.sprite_container);
+        });
+    }
+    // GETTERS
+    __getMoveDirectionFromAngle__(angle) {
+        _checksJs.checkIfNumber(angle);
+        if (angle >= -120 && angle <= -60) return "n";
+        else if (angle >= -150 && angle <= -120) return "nw";
+        else if (angle >= -180 && angle <= -150 || angle <= 180 && angle >= 150) return "w";
+        else if (angle <= 150 && angle >= 120) return "sw";
+        else if (angle <= 120 && angle >= 60) return "s";
+        else if (angle <= 60 && angle >= 30) return "se";
+        else if (angle <= 30 && angle >= 0 || angle <= 0 && angle >= -30) return "e";
+        else if (angle <= -30 && angle >= -60) return "ne";
+    }
+    __getEnemyXandYDistanceFromPlayer__(player) {
+        _checksJs.checkIfInstance(player, Player);
+        const PLAYER_SPRITE = player.getSprite();
+        const PLAYER_CENTER = player.getCenterCoordinates();
+        const ENEMY_CENTER = this.getCenterCoordinates(); // relative to parent
+        const ENEMY_X_DISTANCE_FROM_PLAYER = PLAYER_CENTER.x + PLAYER_SPRITE.x - (ENEMY_CENTER.x + this.sprite_container.x);
+        const ENEMY_Y_DISTANCE_FROM_PLAYER = PLAYER_CENTER.y + PLAYER_SPRITE.y - (ENEMY_CENTER.y + this.sprite_container.y);
+        return {
+            dx: ENEMY_X_DISTANCE_FROM_PLAYER,
+            dy: ENEMY_Y_DISTANCE_FROM_PLAYER
+        };
+    }
+    __getAngleToPlayer__(player) {
+        /*
+            -90
+        -180    0
+            90
+        */ const DISTANCES = this.__getEnemyXandYDistanceFromPlayer__(player);
+        return Math.round(Math.atan2(DISTANCES.dy, DISTANCES.dx) * 180 / Math.PI);
+    }
+    getClosestDetour(object, edge) {
+        if (object instanceof (0, _objectsJs.Obstacle) === false && object instanceof (0, _objectsJs.ObstacleFill) === false) return; // silently fail
+        _checksJs.checkIfString(edge);
+        edge = edge.toLowerCase();
+        if (edge !== "bottom" && edge !== "top" && edge !== "left" && edge !== "right") throw ReferenceError("Edge can only be one of the following: top, bottom, left, right");
+        const ALL_DETOURS = object.getDetours(edge);
+        const ENTITY_CENTER = this.getCenterCoordinates();
+        let closestDetour = null;
+        let previousDistance = null;
+        const NUM_OF_DETOURS = ALL_DETOURS.length;
+        for(let i = 0; i < NUM_OF_DETOURS; i++){
+            const START_OF_DETOUR = ALL_DETOURS[i][0];
+            const DISTANCE = Math.round(Math.sqrt(Math.pow(ENTITY_CENTER.x - START_OF_DETOUR.x, 2) + Math.pow(ENTITY_CENTER.y - START_OF_DETOUR.y, 2)));
+            if (closestDetour === null || DISTANCE < previousDistance) {
+                closestDetour = ALL_DETOURS[i];
+                previousDistance = DISTANCE;
+            }
+        }
+        if (closestDetour !== null) return [
+            ...closestDetour
+        ];
+        else return null;
+    }
+    // SETTERS
+    __switchFrameToAngle__(angle) {
+        if (angle >= -145 && angle <= -45) this.switchFrame("n");
+        else if (angle >= -180 && angle < -145 || angle <= 180 && angle > 145) this.switchFrame("w");
+        else if (angle <= 145 && angle > 45) this.switchFrame("s");
+        else if (angle >= 0 && angle <= 45 || angle < 0 && angle > -45) this.switchFrame("e");
+    }
+    rotateToPlayer(player) {
+        const PLAYER_ANGLE_FROM_ENEMY = this.__getAngleToPlayer__(player);
+        this.__switchFrameToAngle__(PLAYER_ANGLE_FROM_ENEMY);
+    }
+    stopFollowingPlayerAndMoveAroundObject(collision_data) {
+        _checksJs.checkIfObject(collision_data);
+        if (collision_data.object instanceof (0, _objectsJs.Obstacle) === false && collision_data.object instanceof (0, _objectsJs.ObstacleFill) === false) throw TypeError("Object must be an obstacle.");
+        if (collision_data.edge === undefined) throw SyntaxError("Collision data is missing edge information.");
+        _checksJs.checkIfString(collision_data.edge);
+        this.navigationMode = 1;
+        this.objectCollidedWith = collision_data.object;
+        this.edgeCollidedWith = collision_data.edge;
+    }
+    stopFollowingDetourAndChasePlayerAgain(player) {
+        _checksJs.checkIfInstance(player, Player);
+        this.detourChosen = null;
+        this.detourPointIndex = 0;
+        this.navigationMode = 0;
+        this.objectCollidedWith = null;
+        this.edgeCollidedWith = null;
+        this.__switchFrameToAngle__(this.__getAngleToPlayer__(player));
+    }
+    moveToPlayer(player) {
+        const PLAYER_ANGLE_FROM_ENEMY = this.__getAngleToPlayer__(player);
+        if (this.navigationMode === 0) {
+            // going after player
+            const DIRECTION = this.__getMoveDirectionFromAngle__(PLAYER_ANGLE_FROM_ENEMY);
+            const BEC = (0, _collisionJs.checkCollisionWithBottomEdgesOfObstacles)(this);
+            const TEC = (0, _collisionJs.checkCollisionWithTopEdgesOfObstacles)(this);
+            if (DIRECTION === "e" || DIRECTION === "ne" || DIRECTION === "se") {
+                const LEC = (0, _collisionJs.checkCollisionWithLeftEdgesOfObstacles)(this);
+                switch(DIRECTION){
+                    case "e":
+                        if (LEC.status === false) this.moveSpriteEast();
+                        else if (LEC.status === true) this.stopFollowingPlayerAndMoveAroundObject(LEC);
+                        break;
+                    case "ne":
+                        if (BEC.status === false && LEC.status === false) this.moveSpriteNorthEast();
+                        break;
+                    case "se":
+                        if (TEC.status === false && LEC.status === false) this.moveSpriteSouthEast();
+                        break;
+                }
+            } else if (DIRECTION === "w" || DIRECTION === "nw" || DIRECTION === "sw") {
+                const REC = (0, _collisionJs.checkCollisionWithRightEdgesOfObstacles)(this);
+                switch(DIRECTION){
+                    case "w":
+                        if (REC.status === false) this.moveSpriteWest();
+                        else if (REC.status === true) this.stopFollowingPlayerAndMoveAroundObject(REC);
+                        break;
+                    case "nw":
+                        if (BEC.status === false && REC.status === false) this.moveSpriteNorthWest();
+                        break;
+                    case "sw":
+                        if (TEC.status === false && REC.status === false) this.moveSpriteSouthWest();
+                        break;
+                }
+            } else if (DIRECTION === "n") {
+                if (BEC.status === false) this.moveSpriteNorth();
+                else if (BEC.status === true) this.stopFollowingPlayerAndMoveAroundObject(BEC);
+            } else if (DIRECTION === "s") {
+                if (TEC.status === false) this.moveSpriteSouth();
+                else if (TEC.status === true) this.stopFollowingPlayerAndMoveAroundObject(TEC);
+            }
+            // deals damage to player on contact
+            if (player.isInvincible() === false && player.getHealth() > 0 && this.sprite.alpha >= 1) {
+                const DIFFERENCES = this.__getEnemyXandYDistanceFromPlayer__(player);
+                const DISTANCE_BETWEEN_ENEMY_CENTER_AND_PLAYER_CENTER = Math.sqrt(Math.pow(DIFFERENCES.dx, 2) + Math.pow(DIFFERENCES.dy, 2));
+                if (DISTANCE_BETWEEN_ENEMY_CENTER_AND_PLAYER_CENTER <= 40) this.__damagePlayer___(player);
+            }
+        } else if (this.navigationMode === 1) {
+            // going around object
+            const DISTANCE_DIFFERENCE = this.__getEnemyXandYDistanceFromPlayer__(player);
+            const DISTANCE_BETWEEN_ENEMY_AND_PLAYER = Math.round(Math.sqrt(Math.pow(DISTANCE_DIFFERENCE.dx, 2) + Math.pow(DISTANCE_DIFFERENCE.dy, 2)));
+            if (this.detourChosen === null && this.edgeCollidedWith !== null) this.detourChosen = this.getClosestDetour(this.objectCollidedWith, this.edgeCollidedWith); // gets copy of saved detours
+            else if (this.detourChosen !== null && this.detourChosen.constructor === Array) {
+                const NUM_OF_DETOURS = this.detourChosen.length;
+                if (NUM_OF_DETOURS > 0) {
+                    const POINT = this.detourChosen[this.detourPointIndex];
+                    const ENEMY_CENTER = this.getCenterCoordinates();
+                    const DISTANCE_BETWEEN_ENEMY_AND_POINT = Math.round(Math.sqrt(Math.pow(ENEMY_CENTER.x - POINT.x, 2) + Math.pow(ENEMY_CENTER.y - POINT.y, 2)));
+                    // compares distance between enemy and current point to the distance between enemy and the player
+                    if (DISTANCE_BETWEEN_ENEMY_AND_POINT < DISTANCE_BETWEEN_ENEMY_AND_PLAYER) this.moveToDetourPoint(POINT);
+                    else {
+                        this.stopFollowingDetourAndChasePlayerAgain(player);
+                        return;
+                    }
+                    // moves the enemy to the next point
+                    if (Math.round(ENEMY_CENTER.x) === POINT.x && Math.round(ENEMY_CENTER.y) === POINT.y) this.detourPointIndex += 1;
+                    // stop following detour since the last point has been reached
+                    if (this.detourPointIndex === this.detourChosen.length) this.stopFollowingDetourAndChasePlayerAgain(player);
+                }
+            }
+        }
+    }
+    moveToDetourPoint(point) {
+        _checksJs.checkIfObject(point);
+        if (point.x === undefined || point.y === undefined) throw SyntaxError("Point must be an object with x and y as properties.");
+        _checksJs.checkIfNumber(point.x);
+        _checksJs.checkIfNumber(point.y);
+        const ENEMY_CENTER = this.getCenterCoordinates();
+        const ANGLE_TO_DETOUR = Math.round(Math.atan2(point.y - ENEMY_CENTER.y, point.x - ENEMY_CENTER.x) * 180 / Math.PI);
+        this.__switchFrameToAngle__(ANGLE_TO_DETOUR);
+        const DIRECTION = this.__getMoveDirectionFromAngle__(ANGLE_TO_DETOUR);
+        switch(DIRECTION){
+            case "n":
+                this.moveSpriteNorth();
+                break;
+            case "nw":
+                this.moveSpriteNorthWest();
+                break;
+            case "w":
+                this.moveSpriteWest();
+                break;
+            case "sw":
+                this.moveSpriteSouthWest();
+                break;
+            case "s":
+                this.moveSpriteSouth();
+                break;
+            case "se":
+                this.moveSpriteSouthEast();
+                break;
+            case "e":
+                this.moveSpriteEast();
+                break;
+            case "ne":
+                this.moveSpriteNorthEast();
+                break;
+        }
+    }
+    decreaseHealth(value) {
+        _checksJs.checkIfNumber(value);
+        this.health -= value;
+    }
+    removeSelf() {
+        if (this.health <= 0) {
+            // references to enemy get deleted so that its instance can be put in the garbage collector (memory optimization)
+            new Audio(this.deathSoundFile).play();
+            this.sprite_container.parent.removeChild(this.sprite_container);
+            (0, _collisionJs.NON_PLAYER_ENTITIES).splice((0, _collisionJs.NON_PLAYER_ENTITIES).indexOf(this), 1);
+            return true;
+        }
+        return false;
+    }
+}
+class Zombie extends Enemy {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.health = 100;
+        this.damage = 20;
+        this.deathSoundFile = `${0, _urls.SOUND_ASSETS_FOLDER}/zombie-death.mp3` //https://www.fesliyanstudios.com/royalty-free-sound-effects-download/zombie-174
+        ;
+        this.setSpeed(0.5);
+    }
+    // SETTERS
+    __damagePlayer___(player) {
+        _checksJs.checkIfInstance(player, Player);
+        player.decreaseHealth(this.damage);
+        player.activateInvincibility();
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","../core/collision.js":"3zsV5","../sprites/base/base.js":"bXEua","../core/hud.js":"3PEGa","./weapons.js":"gRu1U","../sprites/objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../core/death_screen.js":"l0hrc","../helpers/urls":"5skMk"}],"bXEua":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Sprite", ()=>Sprite);
+parcelHelpers.export(exports, "FillSprite", ()=>FillSprite);
+parcelHelpers.export(exports, "Item", ()=>Item);
+var _checksJs = require("../../helpers/checks.js");
+class Sprite {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        _checksJs.checkIfInstance(texture, PIXI.Texture);
+        _checksJs.checkIfNumber(posX);
+        _checksJs.checkIfNumber(posY);
+        _checksJs.checkIfNumber(frameWidth);
+        _checksJs.checkIfNumber(frameHeight);
+        this.sprite = new PIXI.Sprite(texture);
+        this.spriteFrameWidth = frameWidth;
+        this.spriteFrameHeight = frameHeight;
+        this.sprite_container = new PIXI.Container();
+        this.sprite_container.addChild(this.sprite);
+        this.sprite_container.x = posX;
+        this.sprite_container.y = posY;
+        this.original_tint = this.sprite.tint;
+        this.frameMask = null;
+        this.frames = {};
+        this.currentFrame = null;
+        this.isFlippedHorizontally = false;
+        this.isFlippedVertically = false;
+        this.events = {};
+    }
+    // GETTERS
+    getLeftPosX() {
+        if (this.isFlippedHorizontally) return this.sprite_container.x - this.spriteFrameWidth;
+        else return this.sprite_container.x;
+    }
+    getLeftPosY() {
+        if (this.isFlippedVertically) return this.sprite_container.y - this.spriteFrameHeight;
+        else return this.sprite_container.y;
+    }
+    getRightPosX() {
+        if (this.isFlippedHorizontally) return this.sprite_container.x;
+        else return this.sprite_container.x + this.spriteFrameWidth;
+    }
+    getRightPosY() {
+        if (this.isFlippedVertically) return this.sprite_container.y;
+        else return this.sprite_container.y + this.spriteFrameHeight;
+    }
+    getCenterCoordinates() {
+        return {
+            x: this.getLeftPosX() + this.getHalfWidth(),
+            y: this.getLeftPosY() + this.getHalfHeight()
+        };
+    }
+    getSpriteFrameDimensions() {
+        return {
+            w: this.spriteFrameWidth,
+            h: this.spriteFrameHeight
+        };
+    }
+    getHalfWidth() {
+        return this.spriteFrameWidth * 0.5;
+    }
+    getHalfHeight() {
+        return this.spriteFrameHeight * 0.5;
+    }
+    getCurrentFrame() {
+        return this.currentFrame;
+    }
+    getSprite() {
+        return this.sprite_container;
+    }
+    // SETTERS
+    __setFrameMask__(x, y, frameWidth, frameHeight) {
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        _checksJs.checkIfNumber(frameWidth);
+        _checksJs.checkIfNumber(frameHeight);
+        this.sprite_container.removeChild(this.frameMask); // removes old frame mask
+        const MASK = new PIXI.Graphics();
+        MASK.beginFill("black");
+        MASK.drawRect(x, y, frameWidth, frameHeight);
+        MASK.endFill();
+        this.sprite.mask = MASK;
+        this.sprite_container.addChild(MASK);
+        this.frameMask = MASK;
+        this.spriteFrameWidth = frameWidth;
+        this.spriteFrameHeight = frameHeight;
+    }
+    setPosition(x, y) {
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.sprite_container.x = x;
+        this.sprite_container.y = y;
+    }
+    addEvent(event, callback) {
+        _checksJs.checkIfString(event);
+        _checksJs.checkIfFunction(callback);
+        if (this.events[event] === undefined) throw ReferenceError("Not a valid event");
+        this.events[event].push(callback);
+    }
+    addFrame(name, x, y, w, h) {
+        _checksJs.checkIfString(name);
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        _checksJs.checkIfNumber(w);
+        _checksJs.checkIfNumber(h);
+        this.frames[name] = {
+            x: x,
+            y: y,
+            w: w,
+            h: h
+        };
+    }
+    addFrames(json) {
+        _checksJs.checkIfObject(json);
+        const FRAME_NAMES = Object.keys(json);
+        const NUM_OF_FRAMES = FRAME_NAMES.length;
+        if (NUM_OF_FRAMES > 0) for(let i = 0; i < NUM_OF_FRAMES; i++){
+            const NAME = FRAME_NAMES[i];
+            const FRAME_DATA = json[NAME];
+            this.addFrame(NAME, FRAME_DATA.x, FRAME_DATA.y, FRAME_DATA.w, FRAME_DATA.h);
+        }
+    }
+    switchFrame(name) {
+        const FRAME = this.frames[name];
+        this.sprite.x = -FRAME.x;
+        this.sprite.y = -FRAME.y;
+        this.__setFrameMask__(0, 0, FRAME.w, FRAME.h);
+        this.currentFrame = name;
+        const EVENT = this.events["onChangeFrame"];
+        if (EVENT !== undefined && EVENT !== null) {
+            const EVENT_CALLBACKS = EVENT;
+            const NUM_OF_CALLBACKS = EVENT_CALLBACKS.length;
+            for(let i = 0; i < NUM_OF_CALLBACKS; i++)EVENT_CALLBACKS[i]({
+                currentFrame: this.currentFrame
+            });
+        }
+    }
+    flipHorizontally() {
+        // adding/subtracting the frame width ensures that the sprite is still in the same x-position after the flip
+        if (this.isFlippedHorizontally) {
+            this.sprite_container.scale.x = 1;
+            this.sprite_container.x -= this.spriteFrameWidth;
+            this.isFlippedHorizontally = false;
+        } else {
+            this.sprite_container.scale.x = -1;
+            this.sprite_container.x += this.spriteFrameWidth;
+            this.isFlippedHorizontally = true;
+        }
+    }
+    flipVertically() {
+        // adding/subtracting the frame height ensures that the sprite is still in the same y-position after the flip
+        if (this.isFlippedVertically) {
+            this.sprite_container.scale.y = 1;
+            this.sprite_container.y -= this.spriteFrameHeight;
+            this.isFlippedVertically = false;
+        } else {
+            this.sprite_container.scale.y = -1;
+            this.sprite_container.y += this.spriteFrameHeight;
+            this.isFlippedVertically = true;
+        }
+    }
+}
+class FillSprite {
+    constructor(color, posX, posY, width, height){
+        _checksJs.checkIfNumber(color);
+        _checksJs.checkIfNumber(posX);
+        _checksJs.checkIfNumber(posY);
+        _checksJs.checkIfNumber(width);
+        _checksJs.checkIfNumber(height);
+        this.FILL = new PIXI.Graphics();
+        this.FILL.beginFill(color);
+        this.FILL.drawRect(0, 0, width, height);
+        this.FILL.endFill();
+        this.sprite = this.FILL;
+        this.sprite.x = posX;
+        this.sprite.y = posY;
+        this.fillWidth = width;
+        this.fillHeight = height;
+    }
+    // GETTERS
+    getLeftPosX() {
+        return this.sprite.x;
+    }
+    getLeftPosY() {
+        return this.sprite.y;
+    }
+    getRightPosX() {
+        return this.sprite.x + this.fillWidth;
+    }
+    getRightPosY() {
+        return this.sprite.y + this.fillHeight;
+    }
+    getCenterCoordinates() {
+        return {
+            x: this.getLeftPosX() + this.getHalfWidth(),
+            y: this.getLeftPosY() + this.getHalfHeight()
+        };
+    }
+    getFillDimensions() {
+        return {
+            w: this.fillWidth,
+            h: this.fillHeight
+        };
+    }
+    getHalfWidth() {
+        return this.fillWidth * 0.5;
+    }
+    getHalfHeight() {
+        return this.fillHeight * 0.5;
+    }
+    getSprite() {
+        return this.sprite;
+    }
+    // SETTERS
+    setPosition(x, y) {
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.sprite.x = x;
+        this.sprite.y = y;
+    }
+    setFillDimensions(w, h) {
+        _checksJs.checkIfNumber(w);
+        _checksJs.checkIfNumber(h);
+        this.fillWidth = w;
+        this.fillHeight = h;
+    }
+    setAlpha(alpha) {
+        _checksJs.checkIfNumber(alpha);
+        if (alpha < 0 || alpha > 1) throw Error("Alpha must be a value between 0 and 1.");
+        this.FILL.alpha = alpha;
+    }
+}
+class Item {
+    constructor(texture){
+        _checksJs.checkIfInstance(texture, PIXI.Texture);
+        this.texture = texture;
+        this.icon = new PIXI.Sprite(texture);
+    }
+    // GETTERS
+    getIcon() {
+        return this.icon;
+    }
+}
+
+},{"../../helpers/checks.js":"hGT0N","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3PEGa":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "PLAYER_HEALTH_STATUS", ()=>PLAYER_HEALTH_STATUS);
+parcelHelpers.export(exports, "updatePlayerHealthStatus", ()=>updatePlayerHealthStatus);
+parcelHelpers.export(exports, "PLAYER_POINTS", ()=>PLAYER_POINTS);
+parcelHelpers.export(exports, "updatePlayerPointsText", ()=>updatePlayerPointsText);
+parcelHelpers.export(exports, "AMMO_COUNT", ()=>AMMO_COUNT);
+parcelHelpers.export(exports, "updateAmmoCount", ()=>updateAmmoCount);
+parcelHelpers.export(exports, "hideAmmoCount", ()=>hideAmmoCount);
+var _checksJs = require("../helpers/checks.js");
+var _weaponsJs = require("../sprites/weapons.js");
+const HUD_TEXT_STYLES = {
+    fontSize: 20,
+    fill: 0xffffff
+};
+const PLAYER_HEALTH_STATUS = new PIXI.Text("Health: 100", HUD_TEXT_STYLES);
+PLAYER_HEALTH_STATUS.x = 20;
+PLAYER_HEALTH_STATUS.y = 10;
+function updatePlayerHealthStatus(new_value) {
+    _checksJs.checkIfNumber(new_value);
+    PLAYER_HEALTH_STATUS.text = "Health: " + new_value;
+}
+const PLAYER_POINTS = new PIXI.Text("Points: 1000", HUD_TEXT_STYLES);
+PLAYER_POINTS.x = 300;
+PLAYER_POINTS.y = 10;
+function updatePlayerPointsText(new_value) {
+    _checksJs.checkIfNumber(new_value);
+    PLAYER_POINTS.text = "Points: " + new_value;
+}
+const AMMO_COUNT = new PIXI.Text("Ammo: n/a", HUD_TEXT_STYLES);
+AMMO_COUNT.x = 160;
+AMMO_COUNT.y = 10;
+function updateAmmoCount(gun) {
+    _checksJs.checkIfInstance(gun, (0, _weaponsJs.Gun));
+    AMMO_COUNT.text = `Ammo: ${gun.getAmmoLoaded()}/${gun.getAmmoLeft()}`;
+}
+function hideAmmoCount() {
+    AMMO_COUNT.text = "";
+}
+
+},{"../helpers/checks.js":"hGT0N","../sprites/weapons.js":"gRu1U","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gRu1U":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "toggleCrosshair", ()=>toggleCrosshair);
+parcelHelpers.export(exports, "Weapon", ()=>Weapon);
+parcelHelpers.export(exports, "Gun", ()=>Gun);
+parcelHelpers.export(exports, "Pistol", ()=>Pistol);
+var _checksJs = require("../helpers/checks.js");
+var _baseJs = require("./base/base.js");
+var _hudJs = require("../core/hud.js");
+var _urlsJs = require("../helpers/urls.js");
+function toggleCrosshair(container) {
+    _checksJs.checkIfInstance(container, PIXI.Container);
+    if (window.HOTBAR !== undefined && window.HOTBAR !== null) {
+        if (window.HOTBAR.getSelItem() instanceof Gun) container.cursor = `url(${0, _urlsJs.STATIC_ASSETS_FOLDER}/guns/crosshair.png), auto`;
+        else container.cursor = "auto";
+    }
+}
+class Weapon extends (0, _baseJs.Item) {
+    constructor(texture){
+        super(texture);
+    }
+    // SETTERS
+    createCopy(texture, x, y, w, h) {
+        _checksJs.checkIfInstance(texture, PIXI.Texture);
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        _checksJs.checkIfNumber(w);
+        _checksJs.checkIfNumber(h);
+        const COPY = new PIXI.Sprite(this.texture);
+        COPY.x = x;
+        COPY.y = y;
+        COPY.width = w;
+        COPY.height = h;
+        return COPY;
+    }
+}
+class Gun extends Weapon {
+    constructor(texture){
+        super(texture);
+    }
+    // GETTERS
+    getAmmoLoaded() {
+        if (this.ammoLoaded < 0) return 0;
+        return this.ammoLoaded;
+    }
+    getMaxAmmo() {
+        return this.maxAmmo;
+    }
+    getAmmoLeft() {
+        return this.ammoLeft;
+    }
+    getClipCapacity() {
+        return this.clipCapacity;
+    }
+    playGunFireSound() {
+        new Audio(this.gunFireSoundFile).play();
+    }
+    playReloadSound() {
+        const AUDIO = new Audio(this.reloadSoundFile);
+        AUDIO.play();
+        return AUDIO;
+    }
+    getDamage() {
+        return this.damage;
+    }
+    // SETTERS
+    fire() {
+        if (this.mode === "semi-auto") this.ammoLoaded -= 1;
+        if (this.ammoLoaded > -1) {
+            this.playGunFireSound();
+            (0, _hudJs.updateAmmoCount)(this);
+        }
+        if (this.ammoLoaded === 0 && this.ammoLeft > 0) this.reload();
+    }
+    reload() {
+        this.playReloadSound();
+        setTimeout(()=>{
+            if (this.ammoLoaded <= 0) {
+                // clip is empty (auto reload)
+                if (this.ammoLeft >= 12) {
+                    this.ammoLeft -= this.clipCapacity;
+                    this.ammoLoaded = this.clipCapacity;
+                } else if (this.ammoLeft < 12) {
+                    this.ammoLoaded = this.ammoLeft;
+                    this.ammoLeft -= this.ammoLeft;
+                }
+            } else if (this.ammoLoaded > 0) {
+                // clip is not empty (manual reload)
+                const AMMO_NEEDED = this.clipCapacity - this.ammoLoaded;
+                if (this.ammoLeft >= AMMO_NEEDED) {
+                    this.ammoLoaded += AMMO_NEEDED;
+                    this.ammoLeft -= AMMO_NEEDED;
+                } else if (this.ammoLeft < AMMO_NEEDED) {
+                    this.ammoLoaded += this.ammoLeft;
+                    this.ammoLeft -= this.ammoLeft;
+                }
+            }
+            (0, _hudJs.updateAmmoCount)(this);
+        }, this.reloadDuration);
+    }
+    addMaxAmmo(amount) {
+        this.ammoLeft = amount;
+        (0, _hudJs.updateAmmoCount)(this);
+    }
+    setDamage(amount) {
+        this.damage = amount;
+    }
+    increaseDamage(amount) {
+        this.damage += amount;
+    }
+    increaseClipCapacity(amount) {
+        this.clipCapacity += amount;
+    }
+    increaseMaxAmmo(amount) {
+        this.maxAmmo += amount;
+    }
+}
+class Pistol extends Gun {
+    constructor(texture){
+        super(texture);
+        this.gunFireSoundFile = `${0, _urlsJs.SOUND_ASSETS_FOLDER}/pistol.mp3`;
+        this.reloadSoundFile = `${0, _urlsJs.SOUND_ASSETS_FOLDER}/pistol_reload.mp3`;
+        this.reloadDuration = 1000; // milliseconds
+        this.mode = "semi-auto";
+        this.clipCapacity = 12;
+        this.ammoLoaded = this.clipCapacity;
+        this.ammoLeft = 60;
+        this.maxAmmo = this.ammoLeft;
+        this.damage = 25;
+    }
+    // GETTERS
+    loadNorth() {
+        const PISTOL = this.createCopy(this.texture, 25, 18, 25, 25);
+        PISTOL.scale.y = -1;
+        PISTOL.rotation = 4.6;
+        return PISTOL;
+    }
+    loadSouth() {
+        const PISTOL = this.createCopy(this.texture, 0, 20, 25, 25);
+        PISTOL.scale.y = -1;
+        PISTOL.rotation = 1.5;
+        return PISTOL;
+    }
+    loadWest() {
+        const PISTOL = this.createCopy(this.texture, 18, 8, 25, 25);
+        PISTOL.scale.x = -1;
+        return PISTOL;
+    }
+    loadEast() {
+        const PISTOL = this.createCopy(this.texture, 5, 8, 25, 25);
+        return PISTOL;
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","../core/hud.js":"3PEGa","../helpers/urls.js":"5skMk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5skMk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "STATIC_FOLDER", ()=>STATIC_FOLDER);
+parcelHelpers.export(exports, "STATIC_JS_FOLDER", ()=>STATIC_JS_FOLDER);
+parcelHelpers.export(exports, "STATIC_ASSETS_FOLDER", ()=>STATIC_ASSETS_FOLDER);
+parcelHelpers.export(exports, "SOUND_ASSETS_FOLDER", ()=>SOUND_ASSETS_FOLDER);
+const ABSOLUTE_URL = window.location.href;
+const CURRENT_WORKING_DIRECTORY = ABSOLUTE_URL.substring(0, ABSOLUTE_URL.indexOf("/static/"));
+const STATIC_FOLDER = `${CURRENT_WORKING_DIRECTORY}/static`;
+const STATIC_JS_FOLDER = `${STATIC_FOLDER}/js`;
+const STATIC_ASSETS_FOLDER = `${STATIC_FOLDER}/assets`;
+const SOUND_ASSETS_FOLDER = `${STATIC_ASSETS_FOLDER}/sounds`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fQRa1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Objects", ()=>Objects);
+parcelHelpers.export(exports, "Obstacle", ()=>Obstacle);
+parcelHelpers.export(exports, "Decoration", ()=>Decoration);
+parcelHelpers.export(exports, "SemiSolid", ()=>SemiSolid);
+parcelHelpers.export(exports, "ObstacleFill", ()=>ObstacleFill);
+parcelHelpers.export(exports, "DecorationFill", ()=>DecorationFill);
+parcelHelpers.export(exports, "SemiSolidFill", ()=>SemiSolidFill);
+var _checksJs = require("../helpers/checks.js");
+var _baseJs = require("./base/base.js");
+class Objects extends (0, _baseJs.Sprite) {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+    }
+}
+class Obstacle extends Objects {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.detours = {
+            "top": [],
+            "bottom": [],
+            "left": [],
+            "right": []
+        };
+    }
+    // GETTERS
+    checkIfLeftEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosY() < this.getLeftPosY()) // if the sprite's bottom edge is higher than the object's top edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getRightPosY()) // if the sprite's top edge is lower than the object's bottom edge
+        return false;
+        else if (sprite.getRightPosX() < this.getLeftPosX()) // if the sprite's right edge is far from the object's left edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getLeftPosX()) // if the sprite's left edge is beyond the object's left edge
+        return false;
+        return true;
+    }
+    checkIfRightEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosY() < this.getLeftPosY()) // if the sprite's bottom edge is higher than the object's top edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getRightPosY()) // if the sprite's top edge is lower than the object's bottom edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getRightPosX()) // if the sprite's left edge is far from the object's right edge
+        return false;
+        else if (sprite.getRightPosX() < this.getRightPosX()) // if the sprite's right edge is beyond the object's right edge
+        return false;
+        return true;
+    }
+    checkIfTopEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosX() < this.getLeftPosX()) // if the sprite's right edge is far from the object's left edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getRightPosX()) // if the sprite's left edge is far from the object's right edge
+        return false;
+        else if (sprite.getRightPosY() < this.getLeftPosY()) // if the sprite's bottom edge is higher than the object's top edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getLeftPosY()) // if the sprite's top edge is beyond the object's top edge
+        return false;
+        return true;
+    }
+    checkIfBottomEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosX() < this.getLeftPosX()) // if the sprite's right edge is far from the object's left edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getRightPosX()) // if the sprite's left edge is far from the object's right edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getRightPosY()) // if the sprite's top edge is lower than the object's bottom edge
+        return false;
+        else if (sprite.getRightPosY() < this.getRightPosY()) // if the sprite's bottom edge is beyond the object's bottom edge
+        return false;
+        return true;
+    }
+    getDetours(edge) {
+        _checksJs.checkIfString(edge);
+        return this.detours[edge];
+    }
+    // SETTERS
+    __addDetour__(array_of_points, edge) {
+        _checksJs.checkIfArray(array_of_points);
+        _checksJs.checkIfString(edge);
+        const NUM_OF_ELEMENTS = array_of_points.length;
+        for(let i = 0; i < NUM_OF_ELEMENTS; i++){
+            const E = array_of_points[i];
+            _checksJs.checkIfObject(E);
+            if (E.x === undefined || E.y === undefined) throw SyntaxError(`Element ${i} is not a valid point object. It must have an x and a y property`);
+            _checksJs.checkIfNumber(E.x);
+            _checksJs.checkIfNumber(E.y);
+        }
+        this.detours[edge].push(array_of_points);
+    }
+    addBottomEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "bottom");
+    }
+    addTopEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "top");
+    }
+    addLeftEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "left");
+    }
+    addRightEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "right");
+    }
+}
+class Decoration extends Objects {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+    }
+}
+class SemiSolid extends Obstacle {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.boundaryLeftX = 0;
+        this.boundaryLeftY = 0;
+        this.boundaryRightX = 0;
+        this.boundaryRightY = 0;
+    }
+    // SETTERS
+    modifyCollisionBoundary(leftX, leftY, rightX, rightY) {
+        if (leftX !== null && leftX !== undefined) {
+            _checksJs.checkIfNumber(leftX);
+            this.boundaryLeftX = leftX;
+        }
+        if (leftY !== null && leftY !== undefined) {
+            _checksJs.checkIfNumber(leftY);
+            this.boundaryLeftY = leftY;
+        }
+        if (rightX !== null && rightX !== undefined) {
+            _checksJs.checkIfNumber(rightX);
+            this.boundaryRightX = rightX;
+        }
+        if (rightY !== null && rightY !== undefined) {
+            _checksJs.checkIfNumber(rightY);
+            this.boundaryRightY = rightY;
+        }
+    }
+    // GETTERS
+    getLeftPosX() {
+        if (this.isFlippedHorizontally) return this.sprite_container.x + this.boundaryLeftX - this.spriteFrameWidth;
+        else return this.sprite_container.x + this.boundaryLeftX;
+    }
+    getLeftPosY() {
+        if (this.isFlippedVertically) return this.sprite_container.y + this.boundaryLeftY - this.spriteFrameHeight;
+        else return this.sprite_container.y + this.boundaryLeftY;
+    }
+    getRightPosX() {
+        if (this.isFlippedHorizontally) return this.sprite_container.x + this.boundaryLeftX;
+        else return this.sprite_container.x + (this.spriteFrameWidth + this.boundaryRightX);
+    }
+    getRightPosY() {
+        if (this.isFlippedVertically) return this.sprite_container.y + this.boundaryLeftY;
+        else return this.sprite_container.y + (this.spriteFrameHeight + this.boundaryRightY);
+    }
+}
+class ObstacleFill extends (0, _baseJs.FillSprite) {
+    constructor(color, posX, posY, width, height){
+        super(color, posX, posY, width, height);
+        this.detours = {
+            "top": [],
+            "bottom": [],
+            "left": [],
+            "right": []
+        };
+    }
+    // GETTERS
+    checkIfLeftEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosY() < this.getLeftPosY()) // if the sprite's bottom edge is higher than the object's top edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getRightPosY()) // if the sprite's top edge is lower than the object's bottom edge
+        return false;
+        else if (sprite.getRightPosX() < this.getLeftPosX()) // if the sprite's right edge is far from the object's left edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getLeftPosX()) // if the sprite's left edge is beyond the object's left edge
+        return false;
+        return true;
+    }
+    checkIfRightEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosY() < this.getLeftPosY()) // if the sprite's bottom edge is higher than the object's top edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getRightPosY()) // if the sprite's top edge is lower than the object's bottom edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getRightPosX()) // if the sprite's left edge is far from the object's right edge
+        return false;
+        else if (sprite.getRightPosX() < this.getRightPosX()) // if the sprite's right edge is beyond the object's right edge
+        return false;
+        return true;
+    }
+    checkIfTopEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosX() < this.getLeftPosX()) // if the sprite's right edge is far from the object's left edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getRightPosX()) // if the sprite's left edge is far from the object's right edge
+        return false;
+        else if (sprite.getRightPosY() < this.getLeftPosY()) // if the sprite's bottom edge is higher than the object's top edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getLeftPosY()) // if the sprite's top edge is beyond the object's top edge
+        return false;
+        return true;
+    }
+    checkIfBottomEdgeCollisionOccurred(sprite) {
+        _checksJs.checkIfInstance(sprite, (0, _baseJs.Sprite));
+        if (sprite.getRightPosX() < this.getLeftPosX()) // if the sprite's right edge is far from the object's left edge
+        return false;
+        else if (sprite.getLeftPosX() > this.getRightPosX()) // if the sprite's left edge is far from the object's right edge
+        return false;
+        else if (sprite.getLeftPosY() > this.getRightPosY()) // if the sprite's top edge is lower than the object's bottom edge
+        return false;
+        else if (sprite.getRightPosY() < this.getRightPosY()) // if the sprite's bottom edge is beyond the object's bottom edge
+        return false;
+        return true;
+    }
+    getDetours(edge) {
+        _checksJs.checkIfString(edge);
+        return this.detours[edge];
+    }
+    // SETTERS
+    __addDetour__(array_of_points, edge) {
+        _checksJs.checkIfArray(array_of_points);
+        _checksJs.checkIfString(edge);
+        const NUM_OF_ELEMENTS = array_of_points.length;
+        for(let i = 0; i < NUM_OF_ELEMENTS; i++){
+            const E = array_of_points[i];
+            _checksJs.checkIfObject(E);
+            if (E.x === undefined || E.y === undefined) throw SyntaxError(`Element ${i} is not a valid point object. It must have an x and a y property`);
+            _checksJs.checkIfNumber(E.x);
+            _checksJs.checkIfNumber(E.y);
+        }
+        this.detours[edge].push(array_of_points);
+    }
+    addBottomEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "bottom");
+    }
+    addTopEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "top");
+    }
+    addLeftEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "left");
+    }
+    addRightEdgeDetour(array_of_points) {
+        this.__addDetour__(array_of_points, "right");
+    }
+}
+class DecorationFill extends (0, _baseJs.FillSprite) {
+    constructor(color, posX, posY, width, height){
+        super(color, posX, posY, width, height);
+    }
+}
+class SemiSolidFill extends ObstacleFill {
+    constructor(color, posX, posY, width, height){
+        super(color, posX, posY, width, height);
+        this.boundaryLeftX = 0;
+        this.boundaryLeftY = 0;
+        this.boundaryRightX = 0;
+        this.boundaryRightY = 0;
+    }
+    // SETTERS
+    modifyCollisionBoundary(leftX, leftY, rightX, rightY) {
+        if (leftX !== null && leftX !== undefined) {
+            _checksJs.checkIfNumber(leftX);
+            this.boundaryLeftX = leftX;
+        }
+        if (leftY !== null && leftY !== undefined) {
+            _checksJs.checkIfNumber(leftY);
+            this.boundaryLeftY = leftY;
+        }
+        if (rightX !== null && rightX !== undefined) {
+            _checksJs.checkIfNumber(rightX);
+            this.boundaryRightX = rightX;
+        }
+        if (rightY !== null && rightY !== undefined) {
+            _checksJs.checkIfNumber(rightY);
+            this.boundaryRightY = rightY;
+        }
+    }
+    // GETTERS
+    getLeftPosX() {
+        return this.sprite.x + this.boundaryLeftX;
+    }
+    getLeftPosY() {
+        return this.sprite.y + this.boundaryLeftY;
+    }
+    getRightPosX() {
+        return this.sprite.x + (this.fillWidth + this.boundaryRightX);
+    }
+    getRightPosY() {
+        return this.sprite.y + (this.fillHeight + this.boundaryRightY);
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l0hrc":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "showDeathScreen", ()=>showDeathScreen);
+const DEATH_SCREEN = document.getElementById("death-screen");
+const TIME_SURVIVED = document.getElementById("time-survived");
+const POINTS_EARNED = document.getElementById("points-earned");
+DEATH_SCREEN.addEventListener("click", (event)=>{
+    const ELEMENT_CLICKED = event.target;
+    if (ELEMENT_CLICKED.tagName === "BUTTON") {
+        const ACTION = ELEMENT_CLICKED.getAttribute("data-action");
+        if (ACTION === "exit") window.location.assign("/");
+    }
+});
+function showDeathScreen() {
+    window.GAME_PAUSED = true;
+    // calculates how long the player survived
+    const MS_ELAPSED = new Date() - window.timeGameStarted;
+    const HRS = Math.round(MS_ELAPSED / 3.6e+6);
+    const MINS = Math.round(MS_ELAPSED / 60000);
+    const SECS = Math.round(MS_ELAPSED / 1000);
+    let hrs = 0;
+    let mins = 0;
+    let secs = 0;
+    if (HRS > 0.1) hrs = HRS;
+    if (MINS > 0.1) mins = MINS;
+    if (SECS > 0.1) secs = SECS;
+    TIME_SURVIVED.innerText = `${hrs}h:${mins}m:${secs}s`;
+    const XHR = new XMLHttpRequest();
+    XHR.open("POST", "/store_score");
+    XHR.setRequestHeader("Content-Type", "application/json");
+    XHR.send(JSON.stringify({
+        millisecondsSurvived: MS_ELAPSED,
+        pointsEarned: 0
+    }));
+    DEATH_SCREEN.classList.remove("hide");
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a1CCR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "INTERACTABLES", ()=>INTERACTABLES);
+parcelHelpers.export(exports, "Interactable", ()=>Interactable);
+parcelHelpers.export(exports, "AmmoCache", ()=>AmmoCache);
+parcelHelpers.export(exports, "UpgradeBench", ()=>UpgradeBench);
+var _checksJs = require("../helpers/checks.js");
+var _entitiesJs = require("./entities.js");
+var _objectsJs = require("./objects.js");
+var _weaponsJs = require("./weapons.js");
+const INTERACTABLES = [];
+class Interactable extends (0, _objectsJs.Objects) {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.areaOfEffect = 20; // adds extra area for the interactble range
+    }
+    // GETTERS
+    playerIsNearInteractable(player) {
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        const PLAYER_CENTER = player.getCenterCoordinates();
+        const PLAYER_INSIDE_LR_EDGES = PLAYER_CENTER.x > this.getLeftPosX() - this.areaOfEffect && PLAYER_CENTER.x < this.getRightPosX() + this.areaOfEffect;
+        const PLAYER_INSIDE_TB_EDGES = PLAYER_CENTER.y > this.getLeftPosY() - this.areaOfEffect && PLAYER_CENTER.y < this.getRightPosY() + this.areaOfEffect;
+        if (PLAYER_INSIDE_LR_EDGES && PLAYER_INSIDE_TB_EDGES) return true;
+        return false;
+    }
+    // SETTERS
+    setAreaOfEffect(value) {
+        _checksJs.checkIfNumber(value);
+        this.areaOfEffect = value;
+    }
+}
+class AmmoCache extends Interactable {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.pointCost = 500;
+    }
+    // SETTERS
+    resupply(gun) {
+        _checksJs.checkIfInstance(gun, (0, _weaponsJs.Gun));
+        gun.addMaxAmmo(gun.getMaxAmmo());
+        gun.playReloadSound();
+    }
+}
+class UpgradeBench extends Interactable {
+    constructor(texture, posX, posY, frameWidth, frameHeight){
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.pointCost = 1000;
+    }
+    upgradeGun(gun, option) {
+        _checksJs.checkIfInstance(gun, (0, _weaponsJs.Gun));
+        //true = upgrade ammo, false = upgrade damage
+        if (option) {
+            gun.increaseMaxAmmo(10);
+            gun.increaseClipCapacity(3);
+        } else gun.increaseDamage(10);
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","./entities.js":"77n58","./objects.js":"fQRa1","./weapons.js":"gRu1U","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7dDrd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "PORTALS", ()=>PORTALS);
+parcelHelpers.export(exports, "Portal", ()=>Portal);
+parcelHelpers.export(exports, "PortalFill", ()=>PortalFill);
+var _checksJs = require("../helpers/checks.js");
+var _creationJs = require("../map/creation.js");
+var _entitiesJs = require("./entities.js");
+var _objectsJs = require("./objects.js");
+const PORTALS = [];
+class Portal extends (0, _objectsJs.Decoration) {
+    constructor(origin, texture, posX, posY, frameWidth, frameHeight){
+        _checksJs.checkIfInstance(origin, (0, _creationJs.PlayableArea));
+        super(texture, posX, posY, frameWidth, frameHeight);
+        this.origin = origin;
+        this.destination = null;
+        this.dest_X = null;
+        this.dest_Y = null;
+    }
+    // GETTERS
+    playerIsInsidePortal(player) {
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        const PLAYER_CENTER = player.getCenterCoordinates();
+        if (PLAYER_CENTER.x > this.getLeftPosX() && PLAYER_CENTER.x < this.getRightPosX() && PLAYER_CENTER.y > this.getLeftPosY() && PLAYER_CENTER.y < this.getRightPosY()) return true;
+        return false;
+    }
+    // SETTERS
+    setDestination(playableArea, x, y) {
+        _checksJs.checkIfInstance(playableArea, (0, _creationJs.PlayableArea));
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.destination = playableArea;
+        this.dest_X = x;
+        this.dest_Y = y;
+    }
+    teleport(player) {
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        const GAME_STAGE = this.origin.area.parent;
+        this.origin.unload();
+        GAME_STAGE.removeChild(this.origin.area);
+        GAME_STAGE.addChild(this.destination.load());
+        this.destination.addDynamicSprite(player, "player", this.dest_X, this.dest_Y);
+    }
+}
+class PortalFill extends (0, _objectsJs.DecorationFill) {
+    constructor(origin, color, posX, posY, width, height){
+        _checksJs.checkIfInstance(origin, (0, _creationJs.PlayableArea));
+        super(color, posX, posY, width, height);
+        this.origin = origin;
+        this.destination = null;
+        this.dest_X = null;
+        this.dest_Y = null;
+    }
+    // GETTERS
+    playerIsInsidePortal(player) {
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        const PLAYER_CENTER = player.getCenterCoordinates();
+        if (PLAYER_CENTER.x > this.getLeftPosX() && PLAYER_CENTER.x < this.getRightPosX() && PLAYER_CENTER.y > this.getLeftPosY() && PLAYER_CENTER.y < this.getRightPosY()) return true;
+        return false;
+    }
+    // SETTERS
+    setDestination(playableArea, x, y) {
+        _checksJs.checkIfInstance(playableArea, (0, _creationJs.PlayableArea));
+        _checksJs.checkIfNumber(x);
+        _checksJs.checkIfNumber(y);
+        this.destination = playableArea;
+        this.dest_X = x;
+        this.dest_Y = y;
+    }
+    teleport(player) {
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        const GAME_STAGE = this.origin.area.parent;
+        this.origin.unload();
+        GAME_STAGE.removeChild(this.origin.area);
+        GAME_STAGE.addChild(this.destination.load());
+        this.destination.addDynamicSprite(player, "player", this.dest_X, this.dest_Y);
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","../map/creation.js":"ibUM7","./entities.js":"77n58","./objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bZOjp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getTextureFromStaticJSFolder", ()=>getTextureFromStaticJSFolder);
+parcelHelpers.export(exports, "getTextureFromStaticAssetsFolder", ()=>getTextureFromStaticAssetsFolder);
+var _checksJs = require("./checks.js");
+var _urlsJs = require("./urls.js");
+function getTextureFromStaticJSFolder(path) {
+    _checksJs.checkIfString(path);
+    if (path[0] !== "/") throw ReferenceError("Paths must start with /");
+    return PIXI.Texture.from(`${(0, _urlsJs.STATIC_JS_FOLDER)}${path}`);
+}
+function getTextureFromStaticAssetsFolder(path) {
+    _checksJs.checkIfString(path);
+    if (path[0] !== "/") throw ReferenceError("Paths must start with /");
+    return PIXI.Texture.from(`${(0, _urlsJs.STATIC_ASSETS_FOLDER)}${path}`);
+}
+
+},{"./checks.js":"hGT0N","./urls.js":"5skMk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bjs5C":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LIBRARY", ()=>LIBRARY);
+var _creationJs = require("../creation.js");
+var _pixiHelpersJs = require("../../helpers/pixi_helpers.js");
+var _portalsJs = require("../../sprites/portals.js");
+var _objectsJs = require("../../sprites/objects.js");
+const LIBRARY = function() {
+    const LIBRARY = new (0, _creationJs.PlayableArea)(512, 256);
+    LIBRARY.addEnemySpawnPoint(LIBRARY.getHalfWidth() + 130, 50);
+    LIBRARY.addEnemySpawnPoint(LIBRARY.getHalfWidth(), LIBRARY.getHeight() - 30);
+    const FLOOR = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/libraryfloor.png"), 0, 0, 512, 256);
+    LIBRARY.addStaticSprite(FLOOR, "libraryfloor", 0, 0);
+    const BARRIER_1 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, LIBRARY.getWidth(), 10);
+    BARRIER_1.modifyCollisionBoundary(null, null, null, -BARRIER_1.getHalfHeight());
+    LIBRARY.addStaticSprite(BARRIER_1, "barrier1", 0, -BARRIER_1.getFillDimensions().h);
+    const BARRIER_2 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, LIBRARY.getWidth(), 10);
+    LIBRARY.addStaticSprite(BARRIER_2, "barrier2", 0, LIBRARY.getHeight());
+    const BARRIER_3 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, 10, LIBRARY.getHeight());
+    BARRIER_3.modifyCollisionBoundary(null, null, -3, null);
+    LIBRARY.addStaticSprite(BARRIER_3, "barrier3", -BARRIER_3.getFillDimensions().w, 0);
+    const BARRIER_4 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, 10, LIBRARY.getHeight());
+    BARRIER_4.modifyCollisionBoundary(-3, null, null, null);
+    LIBRARY.addStaticSprite(BARRIER_4, "barrier4", LIBRARY.getWidth(), 0);
+    const SECOND_FLOOR_MAT = new (0, _portalsJs.Portal)(LIBRARY, (0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/mat2.png"), 0, 0, 32, 34);
+    LIBRARY.addStaticSprite(SECOND_FLOOR_MAT, "2f_mat", LIBRARY.getWidth() - (SECOND_FLOOR_MAT.getSpriteFrameDimensions().w + 495), 20);
+    const BOOKSHELF_1 = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/bookshelf.png"), 0, 0, 95, 97);
+    BOOKSHELF_1.modifyCollisionBoundary(null, BOOKSHELF_1.getSpriteFrameDimensions().h - 30, null, null);
+    LIBRARY.addDynamicSprite(BOOKSHELF_1, "bookshelf1", LIBRARY.getWidth() - BOOKSHELF_1.getSpriteFrameDimensions().w, LIBRARY.getHeight() - (BOOKSHELF_1.getSpriteFrameDimensions().h + 50));
+    const BOOKSHELF_2 = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/bookshelf.png"), 0, 0, 95, 97);
+    BOOKSHELF_2.modifyCollisionBoundary(null, BOOKSHELF_2.getSpriteFrameDimensions().h - 30, null, null);
+    LIBRARY.addDynamicSprite(BOOKSHELF_2, "bookshelf2", LIBRARY.getWidth() - BOOKSHELF_2.getSpriteFrameDimensions().w, 0);
+    const CHAIR_A = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/chairA.png"), 0, 0, 75, 48);
+    LIBRARY.addStaticSprite(CHAIR_A, "chairA", 20, LIBRARY.getHeight() - (CHAIR_A.getSpriteFrameDimensions().h + 15));
+    const CHAIR_B = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/chairB.png"), 0, 0, 48, 75);
+    CHAIR_B.modifyCollisionBoundary(null, 40, null, null);
+    LIBRARY.addDynamicSprite(CHAIR_B, "chairB", 130, LIBRARY.getHeight() - (CHAIR_B.getSpriteFrameDimensions().h + 75));
+    const MATBLUE = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/matBlue.png"), 0, 0, 71, 54);
+    LIBRARY.addStaticSprite(MATBLUE, "matblue", 120, LIBRARY.getHeight() - (MATBLUE.getSpriteFrameDimensions().h + 12));
+    const TABLELAMP = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/tableLamp.png"), 0, 0, 95, 66);
+    TABLELAMP.modifyCollisionBoundary(null, 30, null, null);
+    LIBRARY.addDynamicSprite(TABLELAMP, "tablelamp", 10, LIBRARY.getHeight() - (TABLELAMP.getSpriteFrameDimensions().h + 80));
+    const WINDOWS = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/library/assets/window.png"), 0, 0, 525, 75);
+    LIBRARY.addStaticSprite(WINDOWS, "window", -6, -(WINDOWS.getSpriteFrameDimensions().h - 5));
+    return LIBRARY;
+}();
+
+},{"../creation.js":"ibUM7","../../helpers/pixi_helpers.js":"bZOjp","../../sprites/portals.js":"7dDrd","../../sprites/objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7XqC1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "BASEMENT", ()=>BASEMENT);
+var _creationJs = require("../creation.js");
+var _pixiHelpersJs = require("../../helpers/pixi_helpers.js");
+var _portalsJs = require("../../sprites/portals.js");
+var _objectsJs = require("../../sprites/objects.js");
+var _interactable = require("../../sprites/interactable");
+const BASEMENT = function() {
+    const BASEMENT = new (0, _creationJs.PlayableArea)(555, 441);
+    BASEMENT.addEnemySpawnPoint(50, 50);
+    BASEMENT.addEnemySpawnPoint(50, BASEMENT.getHeight() - 150);
+    BASEMENT.addEnemySpawnPoint(280, BASEMENT.getHeight() - 30);
+    const FLOOR = new (0, _objectsJs.Decoration)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/basefloor.png"), 0, 0, 555, 441);
+    BASEMENT.addStaticSprite(FLOOR, "floor", 0, 0);
+    const BARRIER_1 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, BASEMENT.getWidth(), 10);
+    BARRIER_1.modifyCollisionBoundary(null, null, null, -BARRIER_1.getHalfHeight());
+    BASEMENT.addStaticSprite(BARRIER_1, "barrier1", 0, -BARRIER_1.getFillDimensions().h);
+    const BARRIER_2 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, BASEMENT.getWidth(), 10);
+    BASEMENT.addStaticSprite(BARRIER_2, "barrier2", 0, BASEMENT.getHeight());
+    const BARRIER_3 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, 10, BASEMENT.getHeight());
+    BARRIER_3.modifyCollisionBoundary(null, null, -3, null);
+    BASEMENT.addStaticSprite(BARRIER_3, "barrier3", -BARRIER_3.getFillDimensions().w, 0);
+    const BARRIER_4 = new (0, _objectsJs.SemiSolidFill)(0x000000, 0, 0, 10, BASEMENT.getHeight());
+    BARRIER_4.modifyCollisionBoundary(-3, null, null, null);
+    BASEMENT.addStaticSprite(BARRIER_4, "barrier4", BASEMENT.getWidth(), 0);
+    const DOUBLE_DOOR = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/baseelevator.png"), 0, 0, 96, 48);
+    BASEMENT.addStaticSprite(DOUBLE_DOOR, "double_door", BASEMENT.getHalfWidth() - DOUBLE_DOOR.getHalfWidth(), -(DOUBLE_DOOR.getSpriteFrameDimensions().h + 1));
+    const ELEVATOR = new (0, _portalsJs.PortalFill)(BASEMENT, 0xff0000, 0, 0, DOUBLE_DOOR.getSpriteFrameDimensions().w, 35);
+    ELEVATOR.setAlpha(0);
+    BASEMENT.addStaticSprite(ELEVATOR, "elevator", DOUBLE_DOOR.getLeftPosX(), DOUBLE_DOOR.getRightPosY());
+    const COUCH = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/basecouch.png"), 0, 0, 143, 165);
+    COUCH.modifyCollisionBoundary(null, 10, null, null);
+    BASEMENT.addStaticSprite(COUCH, "basecouch", BASEMENT.getHalfWidth() + COUCH.getHalfWidth(), BASEMENT.getHeight() - (COUCH.getSpriteFrameDimensions().h + 90));
+    const FIREPLACE = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/fireplace.png"), 0, 0, 94, 116);
+    FIREPLACE.modifyCollisionBoundary(null, 30, null, -10);
+    BASEMENT.addStaticSprite(FIREPLACE, "fireplace", BASEMENT.getHalfWidth() + COUCH.getHalfWidth(), BASEMENT.getHeight() - (COUCH.getSpriteFrameDimensions().h + 250));
+    const BROKEN_CUPBOARD = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/brokencupboard.png"), 0, 0, 80, 108);
+    BASEMENT.addStaticSprite(BROKEN_CUPBOARD, "brokencupboard", BASEMENT.getWidth() - (BROKEN_CUPBOARD.getSpriteFrameDimensions().w + 450), BASEMENT.getHeight() - (BROKEN_CUPBOARD.getSpriteFrameDimensions().h + 5));
+    const STACKED_CUPBOARD = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/stackedcupboard.png"), 0, 0, 48, 107);
+    BASEMENT.addStaticSprite(STACKED_CUPBOARD, "stackedcupboard", BASEMENT.getWidth() - (STACKED_CUPBOARD.getSpriteFrameDimensions().w + 400), BASEMENT.getHeight() - (STACKED_CUPBOARD.getSpriteFrameDimensions().h + 5));
+    const OPEN_CHEST = new (0, _objectsJs.SemiSolid)((0, _pixiHelpersJs.getTextureFromStaticJSFolder)("/map/basement/assets/openchest.png"), 0, 0, 59, 63);
+    BASEMENT.addStaticSprite(OPEN_CHEST, "openchest", BASEMENT.getWidth() - (OPEN_CHEST.getSpriteFrameDimensions().w + 340), BASEMENT.getHeight() - (OPEN_CHEST.getSpriteFrameDimensions().h + 5));
+    const UPGRADE_BENCH = new (0, _interactable.UpgradeBench)((0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/consumables/upgradeBench.png"), 240, 140, 50, 50);
+    BASEMENT.addStaticSprite(UPGRADE_BENCH, "upgrade_bench1", 240, 120);
+    return BASEMENT;
+}();
+
+},{"../creation.js":"ibUM7","../../helpers/pixi_helpers.js":"bZOjp","../../sprites/portals.js":"7dDrd","../../sprites/objects.js":"fQRa1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../sprites/interactable":"a1CCR"}],"hc8XD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Inventory", ()=>Inventory);
+var _checksJs = require("../helpers/checks.js");
+var _baseJs = require("../sprites/base/base.js");
+var _weaponsJs = require("../sprites/weapons.js");
+var _entitiesJs = require("../sprites/entities.js");
+var _hudJs = require("./hud.js");
+class Inventory {
+    constructor(player, texture, posX, posY, selection_texture){
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        _checksJs.checkIfInstance(texture, PIXI.Texture);
+        _checksJs.checkIfNumber(posX);
+        _checksJs.checkIfNumber(posY);
+        _checksJs.checkIfInstance(selection_texture, PIXI.Texture);
+        this.sprite = new PIXI.Sprite(texture);
+        this.inventory = [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        ];
+        this.currentSelItem = null;
+        this.inventoryContainer = new PIXI.Container();
+        this.inventoryContainer.x = posX;
+        this.inventoryContainer.y = posY;
+        this.selectorSprite = new PIXI.Sprite(selection_texture);
+        this.selectorSprite.x = -2;
+        this.selectorSprite.y = -2;
+        this.selectorSprite.width = 36;
+        this.selectorSprite.height = 36;
+        this.inventoryContainer.addChild(this.sprite, this.selectorSprite);
+        this.player = player;
+    }
+    // GETTERS
+    ___getPositionInInventory__(index) {
+        // returns x-coordinate of item
+        _checksJs.checkIfNumber(index);
+        return -2 + (this.selectorSprite.width - 4) * (index - 1);
+    }
+    display() {
+        return this.inventoryContainer;
+    }
+    getSelItem() {
+        return this.currentSelItem;
+    }
+    // SETTERS
+    addItem(item) {
+        _checksJs.checkIfInstance(item, (0, _baseJs.Item));
+        const ICON = item.getIcon();
+        this.inventoryContainer.addChild(ICON);
+        const NUM_OF_ITEMS_IN_INVENTORY = this.inventory.length;
+        let stored = false;
+        for(let i = 0; i < NUM_OF_ITEMS_IN_INVENTORY; i++){
+            if (this.inventory[i] === null) {
+                this.inventory.splice(i, 1, item);
+                ICON.x = this.___getPositionInInventory__(i + 1) + 2;
+                stored = true;
+                break;
+            }
+            i === NUM_OF_ITEMS_IN_INVENTORY && stored;
+        }
+    }
+    changeSelItem(index) {
+        this.player.unequip();
+        const SELECTED_ITEM = this.inventory[index - 1];
+        this.currentSelItem = SELECTED_ITEM;
+        if (SELECTED_ITEM instanceof (0, _baseJs.Item)) {
+            this.player.equip(SELECTED_ITEM);
+            if (SELECTED_ITEM instanceof (0, _weaponsJs.Gun)) (0, _hudJs.updateAmmoCount)(SELECTED_ITEM);
+            else (0, _hudJs.hideAmmoCount)();
+        } else (0, _hudJs.hideAmmoCount)();
+        this.selectorSprite.x = this.___getPositionInInventory__(index);
+    }
+    removeSelItem() {
+        const ICON = this.currentSelItem.getIcon();
+        const POS_IN_INVENTORY = this.inventoryContainer.getChildIndex(ICON) - 2;
+        this.inventoryContainer.removeChild(ICON);
+        this.inventory.splice(POS_IN_INVENTORY, 1, null);
+        this.currentSelItem = null;
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","../sprites/base/base.js":"bXEua","../sprites/weapons.js":"gRu1U","../sprites/entities.js":"77n58","./hud.js":"3PEGa","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9sJQQ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "WaveSystem", ()=>WaveSystem);
+var _checksJs = require("../helpers/checks.js");
+var _creationJs = require("../map/creation.js");
+var _waveJs = require("./Wave.js");
+var _collisionJs = require("./collision.js");
+var _urlsJs = require("../helpers/urls.js");
+var _clothedZombieJson = require("../../assets/sprite_sheets/enemies/clothed_zombie.json");
+var _clothedZombieJsonDefault = parcelHelpers.interopDefault(_clothedZombieJson);
+class WaveSystem {
+    constructor(starting_map, waves, batch_delay){
+        _checksJs.checkIfInstance(starting_map, (0, _creationJs.PlayableArea));
+        _checksJs.checkIfArray(waves);
+        if (waves.length === 0) throw Error("Waves cannot be empty.");
+        waves.every((wave)=>{
+            if (wave instanceof (0, _waveJs.Wave) === false) throw TypeError("All waves must be an instance of the Wave class.");
+        });
+        _checksJs.checkIfNumber(batch_delay);
+        this.map = starting_map;
+        this.spawnPoints = starting_map.getEnemySpawnPoints(); // array containing {x: ?, y: ?}
+        this.current_wave_index = 0;
+        this.waves = waves;
+        this.current_wave = this.waves[0];
+        this.next_wave_timeout = null;
+        this.next_wave_delay = 3000;
+        this.batch_delay = batch_delay;
+        this.isBatchDone = false;
+        this.time = 0;
+        this.music = new Audio(`${(0, _urlsJs.STATIC_ASSETS_FOLDER)}/sounds/haunted-harpsichord.mp3`);
+        this.music.volume = 0.1;
+    }
+    // GETTERS
+    getRandomInt(min, max) {
+        _checksJs.checkIfNumber(min);
+        _checksJs.checkIfNumber(max);
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    checkIfBatchDone() {
+        this.isBatchDone = Math.floor(Date.now() / 1000) - this.time >= this.batch_delay;
+        return this.isBatchDone;
+    }
+    // SETTERS
+    setWaveDelay(delay) {
+        _checksJs.checkIfNumber(delay);
+        this.next_wave_delay = delay;
+    }
+    updatePlayableArea(playableArea) {
+        _checksJs.checkIfInstance(playableArea, (0, _creationJs.PlayableArea));
+        this.map = playableArea;
+        this.spawnPoints = playableArea.getEnemySpawnPoints();
+    }
+    moveToNextWaveIfFinished() {
+        if (this.next_wave_timeout === null && (0, _collisionJs.NON_PLAYER_ENTITIES).length === 0 && this.current_wave_index + 1 < this.waves.length) {
+            this.waves.splice(this.waves.indexOf(this.current_wave), 1, null); // the instance of the finished wave is thrown in the garbage collector
+            this.next_wave_timeout = setTimeout(()=>{
+                this.current_wave_index++;
+                this.current_wave = this.waves[this.current_wave_index];
+                this.next_wave_timeout = null;
+            }, this.next_wave_delay);
+        }
+    }
+    spawnNextBatch() {
+        let toSpawn = this.current_wave.getNextBatch();
+        for(let i = 0; i < toSpawn.length; i++){
+            const ENEMY = toSpawn[i];
+            const ENEMY_DIMENSIONS = ENEMY.getSpriteFrameDimensions();
+            ENEMY.addFrames((0, _clothedZombieJsonDefault.default));
+            ENEMY.switchFrame("n");
+            const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
+            this.map.addDynamicSprite(ENEMY, (Date.now() * (i + 1)).toString(), SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w, SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h);
+            ENEMY.sprite.alpha = 0; // prepares for fade-in animation
+            this.time = Math.floor(Date.now() / 1000); // gets time zombies spawned
+        }
+    }
+    respawnBatch() {
+        const NUM_OF_ENEMIES_LEFT = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+        if (NUM_OF_ENEMIES_LEFT > 0) for(let i = 0; i < NUM_OF_ENEMIES_LEFT; i++){
+            const ENEMY = (0, _collisionJs.NON_PLAYER_ENTITIES)[i];
+            const ENEMY_DIMENSIONS = ENEMY.getSpriteFrameDimensions();
+            const SPAWN_LOCATION = this.spawnPoints[this.getRandomInt(0, this.spawnPoints.length - 1)];
+            this.map.addDynamicSprite(ENEMY, `zombie${i}`, SPAWN_LOCATION.x - ENEMY_DIMENSIONS.w, SPAWN_LOCATION.y - ENEMY_DIMENSIONS.h);
+            ENEMY.sprite.alpha = 0;
+            this.time = Math.floor(Date.now() / 1000);
+        }
+    }
+    enemySpawnFadeIn() {
+        const NUM_OF_NPE = (0, _collisionJs.NON_PLAYER_ENTITIES).length;
+        if (NUM_OF_NPE > 0) for(let i = 0; i < NUM_OF_NPE; i++){
+            const ENEMY = (0, _collisionJs.NON_PLAYER_ENTITIES)[i].sprite;
+            if (ENEMY.alpha < 1) ENEMY.alpha += 0.01;
+        }
+    }
+    playMusic() {
+        if (this.music.paused) this.music.play();
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","../map/creation.js":"ibUM7","./Wave.js":"eNy6a","./collision.js":"3zsV5","../helpers/urls.js":"5skMk","../../assets/sprite_sheets/enemies/clothed_zombie.json":"BzaM9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eNy6a":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Wave", ()=>Wave);
+var _checksJs = require("../helpers/checks.js");
+var _entitiesJs = require("../sprites/entities.js");
+var _pixiHelpersJs = require("../helpers/pixi_helpers.js");
+var _clothedZombieJson = require("../../assets/sprite_sheets/enemies/clothed_zombie.json");
+var _clothedZombieJsonDefault = parcelHelpers.interopDefault(_clothedZombieJson);
+class Wave {
+    constructor(id, batches, difficultyMod){
+        _checksJs.checkIfArray(batches);
+        this.id = id; // unused as of now, might be useful later
+        this.batches = batches; // an array containing the number of zombies to spawn in each batch i.e. [3, 5, 7] would spawn 3 zombies, then 5, then 7
+        // this.zombieTypes = zombieTypes todo if we have more zombie types
+        this.difficultyMod = difficultyMod; // unused as of now, later I will add interaction with the zombies' stats
+        this.currentBatch = 0;
+        this.toSpawnNext = [];
+    }
+    // GETTERS
+    getNextBatch() {
+        // generates an array containing all zombies to be spawned based of the numbers in this.batches
+        this.toSpawnNext = [];
+        if (this.currentBatch >= this.batches.length) return 0;
+        else {
+            for(let i = 0; i < this.batches[this.currentBatch]; i++){
+                const ZOMBIE = new (0, _entitiesJs.Zombie)((0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/sprite_sheets/enemies/clothed_zombie.png"), 0, 0, (0, _clothedZombieJsonDefault.default).s.w, (0, _clothedZombieJsonDefault.default).s.h);
+                this.toSpawnNext.push(ZOMBIE);
+            }
+            this.currentBatch++;
+            return this.toSpawnNext;
+        }
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","../sprites/entities.js":"77n58","../helpers/pixi_helpers.js":"bZOjp","../../assets/sprite_sheets/enemies/clothed_zombie.json":"BzaM9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"BzaM9":[function(require,module,exports) {
+module.exports = JSON.parse('{"el":{"x":0,"y":0,"w":30,"h":46},"er":{"x":33,"y":1,"w":29,"h":46},"e":{"x":64,"y":1,"w":29,"h":47},"nl":{"x":95,"y":1,"w":30,"h":46},"nr":{"x":127,"y":1,"w":30,"h":46},"n":{"x":159,"y":1,"w":29,"h":47},"sl":{"x":190,"y":1,"w":30,"h":46},"sr":{"x":222,"y":1,"w":30,"h":46},"s":{"x":254,"y":1,"w":29,"h":46},"wl":{"x":285,"y":1,"w":29,"h":46},"w":{"x":316,"y":1,"w":29,"h":47},"wr":{"x":347,"y":1,"w":29,"h":46}}');
+
+},{}],"b2oXW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "showPauseMenu", ()=>showPauseMenu);
+parcelHelpers.export(exports, "hidePauseMenu", ()=>hidePauseMenu);
+const PAUSE_MENU = document.getElementById("pause");
+PAUSE_MENU.addEventListener("click", (event)=>{
+    const ELEMENT_CLICKED = event.target;
+    if (ELEMENT_CLICKED.tagName === "BUTTON") {
+        const ACTION = ELEMENT_CLICKED.getAttribute("data-action");
+        if (ACTION === "resume") hidePauseMenu();
+        else if (ACTION === "exit") window.location.assign("/");
+    }
+});
+function showPauseMenu() {
+    window.GAME_PAUSED = true;
+    PAUSE_MENU.classList.remove("hide");
+}
+function hidePauseMenu() {
+    window.GAME_PAUSED = false;
+    PAUSE_MENU.classList.add("hide");
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kdffl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "HealingItem", ()=>HealingItem);
+parcelHelpers.export(exports, "BandageBox", ()=>BandageBox);
+var _checksJs = require("../helpers/checks.js");
+var _baseJs = require("./base/base.js");
+var _pixiHelpersJs = require("../helpers/pixi_helpers.js");
+var _entitiesJs = require("./entities.js");
+class HealingItem extends (0, _baseJs.Item) {
+    constructor(texture){
+        super(texture);
+    }
+    // SETTERS
+    heal(player) {
+        _checksJs.checkIfInstance(player, (0, _entitiesJs.Player));
+        player.increaseHealth(this.health);
+    }
+}
+class BandageBox extends HealingItem {
+    constructor(){
+        super((0, _pixiHelpersJs.getTextureFromStaticAssetsFolder)("/consumables/bandage_box.png"));
+        this.health = 20;
+    }
+}
+
+},{"../helpers/checks.js":"hGT0N","./base/base.js":"bXEua","../helpers/pixi_helpers.js":"bZOjp","./entities.js":"77n58","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c7kyU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MOVEMENT_KEY_STATUSES", ()=>MOVEMENT_KEY_STATUSES);
+parcelHelpers.export(exports, "checkForCollisionsAndMovePlayer", ()=>checkForCollisionsAndMovePlayer);
+var _checksJs = require("../helpers/checks.js");
+var _entitiesJs = require("../sprites/entities.js");
+var _collisionJs = require("../core/collision.js");
+const MOVEMENT_KEY_STATUSES = {
+    w: false,
+    s: false,
+    a: false,
+    d: false
+};
+function checkForCollisionsAndMovePlayer(sprite) {
+    _checksJs.checkIfInstance(sprite, (0, _entitiesJs.Player));
+    if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.d) {
+        const COLLIDED_WITH_A_TOP_EDGE = (0, _collisionJs.checkCollisionWithTopEdgesOfObstacles)(sprite).status;
+        const COLLIDED_WITH_A_LEFT_EDGE = (0, _collisionJs.checkCollisionWithLeftEdgesOfObstacles)(sprite).status;
+        if (COLLIDED_WITH_A_TOP_EDGE === false && COLLIDED_WITH_A_LEFT_EDGE === false) sprite.moveSpriteSouthEast();
+        else if (COLLIDED_WITH_A_TOP_EDGE && COLLIDED_WITH_A_LEFT_EDGE === false) sprite.moveSpriteEast();
+        else if (COLLIDED_WITH_A_LEFT_EDGE && COLLIDED_WITH_A_TOP_EDGE === false) sprite.moveSpriteSouth();
+    } else if (MOVEMENT_KEY_STATUSES.s && MOVEMENT_KEY_STATUSES.a) {
+        const COLLIDED_WITH_A_TOP_EDGE = (0, _collisionJs.checkCollisionWithTopEdgesOfObstacles)(sprite).status;
+        const COLLIDED_WITH_A_RIGHT_EDGE = (0, _collisionJs.checkCollisionWithRightEdgesOfObstacles)(sprite).status;
+        if (COLLIDED_WITH_A_TOP_EDGE === false && COLLIDED_WITH_A_RIGHT_EDGE === false) sprite.moveSpriteSouthWest();
+        else if (COLLIDED_WITH_A_TOP_EDGE && COLLIDED_WITH_A_RIGHT_EDGE === false) sprite.moveSpriteWest();
+        else if (COLLIDED_WITH_A_RIGHT_EDGE && COLLIDED_WITH_A_TOP_EDGE === false) sprite.moveSpriteSouth();
+    } else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.d) {
+        const COLLIDED_WITH_A_BOTTOM_EDGE = (0, _collisionJs.checkCollisionWithBottomEdgesOfObstacles)(sprite).status;
+        const COLLIDED_WITH_A_LEFT_EDGE = (0, _collisionJs.checkCollisionWithLeftEdgesOfObstacles)(sprite).status;
+        if (COLLIDED_WITH_A_BOTTOM_EDGE === false && COLLIDED_WITH_A_LEFT_EDGE === false) sprite.moveSpriteNorthEast();
+        else if (COLLIDED_WITH_A_BOTTOM_EDGE && COLLIDED_WITH_A_LEFT_EDGE === false) sprite.moveSpriteEast();
+        else if (COLLIDED_WITH_A_LEFT_EDGE && COLLIDED_WITH_A_BOTTOM_EDGE === false) sprite.moveSpriteNorth();
+    } else if (MOVEMENT_KEY_STATUSES.w && MOVEMENT_KEY_STATUSES.a) {
+        const COLLIDED_WITH_A_BOTTOM_EDGE = (0, _collisionJs.checkCollisionWithBottomEdgesOfObstacles)(sprite).status;
+        const COLLIDED_WITH_A_RIGHT_EDGE = (0, _collisionJs.checkCollisionWithRightEdgesOfObstacles)(sprite).status;
+        if (COLLIDED_WITH_A_BOTTOM_EDGE === false && COLLIDED_WITH_A_RIGHT_EDGE === false) sprite.moveSpriteNorthWest();
+        else if (COLLIDED_WITH_A_BOTTOM_EDGE && COLLIDED_WITH_A_RIGHT_EDGE === false) sprite.moveSpriteWest();
+        else if (COLLIDED_WITH_A_RIGHT_EDGE && COLLIDED_WITH_A_BOTTOM_EDGE === false) sprite.moveSpriteNorth();
+    } else if (MOVEMENT_KEY_STATUSES.w && (0, _collisionJs.checkCollisionWithBottomEdgesOfObstacles)(sprite).status === false) sprite.moveSpriteNorth();
+    else if (MOVEMENT_KEY_STATUSES.s && (0, _collisionJs.checkCollisionWithTopEdgesOfObstacles)(sprite).status === false) sprite.moveSpriteSouth();
+    else if (MOVEMENT_KEY_STATUSES.a && (0, _collisionJs.checkCollisionWithRightEdgesOfObstacles)(sprite).status === false) sprite.moveSpriteWest();
+    else if (MOVEMENT_KEY_STATUSES.d && (0, _collisionJs.checkCollisionWithLeftEdgesOfObstacles)(sprite).status === false) sprite.moveSpriteEast();
+}
+
+},{"../helpers/checks.js":"hGT0N","../sprites/entities.js":"77n58","../core/collision.js":"3zsV5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cT2YJ":[function(require,module,exports) {
+module.exports = JSON.parse('{"e":{"x":0,"y":0,"w":23,"h":32},"el":{"x":23,"y":0,"w":23,"h":31},"er":{"x":46,"y":0,"w":23,"h":31},"n":{"x":69,"y":0,"w":23,"h":32},"nl":{"x":92,"y":0,"w":23,"h":31},"nr":{"x":115,"y":0,"w":23,"h":31},"s":{"x":138,"y":0,"w":23,"h":33},"sl":{"x":161,"y":0,"w":23,"h":31},"sr":{"x":184,"y":0,"w":23,"h":31},"w":{"x":207,"y":0,"w":23,"h":32},"wl":{"x":230,"y":0,"w":23,"h":31},"wr":{"x":253,"y":0,"w":23,"h":31}}');
+
+},{}],"16erO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AMMO_CACHE_POPUP", ()=>AMMO_CACHE_POPUP);
+parcelHelpers.export(exports, "PORTAL_POPUP", ()=>PORTAL_POPUP);
+parcelHelpers.export(exports, "UPGRADE_BENCH_POPUP", ()=>UPGRADE_BENCH_POPUP);
+parcelHelpers.export(exports, "managePopUp", ()=>managePopUp);
+const TEXT_STYLE = {
+    fontSize: 20,
+    fill: 0xffffff
+};
+const AMMO_CACHE_POPUP = new PIXI.Text("Press E to refill ammo.(500)", TEXT_STYLE);
+AMMO_CACHE_POPUP.alpha = 0;
+const PORTAL_POPUP = new PIXI.Text("Press Q to change rooms.", TEXT_STYLE);
+PORTAL_POPUP.alpha = 0;
+const UPGRADE_BENCH_POPUP = new PIXI.Text("CHOOSE UPGRADE(1000): E: Ammo and clip size. T: Damage", TEXT_STYLE);
+UPGRADE_BENCH_POPUP.alpha = 0;
+function managePopUp(popup, player, isClose) {
+    if (isClose) {
+        if (popup.alpha < 1.0) popup.alpha += 0.01;
+    } else if (popup.alpha > 0.0) popup.alpha -= 0.01;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["4YftG"], "4YftG", "parcelRequire90aa")
+
 //# sourceMappingURL=test.js.map
