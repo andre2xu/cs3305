@@ -39,12 +39,14 @@ import {
     AMMO_COUNT, updatePlayerPointsText, PLAYER_POINTS
 } from '../../core/hud.js';
 
-import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
 import {
     AMMO_CACHE_POPUP,
     managePopUp,
-    PORTAL_POPUP, UPGRADE_BENCH, UPGRADE_BENCH_POPUP
+    PORTAL_POPUP,
+    UPGRADE_BENCH_POPUP
 } from "../../sprites/popups.js";
+
+import player_frames_json from '../../../assets/sprite_sheets/player/player.json';
 
 
 
@@ -86,8 +88,8 @@ window.addEventListener('load', () => {
     const WAVE_SYSTEM = new WaveSystem(
         FOYER,
         [
-            new Wave(0, [1,2], 1),
-            new Wave(0, [1,1,2], 1)
+            new Wave(0, [1, 1], 0),
+            new Wave(0, [2, 3], 0)
         ],
         5
     );
@@ -341,7 +343,9 @@ window.addEventListener('load', () => {
 
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
-            // WAVE_SYSTEM.playMusic();
+            WAVE_SYSTEM.playMusic();
+
+
 
             // spawns waves of enemies
             WAVE_SYSTEM.enemySpawnFadeIn();
@@ -352,44 +356,45 @@ window.addEventListener('load', () => {
                 WAVE_SYSTEM.moveToNextWaveIfFinished();
             }
 
-            let isClose = false
-            //manages popups for all interactables
-            //still need to make popup for when ammo cache is empty
-            const NUM_OF_INTERACTABLES = INTERACTABLES.length;
-            const POPUPS = [AMMO_CACHE_POPUP,UPGRADE_BENCH_POPUP]
+
+
+            // interactable popup ***still need to make popup for when ammo cache is empty
+            const POPUPS = [AMMO_CACHE_POPUP,UPGRADE_BENCH_POPUP];
             var INTERACTABLE;
-            var POPUP;
+
             for (let i = 0; i < INTERACTABLES.length; i++) {
                 INTERACTABLE = INTERACTABLES[i];
 
+                let isClose = false;
+                isClose = INTERACTABLE.playerIsNearInteractable(player);
 
-                isClose = INTERACTABLE.playerIsNearInteractable(player)
-               if (INTERACTABLE instanceof AmmoCache){
-                   managePopUp(POPUPS[0], player, isClose)
-               }
-               if (INTERACTABLE instanceof UpgradeBench){
-                   managePopUp(POPUPS[1], player, isClose)
-               }
-
-
-
+                if (INTERACTABLE instanceof AmmoCache){
+                    managePopUp(POPUPS[0], player, isClose)
+                }
+                else if (INTERACTABLE instanceof UpgradeBench){
+                    managePopUp(POPUPS[1], player, isClose)
+                }
             }
-            //manages popups for all portals
+
+
+
+            // portal popup
             const NUM_OF_PORTALS = PORTALS.length;
 
-            isClose = false
-            // if (NUM_OF_PORTALS > 0) {
-            for (let i = 0; i < NUM_OF_PORTALS; i++) {
-                const PORTAL = PORTALS[i];
+            isClose = false;
+            if (NUM_OF_PORTALS > 0) {
+                for (let i = 0; i < NUM_OF_PORTALS; i++) {
+                    const PORTAL = PORTALS[i];
 
-                isClose = isClose || PORTAL.playerIsInsidePortal(player) //if player is near ANY of the portals
-
-
+                    isClose = isClose || PORTAL.playerIsInsidePortal(player); // if player is near ANY of the portals
+                }
+                managePopUp(PORTAL_POPUP, player, isClose);
             }
-            managePopUp(PORTAL_POPUP, player, isClose)
 
+
+
+            // points
             let NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
-
 
             if (NUM_OF_ENTITIES > 0) {
                 for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
@@ -402,17 +407,10 @@ window.addEventListener('load', () => {
             }
 
 
-        // }
-
-
-
-
-
-
 
             // moves enemies
-            // const NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
-            NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length
+            NUM_OF_ENTITIES = NON_PLAYER_ENTITIES.length;
+
             if (NUM_OF_ENTITIES > 0) {
                 for (let i=0; i < NON_PLAYER_ENTITIES.length; i++) {
                     NON_PLAYER_ENTITIES[i].moveToPlayer(player);
