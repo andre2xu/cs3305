@@ -358,6 +358,8 @@ window.addEventListener('load', () => {
 
 
 
+            let isClose = false;
+
             // interactable popup ***still need to make popup for when ammo cache is empty
             const POPUPS = [AMMO_CACHE_POPUP,UPGRADE_BENCH_POPUP];
             var INTERACTABLE;
@@ -365,7 +367,6 @@ window.addEventListener('load', () => {
             for (let i = 0; i < INTERACTABLES.length; i++) {
                 INTERACTABLE = INTERACTABLES[i];
 
-                let isClose = false;
                 isClose = INTERACTABLE.playerIsNearInteractable(player);
 
                 if (INTERACTABLE instanceof AmmoCache){

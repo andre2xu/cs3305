@@ -355,6 +355,7 @@ window.addEventListener("load", ()=>{
                 WAVE_SYSTEM.spawnNextBatch();
                 WAVE_SYSTEM.moveToNextWaveIfFinished();
             }
+            let isClose = false;
             // interactable popup ***still need to make popup for when ammo cache is empty
             const POPUPS = [
                 (0, _popupsJs.AMMO_CACHE_POPUP),
@@ -363,10 +364,9 @@ window.addEventListener("load", ()=>{
             var INTERACTABLE;
             for(let i = 0; i < (0, _interactableJs.INTERACTABLES).length; i++){
                 INTERACTABLE = (0, _interactableJs.INTERACTABLES)[i];
-                let isClose1 = false;
-                isClose1 = INTERACTABLE.playerIsNearInteractable(player);
-                if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache)) (0, _popupsJs.managePopUp)(POPUPS[0], player, isClose1);
-                else if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench)) (0, _popupsJs.managePopUp)(POPUPS[1], player, isClose1);
+                isClose = INTERACTABLE.playerIsNearInteractable(player);
+                if (INTERACTABLE instanceof (0, _interactableJs.AmmoCache)) (0, _popupsJs.managePopUp)(POPUPS[0], player, isClose);
+                else if (INTERACTABLE instanceof (0, _interactableJs.UpgradeBench)) (0, _popupsJs.managePopUp)(POPUPS[1], player, isClose);
             }
             // portal popup
             const NUM_OF_PORTALS = (0, _portalsJs.PORTALS).length;
