@@ -141,7 +141,7 @@ export const BASEMENT = (function () {
         BASEMENT.getHeight() - (OPEN_CHEST.getSpriteFrameDimensions().h + 5)
     );
 
-    const UPGRADE_BENCH = new UpgradeBench(getTextureFromStaticAssetsFolder('/consumables/ammoCache.png'), 240, 140, 50, 50);
+    const UPGRADE_BENCH = new UpgradeBench(getTextureFromStaticAssetsFolder('/consumables/upgradeBench.png'), 240, 140, 50, 50);
     BASEMENT.addStaticSprite(
         UPGRADE_BENCH,
         "upgrade_bench1",
