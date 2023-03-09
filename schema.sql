@@ -7,11 +7,12 @@ CREATE TABLE users (
 );
 
 
--- Database for scores --
-DROP TABLE IF EXISTS scores;
+-- Database for leaderboard --
+DROP TABLE IF EXISTS leaderboard;
 
-CREATE TABLE scores (
+CREATE TABLE leaderboard (
     username VARCHAR(255) PRIMARY KEY NOT NULL,
-    score INTEGER NOT NULL
-    );
+    score INTEGER NOT NULL, -- points earned --
+    time_survived INTEGER NOT NULL -- milliseconds -- 
+);
 
