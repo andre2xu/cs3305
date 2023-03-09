@@ -174,16 +174,19 @@ def store_score():
 @app.route("/leaderboard", methods=["GET", "POST"])
 @login_required
 def leaderboard():
-    # db = get_db()
-    # details = db.execute("""SELECT * FROM score ORDER BY score, score ASC""").fetchall()
+    db = get_db()
+    leaderboard_data = db.execute("""SELECT * FROM leaderboard ORDER BY score, score ASC""").fetchall()
 
-    # details = list(details)
-    # scores = []
-    # for row in details:
-    #     row = [item for item in row]
-    #     scores.append(row)
+    users = []
+    scores = []
+    time_survived = []
 
-    return render_template("leaderboard.html", title="Leaderboard", user_game_data=[])
+    for player_game_data in leaderboard_data:
+        users.append(player_game_data[0])
+        scores.append(player_game_data[1])
+        time_survived.append(player_game_data[2])
+
+    return render_template("leaderboard.html", title="Leaderboard", users=users, scores=scores, time_survived=time_survived)
 
 
 """Decorator to quit or exit the game"""
