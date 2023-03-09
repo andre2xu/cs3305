@@ -184,6 +184,7 @@ def leaderboard():
     for player_game_data in leaderboard_data:
         users.append(player_game_data[0])
         scores.append(player_game_data[1])
+
         time_survived.append(player_game_data[2])
 
     return render_template("leaderboard.html", title="Leaderboard", users=users, scores=scores, time_survived=time_survived)
