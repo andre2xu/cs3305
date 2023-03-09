@@ -161,11 +161,42 @@ def store_score():
     time_survived = game_data['millisecondsSurvived']
     points_earned = game_data['pointsEarned']
 
-    username = g.user
+
 
     db = get_db()
-    db.execute("""INSERT INTO leaderboard (username, score, time_survived) VALUES (?, ?, ?);""", (username, points_earned, time_survived))
-    db.commit()
+    username = g.user
+
+    # compares the user's new game data with their old; score and time are only updated when the new data is higher
+    leaderboard_data = db.execute("""SELECT * FROM leaderboard""").fetchall()
+
+    for player_game_data in leaderboard_data:
+        user = player_game_data[0]
+        score = player_game_data[1]
+        time = player_game_data[2]
+
+        if (user == username):
+            if score > points_earned:
+                points_earned = score # keeps old score
+
+            if time > time_survived:
+                time_survived = time # keeps old time
+
+
+
+    user_exists = db.execute(f"""SELECT EXISTS(SELECT username FROM leaderboard WHERE username='{username}')""").fetchone()[0]
+
+    if user_exists:
+        db.execute(f"""UPDATE leaderboard SET score = {points_earned}, time_survived = {time_survived} WHERE username = '{username}'""")
+
+        db.commit()
+    else:
+        # adds the user's game data if they are not on the leaderboard yet
+
+        db.execute("""INSERT INTO leaderboard (username, score, time_survived) VALUES (?, ?, ?);""", (username, points_earned, time_survived))
+
+        db.commit()
+
+
 
     return "" # leave this as an empty string. Also, no other return is needed
 
