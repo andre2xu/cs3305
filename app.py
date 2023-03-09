@@ -185,7 +185,24 @@ def leaderboard():
         users.append(player_game_data[0])
         scores.append(player_game_data[1])
 
-        time_survived.append(player_game_data[2])
+        time = player_game_data[2]
+
+        hrs = round(time / 3.6e+6)
+        mins = round(time / 60000)
+        secs = round(time / 1000)
+
+        hrs_formatted = '0'
+        mins_formatted = '0'
+        secs_formatted = '0'
+
+        if hrs > 0:
+            hrs_formatted = f'{hrs}'
+        if mins > 0:
+            mins_formatted = f'{mins}'
+        if secs > 0:
+            secs_formatted = f'{secs}'
+
+        time_survived.append(f'{hrs_formatted}h:{mins_formatted}m:{secs_formatted}s')
 
     return render_template("leaderboard.html", title="Leaderboard", users=users, scores=scores, time_survived=time_survived)
 
