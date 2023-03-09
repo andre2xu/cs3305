@@ -161,21 +161,11 @@ def store_score():
     time_survived = game_data['millisecondsSurvived']
     points_earned = game_data['pointsEarned']
 
+    username = g.user
 
-
-    # score = data
-    # db = get_db()
-    # username = g.user
-    # # additional validators
-    # if score <= 0:
-    #     return "Score is below zero."
-    # # Here insert the score into the database
-    # else:
-    #     db.execute("""INSERT INTO scores (username, score) VALUES (?, ?);""", (username, score))
-    #     db.commit()
-    #     # if update is successful return success, otherwise return failure
-
-
+    db = get_db()
+    db.execute("""INSERT INTO leaderboard (username, score, time_survived) VALUES (?, ?);""", (username, points_earned, time_survived))
+    db.commit()
 
     return "" # leave this as an empty string. Also, no other return is needed
 
@@ -184,14 +174,16 @@ def store_score():
 @app.route("/leaderboard", methods=["GET", "POST"])
 @login_required
 def leaderboard():
-    db = get_db()
-    details = db.execute("""SELECT * FROM score ORDER BY score, score ASC""").fetchall()
-    details = list(details)
-    scores = []
-    for row in details:
-        row = [item for item in row]
-        scores.append(row)
-    return render_template("leaderboard.html", title="Leaderboard", scores=scores)
+    # db = get_db()
+    # details = db.execute("""SELECT * FROM score ORDER BY score, score ASC""").fetchall()
+
+    # details = list(details)
+    # scores = []
+    # for row in details:
+    #     row = [item for item in row]
+    #     scores.append(row)
+
+    return render_template("leaderboard.html", title="Leaderboard", user_game_data=[])
 
 
 """Decorator to quit or exit the game"""
