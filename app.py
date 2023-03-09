@@ -164,7 +164,7 @@ def store_score():
     username = g.user
 
     db = get_db()
-    db.execute("""INSERT INTO leaderboard (username, score, time_survived) VALUES (?, ?);""", (username, points_earned, time_survived))
+    db.execute("""INSERT INTO leaderboard (username, score, time_survived) VALUES (?, ?, ?);""", (username, points_earned, time_survived))
     db.commit()
 
     return "" # leave this as an empty string. Also, no other return is needed

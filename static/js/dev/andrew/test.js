@@ -88,8 +88,8 @@ window.addEventListener('load', () => {
     const WAVE_SYSTEM = new WaveSystem(
         FOYER,
         [
-            new Wave(0, [1, 1], 0),
-            new Wave(0, [2, 3], 0)
+            new Wave(0, [1], 0),
+            // new Wave(0, [2, 3], 0)
         ],
         5
     );
@@ -343,7 +343,7 @@ window.addEventListener('load', () => {
 
     GAME.ticker.add(() => {
         if (window.GAME_PAUSED === false) {
-            WAVE_SYSTEM.playMusic();
+            // WAVE_SYSTEM.playMusic();
 
 
 

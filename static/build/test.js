@@ -187,12 +187,7 @@ window.addEventListener("load", ()=>{
     // INITIALIZING WAVES
     const WAVE_SYSTEM = new (0, _waveSystemJs.WaveSystem)((0, _foyerJs.FOYER), [
         new (0, _waveJs.Wave)(0, [
-            1,
             1
-        ], 0),
-        new (0, _waveJs.Wave)(0, [
-            2,
-            3
         ], 0)
     ], 5);
     // PLAYER
@@ -348,7 +343,7 @@ window.addEventListener("load", ()=>{
     GAME.stage.addChild((0, _hudJs.PLAYER_HEALTH_STATUS), (0, _hudJs.AMMO_COUNT), (0, _hudJs.PLAYER_POINTS), (0, _popupsJs.UPGRADE_BENCH_POPUP), (0, _popupsJs.AMMO_CACHE_POPUP), (0, _popupsJs.PORTAL_POPUP), window.HOTBAR.display(), (0, _foyerJs.FOYER).load());
     GAME.ticker.add(()=>{
         if (window.GAME_PAUSED === false) {
-            WAVE_SYSTEM.playMusic();
+            // WAVE_SYSTEM.playMusic();
             // spawns waves of enemies
             WAVE_SYSTEM.enemySpawnFadeIn();
             if (WAVE_SYSTEM.checkIfBatchDone()) {
